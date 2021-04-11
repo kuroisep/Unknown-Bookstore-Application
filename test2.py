@@ -1,43 +1,44 @@
-import tkinter as tk
+# from tkinter import *        
+# from PIL import ImageTk, Image
 
-H = 500 # กำหนดค่าตัวแปรความสูงหน้าต่างโปรแกรม
-W = 800 # ตัวแปรความกว้าง
+# app_root = Tk()
 
-root = tk.Tk()
+# #Setting it up
+# img = ImageTk.PhotoImage(Image.open("image.jpg"))
 
-canvas = tk.Canvas(root, height=H, width=W)
-canvas.pack()
+# #Displaying it
+# imglabel = Label(app_root, image=img).grid(row=1, column=1)        
 
-frame = tk.Frame(root, bg='#80c1ff', bd=5)
-frame.place(relx=0.5, rely=0.1, relwidth=0.75, relheight=0.1, anchor='n')
 
-entry = tk.Entry(frame, font=('Courier', 18))
-entry.place(relwidth=0.65, relheight=1)
+# app_root.mainloop()
+# # 'D:/CE/2.sophomore/term2/Data Structure And Algorithm/Project/Git/Proj/image.jpg'
 
-button = tk.Button(frame, text='ตกลง', font=40, command=lambda: get_data(entry.get()))
-button.place(relx=0.7, relwidth=0.3, relheight=1)
+from tkinter import *
+from functools import partial
 
-lower_frame = tk.Frame(root, bg= '#80c1ff', bd=5)
-lower_frame.place(relx=0.5, rely=0.25, relwidth=0.75, relheight=0.6, anchor='n')
+def validateLogin(username, password):
+	print("username entered :", username.get())
+	print("password entered :", password.get())
+	return
 
-label = tk.Label(lower_frame, font=('Courier', 18), anchor='nw', justify='left')
-label.place(relwidth=1, relheight=1)
+#window
+tkWindow = Tk()  
+tkWindow.geometry('400x150')  
+tkWindow.title('Tkinter Login Form - pythonexamples.org')
 
-def data_response(data):
-    try:
-        prov = data['จังหวัด']
-        name = data['ชื่อหน่วยงานการแพทย์ฉุกเฉินจังหวัด']
-        num = data['เครือข่ายที่']
-        long = data['LONGITUDE']
-        lat = data['LATITUDE']
-        final_str = 'จังหวัด: %s \nชื่อหน่วยงาน: %s \nหมายเลขหน่วยงาน: %s \nลองติจูด: %s \nละติจูด: %s' % (str(prov),str(name),str(num), str(long), str(lat))
-    except:
-        final_str = data
-    return final_str
+#username label and text entry box
+usernameLabel = Label(tkWindow, text="User Name").grid(row=0, column=0)
+username = StringVar()
+usernameEntry = Entry(tkWindow, textvariable=username,background='pink').grid(row=0, column=1)  
 
-def get_data(province):
-    print(province)
-    label['text'] = data_response(province)
-    
+#password label and password entry box
+passwordLabel = Label(tkWindow,text="Password").grid(row=1, column=0)  
+password = StringVar()
+passwordEntry = Entry(tkWindow, textvariable=password, show='🎈').grid(row=1, column=1)  
 
-root.mainloop()
+validateLogin = partial(validateLogin, username, password)
+
+#login button
+loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=4, column=0)  
+
+tkWindow.mainloop()
