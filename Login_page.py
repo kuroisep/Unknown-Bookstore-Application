@@ -17,29 +17,29 @@ from tkinter import *
 from functools import partial
 
 def validateLogin(username, password):
-	print("username entered :", username.get())
-	print("password entered :", password.get())
+	print("Username entered :", username.get())
+	print("Password entered :", password.get())
 	return
 
 #window
 tkWindow = Tk()  
-tkWindow.geometry('400x150')  
-tkWindow.title('Tkinter Login Form - pythonexamples.org')
+tkWindow.geometry('777x777')  
+tkWindow.title('READ A BOOK')
 
 #username label and text entry box
-usernameLabel = Label(tkWindow, text="User Name").grid(row=0, column=0)
+usernameLabel = Label(tkWindow, text="User Name").place(x=230, y=100)
 username = StringVar()
-usernameEntry = Entry(tkWindow, textvariable=username,background='pink').grid(row=0, column=1)  
+usernameEntry = Entry(tkWindow, textvariable=username,background='pink').place(x=330, y=100)
 
 #password label and password entry box
-passwordLabel = Label(tkWindow,text="Password").grid(row=1, column=0)  
+passwordLabel = Label(tkWindow,text="Password").place(x=230, y=130) 
 password = StringVar()
-passwordEntry = Entry(tkWindow, textvariable=password, show='🎈').grid(row=1, column=1)  
+passwordEntry = Entry(tkWindow, textvariable=password, show='*', background='pink').place(x=330, y=130)
 
 validateLogin = partial(validateLogin, username, password)
 
 #login button
-loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=4, column=0)  
+loginButton = Button(tkWindow, text="Login", command=validateLogin).place(x=330, y=170)  
 
 tkWindow.mainloop()
 
