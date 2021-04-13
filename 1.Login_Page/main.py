@@ -205,8 +205,11 @@ def delete_user_not_found_screen():
 def main_account_screen():
     global main_screen
     main_screen = Tk()
-    p1 = PhotoImage(file='open-book.png')
-    main_screen.iconphoto(False, p1)
+    base_folder = os.path.dirname(__file__)
+    
+    icon_path = os.path.join(base_folder, 'open-book.png')
+    icon = PhotoImage(file=icon_path)
+    main_screen.iconphoto(False, icon)
 
     x = (960) - (1280/2)
     y = (540) - (720/2)
@@ -215,7 +218,9 @@ def main_account_screen():
     
     canvas = Canvas(main_screen, width=300, height=300)
     canvas.pack()
-    img = ImageTk.PhotoImage(Image.open("logo.jpg").resize((300, 300)))
+
+    logo_path = os.path.join(base_folder,'logo.jpg')
+    img = ImageTk.PhotoImage(Image.open(logo_path).resize((300, 300)))
     canvas.create_image(0, 0, anchor=NW, image=img)
 
     Label(text="", fg="white", bg="#dae1ff",
