@@ -217,7 +217,7 @@ def main_account_screen():
     main_screen.geometry("1280x720+%d+%d" % (x, y))
     main_screen.title("Account Login")
 
-    bg_path = os.path.join(base_folder, 'background1.png')
+    bg_path = os.path.join(base_folder, 'LOGIN.png')
     bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
     # bg = PhotoImage(file = bg_path)
   
