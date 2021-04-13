@@ -3,8 +3,6 @@
 from tkinter import *
 import os
 from PIL import ImageTk, Image
-import tkinter as tk
-from tkinter import ttk
 
 # Designing window for registration
 
@@ -95,15 +93,15 @@ def register_user():
     
     if (username_info == ''):
         Label(register_screen, text="Enter User",
-              fg="red", font=("calibri", 11)).pack()
+              fg="red", font=(myfont, 11)).pack()
 
     elif (password_info == '' or confpassword_info == ''):
         Label(register_screen, text="Enter Pass",
-              fg="red", font=("calibri", 11)).pack()
+              fg="red", font=(myfont, 11)).pack()
 
     elif (password_info != confpassword_info):
         Label(register_screen, text="Pass Not Match",
-              fg="red", font=("calibri", 11)).pack()
+              fg="red", font=(myfont, 11)).pack()
         password_entry.delete(0, END)
         confpassword_entry.delete(0, END)
 
@@ -118,7 +116,7 @@ def register_user():
         confpassword_entry.delete(0, END)
 
         Label(register_screen, text="Registration Success",
-              fg="green", font=("calibri", 11)).pack()
+              fg="green", font=(myfont, 11)).pack()
 
 # Implementing event on login button
 
@@ -147,7 +145,7 @@ def login_verify():
 
 def login_sucess():
     global login_success_screen
-    login_success_screen = Toplevel(login_screen)
+    login_success_screen = Toplevel(main_screen)
     login_success_screen.title("Success")
     x = (960) - (150/2)
     y = (540) - (100/2)
@@ -161,7 +159,7 @@ def login_sucess():
 
 def password_not_recognised():
     global password_not_recog_screen
-    password_not_recog_screen = Toplevel(login_screen)
+    password_not_recog_screen = Toplevel(main_screen)
     password_not_recog_screen.title("Success")
     x = (960) - (150/2)
     y = (540) - (100/2)
@@ -175,7 +173,7 @@ def password_not_recognised():
 
 def user_not_found():
     global user_not_found_screen
-    user_not_found_screen = Toplevel(login_screen)
+    user_not_found_screen = Toplevel(main_screen)
     Label(user_not_found_screen, text='').pack()
     user_not_found_screen.title("Success")
     x = (960) - (150/2)
@@ -199,11 +197,12 @@ def delete_password_not_recognised():
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
 
-
 # Designing Main(first) window
 
 def main_account_screen():
     global main_screen
+    global myfont
+    myfont = 'TRACK'
     main_screen = Tk()
     base_folder = os.path.dirname(__file__)
     
@@ -215,23 +214,64 @@ def main_account_screen():
     y = (540) - (720/2)
     main_screen.geometry("1280x720+%d+%d" % (x, y))
     main_screen.title("Account Login")
+
+    bg_path = os.path.join(base_folder, 'background1.png')
+    bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
+    # bg = PhotoImage(file = bg_path)
+  
+    # Create Canvas
+    canvas = Canvas( main_screen, width = 1280,
+                 height = 720)
+  
+    canvas.pack(fill = "both", expand = True)
+  
+    # Display image
+    canvas.create_image( 0, 0, image = bg, 
+                     anchor = "nw")
     
-    canvas = Canvas(main_screen, width=300, height=300)
-    canvas.pack()
+    global username_verify
+    global password_verify
+    global username_login_entry
 
-    logo_path = os.path.join(base_folder,'logo.jpg')
-    img = ImageTk.PhotoImage(Image.open(logo_path).resize((300, 300)))
-    canvas.create_image(0, 0, anchor=NW, image=img)
+    username_verify = StringVar()
+    password_verify = StringVar()
 
-    Label(text="", fg="white", bg="#dae1ff",
-          width="300", height="2", font=("Calibri", 13)).pack()
+    global username_login_entry
+    global password_login_entry
+
+    canvas.create_text( 200, 250, text = "Welcome" ,font = (myfont,50))
+    canvas.create_text(870,300,text = "Username",font=(myfont))
+    username_login_entry = Entry(textvariable=username_verify,width=30,font=20)
+    # username_login_entry.config(fg = 'blue')
+    canvas.create_window(1000,340,window = username_login_entry)
+    canvas.create_text(870,390,text = "Password",font=myfont)
+    password_login_entry = Entry(textvariable=password_verify, show='*',width=30,font=20)
+    canvas.create_window(1000,430,window = password_login_entry)
+    
+
+    canvas.create_text( 1000, 170, text = "Signin" ,font = (myfont,40))
+    login_button = Button(text="Login", height="3", width="20", command=login_verify)
+    canvas.create_window(1000,500,window = login_button)
+    regis_button = Button(text="Register", height="3", width="20", command=register)
+    canvas.create_window(1000,600,window = regis_button)
+
+    canvas.create_text(1230,700,text = "V.1.0.0",font=myfont)
+
+
+    # canvas = Canvas(main_screen, width=700, height=300)
+    # canvas.pack()
+
+    # logo_path = os.path.join(base_folder,'logo.jpg')
+    # img = ImageTk.PhotoImage(Image.open(logo_path).resize((700, 300)))
+    # canvas.create_image(0, 0, anchor=NW, image=img)
+
+    Label(text="WELCOME TO BOOK STORE", fg="white", bg="#dae1ff",
+          width="300", height="1", font=(myfont, 40)).pack()
     Label(text="").pack()
     Label(text="").pack()
     Button(text="Login", height="2", width="30", command=login).pack()
     Label(text="").pack()
-    button = Button(text="Register", height="300", width="300", command=register)
-    button.config(image=img)
-    button.pack()
+    
     main_screen.resizable(0,0)
 
     main_screen.mainloop()
