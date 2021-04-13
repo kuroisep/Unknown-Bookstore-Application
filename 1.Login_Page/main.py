@@ -222,8 +222,7 @@ def main_account_screen():
     # bg = PhotoImage(file = bg_path)
   
     # Create Canvas
-    canvas = Canvas( main_screen, width = 1280,
-                 height = 720)
+    canvas = Canvas( main_screen, width = 1280,height = 720)
   
     canvas.pack(fill = "both", expand = True)
   
@@ -245,23 +244,30 @@ def main_account_screen():
     img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
     canvas.create_image(200,50,image = img_logo,anchor = "nw")
 
-    canvas.create_text( 250, 250, text = "Welcome" ,font = (myfont,50))
-    canvas.create_text(870,300,text = "Username",font=(myfont))
-    username_login_entry = Entry(textvariable=username_verify,width=30,font=20)
-    # username_login_entry.config(fg = 'blue')
-    canvas.create_window(1000,340,window = username_login_entry)
-    canvas.create_text(870,390,text = "Password",font=myfont)
-    password_login_entry = Entry(textvariable=password_verify, show='*',width=30,font=20)
-    canvas.create_window(1000,430,window = password_login_entry)
-    
+    canvas.create_text( 280, 250, text = "Welcome" ,font = (myfont,60),anchor = "n")
+    canvas.create_text( 320, 330, text = "To the land of books" ,font = (myfont,20),anchor = "n")
+
 
     canvas.create_text( 1000, 170, text = "Signin" ,font = (myfont,40))
+
+    canvas.create_text(870,250,text = "Username",font=(myfont))
+    username_login_entry = Entry(textvariable=username_verify,width=30,font=20)
+    # username_login_entry.config(fg = 'blue')
+    canvas.create_window(1000,290,window = username_login_entry)
+
+    canvas.create_text(870,340,text = "Password",font=myfont)
+    password_login_entry = Entry(textvariable=password_verify, show='●',width=30,font=20)
+    canvas.create_window(1000,380,window = password_login_entry)
+    
+
+    
     img_login_path = os.path.join(base_folder, 'login-button1.png')
     img_login_button = ImageTk.PhotoImage(Image.open(img_login_path).resize((200, 300)))
     login_button = Button(image = img_login_button,command=login_verify,bd=0,highlightthickness=0,width=140,height=60)
-    canvas.create_window(1000,500,window = login_button)
+    canvas.create_window(900,450,window = login_button)
+
     regis_button = Button(text="Register", height="3", width="20", command=register,highlightthickness=0,borderwidth = 0)
-    canvas.create_window(1000,600,window = regis_button)
+    canvas.create_window(1100,450,window = regis_button)
 
     canvas.create_text(1230,700,text = "V.1.0.0",font=myfont)
 
@@ -277,7 +283,7 @@ def main_account_screen():
 
     
     main_screen.resizable(0,0)
-
+    main_screen.overrideredirect(0)
     main_screen.mainloop()
 
 

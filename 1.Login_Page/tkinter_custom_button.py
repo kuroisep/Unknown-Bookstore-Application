@@ -274,3 +274,4 @@ class TkinterCustomButton(tkinter.Frame):
         if self.function is not None:
             self.function()
             self.on_leave()
+    
