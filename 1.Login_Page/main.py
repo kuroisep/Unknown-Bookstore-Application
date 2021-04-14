@@ -12,9 +12,9 @@ def register():
     global register_screen
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
-    x = (960) - (300/2)
-    y = (540) - (250/2)
-    register_screen.geometry("300x250+%d+%d" % (x, y))
+    x = (910) - (300/2)
+    y = (460) - (250/2)
+    register_screen.geometry("450x450+%d+%d" % (x, y))
 
     global username
     global password
@@ -22,14 +22,33 @@ def register():
     global username_entry
     global password_entry
     global confpassword_entry
+
+
+    global name
+    global lastname
+    global gender
+    global email
+    global name_entry
+    global lastname_entry
+    global email_entry
+
     username = StringVar()
     password = StringVar()
     confpassword = StringVar()
+    
+    name = StringVar()
+    lastname = StringVar()
+    email = StringVar()
+    gender1 = StringVar()
+    gender2 = StringVar()
+    gender1 = ""
+    gender2 = ""
 
     Label(register_screen, text="").pack()
-    Label(register_screen, text="Please enter details below",
-          bg="blue", fg="white").pack()
+    Label(register_screen, text="Please enter details below",bg="blue", fg="white").pack()
+    
     Label(register_screen, text="").pack()
+    
     username_lable = Label(register_screen, text="Username * ")
     username_lable.pack()
     username_entry = Entry(register_screen, textvariable=username)
@@ -37,18 +56,45 @@ def register():
 
     password_lable = Label(register_screen, text="Password * ")
     password_lable.pack()
-    password_entry = Entry(register_screen, textvariable=password, show='*')
+    password_entry = Entry(register_screen, textvariable=password, show='●')
     password_entry.pack()
 
     confpassword_lable = Label(register_screen, text="Confirm Password * ")
     confpassword_lable.pack()
-    confpassword_entry = Entry(
-        register_screen, textvariable=confpassword, show='*')
+    confpassword_entry = Entry(register_screen, textvariable=confpassword, show='●')
     confpassword_entry.pack()
-    Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10,
-           height=1, bg="blue", fg="white", command=register_user).pack()
+    
+    name_lable = Label(register_screen, text="Name * ")
+    name_lable.pack()
+    name_entry = Entry(register_screen, textvariable=name)
+    name_entry.pack()
 
+    lastname_lable = Label(register_screen, text="LastName * ")
+    lastname_lable.pack()
+    lastname_entry = Entry(register_screen, textvariable=lastname)
+    lastname_entry.pack()
+
+    gender_lable = Label(register_screen, text="Gender * ")
+    gender_lable.pack()
+    gender_choice = Checkbutton(register_screen, text="Male", command=my_upd, variable=gender1)
+    gender_choice.pack()
+    gender_choice = Checkbutton(register_screen, text="Female", command=my_upd, variable=gender2)
+    gender_choice.pack()
+
+    email_lable = Label(register_screen, text="Email Address * ")
+    email_lable.pack()
+    email_entry = Entry(register_screen, textvariable=email)
+    email_entry.pack()
+
+    Label(register_screen, text="").pack()
+    Button(register_screen, text="Register", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
+    Button(register_screen, text="Clear", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
+
+def my_upd():  
+    if(gender1.get() == 1):
+        gender2.configure(state='disabled')
+    if(gender2.get() == 1):
+        gender1.configure(state='disabled')
 
 # Designing window for login
 
@@ -92,6 +138,9 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
     confpassword_info = confpassword.get()
+    # name_info = name.get()
+    # lastname_info = lastname.get
+    # gender_info = gender.get()
     
     if (username_info == ''):
         Label(register_screen, text="Enter User",
@@ -250,12 +299,12 @@ def main_account_screen():
 
     canvas.create_text( 1000, 170, text = "Signin" ,font = (myfont,40))
 
-    canvas.create_text(870,250,text = "Username",font=(myfont))
+    canvas.create_text(875,250,text = "Username",font=(myfont))
     username_login_entry = Entry(textvariable=username_verify,width=30,font=20)
     # username_login_entry.config(fg = 'blue')
     canvas.create_window(1000,290,window = username_login_entry)
 
-    canvas.create_text(870,340,text = "Password",font=myfont)
+    canvas.create_text(875,340,text = "Password",font=myfont)
     password_login_entry = Entry(textvariable=password_verify, show='●',width=30,font=20)
     canvas.create_window(1000,380,window = password_login_entry)
     
