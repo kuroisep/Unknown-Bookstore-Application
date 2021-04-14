@@ -26,11 +26,15 @@ def register():
 
     global name
     global lastname
-    global gender
+    global gender1
+    global gender2
     global email
     global name_entry
     global lastname_entry
+    global gender_choice1
+    global gender_choice2
     global email_entry
+
 
     username = StringVar()
     password = StringVar()
@@ -38,11 +42,16 @@ def register():
     
     name = StringVar()
     lastname = StringVar()
+
     email = StringVar()
-    gender1 = StringVar()
-    gender2 = StringVar()
-    gender1 = ""
-    gender2 = ""
+
+    gender1 = IntVar()
+    gender2 = IntVar()
+    gender_choice1 = IntVar(register_screen)
+    gender_choice2 = IntVar(register_screen)
+
+
+
 
     Label(register_screen, text="").pack()
     Label(register_screen, text="Please enter details below",bg="blue", fg="white").pack()
@@ -74,12 +83,11 @@ def register():
     lastname_entry = Entry(register_screen, textvariable=lastname)
     lastname_entry.pack()
 
-    gender_lable = Label(register_screen, text="Gender * ")
-    gender_lable.pack()
-    gender_choice = Checkbutton(register_screen, text="Male", command=my_upd, variable=gender1)
-    gender_choice.pack()
-    gender_choice = Checkbutton(register_screen, text="Female", command=my_upd, variable=gender2)
-    gender_choice.pack()
+    
+    gender_lable = Label(register_screen, text="Gender * ").pack()
+    gender_choice1 = Checkbutton(register_screen, text="Male", command=my_upd, variable=gender1).pack()
+    gender_choice2 = Checkbutton(register_screen, text="Female", command=my_upd, variable=gender2).pack()
+
 
     email_lable = Label(register_screen, text="Email Address * ")
     email_lable.pack()
@@ -90,11 +98,24 @@ def register():
     Button(register_screen, text="Register", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
     Button(register_screen, text="Clear", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
 
-def my_upd():  
-    if(gender1.get() == 1):
-        gender2.configure(state='disabled')
-    if(gender2.get() == 1):
-        gender1.configure(state='disabled')
+def my_upd():
+    i=0
+    if(gender1.get()==1):i=i+1
+    if(gender2.get()==1):i=i+1     
+    if(i>=1):
+        if(gender1.get()!=1):gender_choice1.config(state='disabled')
+        if(gender2.get()!=1):gender_choice2.config(state='disabled')
+    else:
+        gender_choice1.config(state='normal')
+        gender_choice2.config(state='normal')
+# c1_v=tk.IntVar(my_w)    
+# c1=tk.Checkbutton(my_w,text='Python',command=my_upd,variable=c1_v)
+# c1.grid(row=1,column=1)
+
+# c2_v=tk.IntVar(my_w)
+# c2=tk.Checkbutton(my_w,text='PHP',command=my_upd,variable=c2_v)
+# c2.grid(row=1,column=2)
+  
 
 # Designing window for login
 
@@ -200,7 +221,7 @@ def login_sucess():
     login_success_screen.title("Success")
     x = (960) - (150/2)
     y = (540) - (100/2)
-    login_success_screen.geometry("150x100+%d+%d" % (x, y))
+    login_success_screen.geometry("300x300+%d+%d" % (x, y))
     Label(login_success_screen, text="Login Success").pack()
     Button(login_success_screen, text="OK",
            command=delete_login_success).pack()
@@ -212,9 +233,9 @@ def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(main_screen)
     password_not_recog_screen.title("Success")
-    x = (960) - (150/2)
-    y = (540) - (100/2)
-    password_not_recog_screen.geometry("150x100+%d+%d" % (x, y))
+    x = (910) - (150/2)
+    y = (490) - (100/2)
+    password_not_recog_screen.geometry("300x300d+%d" % (x, y))
     Label(password_not_recog_screen, text="Invalid Password ").pack()
     Button(password_not_recog_screen, text="OK",
            command=delete_password_not_recognised).pack()
@@ -227,9 +248,9 @@ def user_not_found():
     user_not_found_screen = Toplevel(main_screen)
     Label(user_not_found_screen, text='').pack()
     user_not_found_screen.title("Success")
-    x = (960) - (150/2)
-    y = (540) - (100/2)
-    user_not_found_screen.geometry("150x100+%d+%d" % (x, y))
+    x = (910) - (150/2)
+    y = (490) - (100/2)
+    user_not_found_screen.geometry("300x300+%d+%d" % (x, y))
     Label(user_not_found_screen, text="User Not Found").pack()
     Button(user_not_found_screen, text="OK",
            command=delete_user_not_found_screen).pack()

@@ -57,49 +57,23 @@ my_w.geometry("400x150")
 def my_upd():
     i=0
     if(c1_v.get()==1):i=i+1
-    if(c2_v.get()==1):i=i+1    
-    if(c3_v.get()==1):i=i+1
-    if(c4_v.get()==1):i=i+1
-    if(c5_v.get()==1):i=i+1    
-    if(c6_v.get()==1):i=i+1    
-    if(i>=3):
+    if(c2_v.get()==1):i=i+1     
+    if(i>=1):
         if(c1_v.get()!=1):c1.config(state='disabled')
         if(c2_v.get()!=1):c2.config(state='disabled')
-        if(c2_v.get()!=1):c2.config(state='disabled')
-        if(c3_v.get()!=1):c3.config(state='disabled')
-        if(c4_v.get()!=1):c4.config(state='disabled')
-        if(c5_v.get()!=1):c5.config(state='disabled')
-        if(c6_v.get()!=1):c6.config(state='disabled')
+       
     else:
         c1.config(state='normal')
         c2.config(state='normal')
-        c3.config(state='normal')
-        c4.config(state='normal')
-        c5.config(state='normal')
-        c6.config(state='normal')
 c1_v=tk.IntVar(my_w)    
-c1=tk.Checkbutton(my_w,text='Python',command=my_upd,variable=c1_v)
+c1=tk.Checkbutton(my_w,text='Mele',command=my_upd,variable=c1_v)
 c1.grid(row=1,column=1)
 
 c2_v=tk.IntVar(my_w)
-c2=tk.Checkbutton(my_w,text='PHP',command=my_upd,variable=c2_v)
+c2=tk.Checkbutton(my_w,text='Female',command=my_upd,variable=c2_v)
 c2.grid(row=1,column=2)
 
-c3_v=tk.IntVar(my_w)
-c3=tk.Checkbutton(my_w,text='HTML',command=my_upd,variable=c3_v)
-c3.grid(row=1,column=3)
 
-c4_v=tk.IntVar(my_w)
-c4=tk.Checkbutton(my_w,text='SQL',command=my_upd,variable=c4_v)
-c4.grid(row=1,column=4)
-
-c5_v=tk.IntVar(my_w)
-c5=tk.Checkbutton(my_w,text='Java',command=my_upd,variable=c5_v)
-c5.grid(row=1,column=5)
-
-c6_v=tk.IntVar(my_w)
-c6=tk.Checkbutton(my_w,text='JScript',command=my_upd,variable=c6_v)
-c6.grid(row=1,column=6)
 
 my_w.mainloop()
 
