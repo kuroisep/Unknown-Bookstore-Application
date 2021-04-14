@@ -12,9 +12,9 @@ def register():
     global register_screen
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
-    x = (910) - (300/2)
-    y = (460) - (250/2)
-    register_screen.geometry("450x450+%d+%d" % (x, y))
+    x = (910) - (750/2)
+    y = (460) - (500/2)
+    register_screen.geometry("750x600+%d+%d" % (x, y))
 
     global username
     global password
@@ -50,53 +50,53 @@ def register():
     gender_choice1 = IntVar(register_screen)
     gender_choice2 = IntVar(register_screen)
 
+    canvas = Canvas( register_screen, width = 750,height = 600)
+  
+    canvas.pack(fill = "both", expand = True)
 
+    canvas.create_text(375,60,text = "Please enter details below",font=myfont)
 
-
-    Label(register_screen, text="").pack()
-    Label(register_screen, text="Please enter details below",bg="blue", fg="white").pack()
     
-    Label(register_screen, text="").pack()
     
-    username_lable = Label(register_screen, text="Username * ")
-    username_lable.pack()
+    canvas.create_text(75,150,text = "Username *",font=myfont)
     username_entry = Entry(register_screen, textvariable=username)
-    username_entry.pack()
+    canvas.create_window(115,175,window=username_entry,width = 180)
 
-    password_lable = Label(register_screen, text="Password * ")
-    password_lable.pack()
     password_entry = Entry(register_screen, textvariable=password, show='●')
-    password_entry.pack()
+    canvas.create_text(300,150,text = "Password *",font=myfont)
+    canvas.create_window(340,175,window=password_entry,width = 180)
 
-    confpassword_lable = Label(register_screen, text="Confirm Password * ")
-    confpassword_lable.pack()
+
     confpassword_entry = Entry(register_screen, textvariable=confpassword, show='●')
-    confpassword_entry.pack()
+    canvas.create_text(600,150,text = "Confirm Password *",font=myfont)
+    canvas.create_window(600,175,window=confpassword_entry,width = 180)
     
-    name_lable = Label(register_screen, text="Name * ")
-    name_lable.pack()
     name_entry = Entry(register_screen, textvariable=name)
-    name_entry.pack()
+    canvas.create_text(55,225,text = "Name *",font=myfont)
+    canvas.create_window(115,250,window=name_entry,width = 180)
 
-    lastname_lable = Label(register_screen, text="LastName * ")
-    lastname_lable.pack()
     lastname_entry = Entry(register_screen, textvariable=lastname)
-    lastname_entry.pack()
+    canvas.create_text(300,225,text = "Last Name *",font=myfont)
+    canvas.create_window(340,250,window=lastname_entry,width = 180)
 
     
-    gender_lable = Label(register_screen, text="Gender * ").pack()
-    gender_choice1 = Checkbutton(register_screen, text="Male", command=my_upd, variable=gender1).pack()
-    gender_choice2 = Checkbutton(register_screen, text="Female", command=my_upd, variable=gender2).pack()
+    canvas.create_text(600,225,text = "Gender *",font=myfont)
+    gender_choice1 = Checkbutton(register_screen, text="Male", font = (myfont,10),command=my_upd, variable=gender1)
+    gender_choice2 = Checkbutton(register_screen, text="Female", font = (myfont,10),command=my_upd, variable=gender2)
+    canvas.create_window(550,250,window=gender_choice1)
+    canvas.create_window(650,250,window=gender_choice2)
 
 
-    email_lable = Label(register_screen, text="Email Address * ")
-    email_lable.pack()
+
+    canvas.create_text(100,310,text = "Email Address * ",font=myfont)
     email_entry = Entry(register_screen, textvariable=email)
-    email_entry.pack()
+    canvas.create_window(150,335,window=email_entry,width = 250)
+    
 
-    Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
-    Button(register_screen, text="Clear", width=10,height=1, bg="blue", fg="white", command=register_user).pack()
+    regis_button = Button(register_screen, text="Register", width=20,height=3, bg="blue", fg="white", command=register_user)
+    canvas.create_window(400,420,window=regis_button)
+    clear_button = Button(register_screen, text="Clear", width=20,height=3, bg="blue", fg="white", command=register_user)
+    canvas.create_window(600,420,window=clear_button)
 
 def my_upd():
     i=0
