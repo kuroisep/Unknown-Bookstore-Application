@@ -12,20 +12,21 @@ import re
 
 def register():
     global register_screen
+    global regis_bg
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
     x = (960) - (750/2)
     y = (540) - (650/2)
     register_screen.geometry("750x600+%d+%d" % (x, y))
 
-
     regis_bg_path = "1.Login_Page\Picture\REGISTER.png"
-    global regis_bg
     regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750,600)))
+
     canvas = Canvas(register_screen, width=750, height=600)  
     canvas.pack(fill="both", expand=True)
     canvas.create_image(0, 0, image=regis_bg,anchor="nw")
-   
+
+
     global username
     global password
     global confpassword
@@ -57,9 +58,6 @@ def register():
     gender2 = IntVar()
     gender_choice1 = IntVar(register_screen)
     gender_choice2 = IntVar(register_screen)
-
-
-    
 
 
 

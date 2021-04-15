@@ -10,8 +10,6 @@ y = (420) - (500/2)
 shop_window.geometry("1280x720+%d+%d" % (x, y))
 
 
-
-
 bg_path = "2.Shop_Page\PICTURE\Shop_bg.png"
 bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
