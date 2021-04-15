@@ -3,7 +3,9 @@
 from tkinter import *
 import os
 from PIL import ImageTk, Image
+from tkinter import messagebox
 # from tkinter_custom_button import TkinterCustomButton
+import re
 
 
 # Designing window for registration
@@ -94,6 +96,8 @@ def register():
                           height=3, bg="blue", fg="white", command=clear_user)
     canvas.create_window(600, 420, window=clear_button)
 
+    
+
 
 def my_upd():
     i = 0
@@ -171,39 +175,47 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
     confpassword_info = confpassword.get()
-    # name_info = name.get()
-    # lastname_info = lastname.get
-    # gender_info = gender.get()
+    name_info = name.get()
+    lastname_info = lastname.get()
+    email_info = email.get()
+    email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
     if (username_info == ''):
-        Label(register_screen, text="Enter User",
-              fg="red", font=(myfont, 11)).pack()
+        messagebox.showinfo("Info", "Please Enter Username",parent=register_screen)
 
-    elif (password_info == '' or confpassword_info == ''):
-        Label(register_screen, text="Enter Pass",
-              fg="red", font=(myfont, 11)).pack()
+    elif (password_info == ''):
+        messagebox.showinfo("Info", "Please Enter Password",parent=register_screen)
+    
+    elif (confpassword_info == ''):
+        messagebox.showinfo("Info", "Please Enter Confirm Password",parent=register_screen)
 
     elif (password_info != confpassword_info):
-        Label(register_screen, text="Pass Not Match",
-              fg="red", font=(myfont, 11)).pack()
-
+        messagebox.showerror("Error", "Password Not Match",parent=register_screen)
         password_entry.delete(0, END)
         confpassword_entry.delete(0, END)
+    
+    elif (name_info == ''):
+        messagebox.showinfo("Info", "Please Enter First Name",parent=register_screen)
+    
+    elif (lastname_info == ''):
+        messagebox.showinfo("Info", "Please Enter Last Name",parent=register_screen)
+    
+    elif (gender1.get() == 0 and gender2.get() == 0):
+        messagebox.showinfo("Error", "Please Select Your Gender",parent=register_screen)
+
+    elif (email_info == ''):
+        messagebox.showinfo("Info", "Please Enter Your Email",parent=register_screen)
+
+    elif (email_regex.match(email_info) == None):
+        messagebox.showerror("Error", "Email Invalid",parent=register_screen)
 
     else:
-        file = open(username_info, "w")
-        file.write(username_info + "\n")
-        file.write(password_info)
-        file.close()
+        # file = open(username_info, "w")
+        # file.write(username_info + "\n")
+        # file.write(password_info)
+        # file.close()
 
-        username_entry.delete(0, END)
-        password_entry.delete(0, END)
-        confpassword_entry.delete(0, END)
-
-        Label(register_screen, text="Registration Success",
-              fg="green", font=(myfont, 11)).pack()
-
-# Implementing event on login button
+        clear_user()
 
 
 def login_verify():
@@ -370,6 +382,7 @@ def main_account_screen():
     # logo_path = os.path.join(base_folder,'logo.jpg')
     # img = ImageTk.PhotoImage(Image.open(logo_path).resize((700, 300)))
     # canvas.create_image(0, 0, anchor=NW, image=img)
+    
 
     main_screen.resizable(0, 0)
     main_screen.overrideredirect(1)

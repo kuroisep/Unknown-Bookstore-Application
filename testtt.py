@@ -51,31 +51,31 @@
 # root.mainloop()
 
 
-import tkinter  as tk 
-my_w = tk.Tk()
-my_w.geometry("400x150")
-def my_upd():
-    i=0
-    if(c1_v.get()==1):i=i+1
-    if(c2_v.get()==1):i=i+1     
-    if(i>=1):
-        if(c1_v.get()!=1):c1.config(state='disabled')
-        if(c2_v.get()!=1):c2.config(state='disabled')
+# import tkinter  as tk 
+# my_w = tk.Tk()
+# my_w.geometry("400x150")
+# def my_upd():
+#     i=0
+#     if(c1_v.get()==1):i=i+1
+#     if(c2_v.get()==1):i=i+1     
+#     if(i>=1):
+#         if(c1_v.get()!=1):c1.config(state='disabled')
+#         if(c2_v.get()!=1):c2.config(state='disabled')
        
-    else:
-        c1.config(state='normal')
-        c2.config(state='normal')
-c1_v=tk.IntVar(my_w)    
-c1=tk.Checkbutton(my_w,text='Mele',command=my_upd,variable=c1_v)
-c1.grid(row=1,column=1)
+#     else:
+#         c1.config(state='normal')
+#         c2.config(state='normal')
+# c1_v=tk.IntVar(my_w)    
+# c1=tk.Checkbutton(my_w,text='Mele',command=my_upd,variable=c1_v)
+# c1.grid(row=1,column=1)
 
-c2_v=tk.IntVar(my_w)
-c2=tk.Checkbutton(my_w,text='Female',command=my_upd,variable=c2_v)
-c2.grid(row=1,column=2)
+# c2_v=tk.IntVar(my_w)
+# c2=tk.Checkbutton(my_w,text='Female',command=my_upd,variable=c2_v)
+# c2.grid(row=1,column=2)
 
 
 
-my_w.mainloop()
+# my_w.mainloop()
 
 
 
@@ -107,3 +107,4 @@ my_w.mainloop()
 # #display string in a popup         
 # psg.popup('Custom Pizza',      
 #             'Your chosen pizza will be made with', strx[0:len(strx)-1]) 
+
