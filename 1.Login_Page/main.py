@@ -355,7 +355,10 @@ def main_account_screen():
                           bd=0, highlightthickness=0, width=140, height=60)
     canvas.create_window(900, 450, window=login_button)
 
-    regis_button = Button(text="Register", height="3", width="20",
+    img_regis_path = "1.Login_Page\Picture\\regis-button.png"
+    img_regis_button = ImageTk.PhotoImage(
+        Image.open(img_regis_path).resize((170, 80)))
+    regis_button = Button(image=img_regis_button,width=140, height=60,
                           command=register, highlightthickness=0, borderwidth=0)
     canvas.create_window(1100, 450, window=regis_button)
 
