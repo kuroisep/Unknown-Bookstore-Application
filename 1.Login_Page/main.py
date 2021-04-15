@@ -13,6 +13,7 @@ import re
 def register():
     global register_screen
     global regis_bg
+    
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
     x = (960) - (750/2)
@@ -96,11 +97,9 @@ def register():
     email_entry = Entry(register_screen, textvariable=email)
     canvas.create_window(150, 335, window=email_entry, width=250)
 
-    regis_button = Button(register_screen, text="Register", width=20,
-                          height=3, bg="blue", fg="white", command=register_user)
+    regis_button = Button(register_screen, text="Register", width=20,height=3, bg="blue", fg="white", command=register_user)
     canvas.create_window(400, 420, window=regis_button)
-    clear_button = Button(register_screen, text="Clear", width=20,
-                          height=3, bg="blue", fg="white", command=clear_user)
+    clear_button = Button(register_screen, text="Clear", width=20,height=3, bg="blue", fg="white", command=clear_user)
     canvas.create_window(600, 420, window=clear_button)
     
   
