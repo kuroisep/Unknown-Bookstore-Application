@@ -219,7 +219,7 @@ def register_user():
         # file.close()
 
         
-        if (messagebox.askokcancel("askokcancel", "Want to continue?",parent = register_screen) ) == True:
+        if (messagebox.askokcancel("Confirmation", "Are you sure?",parent = register_screen) ) == True:
             clear_user()
             register_screen.destroy()
             messagebox.showinfo("Alert", "Register Sucessfully!!")
