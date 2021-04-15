@@ -78,10 +78,8 @@ def register():
     canvas.create_window(340, 250, window=lastname_entry, width=180)
 
     canvas.create_text(600, 225, text="Gender *", font=myfont)
-    gender_choice1 = Checkbutton(register_screen, text="Male", font=(
-        myfont, 10), command=my_upd, variable=gender1)
-    gender_choice2 = Checkbutton(register_screen, text="Female", font=(
-        myfont, 10), command=my_upd, variable=gender2)
+    gender_choice1 = Checkbutton(register_screen, text="Male", font=(myfont, 12), command=my_upd, variable=gender1)
+    gender_choice2 = Checkbutton(register_screen, text="Female", font=(myfont, 12), command=my_upd, variable=gender2)
     canvas.create_window(550, 250, window=gender_choice1)
     canvas.create_window(650, 250, window=gender_choice2)
 
@@ -338,13 +336,12 @@ def main_account_screen():
     global password_login_entry
 
     # img_logo_path = os.path.join(base_folder, 'logo.jpg')
-    img_logo_path = "1.Login_Page\Picture\logo.jpg"
-    img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
-    canvas.create_image(200, 50, image=img_logo, anchor="nw")
+    img_logo_path = "1.Login_Page\Picture\logo.png"
+    img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
+    canvas.create_image(200, 150, image=img_logo, anchor="nw")
 
-    canvas.create_text(280, 250, text="Welcome", font=(myfont, 60), anchor="n")
-    canvas.create_text(320, 330, text="To the land of books",
-                       font=(myfont, 20), anchor="n")
+    canvas.create_text(280, 350, text="Welcome", font=(myfont, 60), anchor="n")
+    canvas.create_text(320, 430, text="To the land of books",font=(myfont, 20), anchor="n")
 
     canvas.create_text(1000, 170, text="Signin", font=(myfont, 40))
 
@@ -385,7 +382,7 @@ def main_account_screen():
     
 
     main_screen.resizable(0, 0)
-    main_screen.overrideredirect(1)
+    main_screen.overrideredirect(0)
     main_screen.mainloop()
 
 
