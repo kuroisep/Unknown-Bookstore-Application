@@ -3,7 +3,7 @@
 from tkinter import *
 import os
 from PIL import ImageTk, Image
-# from tkinter.ttk import *
+# from tkinter_custom_button import TkinterCustomButton
 
 
 # Designing window for registration
@@ -12,8 +12,8 @@ def register():
     global register_screen
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
-    x = (910) - (750/2)
-    y = (460) - (500/2)
+    x = (960) - (750/2)
+    y = (540) - (650/2)
     register_screen.geometry("750x600+%d+%d" % (x, y))
 
     global username
@@ -22,7 +22,6 @@ def register():
     global username_entry
     global password_entry
     global confpassword_entry
-
 
     global name
     global lastname
@@ -35,11 +34,10 @@ def register():
     global gender_choice2
     global email_entry
 
-
     username = StringVar()
     password = StringVar()
     confpassword = StringVar()
-    
+
     name = StringVar()
     lastname = StringVar()
 
@@ -50,71 +48,75 @@ def register():
     gender_choice1 = IntVar(register_screen)
     gender_choice2 = IntVar(register_screen)
 
-    canvas = Canvas( register_screen, width = 750,height = 600)
-  
-    canvas.pack(fill = "both", expand = True)
+    canvas = Canvas(register_screen, width=750, height=600)
 
-    canvas.create_text(375,60,text = "Please enter details below",font=myfont)
+    canvas.pack(fill="both", expand=True)
 
+    canvas.create_text(375, 60, text="Please enter details below", font=myfont)
 
-    canvas.create_text(65,150,text = "Username *",font=myfont)
+    canvas.create_text(65, 150, text="Username *", font=myfont)
     username_entry = Entry(register_screen, textvariable=username)
-    canvas.create_window(115,175,window=username_entry,width = 180)
+    canvas.create_window(115, 175, window=username_entry, width=180)
 
     password_entry = Entry(register_screen, textvariable=password, show='●')
-    canvas.create_text(290,150,text = "Password *",font=myfont)
-    canvas.create_window(340,175,window=password_entry,width = 180)
+    canvas.create_text(290, 150, text="Password *", font=myfont)
+    canvas.create_window(340, 175, window=password_entry, width=180)
 
+    confpassword_entry = Entry(
+        register_screen, textvariable=confpassword, show='●')
+    canvas.create_text(580, 150, text="Confirm Password *", font=myfont)
+    canvas.create_window(600, 175, window=confpassword_entry, width=180)
 
-    confpassword_entry = Entry(register_screen, textvariable=confpassword, show='●')
-    canvas.create_text(580,150,text = "Confirm Password *",font=myfont)
-    canvas.create_window(600,175,window=confpassword_entry,width = 180)
-    
     name_entry = Entry(register_screen, textvariable=name)
-    canvas.create_text(50,225,text = "Name *",font=myfont)
-    canvas.create_window(115,250,window=name_entry,width = 180)
+    canvas.create_text(50, 225, text="Name *", font=myfont)
+    canvas.create_window(115, 250, window=name_entry, width=180)
 
     lastname_entry = Entry(register_screen, textvariable=lastname)
-    canvas.create_text(292,225,text = "Last Name *",font=myfont)
-    canvas.create_window(340,250,window=lastname_entry,width = 180)
+    canvas.create_text(292, 225, text="Last Name *", font=myfont)
+    canvas.create_window(340, 250, window=lastname_entry, width=180)
 
-    
-    canvas.create_text(600,225,text = "Gender *",font=myfont)
-    gender_choice1 = Checkbutton(register_screen, text="Male", font = (myfont,10),command=my_upd, variable=gender1)
-    gender_choice2 = Checkbutton(register_screen, text="Female", font = (myfont,10),command=my_upd, variable=gender2)
-    canvas.create_window(550,250,window=gender_choice1)
-    canvas.create_window(650,250,window=gender_choice2)
+    canvas.create_text(600, 225, text="Gender *", font=myfont)
+    gender_choice1 = Checkbutton(register_screen, text="Male", font=(
+        myfont, 10), command=my_upd, variable=gender1)
+    gender_choice2 = Checkbutton(register_screen, text="Female", font=(
+        myfont, 10), command=my_upd, variable=gender2)
+    canvas.create_window(550, 250, window=gender_choice1)
+    canvas.create_window(650, 250, window=gender_choice2)
 
-
-
-    canvas.create_text(85,310,text = "Email Address * ",font=myfont)
+    canvas.create_text(85, 310, text="Email Address * ", font=myfont)
     email_entry = Entry(register_screen, textvariable=email)
-    canvas.create_window(150,335,window=email_entry,width = 250)
-    
+    canvas.create_window(150, 335, window=email_entry, width=250)
 
-    regis_button = Button(register_screen, text="Register", width=20,height=3, bg="blue", fg="white", command=register_user)
-    canvas.create_window(400,420,window=regis_button)
-    clear_button = Button(register_screen, text="Clear", width=20,height=3, bg="blue", fg="white", command=register_user)
-    canvas.create_window(600,420,window=clear_button)
+    regis_button = Button(register_screen, text="Register", width=20,
+                          height=3, bg="blue", fg="white", command=register_user)
+    canvas.create_window(400, 420, window=regis_button)
+    clear_button = Button(register_screen, text="Clear", width=20,
+                          height=3, bg="blue", fg="white", command=clear_user)
+    canvas.create_window(600, 420, window=clear_button)
+
 
 def my_upd():
-    i=0
-    if(gender1.get()==1):i=i+1
-    if(gender2.get()==1):i=i+1     
-    if(i>=1):
-        if(gender1.get()!=1):gender_choice1.config(state='disabled')
-        if(gender2.get()!=1):gender_choice2.config(state='disabled')
+    i = 0
+    if(gender1.get() == 1):
+        i = i+1
+    if(gender2.get() == 1):
+        i = i+1
+    if(i >= 1):
+        if(gender1.get() != 1):
+            gender_choice1.config(state='disabled')
+        if(gender2.get() != 1):
+            gender_choice2.config(state='disabled')
     else:
         gender_choice1.config(state='normal')
         gender_choice2.config(state='normal')
-# c1_v=tk.IntVar(my_w)    
+# c1_v=tk.IntVar(my_w)
 # c1=tk.Checkbutton(my_w,text='Python',command=my_upd,variable=c1_v)
 # c1.grid(row=1,column=1)
 
 # c2_v=tk.IntVar(my_w)
 # c2=tk.Checkbutton(my_w,text='PHP',command=my_upd,variable=c2_v)
 # c2.grid(row=1,column=2)
-  
+
 
 # Designing window for login
 
@@ -150,7 +152,18 @@ def login():
     Button(login_screen, text="Login", width=10,
            height=1, command=login_verify).pack()
 
-# Implementing event on register button
+
+def clear_user():
+    username_entry.delete(0, END)
+    password_entry.delete(0, END)
+    confpassword_entry.delete(0, END)
+    gender_choice1.deselect()
+    gender_choice2.deselect()
+    email_entry.delete(0, END)
+    name_entry.delete(0, END)
+    lastname_entry.delete(0, END)
+    gender_choice1.config(state='normal')
+    gender_choice2.config(state='normal')
 
 
 def register_user():
@@ -161,17 +174,18 @@ def register_user():
     # name_info = name.get()
     # lastname_info = lastname.get
     # gender_info = gender.get()
-    
+
     if (username_info == ''):
-        Label(register_screen, text="Enter User",fg="red", font=(myfont, 11)).pack()
+        Label(register_screen, text="Enter User",
+              fg="red", font=(myfont, 11)).pack()
 
     elif (password_info == '' or confpassword_info == ''):
-        Label(register_screen, text="Enter Pass",fg="red", font=(myfont, 11)).pack()
+        Label(register_screen, text="Enter Pass",
+              fg="red", font=(myfont, 11)).pack()
 
     elif (password_info != confpassword_info):
-        Label(register_screen, text="Pass Not Match",fg="red", font=(myfont, 11)).pack()
-
-
+        Label(register_screen, text="Pass Not Match",
+              fg="red", font=(myfont, 11)).pack()
 
         password_entry.delete(0, END)
         confpassword_entry.delete(0, END)
@@ -270,13 +284,14 @@ def delete_user_not_found_screen():
 
 # Designing Main(first) window
 
+
 def main_account_screen():
     global main_screen
     global myfont
     myfont = 'TRACK'
     main_screen = Tk()
     base_folder = os.path.dirname(__file__)
-    
+
     icon_path = os.path.join(base_folder, 'open-book.png')
     icon = PhotoImage(file=icon_path)
     main_screen.iconphoto(False, icon)
@@ -290,16 +305,16 @@ def main_account_screen():
     bg_path = "1.Login_Page\Picture\LOGIN.png"
     bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
     # bg = PhotoImage(file = bg_path)
-  
+
     # Create Canvas
-    canvas = Canvas( main_screen, width = 1280,height = 720)
-  
-    canvas.pack(fill = "both", expand = True)
-  
+    canvas = Canvas(main_screen, width=1280, height=720)
+
+    canvas.pack(fill="both", expand=True)
+
     # Display image
-    canvas.create_image( 0, 0, image = bg, 
-                     anchor = "nw")
-    
+    canvas.create_image(0, 0, image=bg,
+                        anchor="nw")
+
     global username_verify
     global password_verify
     global username_login_entry
@@ -313,38 +328,38 @@ def main_account_screen():
     # img_logo_path = os.path.join(base_folder, 'logo.jpg')
     img_logo_path = "1.Login_Page\Picture\logo.jpg"
     img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
-    canvas.create_image(200,50,image = img_logo,anchor = "nw")
+    canvas.create_image(200, 50, image=img_logo, anchor="nw")
 
-    canvas.create_text( 280, 250, text = "Welcome" ,font = (myfont,60),anchor = "n")
-    canvas.create_text( 320, 330, text = "To the land of books" ,font = (myfont,20),anchor = "n")
+    canvas.create_text(280, 250, text="Welcome", font=(myfont, 60), anchor="n")
+    canvas.create_text(320, 330, text="To the land of books",
+                       font=(myfont, 20), anchor="n")
 
+    canvas.create_text(1000, 170, text="Signin", font=(myfont, 40))
 
-    canvas.create_text( 1000, 170, text = "Signin" ,font = (myfont,40))
-
-    canvas.create_text(875,250,text = "Username",font=(myfont))
-    username_login_entry = Entry(textvariable=username_verify,width=30,font=20)
+    canvas.create_text(875, 250, text="Username", font=(myfont))
+    username_login_entry = Entry(
+        textvariable=username_verify, width=30, font=20)
     # username_login_entry.config(fg = 'blue')
-    canvas.create_window(1000,290,window = username_login_entry)
+    canvas.create_window(1000, 290, window=username_login_entry)
 
-    canvas.create_text(875,340,text = "Password",font=myfont)
-    password_login_entry = Entry(textvariable=password_verify, show='●',width=30,font=20)
-    canvas.create_window(1000,380,window = password_login_entry)
-    
+    canvas.create_text(875, 340, text="Password", font=myfont)
+    password_login_entry = Entry(
+        textvariable=password_verify, show='●', width=30, font=20)
+    canvas.create_window(1000, 380, window=password_login_entry)
 
-    
     # img_login_path = os.path.join(base_folder, 'login-button1.png')
     img_login_path = "1.Login_Page\Picture\login-button1.png"
-    img_login_button = ImageTk.PhotoImage(Image.open(img_login_path).resize((200, 300)))
-    login_button = Button(image = img_login_button,command=login_verify,bd=0,highlightthickness=0,width=140,height=60)
-    canvas.create_window(900,450,window = login_button)
+    img_login_button = ImageTk.PhotoImage(
+        Image.open(img_login_path).resize((200, 300)))
+    login_button = Button(image=img_login_button, command=login_verify,
+                          bd=0, highlightthickness=0, width=140, height=60)
+    canvas.create_window(900, 450, window=login_button)
 
-    regis_button = Button(text="Register", height="3", width="20", command=register,highlightthickness=0,borderwidth = 0)
-    canvas.create_window(1100,450,window = regis_button)
+    regis_button = Button(text="Register", height="3", width="20",
+                          command=register, highlightthickness=0, borderwidth=0)
+    canvas.create_window(1100, 450, window=regis_button)
 
-    canvas.create_text(1230,700,text = "V.1.0.0",font=myfont)
-
-    
-
+    canvas.create_text(1230, 700, text="V.1.0.0", font=myfont)
 
     # canvas = Canvas(main_screen, width=700, height=300)
     # canvas.pack()
@@ -353,8 +368,7 @@ def main_account_screen():
     # img = ImageTk.PhotoImage(Image.open(logo_path).resize((700, 300)))
     # canvas.create_image(0, 0, anchor=NW, image=img)
 
-    
-    main_screen.resizable(0,0)
+    main_screen.resizable(0, 0)
     main_screen.overrideredirect(0)
     main_screen.mainloop()
 
