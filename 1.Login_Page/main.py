@@ -80,6 +80,10 @@ def register():
     canvas.create_text(600, 225, text="Gender *", font=myfont)
     gender_choice1 = Checkbutton(register_screen, text="Male", font=(myfont, 12), command=my_upd, variable=gender1)
     gender_choice2 = Checkbutton(register_screen, text="Female", font=(myfont, 12), command=my_upd, variable=gender2)
+    gender_choice1 = Checkbutton(register_screen, text="Male",font=(
+        myfont, 10), command=my_upd, variable=gender1)
+    gender_choice2 = Checkbutton(register_screen, text="Female", font=(
+        myfont, 10), command=my_upd, variable=gender2)
     canvas.create_window(550, 250, window=gender_choice1)
     canvas.create_window(650, 250, window=gender_choice2)
 
@@ -208,12 +212,20 @@ def register_user():
         messagebox.showerror("Error", "Email Invalid",parent=register_screen)
 
     else:
+        # Write File
         # file = open(username_info, "w")
         # file.write(username_info + "\n")
         # file.write(password_info)
         # file.close()
 
-        clear_user()
+        
+        if (messagebox.askokcancel("askokcancel", "Want to continue?",parent = register_screen) ) == True:
+            clear_user()
+            register_screen.destroy()
+            messagebox.showinfo("Alert", "Register Sucessfully!!")
+        else:
+            pass
+
 
 
 def login_verify():
