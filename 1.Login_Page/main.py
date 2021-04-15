@@ -18,6 +18,14 @@ def register():
     y = (540) - (650/2)
     register_screen.geometry("750x600+%d+%d" % (x, y))
 
+    regis_bg_path = "1.Login_Page\Picture\REGISTER.png"
+    regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750,600)))
+
+    canvas = Canvas(register_screen, width=750, height=600)  
+    canvas.pack(fill="both", expand=True)
+    canvas.create_image(0, 0, image=regis_bg,anchor="nw")
+
+
     global username
     global password
     global confpassword
@@ -50,9 +58,10 @@ def register():
     gender_choice1 = IntVar(register_screen)
     gender_choice2 = IntVar(register_screen)
 
-    canvas = Canvas(register_screen, width=750, height=600)
 
-    canvas.pack(fill="both", expand=True)
+    
+
+
 
     canvas.create_text(375, 60, text="Please enter details below", font=myfont)
 
@@ -80,10 +89,8 @@ def register():
     canvas.create_text(600, 225, text="Gender *", font=myfont)
     gender_choice1 = Checkbutton(register_screen, text="Male", font=(myfont, 12), command=my_upd, variable=gender1)
     gender_choice2 = Checkbutton(register_screen, text="Female", font=(myfont, 12), command=my_upd, variable=gender2)
-    gender_choice1 = Checkbutton(register_screen, text="Male",font=(
-        myfont, 10), command=my_upd, variable=gender1)
-    gender_choice2 = Checkbutton(register_screen, text="Female", font=(
-        myfont, 10), command=my_upd, variable=gender2)
+    gender_choice1 = Checkbutton(register_screen, text="Male",font=(myfont, 10), command=my_upd, variable=gender1)
+    gender_choice2 = Checkbutton(register_screen, text="Female", font=(myfont, 10), command=my_upd, variable=gender2)
     canvas.create_window(550, 250, window=gender_choice1)
     canvas.create_window(650, 250, window=gender_choice2)
 
@@ -97,7 +104,8 @@ def register():
     clear_button = Button(register_screen, text="Clear", width=20,
                           height=3, bg="blue", fg="white", command=clear_user)
     canvas.create_window(600, 420, window=clear_button)
-
+    
+  
     
 
 
@@ -217,7 +225,6 @@ def register_user():
         # file.write(username_info + "\n")
         # file.write(password_info)
         # file.close()
-
         
         if (messagebox.askokcancel("Confirmation", "Are you sure?",parent = register_screen) ) == True:
             clear_user()
