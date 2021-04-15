@@ -56,27 +56,26 @@ def register():
 
     canvas.create_text(375,60,text = "Please enter details below",font=myfont)
 
-    
-    
-    canvas.create_text(75,150,text = "Username *",font=myfont)
+
+    canvas.create_text(65,150,text = "Username *",font=myfont)
     username_entry = Entry(register_screen, textvariable=username)
     canvas.create_window(115,175,window=username_entry,width = 180)
 
     password_entry = Entry(register_screen, textvariable=password, show='●')
-    canvas.create_text(300,150,text = "Password *",font=myfont)
+    canvas.create_text(290,150,text = "Password *",font=myfont)
     canvas.create_window(340,175,window=password_entry,width = 180)
 
 
     confpassword_entry = Entry(register_screen, textvariable=confpassword, show='●')
-    canvas.create_text(600,150,text = "Confirm Password *",font=myfont)
+    canvas.create_text(580,150,text = "Confirm Password *",font=myfont)
     canvas.create_window(600,175,window=confpassword_entry,width = 180)
     
     name_entry = Entry(register_screen, textvariable=name)
-    canvas.create_text(55,225,text = "Name *",font=myfont)
+    canvas.create_text(50,225,text = "Name *",font=myfont)
     canvas.create_window(115,250,window=name_entry,width = 180)
 
     lastname_entry = Entry(register_screen, textvariable=lastname)
-    canvas.create_text(300,225,text = "Last Name *",font=myfont)
+    canvas.create_text(292,225,text = "Last Name *",font=myfont)
     canvas.create_window(340,250,window=lastname_entry,width = 180)
 
     
@@ -88,7 +87,7 @@ def register():
 
 
 
-    canvas.create_text(100,310,text = "Email Address * ",font=myfont)
+    canvas.create_text(85,310,text = "Email Address * ",font=myfont)
     email_entry = Entry(register_screen, textvariable=email)
     canvas.create_window(150,335,window=email_entry,width = 250)
     
@@ -164,16 +163,16 @@ def register_user():
     # gender_info = gender.get()
     
     if (username_info == ''):
-        Label(register_screen, text="Enter User",
-              fg="red", font=(myfont, 11)).pack()
+        Label(register_screen, text="Enter User",fg="red", font=(myfont, 11)).pack()
 
     elif (password_info == '' or confpassword_info == ''):
-        Label(register_screen, text="Enter Pass",
-              fg="red", font=(myfont, 11)).pack()
+        Label(register_screen, text="Enter Pass",fg="red", font=(myfont, 11)).pack()
 
     elif (password_info != confpassword_info):
-        Label(register_screen, text="Pass Not Match",
-              fg="red", font=(myfont, 11)).pack()
+        Label(register_screen, text="Pass Not Match",fg="red", font=(myfont, 11)).pack()
+
+
+
         password_entry.delete(0, END)
         confpassword_entry.delete(0, END)
 
