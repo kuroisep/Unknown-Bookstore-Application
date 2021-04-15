@@ -369,7 +369,7 @@ def main_account_screen():
     # canvas.create_image(0, 0, anchor=NW, image=img)
 
     main_screen.resizable(0, 0)
-    main_screen.overrideredirect(0)
+    main_screen.overrideredirect(1)
     main_screen.mainloop()
 
 

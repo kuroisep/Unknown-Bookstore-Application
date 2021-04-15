@@ -1,50 +1,26 @@
-# import tkinter as tk
-
-# shop_window = tk.Tk()
-# shop_window.title("Register")
-# x = (700) - (750/2)
-# y = (420) - (500/2)
-# shop_window.geometry("1280x720+%d+%d" % (x, y))
-
-
-
-
+import tkinter as tk
 from tkinter import *
-import webbrowser
+from PIL import ImageTk, Image
 
-def callback(url):
-    webbrowser.open_new(url)
 
-root = Tk()
-link1 = Label(root, text="Google Hyperlink", fg="blue", cursor="hand2")
-link1.pack()
-link1.bind("<Button-1>", lambda e: callback("http://www.google.com"))
-
-link2 = Label(root, text="Ecosia Hyperlink", fg="blue", cursor="hand2")
-link2.pack()
-link2.bind("<Button-1>", lambda e: callback("http://www.ecosia.org"))
-
-root.mainloop()
+shop_window = tk.Tk()
+shop_window.title("Unknown Book Store")
+x = (700) - (750/2)
+y = (420) - (500/2)
+shop_window.geometry("1280x720+%d+%d" % (x, y))
 
 
 
 
+bg_path = "2.Shop_Page\PICTURE\Shop_bg.png"
+bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
+
+canvas = Canvas(shop_window, width=1280, height=720)
+canvas.pack(fill="both", expand=True)
+canvas.create_image(0, 0, image=bg,anchor="nw")
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# shop_window.mainloop()
+shop_window.resizable(0, 0)
+shop_window.mainloop()
