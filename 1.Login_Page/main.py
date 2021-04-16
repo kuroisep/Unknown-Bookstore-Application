@@ -389,5 +389,6 @@ def main_account_screen():
     main_screen.resizable(0, 0)
     main_screen.overrideredirect(0)
     main_screen.mainloop()
-
 main_account_screen()
+def open_shop():
+    main_screen.mainloop()
