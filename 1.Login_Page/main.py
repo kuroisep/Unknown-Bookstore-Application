@@ -179,6 +179,7 @@ def register_user():
     name_info = name.get()
     lastname_info = lastname.get()
     email_info = email.get()
+
     email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
     if (username_info == ''):
@@ -220,15 +221,24 @@ def register_user():
 
     else:
         # Write File
-        # file = open(username_info, "w")
-        # file.write(username_info + "\n")
-        # file.write(password_info)
-        # file.close()
-
         if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=register_screen)) == True:
+            Account_file_path = "1.Login_Page/Regiser/Account_User.txt"
+            Account_file = open(Account_file_path, "a+", encoding= "UTF-8")
+
+            Account_file.write("\n" + "_"*20)
+            Account_file.write("\n" + "User : "+ username_info + "\t\t" +"PASS : " + password_info)
+            Account_file.write("\n" + "First Name : "+ name_info +"\t\t" +"Last Name : " + lastname_info)
+            Account_file.write("\n" + "Email : "+ email_info)
+            Account_file.write("\n" + "_"*20)
+
+            print(Account_file.read())
+            Account_file.close()
+
             clear_user()
             register_screen.destroy()
             messagebox.showinfo("Alert", "Register Sucessfully!!")
+
+           
         else:
             pass
 
@@ -238,9 +248,10 @@ def login_verify():
     username_login_entry.delete(0, END)
     password_login_entry.delete(0, END)
 
+    Account_file_path = "1.Login_Page/Regiser/Account_User.txt"
     list_of_files = os.listdir()
     if username1 in list_of_files:
-        file1 = open(username1, "r")
+        file1 = open(Account_file_path, "r")
         verify = file1.read().splitlines()
         if password1 in verify:
             login_sucess()
@@ -317,7 +328,7 @@ def main_account_screen():
     main_screen = Tk()
     base_folder = os.path.dirname(__file__)
 
-    icon_path = os.path.join(base_folder, 'open-book.png')
+    icon_path = "1.Login_Page\Picture\open-book.png"
     icon = PhotoImage(file=icon_path)
     main_screen.iconphoto(False, icon)
 
