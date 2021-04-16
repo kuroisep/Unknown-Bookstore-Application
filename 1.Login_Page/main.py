@@ -252,10 +252,10 @@ def login_verify():
     password1 = password_verify.get()
     df = pandas.read_csv('login.csv')
     data = df.set_index('USER').T.to_dict('list')
-
     if data.get(username1) != None:
         if str(data.get(username1)[0]) == str(password1):
             print('Success')
+            print(data.get(username1))
             username_login_entry.delete(0, END)
             password_login_entry.delete(0, END)
         else:
