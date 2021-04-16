@@ -11,6 +11,8 @@ import os
 import csv
 
 
+
+
 # Designing window for registration
 
 def register():
@@ -131,39 +133,6 @@ def my_upd():
 
 # Designing window for login
 
-def login():
-    global login_screen
-    login_screen = Toplevel(main_screen)
-    login_screen.title("Login")
-    x = (960) - (300/2)
-    y = (540) - (250/2)
-    login_screen.geometry("300x250+%d+%d" % (x, y))
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Please enter details below to login").pack()
-    Label(login_screen, text="").pack()
-
-    global username_verify
-    global password_verify
-
-    username_verify = StringVar()
-    password_verify = StringVar()
-
-    global username_login_entry
-    global password_login_entry
-
-    Label(login_screen, text="Username * ").pack()
-    username_login_entry = Entry(login_screen, textvariable=username_verify)
-    username_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Password * ").pack()
-    password_login_entry = Entry(
-        login_screen, textvariable=password_verify, show='*')
-    password_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Button(login_screen, text="Login", width=10,
-           height=1, command=login_verify).pack()
-
-
 def clear_user():
     username_entry.delete(0, END)
     password_entry.delete(0, END)
@@ -228,16 +197,6 @@ def register_user():
     else:
         # Write File
         if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=register_screen)) == True:
-            # Account_file_path = "1.Login_Page/Regiser/Account_User.txt"
-            # Account_file = open(Account_file_path, "a+", encoding= "UTF-8")
-
-            # Account_file.write("\n" + "_"*20)
-            # Account_file.write("\n" + "User : "+ username_info + "\t\t" +"PASS : " + password_info)
-            # Account_file.write("\n" + "First Name : "+ name_info +"\t\t" +"Last Name : " + lastname_info)
-            # Account_file.write("\n" + "Email : "+ email_info)
-            # Account_file.write("\n" + "_"*20)
-            # print(Account_file.read())
-            # Account_file.close()
             with open('login.csv', 'a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow([username_info, password_info,name_info,lastname_info,email_info])
@@ -250,6 +209,7 @@ def register_user():
             pass
 
 def login_verify():
+    global t
     username1 = username_verify.get()
     password1 = password_verify.get()
     df = pandas.read_csv('login.csv')
@@ -258,8 +218,10 @@ def login_verify():
         if str(data.get(username1)[0]) == str(password1):
             print('Success')
             print(data.get(username1))
+            t = data.get(username1)[0]
             username_login_entry.delete(0, END)
             password_login_entry.delete(0, END)
+            open_shop()
         else:
             print('Incorrect pass')
             password_login_entry.delete(0, END)
@@ -267,6 +229,8 @@ def login_verify():
         print('User Not Found')
         username_login_entry.delete(0, END)
 
+def variable_to():
+    return t
 
 # Designing popup for login success
 
@@ -425,6 +389,5 @@ def main_account_screen():
     main_screen.resizable(0, 0)
     main_screen.overrideredirect(0)
     main_screen.mainloop()
-
 
 main_account_screen()

@@ -21,4 +21,7 @@ canvas.create_image(0, 0, image=bg,anchor="nw")
 
 
 shop_window.resizable(0, 0)
-shop_window.mainloop()
+
+
+def open_shop():
+    shop_window.mainloop()
