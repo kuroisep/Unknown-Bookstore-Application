@@ -44,3 +44,7 @@
   
 # # Execute tkinter
 # root.mainloop()
+# from main import *
+
+# start()
+# print(variable_to())
