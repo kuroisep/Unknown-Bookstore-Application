@@ -250,19 +250,23 @@ def register_user():
 def login_verify():
     username1 = username_verify.get()
     password1 = password_verify.get()
-    username_login_entry.delete(0, END)
-    password_login_entry.delete(0, END)
+    
+    
 
     df = pandas.read_csv('login.csv')
     data = df.set_index('USER').T.to_dict('list')
 
     if data.get(username1) != None:
         if str(data.get(username1)[0]) == str(password1):
-            print('success')
+            print('Success')
+            username_login_entry.delete(0, END)
+            password_login_entry.delete(0, END)
         else:
-            print('incorrect pass')
+            print('Incorrect pass')
+            password_login_entry.delete(0, END)
     else:
-        print('Not Found')
+        print('User Not Found')
+        username_login_entry.delete(0, END)
 
 
 # Designing popup for login success
