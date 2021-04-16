@@ -69,12 +69,12 @@ def register():
 
     password_entry = Entry(register_screen, textvariable=password, show='●')
     canvas.create_text(290, 150, text="Password *", font=myfont)
-    canvas.create_window(340, 175, window=password_entry, width=180)
+    canvas.create_window(400, 175, window=password_entry, width=180)
 
     confpassword_entry = Entry(
         register_screen, textvariable=confpassword, show='●')
     canvas.create_text(580, 150, text="Confirm Password *", font=myfont)
-    canvas.create_window(600, 175, window=confpassword_entry, width=180)
+    canvas.create_window(610, 175, window=confpassword_entry, width=180)
 
     name_entry = Entry(register_screen, textvariable=name)
     canvas.create_text(50, 225, text="Name *", font=myfont)
