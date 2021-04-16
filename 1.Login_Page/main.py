@@ -8,6 +8,7 @@ import pandas
 from PIL import ImageTk, Image
 import re
 import os
+import csv
 
 
 # Designing window for registration
@@ -227,18 +228,19 @@ def register_user():
     else:
         # Write File
         if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=register_screen)) == True:
-            Account_file_path = "1.Login_Page/Regiser/Account_User.txt"
-            Account_file = open(Account_file_path, "a+", encoding= "UTF-8")
+            # Account_file_path = "1.Login_Page/Regiser/Account_User.txt"
+            # Account_file = open(Account_file_path, "a+", encoding= "UTF-8")
 
-            Account_file.write("\n" + "_"*20)
-            Account_file.write("\n" + "User : "+ username_info + "\t\t" +"PASS : " + password_info)
-            Account_file.write("\n" + "First Name : "+ name_info +"\t\t" +"Last Name : " + lastname_info)
-            Account_file.write("\n" + "Email : "+ email_info)
-            Account_file.write("\n" + "_"*20)
-
-            print(Account_file.read())
-            Account_file.close()
-
+            # Account_file.write("\n" + "_"*20)
+            # Account_file.write("\n" + "User : "+ username_info + "\t\t" +"PASS : " + password_info)
+            # Account_file.write("\n" + "First Name : "+ name_info +"\t\t" +"Last Name : " + lastname_info)
+            # Account_file.write("\n" + "Email : "+ email_info)
+            # Account_file.write("\n" + "_"*20)
+            # print(Account_file.read())
+            # Account_file.close()
+            with open('login.csv', 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([username_info, password_info,name_info,lastname_info,email_info])
             clear_user()
             register_screen.destroy()
             messagebox.showinfo("Alert", "Register Sucessfully!!")
