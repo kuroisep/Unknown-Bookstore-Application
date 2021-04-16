@@ -108,6 +108,11 @@ def register():
                           font=helv20, bg="blue", fg="white", command=clear_user)
     canvas.create_window(600, 420, window=clear_button)
 
+    cancel_button = Button(register_screen ,text="CANCEL", command=delete_register_screen,
+                          bd=0, highlightthickness=0, width=20, height=3)
+    canvas.create_window(600,500,window=cancel_button)
+
+
 def my_upd():
     i = 0
     if(gender1.get() == 1):
@@ -318,6 +323,12 @@ def delete_password_not_recognised():
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
 
+def delete_register_screen():
+    register_screen.destroy()
+
+def delete_main_screen():
+    main_screen.destroy()
+
 # Designing Main(first) window
 
 
@@ -399,6 +410,10 @@ def main_account_screen():
     canvas.create_window(1100, 450, window=regis_button)
 
     canvas.create_text(1230, 700, text="V.1.0.0", font=myfont)
+
+    exit_button = Button(text="EXIT", command=delete_main_screen,
+                          bd=0, highlightthickness=0, width=20, height=3)
+    canvas.create_window(1100,600,window=exit_button)
 
     # canvas = Canvas(main_screen, width=700, height=300)
     # canvas.pack()
