@@ -250,9 +250,6 @@ def register_user():
 def login_verify():
     username1 = username_verify.get()
     password1 = password_verify.get()
-    
-    
-
     df = pandas.read_csv('login.csv')
     data = df.set_index('USER').T.to_dict('list')
 
