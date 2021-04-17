@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk, Image
-
+from PROJ_2563.2. import some_model
 
 shop_window = tk.Tk()
 shop_window.title("Unknown Book Store")
@@ -16,9 +16,6 @@ bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 canvas = Canvas(shop_window, width=1280, height=720)
 canvas.pack(fill="both", expand=True)
 canvas.create_image(0, 0, image=bg,anchor="nw")
-
-
-
 
 shop_window.resizable(0, 0)
 
