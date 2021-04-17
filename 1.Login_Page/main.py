@@ -10,7 +10,6 @@ import re
 import os
 import csv
 
-
 # Designing window for registration
 
 def register():
