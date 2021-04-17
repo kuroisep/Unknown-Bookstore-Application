@@ -26,7 +26,7 @@ def register():
     y = (540) - (650/2)
     register_screen.geometry("750x600+%d+%d" % (x, y))
 
-    regis_bg_path = "1.Login_Page\Picture\REGISTER.png"
+    regis_bg_path = "1_Login_Page\Picture\REGISTER.png"
     regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
 
     canvas = Canvas(register_screen, width=750, height=600)
@@ -345,7 +345,7 @@ def main_account_screen():
     main_screen = Tk()
     base_folder = os.path.dirname(__file__)
 
-    icon_path = "1.Login_Page\Picture\open-book.png"
+    icon_path = "1_Login_Page\Picture\open-book.png"
     icon = PhotoImage(file=icon_path)
     main_screen.iconphoto(False, icon)
 
@@ -355,7 +355,7 @@ def main_account_screen():
     main_screen.title("Account Login")
 
     # bg_path = os.path.join(base_folder, 'LOGIN.png')
-    bg_path = "1.Login_Page\Picture\LOGIN.png"
+    bg_path = "1_Login_Page\Picture\LOGIN.png"
     bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
     # bg = PhotoImage(file = bg_path)
 
@@ -379,7 +379,7 @@ def main_account_screen():
     global password_login_entry
 
     # img_logo_path = os.path.join(base_folder, 'logo.jpg')
-    img_logo_path = "1.Login_Page\Picture\logo.png"
+    img_logo_path = "1_Login_Page\Picture\logo.png"
     img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
     canvas.create_image(200, 150, image=img_logo, anchor="nw")
 
@@ -401,14 +401,14 @@ def main_account_screen():
     canvas.create_window(1000, 380, window=password_login_entry)
 
     # img_login_path = os.path.join(base_folder, 'login-button1.png')
-    img_login_path = "1.Login_Page\Picture\login-button1.png"
+    img_login_path = "1_Login_Page\Picture\login-button1.png"
     img_login_button = ImageTk.PhotoImage(
         Image.open(img_login_path).resize((200, 300)))
     login_button = Button(image=img_login_button, command=login_verify,
                           bd=0, highlightthickness=0, width=140, height=60)
     canvas.create_window(900, 450, window=login_button)
 
-    img_regis_path = "1.Login_Page\Picture\\regis-button.png"
+    img_regis_path = "1_Login_Page\Picture\\regis-button.png"
     img_regis_button = ImageTk.PhotoImage(
         Image.open(img_regis_path).resize((170, 80)))
     regis_button = Button(image=img_regis_button, width=140, height=60,
