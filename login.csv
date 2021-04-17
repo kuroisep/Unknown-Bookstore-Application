@@ -1,8 +1,8 @@
 USER,PASSWORD,NAME,LNAME,GENDER,EMAIL,TEL
-aum,123,noppa,k,MALE,n@mail.com,0123456789
-aum1,123,Noppaa,Khaa,MALE,s@mail.com,0123456456
+aum,123,noppa,k,MALE,n@mail.com,123456789
+aum1,123,Noppaa,Khaa,MALE,s@mail.com,123456456
 a,111,Aum,Auml,MALE,a@mail.com,1111111111
-aaa,a,A,A,MALE,a@mail.com,0000000000
+aaa,a,A,A,MALE,a@mail.com,0
 aaaa,aa,A,A,MALE,a@mail.xom,1111111111
 aaa1,aaa,Aaa,Aaa,MALE,aaa@mail.com,1111111111
 b,b,B,B,MALE,b@mail.com,2222222222
