@@ -13,6 +13,7 @@ import csv
 #lsdflsdfsd
 # Designing window for registration
 
+    
 def register():
     global register_screen
     global regis_bg
