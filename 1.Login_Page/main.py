@@ -277,7 +277,7 @@ def login_sucess():
 
     canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
         sex, info_NAME ,info_LNAME))
-    canvas.create_text(200, 130, text="Email : {}   Phone Number : 0{} ".format(
+    canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
         info_EMAIL, info_telphone))
     ok_button = Button(login_success_screen, text="OK",
                        command=delete_login_success)
