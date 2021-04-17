@@ -11,8 +11,6 @@ import os
 import csv
 
 
-
-
 # Designing window for registration
 
 def register():
@@ -44,25 +42,25 @@ def register():
     global gender1
     global gender2
     global email
+    global telphone
     global name_entry
     global lastname_entry
     global gender_choice1
     global gender_choice2
     global email_entry
+    global telphone_entry
 
     username = StringVar()
     password = StringVar()
     confpassword = StringVar()
-
     name = StringVar()
     lastname = StringVar()
-
     email = StringVar()
-
     gender1 = IntVar()
     gender2 = IntVar()
     gender_choice1 = IntVar(register_screen)
     gender_choice2 = IntVar(register_screen)
+    telphone = StringVar()
 
     canvas.create_text(375, 60, text="Please enter details below", font=myfont)
 
@@ -89,19 +87,21 @@ def register():
 
     canvas.create_text(600, 225, text="Gender *", font=myfont)
 
-    
     gender_choice1 = Checkbutton(register_screen, text="Male", font=(
         myfont, 12), command=my_upd, variable=gender1)
     gender_choice2 = Checkbutton(register_screen, text="Female", font=(
         myfont, 12), command=my_upd, variable=gender2)
-   
-        
+
     canvas.create_window(550, 250, window=gender_choice1)
     canvas.create_window(650, 250, window=gender_choice2)
 
     canvas.create_text(85, 310, text="Email Address * ", font=myfont)
     email_entry = Entry(register_screen, textvariable=email)
     canvas.create_window(150, 335, window=email_entry, width=250)
+
+    canvas.create_text(410, 310, text="Phone Number * ", font=myfont)
+    telphone_entry = Entry(register_screen, textvariable=telphone)
+    canvas.create_window(470, 335, window=telphone_entry, width=250)
 
     helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
     regis_button = Button(register_screen, text="Register",
@@ -111,9 +111,9 @@ def register():
                           font=helv20, bg="blue", fg="white", command=clear_user)
     canvas.create_window(600, 420, window=clear_button)
 
-    cancel_button = Button(register_screen ,text="CANCEL", command=delete_register_screen,
-                          bd=0, highlightthickness=0, width=20, height=3)
-    canvas.create_window(600,500,window=cancel_button)
+    cancel_button = Button(register_screen, text="CANCEL", command=delete_register_screen,
+                           bd=0, highlightthickness=0, width=20, height=3)
+    canvas.create_window(600, 500, window=cancel_button)
 
 
 def my_upd():
@@ -142,6 +142,7 @@ def clear_user():
     email_entry.delete(0, END)
     name_entry.delete(0, END)
     lastname_entry.delete(0, END)
+    telphone_entry.delete(0, END)
     gender_choice1.config(state='normal')
     gender_choice2.config(state='normal')
 
@@ -154,10 +155,18 @@ def register_user():
     name_info = name.get()
     lastname_info = lastname.get()
     email_info = email.get()
+    gender_info = 'MALE'
+    tel_info = telphone.get()
 
     email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
-    if (username_info == ''):
+    df = pandas.read_csv('login.csv')
+    checkuser = df['USER'].tolist()
+    if username_info in checkuser:
+        messagebox.showinfo("Info", "This Username Already Exists",
+                            parent=register_screen)
+
+    elif (username_info == ''):
         messagebox.showinfo("Info", "Please Enter Username",
                             parent=register_screen)
 
@@ -194,69 +203,102 @@ def register_user():
     elif (email_regex.match(email_info) == None):
         messagebox.showerror("Error", "Email Invalid", parent=register_screen)
 
+    elif (tel_info == ''):
+        messagebox.showinfo(
+            "Info", "Please Enter Phone Number", parent=register_screen)
+    
+    elif (tel_info.isdigit() == False or len(tel_info) != 10):
+        messagebox.showerror("Error", "Phone Number Invalid",parent=register_screen)
+        telphone_entry.delete(0,END)
+        
     else:
+        if gender1.get() == 0:
+            gender_info = 'FEMALE'
         # Write File
         if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=register_screen)) == True:
+
             with open('login.csv', 'a', newline='') as file:
                 writer = csv.writer(file)
-                writer.writerow([username_info, password_info,name_info,lastname_info,email_info])
+                writer.writerow([username_info, password_info,
+                                 name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, tel_info])
             clear_user()
             register_screen.destroy()
             messagebox.showinfo("Alert", "Register Sucessfully!!")
-
-           
         else:
             pass
 
+
 def login_verify():
-    global t
+    global info_NAME
+    global info_LNAME
+    global info_GENDER
+    global info_EMAIL
+    global info_telphone
+
     username1 = username_verify.get()
     password1 = password_verify.get()
     df = pandas.read_csv('login.csv')
     data = df.set_index('USER').T.to_dict('list')
     if data.get(username1) != None:
         if str(data.get(username1)[0]) == str(password1):
-            print('Success')
-            print(data.get(username1))
-            t = data.get(username1)[0]
+            info_NAME = data.get(username1)[1]
+            info_LNAME = data.get(username1)[2]
+            info_GENDER = data.get(username1)[3]
+            info_EMAIL = data.get(username1)[4]
+            info_telphone = data.get(username1)[5]
             username_login_entry.delete(0, END)
             password_login_entry.delete(0, END)
-            open_shop()
+            login_sucess()
         else:
-            print('Incorrect pass')
+            password_not_recognised()
             password_login_entry.delete(0, END)
     else:
-        print('User Not Found')
+        user_not_found()
         username_login_entry.delete(0, END)
-
-def variable_to():
-    return t
+        password_login_entry.delete(0, END)
 
 # Designing popup for login success
 
 def login_sucess():
     global login_success_screen
+
     login_success_screen = Toplevel(main_screen)
-    login_success_screen.title("Success")
-    x = (960) - (150/2)
-    y = (540) - (100/2)
-    login_success_screen.geometry("300x300+%d+%d" % (x, y))
-    Label(login_success_screen, text="Login Success").pack()
-    Button(login_success_screen, text="OK",
-           command=delete_login_success).pack()
+    login_success_screen.title("Login Success")
+    x = (960) - (400/2)
+    y = (540) - (300/2)
+    login_success_screen.geometry("400x300+%d+%d" % (x, y))
+    canvas = Canvas(login_success_screen, width=400, height=300)
+    canvas.pack(fill="both", expand=True)
+
+    if info_GENDER == 'MALE':
+        sex = 'Mr.'
+    else:
+        sex = 'Mrs.'
+
+    canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
+        sex, info_NAME ,info_LNAME))
+    canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
+        info_EMAIL, info_telphone))
+    ok_button = Button(login_success_screen, text="OK",
+                       command=delete_login_success)
+    canvas.create_window(200, 200, window=ok_button)
 
 # Designing popup for login invalid password
 
 def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(main_screen)
-    password_not_recog_screen.title("Success")
-    x = (910) - (150/2)
-    y = (490) - (100/2)
-    password_not_recog_screen.geometry("300x300d+%d" % (x, y))
-    Label(password_not_recog_screen, text="Invalid Password ").pack()
-    Button(password_not_recog_screen, text="OK",
-           command=delete_password_not_recognised).pack()
+    password_not_recog_screen.title("Error")
+    x = (960) - (400/2)
+    y = (540) - (300/2)
+    password_not_recog_screen.geometry("400x300+%d+%d" % (x, y))
+    canvas = Canvas(password_not_recog_screen, width=400, height=300)
+    canvas.pack(fill="both", expand=True)
+
+    canvas.create_text(200, 100, text="Incorrect Password")
+    ok_button = Button(password_not_recog_screen, text="OK",
+                       command=delete_password_not_recognised)
+    canvas.create_window(200, 150, window=ok_button)
 
 # Designing popup for user not found
 
@@ -264,37 +306,30 @@ def password_not_recognised():
 def user_not_found():
     global user_not_found_screen
     user_not_found_screen = Toplevel(main_screen)
-    Label(user_not_found_screen, text='').pack()
-    user_not_found_screen.title("Success")
-    x = (910) - (150/2)
-    y = (490) - (100/2)
-    user_not_found_screen.geometry("300x300+%d+%d" % (x, y))
-    Label(user_not_found_screen, text="User Not Found").pack()
-    Button(user_not_found_screen, text="OK",
-           command=delete_user_not_found_screen).pack()
+    user_not_found_screen.title("Error")
+    x = (960) - (400/2)
+    y = (540) - (300/2)
+    user_not_found_screen.geometry("400x300+%d+%d" % (x, y))
+    canvas = Canvas(user_not_found_screen, width=400, height=300)
+    canvas.pack(fill="both", expand=True)
 
+    canvas.create_text(200, 100, text="User Not Found")
+    ok_button = Button(user_not_found_screen, text="OK",
+                       command=delete_user_not_found_screen)
+    canvas.create_window(200, 150, window=ok_button)
 # Deleting popups
-
-
 def delete_login_success():
     login_success_screen.destroy()
-
-
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
-
-
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
-
 def delete_register_screen():
     register_screen.destroy()
-
 def delete_main_screen():
     main_screen.destroy()
 
 # Designing Main(first) window
-
 
 def main_account_screen():
     global main_screen
@@ -376,8 +411,8 @@ def main_account_screen():
     canvas.create_text(1230, 700, text="V.1.0.0", font=myfont)
 
     exit_button = Button(text="EXIT", command=delete_main_screen,
-                          bd=0, highlightthickness=0, width=20, height=3)
-    canvas.create_window(1100,600,window=exit_button)
+                         bd=0, highlightthickness=0, width=20, height=3)
+    canvas.create_window(1100, 600, window=exit_button)
 
     # canvas = Canvas(main_screen, width=700, height=300)
     # canvas.pack()
@@ -391,6 +426,3 @@ def main_account_screen():
     main_screen.mainloop()
 
 main_account_screen()
-
-
-
