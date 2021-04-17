@@ -322,6 +322,8 @@ def delete_login_success():
     login_success_screen.destroy()
     delete_main_screen()
     #### GO TO SHOP PAGE ############
+
+    
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
 def delete_user_not_found_screen():
