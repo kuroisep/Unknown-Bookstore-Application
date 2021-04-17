@@ -19,6 +19,10 @@ def register():
 
     register_screen = Toplevel(main_screen)
     register_screen.title("Register")
+    register_screen.focus_set()                                                        
+    register_screen.grab_set()  
+    register_screen.resizable(0, 0)
+
     x = (960) - (750/2)
     y = (540) - (650/2)
     register_screen.geometry("750x600+%d+%d" % (x, y))
@@ -323,7 +327,7 @@ def delete_login_success():
     delete_main_screen()
     #### GO TO SHOP PAGE ############
 
-    
+
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
 def delete_user_not_found_screen():
