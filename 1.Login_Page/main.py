@@ -220,7 +220,7 @@ def register_user():
             with open('login.csv', 'a', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerow([username_info, password_info,
-                                 name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, tel_info])
+                                 name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, str(tel_info)])
             clear_user()
             register_screen.destroy()
             messagebox.showinfo("Alert", "Register Sucessfully!!")
@@ -277,7 +277,7 @@ def login_sucess():
 
     canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
         sex, info_NAME ,info_LNAME))
-    canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
+    canvas.create_text(200, 130, text="Email : {}   Phone Number : 0{} ".format(
         info_EMAIL, info_telphone))
     ok_button = Button(login_success_screen, text="OK",
                        command=delete_login_success)
@@ -320,6 +320,8 @@ def user_not_found():
 # Deleting popups
 def delete_login_success():
     login_success_screen.destroy()
+    delete_main_screen()
+    #### GO TO SHOP PAGE ############
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
 def delete_user_not_found_screen():
