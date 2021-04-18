@@ -71,9 +71,6 @@ class StartPage(tk.Frame):
 		# using grid
 		button2.grid(row = 2, column = 1, padx = 10, pady = 10)
 
-		
-
-
 # second window frame page1
 class Page1(tk.Frame):
 	
@@ -101,9 +98,6 @@ class Page1(tk.Frame):
 		# using grid
 		button2.grid(row = 2, column = 1, padx = 10, pady = 10)
 
-
-
-
 # third window frame page2
 class Page2(tk.Frame):
 	def __init__(self, parent, controller):
@@ -128,7 +122,6 @@ class Page2(tk.Frame):
 		# putting the button in its place by
 		# using grid
 		button2.grid(row = 2, column = 1, padx = 10, pady = 10)
-
 
 # Driver Code
 app = tkinterApp()
