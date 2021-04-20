@@ -1,5 +1,3 @@
-#import modules
-
 import tkinter
 from tkinter import *
 from tkinter import messagebox
@@ -10,428 +8,378 @@ import re
 import os
 import csv
 
-#lsdflsdfsd
-# Designing window for registration
+class main_account_screen:
 
-    
-def register():
-    global register_screen
-    global regis_bg
+    def __init__(self):
+        self.main_screen = Tk()
+        self.myfont = 'TRACK'
+        base_folder = os.path.dirname(__file__)
 
-    register_screen = Toplevel(main_screen)
-    register_screen.title("Register")
-    register_screen.focus_set()                                                        
-    register_screen.grab_set()  
-    register_screen.resizable(0, 0)
+        icon_path = "1_Login_Page\Picture\open-book.png"
+        icon = PhotoImage(file=icon_path)
+        self.main_screen.iconphoto(False, icon)
 
-    x = (960) - (750/2)
-    y = (540) - (650/2)
-    register_screen.geometry("750x600+%d+%d" % (x, y))
-
-    regis_bg_path = "1_Login_Page\Picture\REGISTER.png"
-    regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
-
-    canvas = Canvas(register_screen, width=750, height=600)
-    canvas.pack(fill="both", expand=True)
-    canvas.create_image(0, 0, image=regis_bg, anchor="nw")
-
-    global username
-    global password
-    global confpassword
-    global username_entry
-    global password_entry
-    global confpassword_entry
-
-    global name
-    global lastname
-    global gender1
-    global gender2
-    global email
-    global telphone
-    global name_entry
-    global lastname_entry
-    global gender_choice1
-    global gender_choice2
-    global email_entry
-    global telphone_entry
-
-    username = StringVar()
-    password = StringVar()
-    confpassword = StringVar()
-    name = StringVar()
-    lastname = StringVar()
-    email = StringVar()
-    gender1 = IntVar()
-    gender2 = IntVar()
-    gender_choice1 = IntVar(register_screen)
-    gender_choice2 = IntVar(register_screen)
-    telphone = StringVar()
-
-    canvas.create_text(375, 60, text="Please enter details below", font=myfont)
-
-    canvas.create_text(65, 150, text="Username *", font=myfont)
-    username_entry = Entry(register_screen, textvariable=username)
-    canvas.create_window(115, 175, window=username_entry, width=180)
-
-    password_entry = Entry(register_screen, textvariable=password, show='●')
-    canvas.create_text(290, 150, text="Password *", font=myfont)
-    canvas.create_window(400, 175, window=password_entry, width=180)
-
-    confpassword_entry = Entry(
-        register_screen, textvariable=confpassword, show='●')
-    canvas.create_text(580, 150, text="Confirm Password *", font=myfont)
-    canvas.create_window(610, 175, window=confpassword_entry, width=180)
-
-    name_entry = Entry(register_screen, textvariable=name)
-    canvas.create_text(50, 225, text="Name *", font=myfont)
-    canvas.create_window(115, 250, window=name_entry, width=180)
-
-    lastname_entry = Entry(register_screen, textvariable=lastname)
-    canvas.create_text(292, 225, text="Last Name *", font=myfont)
-    canvas.create_window(340, 250, window=lastname_entry, width=180)
-
-    canvas.create_text(600, 225, text="Gender *", font=myfont)
-
-    gender_choice1 = Checkbutton(register_screen, text="Male", font=(
-        myfont, 12), command=my_upd, variable=gender1)
-    gender_choice2 = Checkbutton(register_screen, text="Female", font=(
-        myfont, 12), command=my_upd, variable=gender2)
-
-    canvas.create_window(550, 250, window=gender_choice1)
-    canvas.create_window(650, 250, window=gender_choice2)
-
-    canvas.create_text(85, 310, text="Email Address * ", font=myfont)
-    email_entry = Entry(register_screen, textvariable=email)
-    canvas.create_window(150, 335, window=email_entry, width=250)
-
-    canvas.create_text(410, 310, text="Phone Number * ", font=myfont)
-    telphone_entry = Entry(register_screen, textvariable=telphone)
-    canvas.create_window(470, 335, window=telphone_entry, width=250)
-
-    helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
-    regis_button = Button(register_screen, text="Register",
-                          font=helv20, bg="blue", fg="white", command=register_user)
-    canvas.create_window(400, 420, window=regis_button)
-    clear_button = Button(register_screen, text="Clear",
-                          font=helv20, bg="blue", fg="white", command=clear_user)
-    canvas.create_window(600, 420, window=clear_button)
-
-    cancel_button = Button(register_screen, text="CANCEL", command=delete_register_screen,
-                           bd=0, highlightthickness=0, width=20, height=3)
-    canvas.create_window(600, 500, window=cancel_button)
+        x = (960) - (1280/2)
+        y = (540) - (720/2)
+        self.main_screen.geometry("1280x720+%d+%d" % (x, y))
+        self.main_screen.title("Account Login")
 
 
-def my_upd():
-    i = 0
-    if(gender1.get() == 1):
-        i = i+1
-    if(gender2.get() == 1):
-        i = i+1
-    if(i >= 1):
-        if(gender1.get() != 1):
-            gender_choice1.config(state='disabled')
-        if(gender2.get() != 1):
-            gender_choice2.config(state='disabled')
-    else:
-        gender_choice1.config(state='normal')
-        gender_choice2.config(state='normal')
+        # bg_path = os.path.join(base_folder, 'LOGIN.png')
+        bg_path = "1_Login_Page\Picture\LOGIN.png"
+        bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
+        # bg = PhotoImage(file = bg_path)
 
-# Designing window for login
+        # Create Canvas
+        canvas = Canvas(self.main_screen, width=1280, height=720)
 
-def clear_user():
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
-    confpassword_entry.delete(0, END)
-    gender_choice1.deselect()
-    gender_choice2.deselect()
-    email_entry.delete(0, END)
-    name_entry.delete(0, END)
-    lastname_entry.delete(0, END)
-    telphone_entry.delete(0, END)
-    gender_choice1.config(state='normal')
-    gender_choice2.config(state='normal')
+        canvas.pack(fill="both", expand=True)
+
+        # Display image
+        canvas.create_image(0, 0, image=bg,
+                            anchor="nw")
+
+        global username_verify
+        global password_verify
+
+        username_verify = StringVar()
+        password_verify = StringVar()
+
+        global username_login_entry
+        global password_login_entry
+
+        # img_logo_path = os.path.join(base_folder, 'logo.jpg')
+        img_logo_path = "1_Login_Page\Picture\logo.png"
+        img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
+        canvas.create_image(200, 150, image=img_logo, anchor="nw")
+
+        canvas.create_text(280, 350, text="Welcome", font=(self.myfont, 60), anchor="n")
+        canvas.create_text(320, 430, text="To the land of books",
+                        font=(self.myfont, 20), anchor="n")
+
+        canvas.create_text(1000, 170, text="Signin", font=(self.myfont, 40))
+
+        canvas.create_text(875, 250, text="Username", font=(self.myfont))
+        username_login_entry = Entry(
+            textvariable=username_verify, width=30, font=20)
+        # username_login_entry.config(fg = 'blue')
+        canvas.create_window(1000, 290, window=username_login_entry)
+
+        canvas.create_text(875, 340, text="Password", font=self.myfont)
+        password_login_entry = Entry(
+            textvariable=password_verify, show='●', width=30, font=20)
+        canvas.create_window(1000, 380, window=password_login_entry)
+
+        # img_login_path = os.path.join(base_folder, 'login-button1.png')
+        img_login_path = "1_Login_Page\Picture\login-button1.png"
+        img_login_button = ImageTk.PhotoImage(
+            Image.open(img_login_path).resize((200, 300)))
+        login_button = Button(image=img_login_button, command=self.login_verify,
+                            bd=0, highlightthickness=0, width=140, height=60)
+        canvas.create_window(900, 450, window=login_button)
+
+        img_regis_path = "1_Login_Page\Picture\\regis-button.png"
+        img_regis_button = ImageTk.PhotoImage(
+            Image.open(img_regis_path).resize((170, 80)))
+        regis_button = Button(image=img_regis_button, width=140, height=60,
+                            command=self.register, highlightthickness=0, borderwidth=0)
+        canvas.create_window(1100, 450, window=regis_button)
+
+        canvas.create_text(1230, 700, text="V.1.0.0", font=self.myfont)
+
+        exit_button = Button(text="EXIT", command=self.delete_main_screen,
+                            bd=0, highlightthickness=0, width=20, height=3)
+        canvas.create_window(1100, 600, window=exit_button)
 
 
-def register_user():
+        self.main_screen.resizable(0, 0)
+        self.main_screen.overrideredirect(0)
+        self.main_screen.mainloop()
 
-    username_info = username.get()
-    password_info = password.get()
-    confpassword_info = confpassword.get()
-    name_info = name.get()
-    lastname_info = lastname.get()
-    email_info = email.get()
-    gender_info = 'MALE'
-    tel_info = telphone.get()
-
-    email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
-
-    df = pandas.read_csv('login.csv')
-    checkuser = df['USER'].tolist()
-    if username_info in checkuser:
-        messagebox.showinfo("Info", "This Username Already Exists",
-                            parent=register_screen)
-
-    elif (username_info == ''):
-        messagebox.showinfo("Info", "Please Enter Username",
-                            parent=register_screen)
-
-    elif (password_info == ''):
-        messagebox.showinfo("Info", "Please Enter Password",
-                            parent=register_screen)
-
-    elif (confpassword_info == ''):
-        messagebox.showinfo(
-            "Info", "Please Enter Confirm Password", parent=register_screen)
-
-    elif (password_info != confpassword_info):
-        messagebox.showerror("Error", "Password Not Match",
-                             parent=register_screen)
-        password_entry.delete(0, END)
-        confpassword_entry.delete(0, END)
-
-    elif (name_info == ''):
-        messagebox.showinfo(
-            "Info", "Please Enter First Name", parent=register_screen)
-
-    elif (lastname_info == ''):
-        messagebox.showinfo("Info", "Please Enter Last Name",
-                            parent=register_screen)
-
-    elif (gender1.get() == 0 and gender2.get() == 0):
-        messagebox.showinfo(
-            "Error", "Please Select Your Gender", parent=register_screen)
-
-    elif (email_info == ''):
-        messagebox.showinfo(
-            "Info", "Please Enter Your Email", parent=register_screen)
-
-    elif (email_regex.match(email_info) == None):
-        messagebox.showerror("Error", "Email Invalid", parent=register_screen)
-
-    elif (tel_info == ''):
-        messagebox.showinfo(
-            "Info", "Please Enter Phone Number", parent=register_screen)
-    
-    elif (tel_info.isdigit() == False or len(tel_info) != 10):
-        messagebox.showerror("Error", "Phone Number Invalid",parent=register_screen)
-        telphone_entry.delete(0,END)
-        
-    else:
-        if gender1.get() == 0:
-            gender_info = 'FEMALE'
-        # Write File
-        if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=register_screen)) == True:
-
-            with open('login.csv', 'a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([username_info, password_info,
-                                 name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, str(tel_info)])
-            clear_user()
-            register_screen.destroy()
-            messagebox.showinfo("Alert", "Register Sucessfully!!")
+    def login_verify(self):
+        self.username1 = username_verify.get()
+        self.password1 = password_verify.get()
+        df = pandas.read_csv('login.csv')
+        data = df.set_index('USER').T.to_dict('list')
+        if data.get(self.username1) != None:
+            if str(data.get(self.username1)[0]) == str(self.password1):
+                self.info_NAME = data.get(self.username1)[1]
+                self.info_LNAME = data.get(self.username1)[2]
+                self.info_GENDER = data.get(self.username1)[3]
+                self.info_EMAIL = data.get(self.username1)[4]
+                self.info_telphone = data.get(self.username1)[5]
+                username_login_entry.delete(0, END)
+                password_login_entry.delete(0, END)
+                self.login_sucess()
+            else:
+                self.password_not_recognised()
+                password_login_entry.delete(0, END)
         else:
-            pass
-
-
-def login_verify():
-    global info_NAME
-    global info_LNAME
-    global info_GENDER
-    global info_EMAIL
-    global info_telphone
-
-    username1 = username_verify.get()
-    password1 = password_verify.get()
-    df = pandas.read_csv('login.csv')
-    data = df.set_index('USER').T.to_dict('list')
-    if data.get(username1) != None:
-        if str(data.get(username1)[0]) == str(password1):
-            info_NAME = data.get(username1)[1]
-            info_LNAME = data.get(username1)[2]
-            info_GENDER = data.get(username1)[3]
-            info_EMAIL = data.get(username1)[4]
-            info_telphone = data.get(username1)[5]
+            self.user_not_found()
             username_login_entry.delete(0, END)
             password_login_entry.delete(0, END)
-            login_sucess()
+
+
+    def login_sucess(self):
+        self.login_success_screen = Toplevel(self.main_screen)
+        self.login_success_screen.title("Login Success")
+        x = (960) - (400/2)
+        y = (540) - (300/2)
+        self.login_success_screen.geometry("400x300+%d+%d" % (x, y))
+        canvas = Canvas(self.login_success_screen, width=400, height=300)
+        canvas.pack(fill="both", expand=True)
+
+        if self.info_GENDER == 'MALE':
+            sex = 'Mr.'
         else:
-            password_not_recognised()
-            password_login_entry.delete(0, END)
-    else:
-        user_not_found()
-        username_login_entry.delete(0, END)
-        password_login_entry.delete(0, END)
+            sex = 'Mrs.'
 
-# Designing popup for login success
+        canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
+            sex, self.info_NAME, self.info_LNAME))
+        canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
+            self.info_EMAIL, self.info_telphone))
+        ok_button = Button(self.login_success_screen, text="OK",
+                        command=self.delete_login_success)
+        canvas.create_window(200, 200, window=ok_button)
 
-def login_sucess():
-    global login_success_screen
+    def delete_login_success(self):
+        self.login_success_screen.destroy()
+        self.delete_main_screen()
 
-    login_success_screen = Toplevel(main_screen)
-    login_success_screen.title("Login Success")
-    x = (960) - (400/2)
-    y = (540) - (300/2)
-    login_success_screen.geometry("400x300+%d+%d" % (x, y))
-    canvas = Canvas(login_success_screen, width=400, height=300)
-    canvas.pack(fill="both", expand=True)
+    def delete_password_not_recognised(self):
+        self.password_not_recog_screen.destroy()
 
-    if info_GENDER == 'MALE':
-        sex = 'Mr.'
-    else:
-        sex = 'Mrs.'
+    def delete_user_not_found_screen(self):
+        self.user_not_found_screen.destroy()
 
-    canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
-        sex, info_NAME ,info_LNAME))
-    canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
-        info_EMAIL, info_telphone))
-    ok_button = Button(login_success_screen, text="OK",
-                       command=delete_login_success)
-    canvas.create_window(200, 200, window=ok_button)
+    def delete_register_screen(self):
+        self.register_screen.destroy()
 
-# Designing popup for login invalid password
-
-def password_not_recognised():
-    global password_not_recog_screen
-    password_not_recog_screen = Toplevel(main_screen)
-    password_not_recog_screen.title("Error")
-    x = (960) - (400/2)
-    y = (540) - (300/2)
-    password_not_recog_screen.geometry("400x300+%d+%d" % (x, y))
-    canvas = Canvas(password_not_recog_screen, width=400, height=300)
-    canvas.pack(fill="both", expand=True)
-
-    canvas.create_text(200, 100, text="Incorrect Password")
-    ok_button = Button(password_not_recog_screen, text="OK",
-                       command=delete_password_not_recognised)
-    canvas.create_window(200, 150, window=ok_button)
-
-# Designing popup for user not found
+    def delete_main_screen(self):
+        self.main_screen.destroy()
 
 
-def user_not_found():
-    global user_not_found_screen
-    user_not_found_screen = Toplevel(main_screen)
-    user_not_found_screen.title("Error")
-    x = (960) - (400/2)
-    y = (540) - (300/2)
-    user_not_found_screen.geometry("400x300+%d+%d" % (x, y))
-    canvas = Canvas(user_not_found_screen, width=400, height=300)
-    canvas.pack(fill="both", expand=True)
+    def password_not_recognised(self):
+        self.password_not_recog_screen = Toplevel(self.main_screen)
+        self.password_not_recog_screen.title("Error")
+        x = (960) - (400/2)
+        y = (540) - (300/2)
+        self.password_not_recog_screen.geometry("400x300+%d+%d" % (x, y))
+        canvas = Canvas(self.password_not_recog_screen, width=400, height=300)
+        canvas.pack(fill="both", expand=True)
 
-    canvas.create_text(200, 100, text="User Not Found")
-    ok_button = Button(user_not_found_screen, text="OK",
-                       command=delete_user_not_found_screen)
-    canvas.create_window(200, 150, window=ok_button)
-# Deleting popups
-def delete_login_success():
-    login_success_screen.destroy()
-    delete_main_screen()
-    #### GO TO SHOP PAGE ############
+        canvas.create_text(200, 100, text="Incorrect Password")
+        ok_button = Button(self.password_not_recog_screen, text="OK",
+                        command=self.delete_password_not_recognised)
+        canvas.create_window(200, 150, window=ok_button)
+
+    
+    def user_not_found(self):
+        self.user_not_found_screen = Toplevel(self.main_screen)
+        self.user_not_found_screen.title("Error")
+        x = (960) - (400/2)
+        y = (540) - (300/2)
+        self.user_not_found_screen.geometry("400x300+%d+%d" % (x, y))
+        canvas = Canvas(self.user_not_found_screen, width=400, height=300)
+        canvas.pack(fill="both", expand=True)
+
+        canvas.create_text(200, 100, text="User Not Found")
+        ok_button = Button(self.user_not_found_screen, text="OK",
+                        command=self.delete_user_not_found_screen)
+        canvas.create_window(200, 150, window=ok_button)
 
 
-def delete_password_not_recognised():
-    password_not_recog_screen.destroy()
-def delete_user_not_found_screen():
-    user_not_found_screen.destroy()
-def delete_register_screen():
-    register_screen.destroy()
-def delete_main_screen():
-    main_screen.destroy()
+    def register(self):
+        self.register_screen = Toplevel(self.main_screen)
+        self.register_screen.title("Register")
+        self.register_screen.focus_set()
+        self.register_screen.grab_set()
+        self.register_screen.resizable(0, 0)
 
-# Designing Main(first) window
+        x = (960) - (750/2)
+        y = (540) - (650/2)
+        self.register_screen.geometry("750x600+%d+%d" % (x, y))
 
-def main_account_screen():
-    global main_screen
-    global myfont
-    myfont = 'TRACK'
-    main_screen = Tk()
-    base_folder = os.path.dirname(__file__)
+        regis_bg_path = "1_Login_Page\Picture\REGISTER.png"
+        self.regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
 
-    icon_path = "1_Login_Page\Picture\open-book.png"
-    icon = PhotoImage(file=icon_path)
-    main_screen.iconphoto(False, icon)
+        canvas = Canvas(self.register_screen, width=750, height=600)
+        canvas.pack(fill="both", expand=True)
+        canvas.create_image(0, 0, image=self.regis_bg, anchor="nw")
 
-    x = (960) - (1280/2)
-    y = (540) - (720/2)
-    main_screen.geometry("1280x720+%d+%d" % (x, y))
-    main_screen.title("Account Login")
+        self.username = StringVar()
+        self.password = StringVar()
+        self.confpassword = StringVar()
+        self.name = StringVar()
+        self.lastname = StringVar()
+        self.email = StringVar()
+        self.gender1 = IntVar()
+        self.gender2 = IntVar()
+        self.gender_choice1 = IntVar(self.register_screen)
+        self.gender_choice2 = IntVar(self.register_screen)
+        self.telphone = StringVar()
 
-    # bg_path = os.path.join(base_folder, 'LOGIN.png')
-    bg_path = "1_Login_Page\Picture\LOGIN.png"
-    bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
-    # bg = PhotoImage(file = bg_path)
+        canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
 
-    # Create Canvas
-    canvas = Canvas(main_screen, width=1280, height=720)
+        canvas.create_text(65, 150, text="Username *", font=self.myfont)
+        self.username_entry = Entry(self.register_screen, textvariable=self.username)
+        canvas.create_window(115, 175, window=self.username_entry, width=180)
 
-    canvas.pack(fill="both", expand=True)
+        self.password_entry = Entry(self.register_screen, textvariable=self.password, show='●')
+        canvas.create_text(290, 150, text="Password *", font=self.myfont)
+        canvas.create_window(400, 175, window=self.password_entry, width=180)
 
-    # Display image
-    canvas.create_image(0, 0, image=bg,
-                        anchor="nw")
+        self.confpassword_entry = Entry(self.register_screen, textvariable=self.confpassword, show='●')
+        canvas.create_text(580, 150, text="Confirm Password *", font=self.myfont)
+        canvas.create_window(610, 175, window=self.confpassword_entry, width=180)
 
-    global username_verify
-    global password_verify
-    global username_login_entry
+        self.name_entry = Entry(self.register_screen, textvariable=self.name)
+        canvas.create_text(50, 225, text="Name *", font=self.myfont)
+        canvas.create_window(115, 250, window=self.name_entry, width=180)
 
-    username_verify = StringVar()
-    password_verify = StringVar()
+        self.lastname_entry = Entry(self.register_screen, textvariable=self.lastname)
+        canvas.create_text(292, 225, text="Last Name *", font=self.myfont)
+        canvas.create_window(340, 250, window=self.lastname_entry, width=180)
 
-    global username_login_entry
-    global password_login_entry
+        canvas.create_text(600, 225, text="Gender *", font=self.myfont)
 
-    # img_logo_path = os.path.join(base_folder, 'logo.jpg')
-    img_logo_path = "1_Login_Page\Picture\logo.png"
-    img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
-    canvas.create_image(200, 150, image=img_logo, anchor="nw")
+        self.gender_choice1 = Checkbutton(self.register_screen, text="Male", font=(
+            self.myfont, 12), command=self.my_upd, variable=self.gender1)
+        self.gender_choice2 = Checkbutton(self.register_screen, text="Female", font=(
+            self.myfont, 12), command=self.my_upd, variable=self.gender2)
 
-    canvas.create_text(280, 350, text="Welcome", font=(myfont, 60), anchor="n")
-    canvas.create_text(320, 430, text="To the land of books",
-                       font=(myfont, 20), anchor="n")
+        canvas.create_window(550, 250, window=self.gender_choice1)
+        canvas.create_window(650, 250, window=self.gender_choice2)
 
-    canvas.create_text(1000, 170, text="Signin", font=(myfont, 40))
+        canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
+        self.email_entry = Entry(self.register_screen, textvariable=self.email)
+        canvas.create_window(150, 335, window=self.email_entry, width=250)
 
-    canvas.create_text(875, 250, text="Username", font=(myfont))
-    username_login_entry = Entry(
-        textvariable=username_verify, width=30, font=20)
-    # username_login_entry.config(fg = 'blue')
-    canvas.create_window(1000, 290, window=username_login_entry)
+        canvas.create_text(410, 310, text="Phone Number * ", font=self.myfont)
+        self.telphone_entry = Entry(self.register_screen, textvariable=self.telphone)
+        canvas.create_window(470, 335, window=self.telphone_entry, width=250)
 
-    canvas.create_text(875, 340, text="Password", font=myfont)
-    password_login_entry = Entry(
-        textvariable=password_verify, show='●', width=30, font=20)
-    canvas.create_window(1000, 380, window=password_login_entry)
+        helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
+        regis_button = Button(self.register_screen, text="Register",
+                            font=helv20, bg="blue", fg="white", command=self.register_user)
+        canvas.create_window(400, 420, window=regis_button)
+        clear_button = Button(self.register_screen, text="Clear",
+                            font=helv20, bg="blue", fg="white", command=self.clear_user)
+        canvas.create_window(600, 420, window=clear_button)
 
-    # img_login_path = os.path.join(base_folder, 'login-button1.png')
-    img_login_path = "1_Login_Page\Picture\login-button1.png"
-    img_login_button = ImageTk.PhotoImage(
-        Image.open(img_login_path).resize((200, 300)))
-    login_button = Button(image=img_login_button, command=login_verify,
-                          bd=0, highlightthickness=0, width=140, height=60)
-    canvas.create_window(900, 450, window=login_button)
+        cancel_button = Button(self.register_screen, text="CANCEL", command=self.delete_register_screen,
+                            bd=0, highlightthickness=0, width=20, height=3)
+        canvas.create_window(600, 500, window=cancel_button)
 
-    img_regis_path = "1_Login_Page\Picture\\regis-button.png"
-    img_regis_button = ImageTk.PhotoImage(
-        Image.open(img_regis_path).resize((170, 80)))
-    regis_button = Button(image=img_regis_button, width=140, height=60,
-                          command=register, highlightthickness=0, borderwidth=0)
-    canvas.create_window(1100, 450, window=regis_button)
 
-    canvas.create_text(1230, 700, text="V.1.0.0", font=myfont)
+    def my_upd(self):
+        i = 0
+        if(self.gender1.get() == 1):
+            i = i+1
+        if(self.gender2.get() == 1):
+            i = i+1
+        if(i >= 1):
+            if(self.gender1.get() != 1):
+                self.gender_choice1.config(state='disabled')
+            if(self.gender2.get() != 1):
+                self.gender_choice2.config(state='disabled')
+        else:
+            self.gender_choice1.config(state='normal')
+            self.gender_choice2.config(state='normal')
 
-    exit_button = Button(text="EXIT", command=delete_main_screen,
-                         bd=0, highlightthickness=0, width=20, height=3)
-    canvas.create_window(1100, 600, window=exit_button)
 
-    # canvas = Canvas(main_screen, width=700, height=300)
-    # canvas.pack()
+    def clear_user(self):
+        self.username_entry.delete(0, END)
+        self.password_entry.delete(0, END)
+        self.confpassword_entry.delete(0, END)
+        self.gender_choice1.deselect()
+        self.gender_choice2.deselect()
+        self.email_entry.delete(0, END)
+        self.name_entry.delete(0, END)
+        self.lastname_entry.delete(0, END)
+        self.telphone_entry.delete(0, END)
+        self.gender_choice1.config(state='normal')
+        self.gender_choice2.config(state='normal')
 
-    # logo_path = os.path.join(base_folder,'logo.jpg')
-    # img = ImageTk.PhotoImage(Image.open(logo_path).resize((700, 300)))
-    # canvas.create_image(0, 0, anchor=NW, image=img)
 
-    main_screen.resizable(0, 0)
-    main_screen.overrideredirect(0)
-    main_screen.mainloop()
+    def register_user(self):
+        username_info = self.username.get()
+        password_info = self.password.get()
+        confpassword_info = self.confpassword.get()
+        name_info = self.name.get()
+        lastname_info = self.lastname.get()
+        email_info = self.email.get()
+        gender_info = 'MALE'
+        tel_info = self.telphone.get()
 
-main_account_screen()
+        email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
+
+        df = pandas.read_csv('login.csv')
+        checkuser = df['USER'].tolist()
+        if username_info in checkuser:
+            messagebox.showinfo("Info", "This Username Already Exists",
+                                parent=self.register_screen)
+
+        elif (username_info == ''):
+            messagebox.showinfo("Info", "Please Enter Username",
+                                parent=self.register_screen)
+
+        elif (password_info == ''):
+            messagebox.showinfo("Info", "Please Enter Password",
+                                parent=self.register_screen)
+
+        elif (confpassword_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Confirm Password", parent=self.register_screen)
+
+        elif (password_info != confpassword_info):
+            messagebox.showerror("Error", "Password Not Match",
+                                parent=self.register_screen)
+            self.password_entry.delete(0, END)
+            self.confpassword_entry.delete(0, END)
+
+        elif (name_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter First Name", parent=self.register_screen)
+
+        elif (lastname_info == ''):
+            messagebox.showinfo("Info", "Please Enter Last Name",
+                                parent=self.register_screen)
+
+        elif (self.gender1.get() == 0 and self.gender2.get() == 0):
+            messagebox.showinfo(
+                "Error", "Please Select Your Gender", parent=self.register_screen)
+
+        elif (email_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Your Email", parent=self.register_screen)
+
+        elif (email_regex.match(email_info) == None):
+            messagebox.showerror("Error", "Email Invalid", parent=self.register_screen)
+
+        elif (tel_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Phone Number", parent=self.register_screen)
+        
+        elif (tel_info.isdigit() == False or len(tel_info) != 10):
+            messagebox.showerror("Error", "Phone Number Invalid",parent=self.register_screen)
+            self.telphone_entry.delete(0,END)
+            
+        else:
+            if self.gender1.get() == 0:
+                gender_info = 'FEMALE'
+            # Write File
+            if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.register_screen)) == True:
+
+                with open('login.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([username_info, password_info,
+                                    name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, str(tel_info)])
+                self.clear_user()
+                self.register_screen.destroy()
+                messagebox.showinfo("Alert", "Register Sucessfully!!")
+            else:
+                pass
+
+
+RunMain = main_account_screen()
