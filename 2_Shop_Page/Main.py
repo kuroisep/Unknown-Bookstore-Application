@@ -4,6 +4,7 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
 
+
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
@@ -37,49 +38,46 @@ class Shop_main_screen:
         # label1.image = logo
         # label1.place(x=0, y=0)
 
-        banner1_path = "2_Shop_Page\PICTURE\\banner1.jpg"
-        banner2_path = "2_Shop_Page\PICTURE\\banner2.jpg"
-        banner3_path = "2_Shop_Page\PICTURE\\banner3.jpg"
-        banner1 = ImageTk.PhotoImage(Image.open(banner1_path))
-        banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
-        banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
+        self.banner1_path = "2_Shop_Page\PICTURE\\banner1.jpg"
+        self.banner2_path = "2_Shop_Page\PICTURE\\banner2.jpg"
+        self.banner3_path = "2_Shop_Page\PICTURE\\banner3.jpg"
+        self.banner1 = ImageTk.PhotoImage(Image.open(self.banner1_path))
+        self.banner2 = ImageTk.PhotoImage(Image.open(self.banner2_path))
+        self.banner3 = ImageTk.PhotoImage(Image.open(self.banner3_path))
 
-        banner_label = tk.Label(self.shop_window)
-        banner_label.pack()
+        self.banner_label = tk.Label(self.shop_window)
+        self.banner_label.pack()
 
-        dot1_path = "2_Shop_Page\PICTURE\movingdot1.png"
-        dot2_path = "2_Shop_Page\PICTURE\movingdot2.png"
-        dot3_path = "2_Shop_Page\PICTURE\movingdot3.png"
-        dot1 = ImageTk.PhotoImage(Image.open(dot1_path))
-        dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
-        dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
+        self.dot1_path = "2_Shop_Page\PICTURE\movingdot1.png"
+        self.dot2_path = "2_Shop_Page\PICTURE\movingdot2.png"
+        self.dot3_path = "2_Shop_Page\PICTURE\movingdot3.png"
+        self.dot1 = ImageTk.PhotoImage(Image.open(self.dot1_path))
+        self.dot2 = ImageTk.PhotoImage(Image.open(self.dot2_path))
+        self.dot3 = ImageTk.PhotoImage(Image.open(self.dot3_path))
 
-        dot_label = tk.Label(self.shop_window)
-        dot_label.pack()
-        global x
-        x = 0
+        self.dot_label = tk.Label(self.shop_window)
+        self.dot_label.pack()
 
-        def moveBanner(self):
-                if x == 30:
-                    x = 0
-
-                if x == 0:
-                    banner_label.config(image=banner1)
-                    dot_label.config(image=dot1)
-                    banner_label.place(x=330, y=100)
-                    dot_label.place(x=630, y=405)
-                elif x == 10:
-                    banner_label.config(image=banner2)
-                    dot_label.config(image=dot2)
-                elif x == 20:
-                    banner_label.config(image=banner3)
-                    dot_label.config(image=dot3)
-
-                x += 1
-                banner_label.after(200, moveBanner)
-
-        moveBanner(self)
-
+        self.count = 0
+        self.movebanner()
         self.shop_window.resizable(0, 0)
         self.shop_window.mainloop()
+        
+    def movebanner(self):
+        if  self.count == 30:
+            self.count = 0
+        if self.count == 0:
+            self.banner_label.config(image=self.banner1)
+            self.dot_label.config(image=self.dot1)
+            self.banner_label.place(x=330, y=100)
+            self.dot_label.place(x=630, y=405)
+        elif self.count == 10:
+            self.banner_label.config(image=self.banner2)
+            self.dot_label.config(image=self.dot2)
+        elif self.count == 20:
+            self.banner_label.config(image=self.banner3)
+            self.dot_label.config(image=self.dot3)
+        self.count += 1
+        self.banner_label.after(200, self.movebanner)
+
 RunMain = Shop_main_screen()
