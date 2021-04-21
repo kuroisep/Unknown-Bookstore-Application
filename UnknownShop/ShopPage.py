@@ -7,6 +7,8 @@ import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 from UnknownShop import LoginPage
 # 
@@ -32,7 +34,7 @@ class Shop_main_screen:
 
         self.button_state()
 
-        # self.test_search()
+        # self.test_search(4,1)
         self.shop_window.resizable(0, 0)
         self.shop_window.mainloop()
 
@@ -98,7 +100,7 @@ class Shop_main_screen:
         nameEntered = ttk.Entry(self.shop_window, width = 70, textvariable = name)
         nameEntered.place(x=400,y=50)
 
-        drop = ttk.Combobox(self.shop_window, value=["All", "English Books", "Thai Books"])
+        drop = ttk.Combobox(self.shop_window, value=["All", "English Books", "Thai Books", self.get_data(5, 1)])
         drop.current((0))
         drop.place(x=770, y=50)
 
@@ -131,13 +133,14 @@ class Shop_main_screen:
         self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_show_window)
         self.canvas.create_window(0, 563, window=self.button5, anchor="nw")
 
-    def test_search(self):
-        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-        credentials = ServiceAccountCredentials.from_json_keyfile_name('Minor\minor1981-a976b13f378a.json', scope)
-        gc = gspread.authorize(credentials)
-        data = gc.open('Table').sheet1
-        row = data.get_all_records()
-        print(row)
+    def get_data(self, row, column):
+        self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+        self.credentials = ServiceAccountCredentials.from_json_keyfile_name('UnknownShop\minor1981-a976b13f378a.json', self.scope)
+        self.gc = gspread.authorize(self.credentials)
+        self.data = self.gc.open('รายชื่อหนังสือ').sheet1
+        self.row = self.data.row_values(row)[column]
+        
+        return str(self.row)
 
 
     def delete_show_window(self):
