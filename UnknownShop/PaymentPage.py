@@ -15,7 +15,7 @@ class Payment_screen:
         x = (700) - (750/2)
         y = (420) - (500/2)
         self.payment_window.geometry("1280x720+%d+%d" % (x, y))
-        bg_path = "MAIN\Picture\PaymentPage\Infobook_BG.png"
+        bg_path = "UnknownShop\Picture\PaymentPage\Infobook_BG.png"
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
         canvas = Canvas(self.payment_window, width=1280, height=720)
         canvas.pack(fill="both", expand=True)

@@ -13,7 +13,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-from MAIN import ShopPage
+from UnknownShop import ShopPage
 
 class main_account_screen:
 
@@ -21,7 +21,7 @@ class main_account_screen:
         self.main_screen = Tk()
         self.myfont = 'TRACK'
 
-        icon_path = "MAIN\Picture\LoginPage\open-book.png"
+        icon_path = "UnknownShop\Picture\LoginPage\open-book.png"
         icon = PhotoImage(file=icon_path)
         self.main_screen.iconphoto(False, icon)
 
@@ -30,7 +30,7 @@ class main_account_screen:
         self.main_screen.geometry("1280x720+%d+%d" % (x, y))
         self.main_screen.title("Account Login")
 
-        bg_path = "MAIN\Picture\LoginPage\LOGIN.png"
+        bg_path = "UnknownShop\Picture\LoginPage\LOGIN.png"
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
         # Create Canvas
@@ -51,7 +51,7 @@ class main_account_screen:
         global username_login_entry
         global password_login_entry
 
-        img_logo_path = "MAIN\Picture\LoginPage\logo.png"
+        img_logo_path = "UnknownShop\Picture\LoginPage\logo.png"
         img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
         canvas.create_image(200, 150, image=img_logo, anchor="nw")
 
@@ -72,14 +72,14 @@ class main_account_screen:
             textvariable=password_verify, show='●', width=30, font=20)
         canvas.create_window(1000, 380, window=password_login_entry)
 
-        img_login_path = "MAIN\Picture\LoginPage\login-button1.png"
+        img_login_path = "UnknownShop\Picture\LoginPage\login-button1.png"
         img_login_button = ImageTk.PhotoImage(
             Image.open(img_login_path).resize((200, 300)))
         login_button = Button(image=img_login_button, command=self.login_verify,
                             bd=0, highlightthickness=0, width=140, height=60)
         canvas.create_window(900, 450, window=login_button)
 
-        img_regis_path = "MAIN\Picture\LoginPage\\regis-button.png"
+        img_regis_path = "UnknownShop\Picture\LoginPage\\regis-button.png"
         img_regis_button = ImageTk.PhotoImage(
             Image.open(img_regis_path).resize((170, 80)))
         regis_button = Button(image=img_regis_button, width=140, height=60,
@@ -202,7 +202,7 @@ class main_account_screen:
         y = (540) - (650/2)
         self.register_screen.geometry("750x600+%d+%d" % (x, y))
 
-        regis_bg_path = "MAIN\Picture\LoginPage\REGISTER.png"
+        regis_bg_path = "UnknownShop\Picture\LoginPage\REGISTER.png"
         self.regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
 
         canvas = Canvas(self.register_screen, width=750, height=600)
