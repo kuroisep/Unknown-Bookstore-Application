@@ -90,7 +90,7 @@ class main_account_screen:
 
         canvas.create_text(1230, 700, text="V.1.0.0", font=self.myfont)
 
-        exit_button = Button(text="EXIT", command=self.delete_main_screen,
+        exit_button = Button(text="EXIT", command=self.confirm_closing,
                             bd=0, highlightthickness=0, width=20, height=3)
         canvas.create_window(1100, 600, window=exit_button)
 
@@ -98,6 +98,10 @@ class main_account_screen:
         self.main_screen.resizable(0, 0)
         self.main_screen.overrideredirect(1)
         self.main_screen.mainloop()
+
+    def confirm_closing(self):
+        if messagebox.askokcancel("Quit", "Do you want to quit?"):
+            self.main_screen.destroy()
 
     def login_verify(self):
         self.username1 = username_verify.get()
