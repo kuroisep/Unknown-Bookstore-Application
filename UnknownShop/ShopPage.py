@@ -88,6 +88,7 @@ class Shop_main_screen:
         button5 = Button(self.shop_window,image=img_button5,command=self.delete_show_window)
         canvas.create_window(0, 563, window=button5,anchor = "nw")
 
+        
         self.count = 0
         self.movebanner()
         self.shop_window.resizable(0, 0)
@@ -114,6 +115,9 @@ class Shop_main_screen:
     def delete_show_window(self):
         self.shop_window.destroy()
         LoginPage.showLoginPage()
+
 def showShopPage():
-    Shop_main_screen()
-# RunMain = Shop_main_screen()
+    run = Shop_main_screen()
+
+if __name__ == '__main__':
+    run = Shop_main_screen()
