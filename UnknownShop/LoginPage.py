@@ -39,8 +39,7 @@ class main_account_screen:
         canvas.pack(fill="both", expand=True)
 
         # Display image
-        canvas.create_image(0, 0, image=bg,
-                            anchor="nw")
+        canvas.create_image(0, 0, image=bg, anchor="nw")
 
         global username_verify
         global password_verify
@@ -64,7 +63,6 @@ class main_account_screen:
         canvas.create_text(875, 250, text="Username", font=(self.myfont))
         username_login_entry = Entry(
             textvariable=username_verify, width=30, font=20)
-        # username_login_entry.config(fg = 'blue')
         canvas.create_window(1000, 290, window=username_login_entry)
 
         canvas.create_text(875, 340, text="Password", font=self.myfont)
@@ -95,9 +93,10 @@ class main_account_screen:
         canvas.create_window(1100, 600, window=exit_button)
 
 
-        self.main_screen.resizable(0, 0)
+        self.main_screen.resizable(1, 1)
         self.main_screen.overrideredirect(1)
         self.main_screen.mainloop()
+
 
     def confirm_closing(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -165,7 +164,6 @@ class main_account_screen:
 
     def delete_main_screen(self):
         self.main_screen.destroy()
-
 
     def password_not_recognised(self):
         self.password_not_recog_screen = Toplevel(self.main_screen)
@@ -395,4 +393,4 @@ def showLoginPage():
 
 
 if __name__ == '__main__':
-    run = main_account_screen()
+    showLoginPage()

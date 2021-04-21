@@ -26,7 +26,7 @@ class Shop_main_screen:
 
         self.create_logo()
 
-        self.search()
+        self.search_bar()
 
         self.set_banner()
         self.count = 0
@@ -34,8 +34,8 @@ class Shop_main_screen:
 
         self.button_state()
 
-        # self.test_search(4,1)
         self.shop_window.resizable(0, 0)
+        self.shop_window.overrideredirect(0)
         self.shop_window.mainloop()
 
     def create_background(self):
@@ -94,18 +94,24 @@ class Shop_main_screen:
         self.count += 1
         self.banner_label.after(200, self.moveBanner)
 
-    def search(self):
+    def search_bar(self):
     
-        name = tk.StringVar()
-        nameEntered = ttk.Entry(self.shop_window, width = 70, textvariable = name)
-        nameEntered.place(x=400,y=50)
+        self.canvas.create_text(385, 61, text="Search By", font=('TRACK', 12))
 
-        drop = ttk.Combobox(self.shop_window, value=["All", "English Books", "Thai Books", self.get_data(5, 1)])
+        name = tk.StringVar()
+        nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = name)
+        nameEntered.place(x=535, y=50)
+
+        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books", self.get_data(5, 1)])
         drop.current((0))
-        drop.place(x=770, y=50)
+        drop.place(x=440, y=50)
 
         search_button = ttk.Button(self.shop_window, text = "Search")
-        search_button.place(x=913,y=47)
+        search_button.place(x=913, y=47)
+
+        show_all_books_button = ttk.Button(self.shop_window, text = "Show All")
+        show_all_books_button.place(x=1000, y=47)
+        
         
     def button_state(self):
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
@@ -151,4 +157,4 @@ def showShopPage():
     run = Shop_main_screen()
 
 if __name__ == '__main__':
-    run = Shop_main_screen()
+    showShopPage()
