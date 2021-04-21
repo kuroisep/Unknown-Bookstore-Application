@@ -12,14 +12,14 @@ class Shop_main_screen:
         x = (700) - (750/2)
         y = (420) - (500/2)
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
-        bg_path = "2_Shop_Page\PICTURE\Shop_main_page.png"
+        bg_path = "MAIN\Picture\ShopPage\Shop_main_page.png"
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
         canvas = Canvas(self.shop_window, width=1280, height=720)
         canvas.pack(fill="both", expand=True)
         canvas.create_image(0, 0, image=bg, anchor="nw")
 
-        # logo_path = "2_Shop_Page\PICTURE\logo.png"
+        # logo_path = "MAIN\Picture\ShopPage\logo.png"
         # logo = ImageTk.PhotoImage(Image.open(logo_path).resize((150, 150)))
 
         name = tk.StringVar()
@@ -38,9 +38,9 @@ class Shop_main_screen:
         # label1.image = logo
         # label1.place(x=0, y=0)
 
-        self.banner1_path = "2_Shop_Page\PICTURE\\banner1.jpg"
-        self.banner2_path = "2_Shop_Page\PICTURE\\banner2.jpg"
-        self.banner3_path = "2_Shop_Page\PICTURE\\banner3.jpg"
+        self.banner1_path = "MAIN\Picture\ShopPage\\banner1.jpg"
+        self.banner2_path = "MAIN\Picture\ShopPage\\banner2.jpg"
+        self.banner3_path = "MAIN\Picture\ShopPage\\banner3.jpg"
         self.banner1 = ImageTk.PhotoImage(Image.open(self.banner1_path))
         self.banner2 = ImageTk.PhotoImage(Image.open(self.banner2_path))
         self.banner3 = ImageTk.PhotoImage(Image.open(self.banner3_path))
@@ -48,9 +48,9 @@ class Shop_main_screen:
         self.banner_label = tk.Label(self.shop_window)
         self.banner_label.pack()
 
-        self.dot1_path = "2_Shop_Page\PICTURE\movingdot1.png"
-        self.dot2_path = "2_Shop_Page\PICTURE\movingdot2.png"
-        self.dot3_path = "2_Shop_Page\PICTURE\movingdot3.png"
+        self.dot1_path = "MAIN\Picture\ShopPage\movingdot1.png"
+        self.dot2_path = "MAIN\Picture\ShopPage\movingdot2.png"
+        self.dot3_path = "MAIN\Picture\ShopPage\movingdot3.png"
         self.dot1 = ImageTk.PhotoImage(Image.open(self.dot1_path))
         self.dot2 = ImageTk.PhotoImage(Image.open(self.dot2_path))
         self.dot3 = ImageTk.PhotoImage(Image.open(self.dot3_path))
@@ -58,27 +58,27 @@ class Shop_main_screen:
         self.dot_label = tk.Label(self.shop_window)
         self.dot_label.pack()
 
-        button1_path = "2_Shop_Page\PICTURE\\button1.png"
+        button1_path = "MAIN\Picture\ShopPage\\button1.png"
         img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
         self.button1 = Button(image=img_button1)
         canvas.create_window(0, 222, window=self.button1,anchor = "nw")
 
-        button2_path = "2_Shop_Page\PICTURE\\button2.png"
+        button2_path = "MAIN\Picture\ShopPage\\button2.png"
         img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
         self.button2 = Button(image=img_button2)
         canvas.create_window(0, 307, window=self.button2,anchor = "nw")
 
-        button3_path = "2_Shop_Page\PICTURE\\button3.png"
+        button3_path = "MAIN\Picture\ShopPage\\button3.png"
         img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
         self.button3 = Button(image=img_button3)
         canvas.create_window(0, 393, window=self.button3,anchor = "nw")
 
-        button4_path = "2_Shop_Page\PICTURE\\button4.png"
+        button4_path = "MAIN\Picture\ShopPage\\button4.png"
         img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
         self.button4 = Button(image=img_button4)
         canvas.create_window(0, 477, window=self.button4,anchor = "nw")
 
-        button5_path = "2_Shop_Page\PICTURE\\button5.png"
+        button5_path = "MAIN\Picture\ShopPage\\button5.png"
         img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
         self.button5 = Button(image=img_button5)
         canvas.create_window(0, 563, window=self.button5,anchor = "nw")
