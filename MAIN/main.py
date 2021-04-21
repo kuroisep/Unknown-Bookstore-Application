@@ -1,5 +1,4 @@
-import tkinter as tk
-from tkinter import ttk
+import tkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import font as tkFont
@@ -8,14 +7,17 @@ from PIL import ImageTk, Image
 import re
 import os
 import csv
-from tkinter.ttk import *
+
+import tkinter as tk
+# from tkinter import ttk
+# from tkinter.ttk import *
+
 
 class main_account_screen:
 
     def __init__(self):
         self.main_screen = Tk()
         self.myfont = 'TRACK'
-        base_folder = os.path.dirname(__file__)
 
         icon_path = "MAIN\Picture\LoginPage\open-book.png"
         icon = PhotoImage(file=icon_path)
@@ -26,11 +28,8 @@ class main_account_screen:
         self.main_screen.geometry("1280x720+%d+%d" % (x, y))
         self.main_screen.title("Account Login")
 
-
-        # bg_path = os.path.join(base_folder, 'LOGIN.png')
         bg_path = "MAIN\Picture\LoginPage\LOGIN.png"
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
-        # bg = PhotoImage(file = bg_path)
 
         # Create Canvas
         canvas = Canvas(self.main_screen, width=1280, height=720)
@@ -50,7 +49,6 @@ class main_account_screen:
         global username_login_entry
         global password_login_entry
 
-        # img_logo_path = os.path.join(base_folder, 'logo.jpg')
         img_logo_path = "MAIN\Picture\LoginPage\logo.png"
         img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))
         canvas.create_image(200, 150, image=img_logo, anchor="nw")
@@ -72,7 +70,6 @@ class main_account_screen:
             textvariable=password_verify, show='●', width=30, font=20)
         canvas.create_window(1000, 380, window=password_login_entry)
 
-        # img_login_path = os.path.join(base_folder, 'login-button1.png')
         img_login_path = "MAIN\Picture\LoginPage\login-button1.png"
         img_login_button = ImageTk.PhotoImage(
             Image.open(img_login_path).resize((200, 300)))
@@ -401,7 +398,7 @@ class Shop_main_screen:
         # logo = ImageTk.PhotoImage(Image.open(logo_path).resize((150, 150)))
 
         name = tk.StringVar()
-        nameEntered = ttk.Entry(self.shop_window, width=70, textvariable=name)
+        nameEntered = Entry(self.shop_window, width=70, textvariable=name)
         nameEntered.place(x=400, y=50)
 
         combo = Combobox(self.shop_window)
@@ -409,7 +406,7 @@ class Shop_main_screen:
         combo.current(0)  # set the selected item
         combo.place(x=770, y=50)
 
-        button = ttk.Button(self.shop_window, text="Search")
+        button = Button(self.shop_window, text="Search")
         button.place(x=913, y=47)
 
         # label1 = tk.Label(image=logo)
@@ -498,3 +495,4 @@ class Payment_screen:
 
         self.payment_window.resizable(0, 0)
         self.payment_window.mainloop()
+RunMain = main_account_screen()

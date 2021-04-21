@@ -106,4 +106,6 @@ class Shop_main_screen:
         self.banner_label.after(200, self.movebanner)
 
 
-RunMain = Shop_main_screen()
+def showShopPage():
+    Shop_main_screen()
+# RunMain = Shop_main_screen()
