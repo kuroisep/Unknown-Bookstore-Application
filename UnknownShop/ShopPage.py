@@ -3,12 +3,12 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
-# import os, sys
-# currentdir = os.path.dirname(os.path.realpath(__file__))
-# parentdir = os.path.dirname(currentdir)
-# sys.path.append(parentdir)
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
 
-# from UnknownShop import LoginPage
+from UnknownShop import LoginPage
 # 
 class Shop_main_screen:
     def __init__(self):
@@ -63,25 +63,25 @@ class Shop_main_screen:
         self.dot_label = tk.Label(self.shop_window)
         self.dot_label.pack()
 
-        # button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
-        # img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        # self.button1 = Button(image=img_button1)
-        # canvas.create_window(0, 222, window=self.button1,anchor = "nw")
+        button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
+        img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
+        self.button1 = Button(image=img_button1)
+        canvas.create_window(0, 222, window=self.button1,anchor = "nw")
 
-        # button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
-        # img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        # self.button2 = Button(image=img_button2)
-        # canvas.create_window(0, 307, window=self.button2,anchor = "nw")
+        button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
+        img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
+        self.button2 = Button(image=img_button2)
+        canvas.create_window(0, 307, window=self.button2,anchor = "nw")
 
-        # button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
-        # img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
-        # self.button3 = Button(image=img_button3)
-        # canvas.create_window(0, 393, window=self.button3,anchor = "nw")
+        button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
+        img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
+        self.button3 = Button(image=img_button3)
+        canvas.create_window(0, 393, window=self.button3,anchor = "nw")
 
-        # button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
-        # img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
-        # self.button4 = Button(image=img_button4,command=print('D'))
-        # canvas.create_window(0, 477, window=self.button4,anchor = "nw")
+        button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
+        img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
+        self.button4 = Button(image=img_button4)
+        canvas.create_window(0, 477, window=self.button4,anchor = "nw")
 
         button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
         img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
@@ -113,6 +113,7 @@ class Shop_main_screen:
 
     def delete_show_window(self):
         self.shop_window.destroy()
-# def showShopPage():
-#     Shop_main_screen()
-RunMain = Shop_main_screen()
+        LoginPage.showLoginPage()
+def showShopPage():
+    Shop_main_screen()
+# RunMain = Shop_main_screen()

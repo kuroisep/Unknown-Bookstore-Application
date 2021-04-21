@@ -13,7 +13,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-# from UnknownShop import ShopPage
+from UnknownShop import ShopPage
 
 class main_account_screen:
 
@@ -385,4 +385,6 @@ class main_account_screen:
             else:
                 pass
 
+def showLoginPage():
+    main_account_screen()
 RunMain = main_account_screen()
