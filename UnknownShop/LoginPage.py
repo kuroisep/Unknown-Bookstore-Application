@@ -13,7 +13,7 @@ currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
-from UnknownShop import ShopPage
+# from UnknownShop import ShopPage
 
 class main_account_screen:
 
@@ -34,7 +34,7 @@ class main_account_screen:
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
         # Create Canvas
-        canvas = Canvas(self.main_screen, width=1280, height=720)
+        canvas = Canvas(self.main_screen, width=1280, height=720, bd=0, highlightthickness=0, relief='ridge')
 
         canvas.pack(fill="both", expand=True)
 
@@ -79,10 +79,12 @@ class main_account_screen:
                             bd=0, highlightthickness=0, width=140, height=60)
         canvas.create_window(900, 450, window=login_button)
 
+
+
         img_regis_path = "UnknownShop\Picture\LoginPage\\regis-button.png"
         img_regis_button = ImageTk.PhotoImage(
             Image.open(img_regis_path).resize((170, 80)))
-        regis_button = Button(image=img_regis_button, width=140, height=60,
+        regis_button = Button(image=img_regis_button,  width=140, height=60,
                             command=self.register, highlightthickness=0, borderwidth=0)
         canvas.create_window(1100, 450, window=regis_button)
 
@@ -382,6 +384,5 @@ class main_account_screen:
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
             else:
                 pass
-
 
 RunMain = main_account_screen()
