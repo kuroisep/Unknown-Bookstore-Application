@@ -96,8 +96,7 @@ class Shop_main_screen:
         self.count += 1
         after_id = self.banner_label.after(200, self.moveBanner)
 
-    def search_bar(self):
-    
+    def search_bar(self): 
         self.canvas.create_text(385, 61, text="Search By", font=('TRACK', 12))
 
         name = tk.StringVar()
@@ -141,6 +140,7 @@ class Shop_main_screen:
         self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_show_window)
         self.canvas.create_window(0, 563, window=self.button5, anchor="nw")
 
+
     def get_data(self, row, column):
         self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.credentials = ServiceAccountCredentials.from_json_keyfile_name('UnknownShop\minor1981-a976b13f378a.json', self.scope)
@@ -149,7 +149,6 @@ class Shop_main_screen:
         self.row = self.data.row_values(row)[column]
         
         return str(self.row)
-
 
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
