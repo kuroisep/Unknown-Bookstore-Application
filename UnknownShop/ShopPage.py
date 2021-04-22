@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
+from tkinter import messagebox
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -30,8 +31,8 @@ class Shop_main_screen:
 
         self.set_banner()
         self.count = 0
-        self.moveBanner()
 
+        self.moveBanner()  
         self.button_state()
 
         self.shop_window.resizable(0, 0)
@@ -76,6 +77,7 @@ class Shop_main_screen:
         self.dot_label.pack()
 
     def moveBanner(self):
+        global after_id
         if self.count == 30 :
             self.count = 0
 
@@ -92,7 +94,7 @@ class Shop_main_screen:
             self.dot_label.config(image = self.dot3)
 
         self.count += 1
-        self.banner_label.after(200, self.moveBanner)
+        after_id = self.banner_label.after(200, self.moveBanner)
 
     def search_bar(self):
     
@@ -150,8 +152,11 @@ class Shop_main_screen:
 
 
     def delete_show_window(self):
-        self.shop_window.destroy()
-        LoginPage.showLoginPage()
+        if messagebox.askokcancel("Quit", "Do you want to sign out?"):
+            self.shop_window.destroy()
+            self.shop_window.after_cancel(after_id)
+            LoginPage.showLoginPage()
+            
 
 def showShopPage():
     run = Shop_main_screen()
