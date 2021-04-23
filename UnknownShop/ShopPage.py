@@ -102,7 +102,7 @@ class Shop_main_screen:
         nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = name)
         nameEntered.place(x=535, y=50)
 
-        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books", self.get_data(5, 1)])
+        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books", self.get_data(19, 1)])
         drop.current((0))
         drop.place(x=440, y=50)
 
