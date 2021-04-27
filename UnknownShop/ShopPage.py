@@ -22,18 +22,19 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720)
-
+        self.infomationPage() # หน้า info 
         self.create_background()
 
         self.create_logo()
 
         self.search_bar()
 
-        self.set_banner()
+        # self.set_banner()
         self.count = 0
 
-        self.moveBanner()  
+        # self.moveBanner()  
         self.button_state()
+
 
         self.shop_window.resizable(0, 0)
         self.shop_window.overrideredirect(0)
@@ -103,7 +104,7 @@ class Shop_main_screen:
         nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = name)
         nameEntered.place(x=535, y=50)
 
-        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books", self.get_data(19, 1)])
+        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books"])
         drop.current((0))
         drop.place(x=440, y=50)
 
@@ -117,12 +118,12 @@ class Shop_main_screen:
     def button_state(self):
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        self.button1 = Button(image=self.img_button1)
+        self.button1 = Button(image=self.img_button1,command = self.show_infomationPage)
         self.canvas.create_window(0, 222, window=self.button1, anchor="nw")
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        self.button2 = Button(image=self.img_button2)
+        self.button2 = Button(image=self.img_button2,command=self.delete_canvas)
         self.canvas.create_window(0, 307, window=self.button2, anchor="nw")
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
@@ -153,9 +154,29 @@ class Shop_main_screen:
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
             self.shop_window.destroy()
-            self.shop_window.after_cancel(after_id)
+            # self.shop_window.after_cancel(after_id)
             LoginPage.showLoginPage()
-            
+    
+    def infomationPage(self): # ข้อมูลหน้า info       #1
+        self.innercanvas = Canvas(self.canvas, width=1000, height=550)
+        self.innercanvas.create_text(500, 250, anchor=NW, text="Hello")
+        self.innercanvas.create_text(100, 250, anchor=NW, text="Hello1")
+        self.innercanvas.create_text(200, 250, anchor=NW, text="Hello000")
+        
+    def show_infomationPage(self): # ุปุ่ม 1          #2
+        self.delete_canvas()
+        self.canvas.create_window(250, 150, anchor=NW, window=self.innercanvas)
+        
+    def delete_canvas(self): # ปุ่ม 2                #3
+        self.canvas.create_window(1000, 700, anchor=NW, window=self.innercanvas)
+         # ลบหน้า info
+    
+    ## 1. def ข้อมูลหน้านั้น -> ใส่ใน init
+    ## 2. def แสดงข้อมูลหน้านัั้น -> ใส่ delete ก่อน
+    ## 3. ใน def delete เอาหน้านั้นไปใส่
+
+
+        
 
 def showShopPage():
     run = Shop_main_screen()

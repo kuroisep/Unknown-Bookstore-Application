@@ -107,19 +107,26 @@ class main_account_screen:
         self.password1 = password_verify.get()
         df = pandas.read_csv('login.csv')
         data = df.set_index('USER').T.to_dict('list')
+        
         if data.get(self.username1) != None:
-            if str(data.get(self.username1)[0]) == str(self.password1):
-                self.info_NAME = data.get(self.username1)[1]
-                self.info_LNAME = data.get(self.username1)[2]
-                self.info_GENDER = data.get(self.username1)[3]
-                self.info_EMAIL = data.get(self.username1)[4]
-                self.info_telphone = data.get(self.username1)[5]
+            if str(data.get(self.username1)[1]) == str(self.password1):
+                self.info_NAME = data.get(self.username1)[2]
+                self.info_LNAME = data.get(self.username1)[3]
+                self.info_GENDER = data.get(self.username1)[4]
+                self.info_EMAIL = data.get(self.username1)[5]
+                self.info_telphone = data.get(self.username1)[6]
                 username_login_entry.delete(0, END)
                 password_login_entry.delete(0, END)
+
+                df.loc[df['USER'] == self.username1, 'STATUS'] = 'T'
+                df.to_csv("login.csv", index=False)
+                print(df)
                 self.login_sucess()
+
             else:
                 self.password_not_recognised()
                 password_login_entry.delete(0, END)
+        
         else:
             self.user_not_found()
             username_login_entry.delete(0, END)
@@ -333,6 +340,9 @@ class main_account_screen:
         elif (password_info == ''):
             messagebox.showinfo("Info", "Please Enter Password",
                                 parent=self.register_screen)
+        elif (len(password_info) < 8):
+            messagebox.showinfo("Info", "Password Must Habe At Least 8 Characters",
+                                parent=self.register_screen)
 
         elif (confpassword_info == ''):
             messagebox.showinfo(
@@ -379,7 +389,7 @@ class main_account_screen:
 
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow([username_info, password_info,
+                    writer.writerow(['F',username_info, password_info,
                                     name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, str(tel_info)])
                 self.clear_user()
                 self.register_screen.destroy()
