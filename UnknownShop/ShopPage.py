@@ -24,6 +24,21 @@ class Shop_main_screen:
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720)
 
+        #USER LOGIN
+        self.df = pandas.read_csv('login.csv')
+        self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
+        if self.user == []:
+            # messagebox.showerror("Error", "NO USER LOGIN FOUND")
+            print("NO USER LOGIN FOUND")
+            self.user = [['T', 'NO USER LOGIN FOUND', '', 'You are not logged in', 'You are not logged in', 'You are not logged in', 'You are not logged in', 'You are not logged in']]
+        #self.user[0][1] = username
+        #self.user[0][2] = password
+        #self.user[0][3] = name
+        #self.user[0][4] = lastname
+        #self.user[0][5] = gender
+        #self.user[0][6] = email
+        #self.user[0][7] = telphone
+
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
@@ -159,38 +174,57 @@ class Shop_main_screen:
 
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
+            self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+            self.df.to_csv("login.csv", index=False)
             self.shop_window.destroy()
-            self.shop_window.after_cancel(after_id)
-            LoginPage.showLoginPage()
+            # self.shop_window.after_cancel(after_id)
+            # LoginPage.showLoginPage()
     
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
 
-        df = pandas.read_csv('login.csv')
-        user = df.loc[df['STATUS']=='T'].values.tolist()
-        print(user)
         self.username = StringVar()
         self.password = StringVar()
         self.confpassword = StringVar()
         self.name = StringVar()
         self.lastname = StringVar()
         self.email = StringVar()
-        self.gender = IntVar()
+        self.gender = StringVar()
         self.gender_choice1 = IntVar()
         self.gender_choice2 = IntVar()
         self.telphone = StringVar()
-        self.username_entry = Entry(self.inner_infomation, textvariable=self.username)
-        self.username_entry.insert(0,user[0][3])
-        self.username_entry.config(state=DISABLED)
-        self.inner_infomation.create_window(400,350,window=self.username_entry)
-        if user == []:
-            print("ERROR")
-        else:
-            self.inner_infomation.create_text(200, 250, anchor=NW, text='NAME : {}'.format(user[0][3]))
-            self.inner_infomation.create_text(300, 250, anchor=NW, text='LAST NAME : {}'.format(user[0][4]))
-            self.inner_infomation.create_text(420, 250, anchor=NW, text='Gender : {}'.format(user[0][5]))
-            self.inner_infomation.create_text(500, 250, anchor=NW, text='EMAIL : {}'.format(user[0][6]))
-            self.inner_infomation.create_text(650, 250, anchor=NW, text='PHONE : {}'.format(user[0][7]))
+        
+        if self.user != []:
+            ## NAME
+            self.inner_infomation.create_text(150, 100, anchor=NW, text='Name : ')
+            self.username_entry = Entry(self.inner_infomation, textvariable=self.username,font=('Verdana',15))
+            self.username_entry.insert(0,self.user[0][3])
+            self.username_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(205,80,window=self.username_entry,anchor = 'nw')
+            ##LASTNAME
+            self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
+            self.lname_entry = Entry(self.inner_infomation, textvariable=self.lastname)
+            self.lname_entry.insert(0,self.user[0][4])
+            self.lname_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(275,155,window=self.lname_entry)
+            ##GENDER
+            self.inner_infomation.create_text(150, 200, anchor=NW, text='Gender : ')
+            self.gender_entry = Entry(self.inner_infomation, textvariable=self.gender)
+            self.gender_entry.insert(0,self.user[0][5])
+            self.gender_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(275,205,window=self.gender_entry)
+            ##EMAIL
+            self.inner_infomation.create_text(150, 250, anchor=NW, text='Email : ')
+            self.email_entry = Entry(self.inner_infomation, textvariable=self.email)
+            self.email_entry.insert(0,self.user[0][6])
+            self.email_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(275,255,window=self.email_entry)
+            ##PHONE
+            self.inner_infomation.create_text(150, 300, anchor=NW, text='Telphone : ')
+            self.telphone_entry = Entry(self.inner_infomation, textvariable=self.telphone)
+            self.telphone_entry.insert(0,self.user[0][7])
+            self.telphone_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(275,305,window=self.telphone_entry)
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
