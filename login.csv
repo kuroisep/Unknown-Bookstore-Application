@@ -1,7 +1,7 @@
 STATUS,USER,PASSWORD,NAME,LNAME,GENDER,EMAIL,TEL
 F,aum,123,noppa,k,MALE,n@mail.com,123456789
 F,aum1,123,Noppaa,Khaa,MALE,s@mail.com,123456456
-F,a,111,Aum,Auml,MALE,a@mail.com,1111111111
+T,a,111,Aum,Auml,MALE,a@mail.com,1111111111
 F,aaa,a,A,A,MALE,a@mail.com,0
 F,aaaa,aa,A,A,MALE,a@mail.xom,1111111111
 F,aaa1,aaa,Aaa,Aaa,MALE,aaa@mail.com,1111111111
