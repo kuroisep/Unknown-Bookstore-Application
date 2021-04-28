@@ -2,6 +2,7 @@ import tkinter
 from tkinter import *
 from tkinter import messagebox
 from tkinter import font as tkFont
+from tkinter.ttk import Combobox
 import pandas
 from PIL import ImageTk, Image
 import re
@@ -12,6 +13,7 @@ import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
+
 
 from UnknownShop import ShopPage
 
@@ -231,6 +233,10 @@ class main_account_screen:
         self.gender_choice1 = IntVar(self.register_screen)
         self.gender_choice2 = IntVar(self.register_screen)
         self.telphone = StringVar()
+        self.birth_date = StringVar()
+        self.birth_date.set('1')
+        self.birth_month = StringVar()
+        self.birth_year = StringVar()
 
         canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
 
@@ -254,23 +260,47 @@ class main_account_screen:
         canvas.create_text(292, 225, text="Last Name *", font=self.myfont)
         canvas.create_window(340, 250, window=self.lastname_entry, width=180)
 
-        canvas.create_text(600, 225, text="Gender *", font=self.myfont)
+        canvas.create_text(500, 310, text="Gender *", font=self.myfont)
 
         self.gender_choice1 = Checkbutton(self.register_screen, text="Male", font=(
             self.myfont, 12), command=self.my_upd, variable=self.gender1)
         self.gender_choice2 = Checkbutton(self.register_screen, text="Female", font=(
             self.myfont, 12), command=self.my_upd, variable=self.gender2)
 
-        canvas.create_window(550, 250, window=self.gender_choice1)
-        canvas.create_window(650, 250, window=self.gender_choice2)
+        canvas.create_window(450, 350, window=self.gender_choice1)
+        canvas.create_window(550, 350, window=self.gender_choice2)
 
-        canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
+        
+        #DATE Combobox
+        canvas.create_text(470, 225, text="Day", font=self.myfont)
+        self.birth_date_entry = Combobox(self.register_screen, width=3, value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'])
+        self.birth_date_entry.current(0)
+        canvas.create_window(470, 250, window=self.birth_date_entry)
+        #MONTH Combobox
+        canvas.create_text(550, 225, text="Month", font=self.myfont)
+        self.birth_month_entry = Combobox(self.register_screen, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        self.birth_month_entry.current(0)
+        canvas.create_window(550, 250, window=self.birth_month_entry)
+        #YEAR Combobox
+        canvas.create_text(630, 225, text="Year", font=self.myfont)
+        year_list = []
+        for i in range(1920,2021):
+            year_list.append(str(i))
+        self.birth_year_entry = Combobox(self.register_screen, width=5, value=year_list)
+        self.birth_year_entry.current(0)
+        canvas.create_window(630, 250, window=self.birth_year_entry)
+        
+
+
+
+
+        canvas.create_text(85, 385, text="Email Address * ", font=self.myfont)
         self.email_entry = Entry(self.register_screen, textvariable=self.email)
-        canvas.create_window(150, 335, window=self.email_entry, width=250)
+        canvas.create_window(150, 410, window=self.email_entry, width=250)
 
-        canvas.create_text(410, 310, text="Phone Number * ", font=self.myfont)
+        canvas.create_text(85, 310, text="Phone Number * ", font=self.myfont)
         self.telphone_entry = Entry(self.register_screen, textvariable=self.telphone)
-        canvas.create_window(470, 335, window=self.telphone_entry, width=250)
+        canvas.create_window(150, 335, window=self.telphone_entry, width=250)
 
         helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
         regis_button = Button(self.register_screen, text="Register",

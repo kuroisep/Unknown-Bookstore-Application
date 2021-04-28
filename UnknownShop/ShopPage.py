@@ -1,3 +1,4 @@
+from logging import disable
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
@@ -200,7 +201,8 @@ class Shop_main_screen:
             self.username_entry = Entry(self.inner_infomation, textvariable=self.username,font=('Verdana',15))
             self.username_entry.insert(0,self.user[0][3])
             self.username_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(205,80,window=self.username_entry,anchor = 'nw')
+            # print(self.username_entry["state"])
+            self.inner_infomation.create_window(210,80,window=self.username_entry,anchor = 'nw')
             ##LASTNAME
             self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
             self.lname_entry = Entry(self.inner_infomation, textvariable=self.lastname)
