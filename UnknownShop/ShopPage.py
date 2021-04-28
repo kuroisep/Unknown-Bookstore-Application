@@ -22,17 +22,21 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720)
+
         self.infomationPage() # หน้า info 
+        self.categoryPage()
+        self.paymentPage()
+
         self.create_background()
 
         self.create_logo()
 
         self.search_bar()
 
-        # self.set_banner()
+        self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
 
-        # self.moveBanner()  
+        self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.button_state()
 
 
@@ -78,24 +82,25 @@ class Shop_main_screen:
         self.dot_label.pack()
 
     def moveBanner(self):
-        global after_id
-        if self.count == 30 :
-            self.count = 0
+        # global after_id
+        # if self.count == 30 :
+        #     self.count = 0
 
-        if self.count == 0 :
-            self.banner_label.config(image = self.banner1)
-            self.dot_label.config(image = self.dot1)
-            self.banner_label.place(x=330,y=100)
-            self.dot_label.place(x=630,y=405)
-        elif self.count == 10 :
-            self.banner_label.config(image = self.banner2)
-            self.dot_label.config(image = self.dot2)
-        elif self.count == 20 :
-            self.banner_label.config(image = self.banner3)
-            self.dot_label.config(image = self.dot3)
+        # if self.count == 0 :
+        #     self.banner_label.config(image = self.banner1)
+        #     self.dot_label.config(image = self.dot1)
+        #     self.banner_label.place(x=330,y=100)
+        #     self.dot_label.place(x=630,y=405)
+        # elif self.count == 10 :
+        #     self.banner_label.config(image = self.banner2)
+        #     self.dot_label.config(image = self.dot2)
+        # elif self.count == 20 :
+        #     self.banner_label.config(image = self.banner3)
+        #     self.dot_label.config(image = self.dot3)
 
-        self.count += 1
-        after_id = self.banner_label.after(200, self.moveBanner)
+        # self.count += 1
+        # after_id = self.banner_label.after(200, self.moveBanner)
+        pass
 
     def search_bar(self): 
         self.canvas.create_text(385, 61, text="Search By", font=('TRACK', 12))
@@ -123,12 +128,12 @@ class Shop_main_screen:
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        self.button2 = Button(image=self.img_button2,command=self.delete_canvas)
+        self.button2 = Button(image=self.img_button2,command= self.show_categoryPage)
         self.canvas.create_window(0, 307, window=self.button2, anchor="nw")
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
         self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
-        self.button3 = Button(image=self.img_button3)
+        self.button3 = Button(image=self.img_button3,command=self.show_paymentPage)
         self.canvas.create_window(0, 393, window=self.button3, anchor="nw")
 
         button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
@@ -154,21 +159,38 @@ class Shop_main_screen:
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
             self.shop_window.destroy()
-            # self.shop_window.after_cancel(after_id)
+            self.shop_window.after_cancel(after_id)
             LoginPage.showLoginPage()
     
     def infomationPage(self): # ข้อมูลหน้า info       #1
-        self.innercanvas = Canvas(self.canvas, width=1000, height=550)
-        self.innercanvas.create_text(500, 250, anchor=NW, text="Hello")
-        self.innercanvas.create_text(100, 250, anchor=NW, text="Hello1")
-        self.innercanvas.create_text(200, 250, anchor=NW, text="Hello000")
-        
-    def show_infomationPage(self): # ุปุ่ม 1          #2
+        self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
+        self.inner_infomation.create_text(500, 250, anchor=NW, text="Hello")
+        self.inner_infomation.create_text(100, 250, anchor=NW, text="Hello1")
+        self.inner_infomation.create_text(200, 250, anchor=NW, text="Hello000")
+    def categoryPage(self):
+        self.inner_category = Canvas(self.canvas, width=1000, height=550)
+        self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
+    def paymentPage(self):
+        self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
+        self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
+
+
+    def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
-        self.canvas.create_window(250, 150, anchor=NW, window=self.innercanvas)
-        
+        self.canvas.create_window(250, 150, anchor=NW, window=self.inner_infomation)
+    def show_categoryPage(self):
+        self.delete_canvas()
+        self.canvas.create_window(250, 150, anchor=NW, window=self.inner_category)
+    def show_paymentPage(self):
+        self.delete_canvas()
+        self.canvas.create_window(250,150, anchor=NW, window=self.inner_payment)
+
+
     def delete_canvas(self): # ปุ่ม 2                #3
-        self.canvas.create_window(1000, 700, anchor=NW, window=self.innercanvas)
+        self.canvas.create_window(1000, 700, anchor=NW, window=self.inner_infomation)
+        self.canvas.create_window(1000,750, anchor=NW, window=self.inner_category)
+        self.canvas.create_window(1000,750, anchor=NW, window=self.inner_payment)
+        
          # ลบหน้า info
     
     ## 1. def ข้อมูลหน้านั้น -> ใส่ใน init
