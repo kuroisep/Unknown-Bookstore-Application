@@ -4,6 +4,7 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
 from tkinter import messagebox
+import pandas
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -164,9 +165,33 @@ class Shop_main_screen:
     
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
-        self.inner_infomation.create_text(500, 250, anchor=NW, text="Hello")
-        self.inner_infomation.create_text(100, 250, anchor=NW, text="Hello1")
-        self.inner_infomation.create_text(200, 250, anchor=NW, text="Hello000")
+
+        df = pandas.read_csv('login.csv')
+        user = df.loc[df['STATUS']=='T'].values.tolist()
+        print(user)
+        self.username = StringVar()
+        self.password = StringVar()
+        self.confpassword = StringVar()
+        self.name = StringVar()
+        self.lastname = StringVar()
+        self.email = StringVar()
+        self.gender = IntVar()
+        self.gender_choice1 = IntVar()
+        self.gender_choice2 = IntVar()
+        self.telphone = StringVar()
+        self.username_entry = Entry(self.inner_infomation, textvariable=self.username)
+        self.username_entry.insert(0,user[0][3])
+        self.username_entry.config(state=DISABLED)
+        self.inner_infomation.create_window(400,350,window=self.username_entry)
+        if user == []:
+            print("ERROR")
+        else:
+            self.inner_infomation.create_text(200, 250, anchor=NW, text='NAME : {}'.format(user[0][3]))
+            self.inner_infomation.create_text(300, 250, anchor=NW, text='LAST NAME : {}'.format(user[0][4]))
+            self.inner_infomation.create_text(420, 250, anchor=NW, text='Gender : {}'.format(user[0][5]))
+            self.inner_infomation.create_text(500, 250, anchor=NW, text='EMAIL : {}'.format(user[0][6]))
+            self.inner_infomation.create_text(650, 250, anchor=NW, text='PHONE : {}'.format(user[0][7]))
+
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
