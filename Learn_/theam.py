@@ -1,19 +1,17 @@
 import tkinter as tk
-from tkinter import ttk
+
+def on_enter(e):
+    myButton['background'] = 'light green'
+
+def on_leave(e):
+    myButton['background'] = 'SystemButtonFace'
 
 root = tk.Tk()
+myButton = tk.Button(root,text="Click Me")
+myButton.grid()
 
-# Create a style
-style = ttk.Style(root)
 
-# Import the tcl file
-root.tk.call('source', 'azure.tcl')
-
-# Set the theme with the theme_use method
-style.theme_use('azure')
-
-# A themed button
-button = ttk.Button(root, text='I\'m a themed button')
-button.pack(pady=20)
+myButton.bind("<Enter>", on_enter)
+myButton.bind("<Leave>", on_leave)
 
 root.mainloop()
