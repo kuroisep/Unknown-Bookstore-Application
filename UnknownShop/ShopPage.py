@@ -48,7 +48,7 @@ class Shop_main_screen:
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
             print("NO USER LOGIN FOUND")
-            self.user = [['T', 'NO USER LOGIN FOUND', '', 'You are not logged in', 'You are not logged in', 'You are not logged in','-/-/-', 'You are not logged in', 'You are not logged in']]
+            self.user = [['T', '\" Login Required \"', '', 'You are not logged in', 'You are not logged in', 'You are not logged in','-/-/-', 'You are not logged in', 'You are not logged in']]
         #self.user[0][1] = username
         #self.user[0][2] = password
         #self.user[0][3] = name
@@ -240,12 +240,13 @@ class Shop_main_screen:
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
         
         if self.user != []:
+            ## USERNAME
+            self.inner_infomation.create_text(150, 50, anchor=NW, text='Username : {}'.format(self.user[0][1]))
             ## NAME
             self.inner_infomation.create_text(150, 100, anchor=NW, text='Name : ')
             self.username_entry = Entry(self.inner_infomation,font=('Verdana',15))
             self.username_entry.insert(0,self.user[0][3])
             self.username_entry.config(state=DISABLED)
-            # print(self.username_entry["state"])
             self.inner_infomation.create_window(210,80,window=self.username_entry,anchor = 'nw')
             ##LASTNAME
             self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
