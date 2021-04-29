@@ -130,22 +130,78 @@
 
 
 
-import tkinter as tk
+# import tkinter as tk
 
-# --- functions ---
+# # --- functions ---
 
-def on_click():
-    print('clicked')
+# def on_click():
+#     print('clicked')
 
-# --- main ---
+# # --- main ---
 
-root = tk.Tk()
+# root = tk.Tk()
 
-img = tk.PhotoImage(data="iVBORw0KGgoAAAANSUhEUgAAACMAAAAjAQMAAAAkFyEaAAAABlBMVEX///8AAABVwtN+AAAAJ0lEQVQI12P4DwQPGCDkAQYGhgRSSDv+BjwkqabZ/2/AQ+LVi+QLAGveQwjt4H11AAAAAElFTkSuQmCC")
+# img = tk.PhotoImage(data="iVBORw0KGgoAAAANSUhEUgAAACMAAAAjAQMAAAAkFyEaAAAABlBMVEX///8AAABVwtN+AAAAJ0lEQVQI12P4DwQPGCDkAQYGhgRSSDv+BjwkqabZ/2/AQ+LVi+QLAGveQwjt4H11AAAAAElFTkSuQmCC")
 
-for y in range(9):
-    for x in range(9):
-        button = tk.Button(root, image=img, command=on_click)
-        button.grid(row=y, column=x)
+# for y in range(9):
+#     for x in range(9):
+#         button = tk.Button(root, image=img, command=on_click)
+#         button.grid(row=y, column=x)
 
-root.mainloop()
+# root.mainloop()
+
+
+
+
+# from tkinter import *
+
+# class Colors(Frame):
+#     def __init__(self):
+#         Frame.__init__(self)
+#         self._image = PhotoImage(file="r.gif")
+#         self._imageLabel = Label(self, image=self._image)
+#         self._imageLabel.grid()
+
+#         self.master.title("Color Changer")
+#         self.grid()
+
+#         self.red = Scale(self, from_=0, to=255, label="Red", fg="red", )
+#         self.red.grid(row=0, column=1)
+
+#         self.green = Scale(self, from_=0, to=255, label="Green", fg='green')
+#         self.green.grid(row=0, column=2)
+
+#         self.blue = Scale(self, from_=0, to=255, label="Blue", fg="blue")
+#         self.blue.grid(row=0, column=3)
+
+#         self.button = Button(self, text="Change Colors", command=self.changeColor)
+#         self.button.grid(row=1, column=2)
+
+#     def changeColor(self):
+#         red = self.red.get()
+#         blue = self.blue.get()
+#         green = self.green.get()
+#         for y in range(self._image.height()):
+#             for x in range(self._image.width()):
+#                 self._image.put("#%02x%02x%02x" % (red,green,blue), (x, y))
+
+
+#     Colors().mainloop()
+
+# main()
+
+# from tkinter import *
+# from tkmacosx import Button, ColorVar, Marquee, Colorscale
+
+# root = Tk()
+# var = ColorVar(value='pink')
+# root['bg'] = var
+# m = Marquee(root, left_margin=30, bg= var, initial_delay=2000,
+#             text='Welcome to tkmacosx!! Slide the slider to change color :)')
+# m.pack(pady=(10,0))
+# b = Button(root, text='Button', borderless=1, fg=var, bg='black')
+# b.pack(pady=10)
+# c = Colorscale(root, variable=var, value='hex', height=25, mousewheel=0)
+# c.pack(pady=(0,10))
+
+# root.mainloop()
