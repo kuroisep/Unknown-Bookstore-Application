@@ -200,35 +200,24 @@ class Shop_main_screen:
     
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
-
-        self.username = StringVar()
-        self.password = StringVar()
-        self.confpassword = StringVar()
-        self.name = StringVar()
-        self.lastname = StringVar()
-        self.email = StringVar()
-        self.gender = StringVar()
-        self.gender_choice1 = IntVar()
-        self.gender_choice2 = IntVar()
-        self.telphone = StringVar()
         
         if self.user != []:
             ## NAME
             self.inner_infomation.create_text(150, 100, anchor=NW, text='Name : ')
-            self.username_entry = Entry(self.inner_infomation, textvariable=self.username,font=('Verdana',15))
+            self.username_entry = Entry(self.inner_infomation,font=('Verdana',15))
             self.username_entry.insert(0,self.user[0][3])
             self.username_entry.config(state=DISABLED)
             # print(self.username_entry["state"])
             self.inner_infomation.create_window(210,80,window=self.username_entry,anchor = 'nw')
             ##LASTNAME
             self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
-            self.lname_entry = Entry(self.inner_infomation, textvariable=self.lastname)
+            self.lname_entry = Entry(self.inner_infomation)
             self.lname_entry.insert(0,self.user[0][4])
             self.lname_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,155,window=self.lname_entry)
             ##GENDER
             self.inner_infomation.create_text(150, 200, anchor=NW, text='Gender : ')
-            self.gender_entry = Entry(self.inner_infomation, textvariable=self.gender)
+            self.gender_entry = Entry(self.inner_infomation)
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,205,window=self.gender_entry)
@@ -248,13 +237,13 @@ class Shop_main_screen:
             self.inner_infomation.create_window(350,255,window=self.birthday_year_entry)
             ##EMAIL
             self.inner_infomation.create_text(150, 300, anchor=NW, text='Email : ')
-            self.email_entry = Entry(self.inner_infomation, textvariable=self.email)
+            self.email_entry = Entry(self.inner_infomation)
             self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,305,window=self.email_entry)
             ##PHONE
             self.inner_infomation.create_text(150, 350, anchor=NW, text='Telphone : ')
-            self.telphone_entry = Entry(self.inner_infomation, textvariable=self.telphone)
+            self.telphone_entry = Entry(self.inner_infomation)
             self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,355,window=self.telphone_entry)
