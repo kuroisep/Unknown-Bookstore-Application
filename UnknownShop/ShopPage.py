@@ -370,6 +370,7 @@ class Shop_main_screen:
                 self.done_info_button.config(state=DISABLED)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'NAME'] = str(name_info).capitalize()
                 self.df.loc[self.df['USER'] == self.user[0][1], 'LNAME'] = str(lastname_info).capitalize()
+                self.df.loc[self.df['USER'] == self.user[0][1], 'GENDER'] = str(self.gender_entry.get())
                 self.df.loc[self.df['USER'] == self.user[0][1], 'BIRTHDAY'] = str(birthday_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'EMAIL'] = str(email_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
