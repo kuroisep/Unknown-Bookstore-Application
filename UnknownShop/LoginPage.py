@@ -50,7 +50,6 @@ class main_account_screen:
         """
 
 
-
         # Create Canvas
         canvas = Canvas(self.main_screen, width=1280, height=720, bd=0, highlightthickness=0, relief='ridge')
 
@@ -81,18 +80,17 @@ class main_account_screen:
         canvas.create_text(1000, 170, text="Signin", font=(self.myfont, 40))
 
         canvas.create_text(875, 250, text="Username", font=(self.myfont))
-        username_login_entry = Entry(
+        username_login_entry = ttk.Entry(
             textvariable=username_verify, width=30, font=20)
         canvas.create_window(1000, 290, window=username_login_entry)
 
         canvas.create_text(875, 340, text="Password", font=self.myfont)
-        password_login_entry = Entry(
+        password_login_entry = ttk.Entry(
             textvariable=password_verify, show='●', width=30, font=20)
         canvas.create_window(1000, 380, window=password_login_entry)
 
         img_login_path = "UnknownShop\Picture\LoginPage\login-button1.png"
-        img_login_button = ImageTk.PhotoImage(
-            Image.open(img_login_path).resize((200, 300)))
+        img_login_button = ImageTk.PhotoImage(Image.open(img_login_path).resize((200, 300)))
         login_button = Button(image=img_login_button, command=self.login_verify,
                             bd=0, highlightthickness=0, width=140, height=60)
         canvas.create_window(900, 450, window=login_button)
@@ -100,23 +98,23 @@ class main_account_screen:
 
 
         img_regis_path = "UnknownShop\Picture\LoginPage\\regis-button.png"
-        img_regis_button = ImageTk.PhotoImage(
-            Image.open(img_regis_path).resize((170, 80)))
-        regis_button = Button(image=img_regis_button,  width=140, height=60,
-                            command=self.register, highlightthickness=0, borderwidth=0)
-        canvas.create_window(1100, 450, window=regis_button)
+        img_regis_button = ImageTk.PhotoImage(Image.open(img_regis_path).resize((140, 60)))
+        regis_button = Button(image=img_regis_button, command=self.register ,
+                            bd=0, highlightthickness=0, width=140, height=60)
+        # canvas.create_window(1100, 450, window=regis_button)
+        regis_button.place(x=1040, y = 420)
 
         canvas.create_text(1230, 700, text="V.1.0.0", font=self.myfont)
 
         exit_button = Button(text="EXIT", command=self.confirm_closing,
                             bd=0, highlightthickness=0, width=20, height=3)
-        canvas.create_window(1100, 600, window=exit_button)
+        # canvas.create_window(1100, 600, window=exit_button)
+        exit_button.place(x=1100, y=600)
 
 
         self.main_screen.resizable(1, 1)
         self.main_screen.overrideredirect(1)
         self.main_screen.mainloop()
-
 
     def confirm_closing(self):
         if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -155,7 +153,7 @@ class main_account_screen:
 
     def login_sucess(self):
         self.login_success_screen = Toplevel(self.main_screen)
-        self.login_success_screen.title("Login Success")
+        self.login_success_screen.title("Login Success.")
         x = (960) - (400/2)
         y = (540) - (300/2)
         self.login_success_screen.geometry("400x300+%d+%d" % (x, y))
@@ -255,22 +253,22 @@ class main_account_screen:
         canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
 
         canvas.create_text(65, 150, text="Username *", font=self.myfont)
-        self.username_entry = Entry(self.register_screen, textvariable=self.username)
+        self.username_entry = ttk.Entry(self.register_screen, textvariable=self.username)
         canvas.create_window(115, 175, window=self.username_entry, width=180)
 
-        self.password_entry = Entry(self.register_screen, textvariable=self.password, show='●')
+        self.password_entry = ttk.Entry(self.register_screen, textvariable=self.password, show='●')
         canvas.create_text(290, 150, text="Password *", font=self.myfont)
-        canvas.create_window(400, 175, window=self.password_entry, width=180)
+        canvas.create_window(340, 175, window=self.password_entry, width=180)
 
-        self.confpassword_entry = Entry(self.register_screen, textvariable=self.confpassword, show='●')
+        self.confpassword_entry = ttk.Entry(self.register_screen, textvariable=self.confpassword, show='●')
         canvas.create_text(580, 150, text="Confirm Password *", font=self.myfont)
         canvas.create_window(610, 175, window=self.confpassword_entry, width=180)
 
-        self.name_entry = Entry(self.register_screen, textvariable=self.name)
+        self.name_entry = ttk.Entry(self.register_screen, textvariable=self.name)
         canvas.create_text(50, 225, text="Name *", font=self.myfont)
         canvas.create_window(115, 250, window=self.name_entry, width=180)
 
-        self.lastname_entry = Entry(self.register_screen, textvariable=self.lastname)
+        self.lastname_entry = ttk.Entry(self.register_screen, textvariable=self.lastname)
         canvas.create_text(292, 225, text="Last Name *", font=self.myfont)
         canvas.create_window(340, 250, window=self.lastname_entry, width=180)
 
@@ -307,16 +305,12 @@ class main_account_screen:
         self.birth_year_entry.current(0)
         canvas.create_window(630, 250, window=self.birth_year_entry)
         
-
-
-
-
         canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
-        self.email_entry = Entry(self.register_screen, textvariable=self.email)
+        self.email_entry = ttk.Entry(self.register_screen, textvariable=self.email)
         canvas.create_window(150, 335, window=self.email_entry, width=250)
 
         canvas.create_text(85, 385, text="Phone Number * ", font=self.myfont)
-        self.telphone_entry = Entry(self.register_screen, textvariable=self.telphone)
+        self.telphone_entry = ttk.Entry(self.register_screen, textvariable=self.telphone)
         canvas.create_window(150, 410, window=self.telphone_entry, width=250)
 
         helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
@@ -380,87 +374,90 @@ class main_account_screen:
         email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
         df = pandas.read_csv('login.csv')
-        checkuser = df['USER'].tolist()
-        if username_info in checkuser:
-            messagebox.showinfo("Info", "This Username Already Exists",
+        check_user = df['USER'].tolist()
+        if username_info in check_user:
+            messagebox.showinfo("Info", "This Username Already Exists.",
+                                parent=self.register_screen)
+        elif len(username_info) <= 8:
+            messagebox.showinfo("Info", "This Username Must have At Least 8 Characters.",
                                 parent=self.register_screen)
 
         elif (username_info == ''):
-            messagebox.showinfo("Info", "Please Enter Username",
+            messagebox.showinfo("Info", "Please Enter Username.",
                                 parent=self.register_screen)
 
         elif (password_info == ''):
-            messagebox.showinfo("Info", "Please Enter Password",
+            messagebox.showinfo("Info", "Please Enter Password.",
                                 parent=self.register_screen)
         elif (len(password_info) < 8):
-            messagebox.showinfo("Info", "Password Must Habe At Least 8 Characters",
+            messagebox.showinfo("Info", "Password Must Have At Least 8 Characters.",
                                 parent=self.register_screen)
 
         elif (confpassword_info == ''):
             messagebox.showinfo(
-                "Info", "Please Enter Confirm Password", parent=self.register_screen)
+                "Info", "Please Enter Confirm Password.", parent=self.register_screen)
 
         elif (password_info != confpassword_info):
-            messagebox.showerror("Error", "Password Not Match",
+            messagebox.showerror("Error", "Password Not Match.",
                                 parent=self.register_screen)
             self.password_entry.delete(0, END)
             self.confpassword_entry.delete(0, END)
 
         elif (name_info == ''):
             messagebox.showinfo(
-                "Info", "Please Enter First Name", parent=self.register_screen)
+                "Info", "Please Enter First Name.", parent=self.register_screen)
 
         elif (lastname_info == ''):
-            messagebox.showinfo("Info", "Please Enter Last Name",
+            messagebox.showinfo("Info", "Please Enter Last Name.",
                                 parent=self.register_screen)
 
         elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_month_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birthday", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birthday.", parent=self.register_screen)
        
         elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_month_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth day and Birth month", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth day and Birth month.", parent=self.register_screen)
         elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth day and Birth year", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth day and Birth year.", parent=self.register_screen)
         elif (str(self.birth_month_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth month and Birth year", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth month and Birth year.", parent=self.register_screen)
 
         elif (str(self.birth_date_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth day", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth day.", parent=self.register_screen)
         elif (str(self.birth_month_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth month", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth month.", parent=self.register_screen)
         elif (str(self.birth_year_entry.get()) == '----'):
-            messagebox.showinfo("Info", "Please Enter your Birth year", parent=self.register_screen)
+            messagebox.showinfo("Info", "Please Enter your Birth year.", parent=self.register_screen)
 
         elif (str(self.birth_month_entry.get()) == 'Feb'):
             if  (str(self.birth_date_entry.get()) == '29') and (int(self.birth_year_entry.get()) % 4 != 0 and int(self.birth_year_entry.get()) % 100 != 0 and int(self.birth_year_entry.get()) % 400 != 0):
-                messagebox.showinfo("Info", "Please Check your Birthday", parent=self.register_screen)
+                messagebox.showinfo("Info", "Please Check your Birthday.", parent=self.register_screen)
             elif (str(self.birth_date_entry.get()) == '30' or str(self.birth_date_entry.get()) == '31'):
-                    messagebox.showinfo("Info", "Please Check your Birthday", parent=self.register_screen)
+                    messagebox.showinfo("Info", "Please Check your Birthday.", parent=self.register_screen)
         elif (str(self.birth_date_entry.get()) == '30') and (str(self.birth_month_entry.get()) != ['Apr', 'Jun', 'Sep', 'Nov']):
             messagebox.showinfo(
-                "Info", "Please Check your Birthday", parent=self.register_screen)
+                "Info", "Please Check your Birthday.", parent=self.register_screen)
         elif (str(self.birth_date_entry.get()) == '31') and (str(self.birth_month_entry.get()) != ['Jan','Mar', 'May', 'Jul', 'Aug', 'Oct', 'Dec']):
             messagebox.showinfo(
-                "Info", "Please Check your Birthday", parent=self.register_screen)
+                "Info", "Please Check your Birthday.", parent=self.register_screen)
         
 
         elif (self.gender1.get() == 0 and self.gender2.get() == 0):
             messagebox.showinfo(
-                "Error", "Please Select Your Gender", parent=self.register_screen)
+                "Error", "Please Select Your Gender.", parent=self.register_screen)
                                                                    
         elif (email_info == ''):
             messagebox.showinfo(
-                "Info", "Please Enter Your Email", parent=self.register_screen)
+                "Info", "Please Enter Your Email.", parent=self.register_screen)
 
         elif (email_regex.match(email_info) == None):
-            messagebox.showerror("Error", "Email Invalid", parent=self.register_screen)
+            messagebox.showerror("Error", "Email Invalid.", parent=self.register_screen)
 
         elif (tel_info == ''):
             messagebox.showinfo(
-                "Info", "Please Enter Phone Number", parent=self.register_screen)
+                "Info", "Please Enter Phone Number.", parent=self.register_screen)
         
         elif (tel_info.isdigit() == False or len(tel_info) != 10):
-            messagebox.showerror("Error", "Phone Number Invalid",parent=self.register_screen)
+            messagebox.showerror("Error", "Phone Number Invalid.",parent=self.register_screen)
             self.telphone_entry.delete(0,END)
         
         else:
