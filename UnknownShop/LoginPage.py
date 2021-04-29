@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import font as tkFont
 from tkinter.ttk import Combobox
+from tkinter import ttk
 import pandas
 from PIL import ImageTk, Image
 import re
@@ -35,6 +36,21 @@ class main_account_screen:
         bg_path = "UnknownShop\Picture\LoginPage\LOGIN.png"
         bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
+        """ 
+        THEAM
+        """
+        style = ttk.Style(self.main_screen)
+        # Import the tcl file
+        self.main_screen.tk.call('source', 'UnknownShop/azure.tcl')
+
+        # Set the theme with the theme_use method
+        style.theme_use('azure')
+        """ 
+        THEAM
+        """
+
+
+
         # Create Canvas
         canvas = Canvas(self.main_screen, width=1280, height=720, bd=0, highlightthickness=0, relief='ridge')
 
@@ -51,6 +67,8 @@ class main_account_screen:
 
         global username_login_entry
         global password_login_entry
+
+
 
         img_logo_path = "UnknownShop\Picture\LoginPage\logo.png"
         img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((200, 200)))

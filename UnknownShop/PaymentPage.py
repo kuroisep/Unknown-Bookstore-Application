@@ -21,6 +21,19 @@ class Payment_screen:
         canvas.pack(fill="both", expand=True)
         canvas.create_image(0, 0, image=bg, anchor="nw")
 
+        """ 
+        THEAM
+        """
+        style = ttk.Style(self.shop_window)
+        # Import the tcl file
+        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+
+        # Set the theme with the theme_use method
+        style.theme_use('azure')
+        """ 
+        THEAM
+        """
+
         self.payment_window.resizable(0, 0)
         self.payment_window.mainloop()
 RunMain = Payment_screen()
