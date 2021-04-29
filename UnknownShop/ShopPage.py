@@ -145,11 +145,15 @@ class Shop_main_screen:
         
         
     def button_state(self):
+        
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
         self.canvas.create_image(200,200,image=self.img_button1)
-        self.button1 = Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage)
-        self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
+        self.button1 = Button(self.shop_window ,image=self.img_button1,command = self.show_infomationPage)
+        
+        
+        # self.button1.pack()
+        # self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
@@ -172,13 +176,15 @@ class Shop_main_screen:
         button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
         self.canvas.create_image(200,600,image=self.img_button5)
-        self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_show_window)
+        self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_canvas)
         self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
 
         button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
         self.button6 = Button(self.shop_window, image=self.img_button6, command=self.delete_show_window)
         self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
+
+        
 
     def get_data(self, row, column):
         self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
