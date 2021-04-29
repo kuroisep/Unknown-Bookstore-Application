@@ -259,14 +259,14 @@ class Shop_main_screen:
             self.telphone_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,355,window=self.telphone_entry)
             ##EDIT BUTTON
-            self.edit_info_button = Button(self.inner_infomation,text='Edit', command=self.edit_infomation)
+            self.edit_info_button = Button(self.inner_infomation,text='Edit', command=self.edit_infomation_state)
             self.inner_infomation.create_window(275, 450, window=self.edit_info_button, anchor="nw")
             ##DONE BUTTON
-            self.done_info_button = Button(self.inner_infomation,text='Done',state=DISABLED, command=self.edit_infomation)
-            self.inner_infomation.create_window(350, 450, window=self.done_info_button, anchor="nw")
+            self.done_info_button = Button(self.inner_infomation,text='Done',state=DISABLED, command=self.edit_infomation_state)
+            self.inner_infomation.create_window(370, 450, window=self.done_info_button, anchor="nw")
 
 
-    def edit_infomation(self):
+    def edit_infomation_state(self):
         if str(self.username_entry['state']) == 'disabled':
             self.username_entry.config(state=NORMAL)
             self.lname_entry.config(state=NORMAL)
@@ -279,16 +279,17 @@ class Shop_main_screen:
             self.edit_info_button.config(state=DISABLED)
             self.done_info_button.config(state=NORMAL)
         else:
-            self.username_entry.config(state=DISABLED)
-            self.lname_entry.config(state=DISABLED)
-            self.gender_entry.config(state=DISABLED)
-            self.birthday_date_entry.config(state=DISABLED)
-            self.birthday_month_entry.config(state=DISABLED)
-            self.birthday_year_entry.config(state=DISABLED)
-            self.email_entry.config(state=DISABLED)
-            self.telphone_entry.config(state=DISABLED)
-            self.edit_info_button.config(state=NORMAL)
-            self.done_info_button.config(state=DISABLED)
+            if messagebox.askokcancel("Confirm", "Are you sure?"):
+                self.username_entry.config(state=DISABLED)
+                self.lname_entry.config(state=DISABLED)
+                self.gender_entry.config(state=DISABLED)
+                self.birthday_date_entry.config(state=DISABLED)
+                self.birthday_month_entry.config(state=DISABLED)
+                self.birthday_year_entry.config(state=DISABLED)
+                self.email_entry.config(state=DISABLED)
+                self.telphone_entry.config(state=DISABLED)
+                self.edit_info_button.config(state=NORMAL)
+                self.done_info_button.config(state=DISABLED)
 
 
     def categoryPage(self):
