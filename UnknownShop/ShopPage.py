@@ -23,7 +23,7 @@ class Shop_main_screen:
         y = (420) - (500/2)
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
-        self.canvas = Canvas(self.shop_window, width=1280, height=720)
+        self.canvas = Canvas(self.shop_window, width=1280, height=720, highlightthickness=0, borderwidth=0)
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -152,15 +152,15 @@ class Shop_main_screen:
         self.canvas.create_image(200,200,image=self.img_button1)
         self.button1 = Button(self.shop_window ,image=self.img_button1,command = self.show_infomationPage)
         
-        
         # self.button1.pack()
-        # self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
+        self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
         self.canvas.create_image(200,300,image=self.img_button2)
         self.button2 = Button(image=self.img_button2,command= self.show_categoryPage)
         self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
+
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
         self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
