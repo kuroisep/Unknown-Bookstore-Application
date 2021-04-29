@@ -34,10 +34,10 @@ class Shop_main_screen:
         """
         style = ttk.Style(self.shop_window)
         # Import the tcl file
-        self.shop_window.tk.call('source', 'UnknownShop/azure-dark.tcl')
+        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
 
         # Set the theme with the theme_use method
-        style.theme_use('azure-dark')
+        style.theme_use('azure')
         """ 
         THEAM
         """
