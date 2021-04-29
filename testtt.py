@@ -251,3 +251,310 @@
 # Button.pack(padx = 5, pady = 5)
 
 # root.mainloop()
+
+
+
+
+# # Upload picture to
+# from tkinter import *
+# from tkinter.ttk import *
+# from tkinter.filedialog import askopenfile 
+# import time
+
+# ws = Tk()
+# ws.title('PythonGuides')
+# ws.geometry('400x200') 
+
+
+# def open_file():
+#     file_path = askopenfile(mode='r', filetypes=[('Image Files', '*jpeg')])
+#     if file_path is not None:
+#         pass
+
+
+# def uploadFiles():
+#     pb1 = Progressbar(
+#         ws, 
+#         orient=HORIZONTAL, 
+#         length=300, 
+#         mode='determinate'
+#         )
+#     pb1.grid(row=4, columnspan=3, pady=20)
+#     for i in range(5):
+#         ws.update_idletasks()
+#         pb1['value'] += 20
+#         time.sleep(1)
+#     pb1.destroy()
+#     Label(ws, text='File Uploaded Successfully!', foreground='green').grid(row=4, columnspan=3, pady=10)
+        
+    
+    
+# adhar = Label(
+#     ws, 
+#     text='Upload Government id in jpg format '
+#     )
+# adhar.grid(row=0, column=0, padx=10)
+
+# adharbtn = Button(
+#     ws, 
+#     text ='Choose File', 
+#     command = lambda:open_file()
+#     ) 
+# adharbtn.grid(row=0, column=1)
+
+# dl = Label(
+#     ws, 
+#     text='Upload Driving License in jpg format '
+#     )
+# dl.grid(row=1, column=0, padx=10)
+
+# dlbtn = Button(
+#     ws, 
+#     text ='Choose File ', 
+#     command = lambda:open_file()
+#     ) 
+# dlbtn.grid(row=1, column=1)
+
+# ms = Label(
+#     ws, 
+#     text='Upload Marksheet in jpg format '
+#     )
+# ms.grid(row=2, column=0, padx=10)
+
+# msbtn = Button(
+#     ws, 
+#     text ='Choose File', 
+#     command = lambda:open_file()
+#     ) 
+# msbtn.grid(row=2, column=1)
+
+# upld = Button(
+#     ws, 
+#     text='Upload Files', 
+#     command=uploadFiles
+#     )
+# upld.grid(row=3, columnspan=3, pady=10)
+
+
+
+# ws.mainloop()
+# import the necessary packages
+
+# from tkinter import *
+# from PIL import Image
+# from PIL import ImageTk
+# import tkFileDialog
+# import cv2
+# def select_image():
+# 	# grab a reference to the image panels
+# 	global panelA, panelB
+# 	# open a file chooser dialog and allow the user to select an input
+# 	# image
+# 	path = tkFileDialog.askopenfilename()
+# # ensure a file path was selected
+# 	if len(path) > 0:
+# 		# load the image from disk, convert it to grayscale, and detect
+# 		# edges in it
+# 		image = cv2.imread(path)
+# 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# 		edged = cv2.Canny(gray, 50, 100)
+# 		# OpenCV represents images in BGR order; however PIL represents
+# 		# images in RGB order, so we need to swap the channels
+# 		image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+# 		# convert the images to PIL format...
+# 		image = Image.fromarray(image)
+# 		edged = Image.fromarray(edged)
+# 		# ...and then to ImageTk format
+# 		image = ImageTk.PhotoImage(image)
+# 		edged = ImageTk.PhotoImage(edged)
+# # if the panels are None, initialize them
+# 		if panelA is None or panelB is None:
+# 			# the first panel will store our original image
+# 			panelA = Label(image=image)
+# 			panelA.image = image
+# 			panelA.pack(side="left", padx=10, pady=10)
+# 			# while the second panel will store the edge map
+# 			panelB = Label(image=edged)
+# 			panelB.image = edged
+# 			panelB.pack(side="right", padx=10, pady=10)
+# 		# otherwise, update the image panels
+# 		else:
+# 			# update the pannels
+# 			panelA.configure(image=image)
+# 			panelB.configure(image=edged)
+# 			panelA.image = image
+# 			panelB.image = edged
+# # initialize the window toolkit along with the two image panels
+# root = Tk()
+# panelA = None
+# panelB = None
+# # create a button, then when pressed, will trigger a file chooser
+# # dialog and allow the user to select an input image; then add the
+# # button the GUI
+# btn = Button(root, text="Select an image", command=select_image)
+# btn.pack(side="bottom", fill="both", expand="yes", padx="10", pady="10")
+# # kick off the GUI
+# root.mainloop()
+
+
+
+# try:
+#     import os
+#     import tkinter as tk
+#     import tkinter.ttk as ttk
+#     from tkinter import filedialog
+# except ImportError:
+#     import Tkinter as tk
+#     import ttk
+#     import tkFileDialog as filedialog
+ 
+ 
+# root = tk.Tk()
+ 
+# style = ttk.Style(root)
+# style.theme_use("clam")
+ 
+ 
+# def c_open_file_old():
+#     rep = filedialog.askopenfilenames(
+#     	parent=root,
+#     	initialdir='/',
+#     	initialfile='tmp',
+#     	filetypes=[
+#     		("PNG", "*.png"),
+#     		("JPEG", "*.jpg"),
+#     		("All files", "*")])
+#     print(rep)
+#     try:
+# 	    os.startfile(rep[0])
+#     except IndexError:
+#         print("No file selected")
+ 
+# ttk.Button(root, text="Open files", command=c_open_file_old).grid(row=1, column=0, padx=4, pady=4, sticky='ew')
+ 
+# root.mainloop()
+
+
+
+
+
+
+
+from tkinter import *
+from PIL import ImageTk, Image
+from tkinter import filedialog
+import os
+
+root = Tk()
+root.geometry("550x600+300+150")
+root.resizable(width=True, height=True)
+
+def openfn():
+    filename = filedialog.askopenfilename(title='open')
+    print(filename)
+    return filename
+def open_img():
+    x = openfn()
+    img = Image.open(x)
+    img = img.resize((400, 400), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
+    panel = Label(root, image=img)
+    panel.image = img
+    panel.pack()
+def save_img():
+    x = openfn().waitKey(0)
+    #Check if user hits ‘c’ or ‘g’ key
+    if( k == ord('c') ):
+        x.imwrite('color.jpg', color_img )
+        print("Image is saved color")
+        x.destroyAllWindows()
+    if( k == ord('g') ):
+        x.imwrite('gray.jpg', gray_img )
+        print("Image saved in grayscale")
+        x.destroyAllWindows()
+
+btn = Button(root, text='open image', command=open_img).pack()
+bbb = Button(root, text='save image', command=save_img).pack()
+
+
+root.mainloop()
+
+
+
+
+
+
+
+
+
+
+# # VideoCapture
+
+# from tkinter import *
+# from PIL import ImageTk, Image
+# import cv2
+
+# root2=Tk()
+# root2.title('Video preview')
+
+
+# #Layout of display
+# topFrame =Frame(root2,width=100,height=100)
+# topFrame.grid(rowspan=2)
+
+
+
+# #topFrame
+# lmain = Label(topFrame,width=600,height=500)
+# lmain.grid()
+
+# cap=cv2.VideoCapture(0)
+
+
+# def video_stream():
+
+
+#     _, frame = cap.read()
+  
+
+   
+#     cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+#     img = Image.fromarray(cv2image)
+#     imgtk = ImageTk.PhotoImage(image=img)
+#     lmain.imgtk = imgtk
+#     lmain.configure(image=imgtk)
+#     lmain.after(1, video_stream)
+
+
+# video_stream()
+
+   
+# root2.mainloop()
+
+
+
+
+
+
+
+#capture
+
+import cv2
+#Reading images in color and grayscale
+
+color_img = cv2.imread('Mayuyu.jpg')
+gray_img = cv2.imread('Mayuyu.jpg',0)
+#Displaying the image
+cv2.imshow('Cat image', color_img)
+#Storing the key pressed by user 
+k = cv2.waitKey(0)
+#Check if user hits ‘c’ or ‘g’ key
+if( k == ord('c') ):
+  cv2.imwrite('color.jpg', color_img )
+  print("Image is saved color")
+  cv2.destroyAllWindows()
+if( k == ord('g') ):
+  cv2.imwrite('gray.jpg', gray_img )
+  print("Image saved in grayscale")
+  cv2.destroyAllWindows()
+
