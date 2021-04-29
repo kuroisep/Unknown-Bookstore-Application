@@ -27,10 +27,10 @@ root.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, xCordinate, yCordi
 style = ttk.Style(root)
 
 # Import the tcl file
-root.tk.call(path ='Azure-ttk-theme/azure.tcl')
+root.tk.call('source', path ='Azure-ttk-theme/azure.tcl')
 
 # Set the theme with the theme_use method
-style.theme_use(path="Azure-ttk-theme/azure")
+style.theme_use(path="UnknownShop/Azure-ttk-theme/azure")
 
 
 # Creating lists for the Comboboxes

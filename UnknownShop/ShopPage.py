@@ -43,6 +43,8 @@ class Shop_main_screen:
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
+        self.deliveryPage()
+
 
         self.create_background()
 
@@ -70,12 +72,10 @@ class Shop_main_screen:
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
 
     def create_logo(self):
-        logo_path = "Shop_Page\PICTURE\logo.png"
-        logo = ImageTk.PhotoImage(Image.open(logo_path).resize((150, 150)))
-
-        label1 = tk.Label(image=logo)
-        label1.image = logo
-        label1.place(x=0, y=0)
+        
+        img_logo_path = "Shop_Page\PICTURE\logo.png"
+        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
+        self.canvas.create_image(15, 15, image=self.img_logo, anchor="nw")
 
     def set_banner(self):
         banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
@@ -85,7 +85,7 @@ class Shop_main_screen:
         self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
         self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
 
-        self.banner_label = tk.Label(self.shop_window)
+        self.banner_label = tk.Label(self.shop_window,compound='none')
         self.banner_label.pack()
 
         dot1_path = "Shop_Page\PICTURE\movingdot1.png"
@@ -99,25 +99,32 @@ class Shop_main_screen:
         self.dot_label.pack()
 
     def moveBanner(self):
-        # global after_id
-        # if self.count == 30 :
-        #     self.count = 0
+        global after_id
+       
+        if self.count == 30 :
+            self.count = 0
 
-        # if self.count == 0 :
-        #     self.banner_label.config(image = self.banner1)
-        #     self.dot_label.config(image = self.dot1)
-        #     self.banner_label.place(x=330,y=100)
-        #     self.dot_label.place(x=630,y=405)
-        # elif self.count == 10 :
-        #     self.banner_label.config(image = self.banner2)
-        #     self.dot_label.config(image = self.dot2)
-        # elif self.count == 20 :
-        #     self.banner_label.config(image = self.banner3)
-        #     self.dot_label.config(image = self.dot3)
+        if self.count == 0 :
+            self.banner_label.config(image = self.banner1)
+            self.dot_label.config(image = self.dot1)
+            self.canvas.create_image(700,250,image=self.banner1)
+            self.canvas.create_image(700,425,image=self.dot1)
+            self.banner_label.place()
+            self.dot_label.place()
+        elif self.count == 10 :
+            self.banner_label.config(image = self.banner2)
+            self.canvas.create_image(700,250,image=self.banner2)
+            self.canvas.create_image(700,425,image=self.dot2)
+            self.dot_label.config(image = self.dot2)
+        elif self.count == 20 :
+            self.banner_label.config(image = self.banner3)
+            self.canvas.create_image(700,250,image=self.banner3)
+            self.canvas.create_image(700,425,image=self.dot3)
+            self.dot_label.config(image = self.dot3)
 
-        # self.count += 1
-        # after_id = self.banner_label.after(200, self.moveBanner)
-        pass
+        self.count += 1
+        after_id = self.banner_label.after(200, self.moveBanner)
+        
 
     def search_bar(self): 
         self.canvas.create_text(385, 61, text="Search By", font=('TRACK', 12))
@@ -140,29 +147,38 @@ class Shop_main_screen:
     def button_state(self):
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        self.button1 = Button(image=self.img_button1,command = self.show_infomationPage)
-        self.canvas.create_window(0, 222, window=self.button1, anchor="nw")
+        self.canvas.create_image(200,200,image=self.img_button1)
+        self.button1 = Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage)
+        self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
+        self.canvas.create_image(200,300,image=self.img_button2)
         self.button2 = Button(image=self.img_button2,command= self.show_categoryPage)
-        self.canvas.create_window(0, 307, window=self.button2, anchor="nw")
+        self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
         self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
+        self.canvas.create_image(200,400,image=self.img_button3)
         self.button3 = Button(image=self.img_button3,command=self.show_paymentPage)
-        self.canvas.create_window(0, 393, window=self.button3, anchor="nw")
+        self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
 
         button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
         self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
-        self.button4 = Button(image=self.img_button4)
-        self.canvas.create_window(0, 477, window=self.button4, anchor="nw")
+        self.canvas.create_image(200,500,image=self.img_button4)
+        self.button4 = Button(image=self.img_button4,command=self.show_deliveryPage)
+        self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
 
         button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
+        self.canvas.create_image(200,600,image=self.img_button5)
         self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_show_window)
-        self.canvas.create_window(0, 563, window=self.button5, anchor="nw")
+        self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
 
+        button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
+        self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
+        self.button6 = Button(self.shop_window, image=self.img_button6, command=self.delete_show_window)
+        self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
 
     def get_data(self, row, column):
         self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -234,7 +250,9 @@ class Shop_main_screen:
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
-
+    def deliveryPage(self):
+        self.inner_delivery = Canvas(self.canvas, width=1000, height=550)   
+        self.inner_delivery.create_text(500, 275, font = 50, anchor=CENTER, text="deliveryPage")
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
@@ -245,12 +263,15 @@ class Shop_main_screen:
     def show_paymentPage(self):
         self.delete_canvas()
         self.canvas.create_window(250,150, anchor=NW, window=self.inner_payment)
-
+    def show_deliveryPage(self):
+        self.delete_canvas()
+        self.canvas.create_window(250,150, anchor=NW, window=self.inner_delivery)
 
     def delete_canvas(self): # ปุ่ม 2                #3
-        self.canvas.create_window(1000, 700, anchor=NW, window=self.inner_infomation)
-        self.canvas.create_window(1000,750, anchor=NW, window=self.inner_category)
-        self.canvas.create_window(1000,750, anchor=NW, window=self.inner_payment)
+        self.canvas.create_window(2000, 700, anchor=NW, window=self.inner_infomation)
+        self.canvas.create_window(2200,750, anchor=NW, window=self.inner_category)
+        self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
+        self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
         
          # ลบหน้า info
     
