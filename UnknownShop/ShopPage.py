@@ -7,6 +7,7 @@ from tkinter.ttk import *
 from tkinter import messagebox
 import pandas
 import os, sys
+import re
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -244,10 +245,10 @@ class Shop_main_screen:
             self.inner_infomation.create_text(150, 50, anchor=NW, text='Username : {}'.format(self.user[0][1]))
             ## NAME
             self.inner_infomation.create_text(150, 100, anchor=NW, text='Name : ')
-            self.username_entry = Entry(self.inner_infomation,font=('Verdana',15))
-            self.username_entry.insert(0,self.user[0][3])
-            self.username_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(210,80,window=self.username_entry,anchor = 'nw')
+            self.name_entry = Entry(self.inner_infomation,font=('Verdana',15))
+            self.name_entry.insert(0,self.user[0][3])
+            self.name_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(210,80,window=self.name_entry,anchor = 'nw')
             ##LASTNAME
             self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
             self.lname_entry = Entry(self.inner_infomation)
@@ -295,8 +296,8 @@ class Shop_main_screen:
 
 
     def edit_infomation_state(self):
-        if str(self.username_entry['state']) == 'disabled':
-            self.username_entry.config(state=NORMAL)
+        if str(self.name_entry['state']) == 'disabled':
+            self.name_entry.config(state=NORMAL)
             self.lname_entry.config(state=NORMAL)
             self.gender_entry.config(state=NORMAL)
             self.birthday_date_entry.config(state=NORMAL)
@@ -308,7 +309,7 @@ class Shop_main_screen:
             self.done_info_button.config(state=NORMAL)
         else:
             if messagebox.askokcancel("Confirm", "Are you sure?"):
-                self.username_entry.config(state=DISABLED)
+                self.name_entry.config(state=DISABLED)
                 self.lname_entry.config(state=DISABLED)
                 self.gender_entry.config(state=DISABLED)
                 self.birthday_date_entry.config(state=DISABLED)
@@ -318,6 +319,53 @@ class Shop_main_screen:
                 self.telphone_entry.config(state=DISABLED)
                 self.edit_info_button.config(state=NORMAL)
                 self.done_info_button.config(state=DISABLED)
+                self.edit_infomation_file()
+
+    def edit_infomation_file(self):
+        name_info = self.name_entry.get()
+        lastname_info = self.lname_entry.get()
+        email_info = self.email_entry.get()
+        # gender_info = 'MALE'
+        tel_info = self.telphone_entry.get()
+        birthday_info = str(self.birthday_date_entry.get()) + '/' +  str(self.birthday_month_entry.get()) + '/' + str(self.birthday_year_entry.get())
+
+        email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
+
+        if (name_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter First Name", parent=self.shop_window)
+
+        elif (lastname_info == ''):
+            messagebox.showinfo("Info", "Please Enter Last Name",
+                                parent=self.shop_window)
+
+        # elif (self.gender1.get() == 0 and self.gender2.get() == 0):
+        #     messagebox.showinfo(
+        #         "Error", "Please Select Your Gender", parent=self.register_screen)
+
+        elif (email_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Your Email", parent=self.shop_window)
+
+        elif (email_regex.match(email_info) == None):
+            messagebox.showerror("Error", "Email Invalid", parent=self.shop_window)
+
+        elif (tel_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Phone Number", parent=self.shop_window)
+        
+        elif (tel_info.isdigit() == False or len(tel_info) != 10):
+            messagebox.showerror("Error", "Phone Number Invalid",parent=self.shop_window)
+            self.telphone_entry.delete(0,END)
+
+        else:
+            self.df.loc[self.df['USER'] == self.user[0][1], 'NAME'] = str(name_info).capitalize()
+            self.df.loc[self.df['USER'] == self.user[0][1], 'LNAME'] = str(lastname_info).capitalize()
+            self.df.loc[self.df['USER'] == self.user[0][1], 'BIRTHDAY'] = str(birthday_info)
+            self.df.loc[self.df['USER'] == self.user[0][1], 'EMAIL'] = str(email_info)
+            self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
+            self.df.to_csv("login.csv", index=False)
+            
 
 
     def categoryPage(self):
