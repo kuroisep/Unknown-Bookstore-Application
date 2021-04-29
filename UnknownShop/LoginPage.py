@@ -233,10 +233,6 @@ class main_account_screen:
         self.gender_choice1 = IntVar(self.register_screen)
         self.gender_choice2 = IntVar(self.register_screen)
         self.telphone = StringVar()
-        self.birth_date = StringVar()
-        self.birth_date.set('1')
-        self.birth_month = StringVar()
-        self.birth_year = StringVar()
 
         canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
 
@@ -343,7 +339,10 @@ class main_account_screen:
         self.telphone_entry.delete(0, END)
         self.gender_choice1.config(state='normal')
         self.gender_choice2.config(state='normal')
-
+        self.birth_date_entry.current(0)
+        self.birth_month_entry.current(0)
+        self.birth_year_entry.current(0)
+        
 
     def register_user(self):
         username_info = self.username.get()
@@ -354,6 +353,7 @@ class main_account_screen:
         email_info = self.email.get()
         gender_info = 'MALE'
         tel_info = self.telphone.get()
+        birthday_info = str(self.birth_date_entry.get()) + '/' +  str(self.birth_month_entry.get()) + '/' + str(self.birth_year_entry.get())
 
         email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
@@ -420,7 +420,7 @@ class main_account_screen:
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(['F',username_info, password_info,
-                                    name_info.capitalize(), lastname_info.capitalize(), gender_info, email_info, str(tel_info)])
+                                    name_info.capitalize(), lastname_info.capitalize(), gender_info,birthday_info, email_info, str(tel_info)])
                 self.clear_user()
                 self.register_screen.destroy()
                 messagebox.showinfo("Alert", "Register Sucessfully!!")

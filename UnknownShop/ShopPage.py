@@ -31,14 +31,15 @@ class Shop_main_screen:
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
             print("NO USER LOGIN FOUND")
-            self.user = [['T', 'NO USER LOGIN FOUND', '', 'You are not logged in', 'You are not logged in', 'You are not logged in', 'You are not logged in', 'You are not logged in']]
+            self.user = [['T', 'NO USER LOGIN FOUND', '', 'You are not logged in', 'You are not logged in', 'You are not logged in','-/-/-', 'You are not logged in', 'You are not logged in']]
         #self.user[0][1] = username
         #self.user[0][2] = password
         #self.user[0][3] = name
         #self.user[0][4] = lastname
         #self.user[0][5] = gender
-        #self.user[0][6] = email
-        #self.user[0][7] = telphone
+        #self.user[0][6] = birthday
+        #self.user[0][7] = email
+        #self.user[0][8] = telphone
 
         self.infomationPage() # หน้า info 
         self.categoryPage()
@@ -231,18 +232,64 @@ class Shop_main_screen:
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
             self.inner_infomation.create_window(275,205,window=self.gender_entry)
+            ##BIRTHDAY
+            self.inner_infomation.create_text(150, 250, anchor=NW, text='Birthday : ')
+            self.birthday_date_entry = Entry(self.inner_infomation,width= 3)
+            self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
+            self.birthday_date_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(250,255,window=self.birthday_date_entry)
+            self.birthday_month_entry = Entry(self.inner_infomation,width= 5)
+            self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
+            self.birthday_month_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(300,255,window=self.birthday_month_entry)
+            self.birthday_year_entry = Entry(self.inner_infomation,width= 5)
+            self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
+            self.birthday_year_entry.config(state=DISABLED)
+            self.inner_infomation.create_window(350,255,window=self.birthday_year_entry)
             ##EMAIL
-            self.inner_infomation.create_text(150, 250, anchor=NW, text='Email : ')
+            self.inner_infomation.create_text(150, 300, anchor=NW, text='Email : ')
             self.email_entry = Entry(self.inner_infomation, textvariable=self.email)
-            self.email_entry.insert(0,self.user[0][6])
+            self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,255,window=self.email_entry)
+            self.inner_infomation.create_window(275,305,window=self.email_entry)
             ##PHONE
-            self.inner_infomation.create_text(150, 300, anchor=NW, text='Telphone : ')
+            self.inner_infomation.create_text(150, 350, anchor=NW, text='Telphone : ')
             self.telphone_entry = Entry(self.inner_infomation, textvariable=self.telphone)
-            self.telphone_entry.insert(0,self.user[0][7])
+            self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,305,window=self.telphone_entry)
+            self.inner_infomation.create_window(275,355,window=self.telphone_entry)
+            ##EDIT BUTTON
+            self.edit_info_button = Button(self.inner_infomation,text='Edit', command=self.edit_infomation)
+            self.inner_infomation.create_window(275, 450, window=self.edit_info_button, anchor="nw")
+            ##DONE BUTTON
+            self.done_info_button = Button(self.inner_infomation,text='Done',state=DISABLED, command=self.edit_infomation)
+            self.inner_infomation.create_window(350, 450, window=self.done_info_button, anchor="nw")
+
+
+    def edit_infomation(self):
+        if str(self.username_entry['state']) == 'disabled':
+            self.username_entry.config(state=NORMAL)
+            self.lname_entry.config(state=NORMAL)
+            self.gender_entry.config(state=NORMAL)
+            self.birthday_date_entry.config(state=NORMAL)
+            self.birthday_month_entry.config(state=NORMAL)
+            self.birthday_year_entry.config(state=NORMAL)
+            self.email_entry.config(state=NORMAL)
+            self.telphone_entry.config(state=NORMAL)
+            self.edit_info_button.config(state=DISABLED)
+            self.done_info_button.config(state=NORMAL)
+        else:
+            self.username_entry.config(state=DISABLED)
+            self.lname_entry.config(state=DISABLED)
+            self.gender_entry.config(state=DISABLED)
+            self.birthday_date_entry.config(state=DISABLED)
+            self.birthday_month_entry.config(state=DISABLED)
+            self.birthday_year_entry.config(state=DISABLED)
+            self.email_entry.config(state=DISABLED)
+            self.telphone_entry.config(state=DISABLED)
+            self.edit_info_button.config(state=NORMAL)
+            self.done_info_button.config(state=DISABLED)
+
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
