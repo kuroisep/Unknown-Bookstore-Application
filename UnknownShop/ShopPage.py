@@ -254,39 +254,48 @@ class Shop_main_screen:
             self.lname_entry = Entry(self.inner_infomation)
             self.lname_entry.insert(0,self.user[0][4])
             self.lname_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,155,window=self.lname_entry)
+            self.inner_infomation.create_window(280,155,window=self.lname_entry)
             ##GENDER
             self.inner_infomation.create_text(150, 200, anchor=NW, text='Gender : ')
-            self.gender_entry = Entry(self.inner_infomation)
+            self.gender_entry = Combobox(self.inner_infomation, width=6,value=['MALE','FEMALE']) 
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,205,window=self.gender_entry)
+            self.inner_infomation.create_window(250,200,window=self.gender_entry)
             ##BIRTHDAY
+                    #DATE
             self.inner_infomation.create_text(150, 250, anchor=NW, text='Birthday : ')
-            self.birthday_date_entry = Entry(self.inner_infomation,width= 3)
+            self.birthday_date_entry = Combobox(self.inner_infomation, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
+                                                                             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
+                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
             self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
             self.birthday_date_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(250,255,window=self.birthday_date_entry)
-            self.birthday_month_entry = Entry(self.inner_infomation,width= 5)
+            self.inner_infomation.create_window(240,255,window=self.birthday_date_entry)
+                    #MONTH
+            self.birthday_month_entry = Combobox(self.inner_infomation, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
             self.inner_infomation.create_window(300,255,window=self.birthday_month_entry)
-            self.birthday_year_entry = Entry(self.inner_infomation,width= 5)
+                    #YEAR
+            year_list = []
+            for i in range(1920,2022):
+                year_list.append(str(i))
+            self.birthday_year_entry = Combobox(self.inner_infomation, width=5, value=year_list)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(350,255,window=self.birthday_year_entry)
+            self.inner_infomation.create_window(370,255,window=self.birthday_year_entry)
             ##EMAIL
             self.inner_infomation.create_text(150, 300, anchor=NW, text='Email : ')
             self.email_entry = Entry(self.inner_infomation)
             self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,305,window=self.email_entry)
+            self.inner_infomation.create_window(280,305,window=self.email_entry)
             ##PHONE
             self.inner_infomation.create_text(150, 350, anchor=NW, text='Telphone : ')
             self.telphone_entry = Entry(self.inner_infomation)
             self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(275,355,window=self.telphone_entry)
+            self.inner_infomation.create_window(280,355,window=self.telphone_entry)
             ##EDIT BUTTON
             self.edit_info_button = Button(self.inner_infomation,text='Edit', command=self.edit_infomation_state)
             self.inner_infomation.create_window(275, 450, window=self.edit_info_button, anchor="nw")
@@ -308,18 +317,7 @@ class Shop_main_screen:
             self.edit_info_button.config(state=DISABLED)
             self.done_info_button.config(state=NORMAL)
         else:
-            if messagebox.askokcancel("Confirm", "Are you sure?"):
-                self.name_entry.config(state=DISABLED)
-                self.lname_entry.config(state=DISABLED)
-                self.gender_entry.config(state=DISABLED)
-                self.birthday_date_entry.config(state=DISABLED)
-                self.birthday_month_entry.config(state=DISABLED)
-                self.birthday_year_entry.config(state=DISABLED)
-                self.email_entry.config(state=DISABLED)
-                self.telphone_entry.config(state=DISABLED)
-                self.edit_info_button.config(state=NORMAL)
-                self.done_info_button.config(state=DISABLED)
-                self.edit_infomation_file()
+            self.edit_infomation_file()
 
     def edit_infomation_file(self):
         name_info = self.name_entry.get()
@@ -359,13 +357,24 @@ class Shop_main_screen:
             self.telphone_entry.delete(0,END)
 
         else:
-            self.df.loc[self.df['USER'] == self.user[0][1], 'NAME'] = str(name_info).capitalize()
-            self.df.loc[self.df['USER'] == self.user[0][1], 'LNAME'] = str(lastname_info).capitalize()
-            self.df.loc[self.df['USER'] == self.user[0][1], 'BIRTHDAY'] = str(birthday_info)
-            self.df.loc[self.df['USER'] == self.user[0][1], 'EMAIL'] = str(email_info)
-            self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
-            self.df.to_csv("login.csv", index=False)
-            
+            if messagebox.askokcancel("Confirm", "Are you sure?"):
+                self.name_entry.config(state=DISABLED)
+                self.lname_entry.config(state=DISABLED)
+                self.gender_entry.config(state=DISABLED)
+                self.birthday_date_entry.config(state=DISABLED)
+                self.birthday_month_entry.config(state=DISABLED)
+                self.birthday_year_entry.config(state=DISABLED)
+                self.email_entry.config(state=DISABLED)
+                self.telphone_entry.config(state=DISABLED)
+                self.edit_info_button.config(state=NORMAL)
+                self.done_info_button.config(state=DISABLED)
+                self.df.loc[self.df['USER'] == self.user[0][1], 'NAME'] = str(name_info).capitalize()
+                self.df.loc[self.df['USER'] == self.user[0][1], 'LNAME'] = str(lastname_info).capitalize()
+                self.df.loc[self.df['USER'] == self.user[0][1], 'BIRTHDAY'] = str(birthday_info)
+                self.df.loc[self.df['USER'] == self.user[0][1], 'EMAIL'] = str(email_info)
+                self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
+                self.df.to_csv("login.csv", index=False)
+                
 
 
     def categoryPage(self):
