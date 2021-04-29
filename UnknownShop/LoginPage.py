@@ -115,8 +115,8 @@ class main_account_screen:
                 self.info_NAME = data.get(self.username1)[2]
                 self.info_LNAME = data.get(self.username1)[3]
                 self.info_GENDER = data.get(self.username1)[4]
-                self.info_EMAIL = data.get(self.username1)[5]
-                self.info_telphone = data.get(self.username1)[6]
+                self.info_EMAIL = data.get(self.username1)[6]
+                self.info_telphone = data.get(self.username1)[7]
                 username_login_entry.delete(0, END)
                 password_login_entry.delete(0, END)
 
