@@ -287,18 +287,21 @@ class main_account_screen:
         
         #DATE Combobox
         canvas.create_text(470, 225, text="Day", font=self.myfont)
-        self.birth_date_entry = Combobox(self.register_screen, width=3, value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'])
+        self.birth_date_entry = Combobox(self.register_screen, width=3,value=['----','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
+                                                                             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
+                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
         self.birth_date_entry.current(0)
         canvas.create_window(470, 250, window=self.birth_date_entry)
         #MONTH Combobox
         canvas.create_text(550, 225, text="Month", font=self.myfont)
-        self.birth_month_entry = Combobox(self.register_screen, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+        self.birth_month_entry = Combobox(self.register_screen, width=5, value=['----','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
         self.birth_month_entry.current(0)
         canvas.create_window(550, 250, window=self.birth_month_entry)
         #YEAR Combobox
         canvas.create_text(630, 225, text="Year", font=self.myfont)
-        year_list = []
-        for i in range(1920,2021):
+        year_list = ['----']
+        for i in range(1920,2022):
             year_list.append(str(i))
         self.birth_year_entry = Combobox(self.register_screen, width=5, value=year_list)
         self.birth_year_entry.current(0)
@@ -308,13 +311,13 @@ class main_account_screen:
 
 
 
-        canvas.create_text(85, 385, text="Email Address * ", font=self.myfont)
+        canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
         self.email_entry = Entry(self.register_screen, textvariable=self.email)
-        canvas.create_window(150, 410, window=self.email_entry, width=250)
+        canvas.create_window(150, 335, window=self.email_entry, width=250)
 
-        canvas.create_text(85, 310, text="Phone Number * ", font=self.myfont)
+        canvas.create_text(85, 385, text="Phone Number * ", font=self.myfont)
         self.telphone_entry = Entry(self.register_screen, textvariable=self.telphone)
-        canvas.create_window(150, 335, window=self.telphone_entry, width=250)
+        canvas.create_window(150, 410, window=self.telphone_entry, width=250)
 
         helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
         regis_button = Button(self.register_screen, text="Register",
@@ -343,7 +346,8 @@ class main_account_screen:
         else:
             self.gender_choice1.config(state='normal')
             self.gender_choice2.config(state='normal')
-
+    def Birthday_Check(self):
+        pass
 
     def clear_user(self):
         self.username_entry.delete(0, END)
@@ -410,10 +414,40 @@ class main_account_screen:
             messagebox.showinfo("Info", "Please Enter Last Name",
                                 parent=self.register_screen)
 
+        elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_month_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birthday", parent=self.register_screen)
+       
+        elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_month_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth day and Birth month", parent=self.register_screen)
+        elif (str(self.birth_date_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth day and Birth year", parent=self.register_screen)
+        elif (str(self.birth_month_entry.get()) == '----') and (str(self.birth_year_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth month and Birth year", parent=self.register_screen)
+
+        elif (str(self.birth_date_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth day", parent=self.register_screen)
+        elif (str(self.birth_month_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth month", parent=self.register_screen)
+        elif (str(self.birth_year_entry.get()) == '----'):
+            messagebox.showinfo("Info", "Please Enter your Birth year", parent=self.register_screen)
+
+        elif (str(self.birth_month_entry.get()) == 'Feb'):
+            if  (str(self.birth_date_entry.get()) == '29') and (int(self.birth_year_entry.get()) % 4 != 0 and int(self.birth_year_entry.get()) % 100 != 0 and int(self.birth_year_entry.get()) % 400 != 0):
+                messagebox.showinfo("Info", "Please Check your Birthday", parent=self.register_screen)
+            elif (str(self.birth_date_entry.get()) == '30' or str(self.birth_date_entry.get()) == '31'):
+                    messagebox.showinfo("Info", "Please Check your Birthday", parent=self.register_screen)
+        elif (str(self.birth_date_entry.get()) == '30') and (str(self.birth_month_entry.get()) != ['Apr', 'Jun', 'Sep', 'Nov']):
+            messagebox.showinfo(
+                "Info", "Please Check your Birthday", parent=self.register_screen)
+        elif (str(self.birth_date_entry.get()) == '31') and (str(self.birth_month_entry.get()) != ['Jan','Mar', 'May', 'Jul', 'Aug', 'Oct', 'Dec']):
+            messagebox.showinfo(
+                "Info", "Please Check your Birthday", parent=self.register_screen)
+        
+
         elif (self.gender1.get() == 0 and self.gender2.get() == 0):
             messagebox.showinfo(
                 "Error", "Please Select Your Gender", parent=self.register_screen)
-
+                                                                   
         elif (email_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter Your Email", parent=self.register_screen)
@@ -428,12 +462,12 @@ class main_account_screen:
         elif (tel_info.isdigit() == False or len(tel_info) != 10):
             messagebox.showerror("Error", "Phone Number Invalid",parent=self.register_screen)
             self.telphone_entry.delete(0,END)
-            
+        
         else:
             if self.gender1.get() == 0:
                 gender_info = 'FEMALE'
             # Write File
-            if (messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.register_screen)) == True:
+            if (messagebox.askokcancel("Confirmation", "Are your sure?", parent=self.register_screen)) == True:
 
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
