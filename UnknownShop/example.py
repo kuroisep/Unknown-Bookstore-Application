@@ -27,10 +27,10 @@ root.geometry("{}x{}+{}+{}".format(windowWidth, windowHeight, xCordinate, yCordi
 style = ttk.Style(root)
 
 # Import the tcl file
-root.tk.call('source', path ='Azure-ttk-theme/azure.tcl')
+root.tk.call('source', 'UnknownShop/azure-dark.tcl')
 
 # Set the theme with the theme_use method
-style.theme_use(path="UnknownShop/Azure-ttk-theme/azure")
+style.theme_use('azure-dark')
 
 
 # Creating lists for the Comboboxes
@@ -49,7 +49,7 @@ g = tk.DoubleVar(value=75.0)
 h = tk.BooleanVar()
 
 # Create a Frame for the Checkbuttons
-checkframe = ttk.LabelFrame(root, text='Apirak Rattanaritthikul', width=210, height=200)
+checkframe = ttk.LabelFrame(root, text='Checkbuttons', width=210, height=200)
 checkframe.place(x=20, y=12)
 
 # Checkbuttons

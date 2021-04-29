@@ -14,6 +14,10 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 from UnknownShop import LoginPage
+# from UnknownShop import example
+# ss = r"Azure-ttk-theme-main"
+# from UnknownShop import example
+
 # 
 class Shop_main_screen:
     def __init__(self):
@@ -24,6 +28,19 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720)
+
+        """ 
+        THEAM
+        """
+        style = ttk.Style(self.shop_window)
+        # Import the tcl file
+        self.shop_window.tk.call('source', 'UnknownShop/azure-dark.tcl')
+
+        # Set the theme with the theme_use method
+        style.theme_use('azure-dark')
+        """ 
+        THEAM
+        """
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -146,15 +163,30 @@ class Shop_main_screen:
         
         
     def button_state(self):
-        
+
+
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
         self.canvas.create_image(200,200,image=self.img_button1)
-        self.button1 = Button(self.shop_window ,image=self.img_button1,command = self.show_infomationPage)
-        
-        
+        self.button1 = Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage)
+
+
+
+
+        # canvas1 = Canvas(self.shop_window, width=400, height=400)
+        # button = canvas1.create_image(100, 100, anchor=NW, image=button1_path)
+        # blank = canvas1.create_image(100, 100, anchor=NW, image=button1_path, state=NORMAL)
+        # canvas1.tag_bind(blank, "<Button-1>", self.show_infomationPage)
+        # canvas1.pack()
+
+        # button1 = Button(self, text = "Quit", command = self.quit, anchor = W)
+        # button1.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
+        # button1_window = canvas.create_window(10, 10, anchor=NW, window=button1)
+            
         # self.button1.pack()
-        # self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
+        # self.button1.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
+        
+        self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
