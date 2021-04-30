@@ -318,7 +318,7 @@ class main_account_screen:
                             font=helv20, bg="blue", fg="white", command=self.register_user)
         canvas.create_window(400, 420, window=regis_button)
         clear_button = Button(self.register_screen, text="Clear",
-                            font=helv20, bg="blue", fg="white", command=self.clear_user)
+                            font=helv20, bg="blue", fg="white", command=self.clear_user_confirm)
         canvas.create_window(600, 420, window=clear_button)
 
         cancel_button = Button(self.register_screen, text="CANCEL", command=self.delete_register_screen,
@@ -342,6 +342,10 @@ class main_account_screen:
             self.gender_choice2.config(state='normal')
     def Birthday_Check(self):
         pass
+
+    def clear_user_confirm(self):
+        if (messagebox.askokcancel("Confirmation", "Are your sure?", parent=self.register_screen)) == True:
+            self.clear_user()
 
     def clear_user(self):
         self.username_entry.delete(0, END)
@@ -378,7 +382,7 @@ class main_account_screen:
         if username_info in check_user:
             messagebox.showinfo("Info", "This Username Already Exists.",
                                 parent=self.register_screen)
-        elif len(username_info) <= 8:
+        elif len(username_info) < 8:
             messagebox.showinfo("Info", "This Username Must have At Least 8 Characters.",
                                 parent=self.register_screen)
 
