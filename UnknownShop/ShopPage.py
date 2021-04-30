@@ -257,7 +257,7 @@ class Shop_main_screen:
             self.inner_infomation.create_window(280,155,window=self.lname_entry)
             ##GENDER
             self.inner_infomation.create_text(150, 200, anchor=NW, text='Gender : ')
-            self.gender_entry = Combobox(self.inner_infomation, width=6,value=['MALE','FEMALE']) 
+            self.gender_entry = Combobox(self.inner_infomation, width=8,value=['MALE','FEMALE']) 
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
             self.inner_infomation.create_window(250,200,window=self.gender_entry)
