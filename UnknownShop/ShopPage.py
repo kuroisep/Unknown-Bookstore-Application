@@ -64,6 +64,30 @@ class Shop_main_screen:
         #self.user[0][7] = email
         #self.user[0][8] = telphone
 
+
+
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        
+        
+        self.canvas=Canvas(self.shop_window,bg='#7242f5')
+        self.canvas.pack(fill=BOTH, expand=1)
+        text_var=" ______ Welcome to the land of bookS ______"
+        text=self.canvas.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='white',tags=("marquee",),anchor='w')
+        x1,y1,x2,y2 = self.canvas.bbox("marquee")
+        width = x2-x1
+        height = y2-y1
+        self.canvas['width']=width
+        self.canvas['height']=height
+        fps=40    #Change the fps to make the animation faster/slower
+
+
+
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+
+
+
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
@@ -75,7 +99,7 @@ class Shop_main_screen:
         self.create_logo()
 
         self.search_bar()
-
+        self.shift()
         self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
 
@@ -131,19 +155,19 @@ class Shop_main_screen:
         if self.count == 0 :
             self.banner_label.config(image = self.banner1)
             self.dot_label.config(image = self.dot1)
-            self.canvas.create_image(700,250,image=self.banner1)
-            self.canvas.create_image(700,425,image=self.dot1)
+            self.canvas.create_image(700,300,image=self.banner1)
+            self.canvas.create_image(700,475,image=self.dot1)
             self.banner_label.place()
             self.dot_label.place()
         elif self.count == 10 :
             self.banner_label.config(image = self.banner2)
-            self.canvas.create_image(700,250,image=self.banner2)
-            self.canvas.create_image(700,425,image=self.dot2)
+            self.canvas.create_image(700,300,image=self.banner2)
+            self.canvas.create_image(700,475,image=self.dot2)
             self.dot_label.config(image = self.dot2)
         elif self.count == 20 :
             self.banner_label.config(image = self.banner3)
-            self.canvas.create_image(700,250,image=self.banner3)
-            self.canvas.create_image(700,425,image=self.dot3)
+            self.canvas.create_image(700,300,image=self.banner3)
+            self.canvas.create_image(700,475,image=self.dot3)
             self.dot_label.config(image = self.dot3)
 
         self.count += 1
@@ -151,7 +175,7 @@ class Shop_main_screen:
         
 
     def search_bar(self): 
-        self.canvas.create_text(385, 61, text="Search By", font=('TRACK', 12))
+        self.canvas.create_text(385, 65, text="Search By", font=('TRACK', 12))
 
         name = tk.StringVar()
         nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = name)
@@ -162,18 +186,30 @@ class Shop_main_screen:
         drop.place(x=440, y=50)
 
         search_button = ttk.Button(self.shop_window, text = "Search")
-        search_button.place(x=913, y=47)
+        search_button.place(x=913, y=50)
 
         show_all_books_button = ttk.Button(self.shop_window, text = "Show All")
-        show_all_books_button.place(x=1000, y=47)
+        show_all_books_button.place(x=1000, y=50)
         
+    def shift(self):
+        x1,y1,x2,y2 = canvas.bbox("marquee")
+        if(x2<0 or y1<0): #reset the coordinates
+            x1 = canvas.winfo_width()
+            y1 = canvas.winfo_height()//2
+            canvas.coords("marquee",x1,y1)
+        else:
+            canvas.move("marquee", -2, 0)
+        canvas.after(1000//fps,shift)    
         
+       
+    
+    
     def button_state(self):
 
 
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        self.canvas.create_image(200,200,image=self.img_button1)
+        # self.canvas.create_image(200,200,image=self.img_button1)
         self.button1 = tk.Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage, borderwidth=0)
 
 
@@ -196,26 +232,26 @@ class Shop_main_screen:
 
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        self.canvas.create_image(200,300,image=self.img_button2)
+        # self.canvas.create_image(200,300,image=self.img_button2)
         self.button2 = tk.Button(image=self.img_button2,command= self.show_categoryPage, borderwidth=0, )
         self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
         self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
-        self.canvas.create_image(200,400,image=self.img_button3)
+        # self.canvas.create_image(200,400,image=self.img_button3)
         self.button3 = tk.Button(image=self.img_button3,command=self.show_paymentPage, borderwidth=0)
         self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
 
         button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
         self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
-        self.canvas.create_image(200,500,image=self.img_button4)
+        # self.canvas.create_image(200,500,image=self.img_button4)
         self.button4 = tk.Button(image=self.img_button4,command=self.show_deliveryPage, borderwidth=0, 
                                 relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
 
         button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
-        self.canvas.create_image(200,600,image=self.img_button5)
+        # self.canvas.create_image(200,600,image=self.img_button5)
         self.button5 = tk.Button(self.shop_window, image=self.img_button5, command=self.delete_canvas, border=0,
                                 relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
@@ -223,7 +259,7 @@ class Shop_main_screen:
 
         button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
-        self.canvas.create_image(200,600,image=self.img_button6)
+        # self.canvas.create_image(200,600,image=self.img_button6)
         self.button6 = tk.Button(self.shop_window, image=self.img_button6, command=self.delete_show_window, border=0,
                                 relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
