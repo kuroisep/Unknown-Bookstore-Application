@@ -184,10 +184,10 @@ treeFrame.place(x=420, y=20)
 
 # Scrollbar
 treeScroll = ttk.Scrollbar(treeFrame)
-treeScroll.pack(side='right', fill='y')
+treeScroll.pack(side='right', fill='x')
 
 # Treeview
-treeview = ttk.Treeview(treeFrame, selectmode="extended", yscrollcommand=treeScroll.set, columns=(1, 2), height=12)
+treeview = ttk.Treeview(treeFrame, selectmode="extended", xscrollcommand=treeScroll.set, columns=(1, 2), height=12)
 treeview.pack()
 
 treeScroll.config(command=treeview.yview)

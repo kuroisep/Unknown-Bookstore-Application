@@ -28,7 +28,7 @@ class Shop_main_screen:
         y = (420) - (500/2)
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
-        self.canvas = Canvas(self.shop_window, width=1280, height=720)
+        self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
 
         """ 
         THEAM
@@ -39,6 +39,7 @@ class Shop_main_screen:
 
         # Set the theme with the theme_use method
         style.theme_use('azure')
+        style.configure('flat.TButton', borderwidth=0)
         """ 
         THEAM
         """
@@ -49,7 +50,11 @@ class Shop_main_screen:
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
             print("NO USER LOGIN FOUND")
-            self.user = [['T', '\" Login Required \"', '', 'You are not logged in', 'You are not logged in', 'You are not logged in','-/-/-', 'You are not logged in', 'You are not logged in']]
+            self.user = [['T', '\" Login Required \"', '', 
+            'You are not logged in', 'You are not logged in', 
+            'You are not logged in','-/-/-', 'You are not logged in', 
+            'You are not logged in']]
+
         #self.user[0][1] = username
         #self.user[0][2] = password
         #self.user[0][3] = name
@@ -169,7 +174,7 @@ class Shop_main_screen:
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
         self.canvas.create_image(200,200,image=self.img_button1)
-        self.button1 = Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage)
+        self.button1 = tk.Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage, borderwidth=0)
 
 
 
@@ -192,32 +197,37 @@ class Shop_main_screen:
         button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
         self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
         self.canvas.create_image(200,300,image=self.img_button2)
-        self.button2 = Button(image=self.img_button2,command= self.show_categoryPage)
+        self.button2 = tk.Button(image=self.img_button2,command= self.show_categoryPage, borderwidth=0, )
         self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
 
         button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
         self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
         self.canvas.create_image(200,400,image=self.img_button3)
-        self.button3 = Button(image=self.img_button3,command=self.show_paymentPage)
+        self.button3 = tk.Button(image=self.img_button3,command=self.show_paymentPage, borderwidth=0)
         self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
 
         button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
         self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
         self.canvas.create_image(200,500,image=self.img_button4)
-        self.button4 = Button(image=self.img_button4,command=self.show_deliveryPage)
+        self.button4 = tk.Button(image=self.img_button4,command=self.show_deliveryPage, borderwidth=0, 
+                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
 
         button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
         self.canvas.create_image(200,600,image=self.img_button5)
-        self.button5 = Button(self.shop_window, image=self.img_button5, command=self.delete_canvas)
+        self.button5 = tk.Button(self.shop_window, image=self.img_button5, command=self.delete_canvas, border=0,
+                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
+       
 
         button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
         self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
-        self.button6 = Button(self.shop_window, image=self.img_button6, command=self.delete_show_window)
+        self.canvas.create_image(200,600,image=self.img_button6)
+        self.button6 = tk.Button(self.shop_window, image=self.img_button6, command=self.delete_show_window, border=0,
+                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
-
+    
         
 
     def get_data(self, row, column):
@@ -381,6 +391,83 @@ class Shop_main_screen:
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
+
+        # Create a Frame for the Treeview
+        treeFrame = ttk.Frame(self.inner_category)
+        # treeFrame.geometry(300,200)
+        treeFrame.place(x=100, y=20)
+
+        # Treeview
+        treeview = ttk.Treeview(treeFrame, selectmode="extended", columns=(1, 2))
+        treeview.pack()
+        
+        # Scrollbar
+        treeScrollX,treeScrollY = ttk.Scrollbar(treeFrame,orient="horizontal", command=treeview.xview), \
+                                                ttk.Scrollbar(treeFrame,orient="vertical", command=treeview.yview)
+        treeScrollX.pack(side='bottom', fill='x')
+        treeScrollY.pack(side='right', fill='y')
+
+
+        treeview.config(xscrollcommand=treeScrollX.set,yscrollcommand=treeScrollY.set)
+
+        # Treeview columns
+        treeview.column("#0", width=120)
+        treeview.column(1, anchor='w', width=5000)
+        treeview.column(2, anchor='w', width=1000)
+        treeview.column(3, anchor='w', width=100)
+        # treeview.column(4, anchor='w', width=100)
+        # treeview.column(5, anchor='w', width=100)
+        # treeview.column(6, anchor='w', width=100)
+        # treeview.column(7, anchor='w', width=100)
+        # treeview.column(8, anchor='w', width=100)
+        # treeview.column(9, anchor='w', width=100)
+
+        # Treeview headings
+        treeview.heading("#0", text="Treeview", anchor='center')
+        treeview.heading(1, text="Column 1", anchor='center')
+        treeview.heading(2, text="Column 2", anchor='center')
+        # treeview.heading(3, text="Column 2", anchor='center')
+        # treeview.heading(4, text="Column 2", anchor='center')
+        # treeview.heading(5, text="Column 2", anchor='center')
+        # treeview.heading(6, text="Column 2", anchor='center')
+        # treeview.heading(7, text="Column 2", anchor='center')
+        # treeview.heading(8, text="Column 2", anchor='center')
+        # treeview.heading(9, text="Column 2", anchor='center')
+
+        # Insert data into Treeview
+        treeview.insert(parent='', index='end', iid=1, text="Parent", values=("Item 1", "Value 1","Value 3"))
+        treeview.item(1, open=True)
+        treeview.insert(parent=1, index='end', iid=2, text="Child", values=("Subitem 1.1", "Value 1.1"))
+        treeview.insert(parent=1, index='end', iid=3, text="Child", values=("Subitem 1.2", "Value 1.2"))
+        treeview.insert(parent=1, index='end', iid=4, text="Child", values=("Subitem 1.3", "Value 1.3"))
+        treeview.insert(parent=1, index='end', iid=5, text="Child", values=("Subitem 1.4", "Value 1.4"))
+        treeview.insert(parent='', index='end', iid=6, text="Parent", values=("Item 2", "Value 2"))
+        treeview.item(6, open=True)
+        treeview.insert(parent=6, index='end', iid=13, text="Child", values=("Subitem 2.1", "Value 2.1"))
+        treeview.insert(parent=6, index='end', iid=7, text="Sub-parent", values=("Subitem 2.2", "Value 2.2"))
+        treeview.item(7, open=True)
+        treeview.insert(parent=7, index='end', iid=8, text="Child", values=("Subitem 2.2.1", "Value 2.2.1"))
+        treeview.insert(parent=7, index='end', iid=9, text="Child", values=("Subitem 2.2.2", "Value 2.2.2"))
+        treeview.selection_set(9)
+        treeview.insert(parent=7, index='end', iid=10, text="Child", values=("Subitem 2.2.3", "Value 2.2.3"))
+        treeview.insert(parent=6, index='end', iid=11, text="Child", values=("Subitem 2.3", "Value 2.3"))
+        treeview.insert(parent=6, index='end', iid=12, text="Child", values=("Subitem 2.4", "Value 2.4"))
+        treeview.insert(parent='', index='end', iid=14, text="Parent", values=("Item 3", "Value 3"))
+        treeview.item(14, open=True)
+        treeview.insert(parent=14, index='end', iid=15, text="Child", values=("Subitem 3.1", "Value 3.1"))
+        treeview.insert(parent=14, index='end', iid=16, text="Child", values=("Subitem 3.2", "Value 3.2"))
+        treeview.insert(parent=14, index='end', iid=17, text="Child", values=("Subitem 3.3", "Value 3.3"))
+        treeview.insert(parent=14, index='end', iid=18, text="Child", values=("Subitem 3.4", "Value 3.4"))
+        treeview.insert(parent='', index='end', iid=19, text="Parent", values=("Item 4", "Value 4"))
+        treeview.item(19, open=True)
+        treeview.insert(parent=19, index='end', iid=20, text="Child", values=("Subitem 4.1", "Value 4.1"))
+        treeview.insert(parent=19, index='end', iid=21, text="Sub-parent", values=("Subitem 4.2", "Value 4.2"))
+        treeview.item(21, open=True)
+        treeview.insert(parent=21, index='end', iid=22, text="Child", values=("Subitem 4.2.1", "Value 4.2.1"))
+        treeview.insert(parent=21, index='end', iid=23, text="Child", values=("Subitem 4.2.2", "Value 4.2.2"))
+        treeview.insert(parent=21, index='end', iid=24, text="Child", values=("Subitem 4.2.3", "Value 4.2.3"))
+        treeview.insert(parent=19, index='end', iid=25, text="Child", values=("Subitem 4.3", "Value 4.3"))
+
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
@@ -408,7 +495,9 @@ class Shop_main_screen:
         self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
         
          # ลบหน้า info
-    
+
+
+
     ## 1. def ข้อมูลหน้านั้น -> ใส่ใน init
     ## 2. def แสดงข้อมูลหน้านัั้น -> ใส่ delete ก่อน
     ## 3. ใน def delete เอาหน้านั้นไปใส่
