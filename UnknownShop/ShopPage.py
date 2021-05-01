@@ -394,48 +394,31 @@ class Shop_main_screen:
 
         # Create a Frame for the Treeview
         treeFrame = ttk.Frame(self.inner_category)
-        # treeFrame.geometry(300,200)
-        treeFrame.place(x=100, y=20)
+        treeFrame.place(x=420, y=20)
+
+        # Scrollbar
+        treeScroll = ttk.Scrollbar(treeFrame)
+        treeScroll.pack(side='right', fill='y')
 
         # Treeview
-        treeview = ttk.Treeview(treeFrame, selectmode="extended", columns=(1, 2))
+        treeview = ttk.Treeview(treeFrame, selectmode="extended", 
+                                yscrollcommand=treeScroll.set, columns=(1, 2,3), height=20)
         treeview.pack()
-        
-        # Scrollbar
-        treeScrollX,treeScrollY = ttk.Scrollbar(treeFrame,orient="horizontal", command=treeview.xview), \
-                                                ttk.Scrollbar(treeFrame,orient="vertical", command=treeview.yview)
-        treeScrollX.pack(side='bottom', fill='x')
-        treeScrollY.pack(side='right', fill='y')
 
-
-        treeview.config(xscrollcommand=treeScrollX.set,yscrollcommand=treeScrollY.set)
+        treeScroll.config(command=treeview.yview)
 
         # Treeview columns
         treeview.column("#0", width=120)
-        treeview.column(1, anchor='w', width=5000)
-        treeview.column(2, anchor='w', width=1000)
-        treeview.column(3, anchor='w', width=100)
-        # treeview.column(4, anchor='w', width=100)
-        # treeview.column(5, anchor='w', width=100)
-        # treeview.column(6, anchor='w', width=100)
-        # treeview.column(7, anchor='w', width=100)
-        # treeview.column(8, anchor='w', width=100)
-        # treeview.column(9, anchor='w', width=100)
+        treeview.column(1, anchor='w', width=100)
+        treeview.column(2, anchor='w', width=100)
 
         # Treeview headings
         treeview.heading("#0", text="Treeview", anchor='center')
         treeview.heading(1, text="Column 1", anchor='center')
         treeview.heading(2, text="Column 2", anchor='center')
-        # treeview.heading(3, text="Column 2", anchor='center')
-        # treeview.heading(4, text="Column 2", anchor='center')
-        # treeview.heading(5, text="Column 2", anchor='center')
-        # treeview.heading(6, text="Column 2", anchor='center')
-        # treeview.heading(7, text="Column 2", anchor='center')
-        # treeview.heading(8, text="Column 2", anchor='center')
-        # treeview.heading(9, text="Column 2", anchor='center')
 
         # Insert data into Treeview
-        treeview.insert(parent='', index='end', iid=1, text="Parent", values=("Item 1", "Value 1","Value 3"))
+        treeview.insert(parent='', index='end', iid=1, text="Parent", values=("Item 1", "Value 1"))
         treeview.item(1, open=True)
         treeview.insert(parent=1, index='end', iid=2, text="Child", values=("Subitem 1.1", "Value 1.1"))
         treeview.insert(parent=1, index='end', iid=3, text="Child", values=("Subitem 1.2", "Value 1.2"))
@@ -467,6 +450,7 @@ class Shop_main_screen:
         treeview.insert(parent=21, index='end', iid=23, text="Child", values=("Subitem 4.2.2", "Value 4.2.2"))
         treeview.insert(parent=21, index='end', iid=24, text="Child", values=("Subitem 4.2.3", "Value 4.2.3"))
         treeview.insert(parent=19, index='end', iid=25, text="Child", values=("Subitem 4.3", "Value 4.3"))
+
 
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
