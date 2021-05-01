@@ -24,9 +24,11 @@ class main_account_screen:
         self.main_screen = Tk()
         self.myfont = 'TRACK'
 
-        icon_path = "UnknownShop\Picture\LoginPage\open-book.png"
-        icon = PhotoImage(file=icon_path)
-        self.main_screen.iconphoto(False, icon)
+        """ set icon program desktop
+        # icon_path = "UnknownShop\Picture\LoginPage\open-book.png"
+        # icon = PhotoImage(file=icon_path)
+        # self.main_screen.iconphoto(False, icon)
+        """
 
         x = (960) - (1280/2)
         y = (540) - (720/2)
@@ -200,7 +202,7 @@ class main_account_screen:
         canvas.pack(fill="both", expand=True)
 
         canvas.create_text(200, 100, text="Incorrect Password")
-        ok_button = Button(self.password_not_recog_screen, text="OK",
+        ok_button = Button(self.password_not_recog_screen, text="<    OK   >",
                         command=self.delete_password_not_recognised)
         canvas.create_window(200, 150, window=ok_button)
 
@@ -215,7 +217,7 @@ class main_account_screen:
         canvas.pack(fill="both", expand=True)
 
         canvas.create_text(200, 100, text="User Not Found")
-        ok_button = Button(self.user_not_found_screen, text="OK",
+        ok_button = Button(self.user_not_found_screen, text="<    OK   >",
                         command=self.delete_user_not_found_screen)
         canvas.create_window(200, 150, window=ok_button)
 
