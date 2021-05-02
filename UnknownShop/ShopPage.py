@@ -4,7 +4,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
-from tkinter import messagebox
+from tkinter import filedialog, messagebox
 import pandas
 import os, sys
 import re
@@ -15,6 +15,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 
 from UnknownShop import LoginPage
+import pandas as pd
 # from UnknownShop import example
 # ss = r"Azure-ttk-theme-main"
 # from UnknownShop import example
@@ -69,16 +70,16 @@ class Shop_main_screen:
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
         
-        self.canvas=Canvas(self.shop_window,bg='#7242f5')
-        self.canvas.pack(fill=BOTH, expand=1)
-        text_var=" ______ Welcome to the land of bookS ______"
-        text=self.canvas.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='white',tags=("marquee",),anchor='w')
-        x1,y1,x2,y2 = self.canvas.bbox("marquee")
-        width = x2-x1
-        height = y2-y1
-        self.canvas['width']=width
-        self.canvas['height']=height
-        fps=40    #Change the fps to make the animation faster/slower
+        # self.canvas=Canvas(self.shop_window,bg='#7242f5')
+        # self.canvas.pack(fill=BOTH, expand=1)
+        # text_var=" ______ Welcome to the land of bookS ______"
+        # text=self.canvas.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='white',tags=("marquee",),anchor='w')
+        # x1,y1,x2,y2 = self.canvas.bbox("marquee")
+        # width = x2-x1
+        # height = y2-y1
+        # self.canvas['width']=width
+        # self.canvas['height']=height
+        # fps=40    #Change the fps to make the animation faster/slower
 
 
 
@@ -99,7 +100,7 @@ class Shop_main_screen:
         self.create_logo()
 
         self.search_bar()
-        self.shift()
+        # self.shift()
         self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
 
@@ -428,66 +429,97 @@ class Shop_main_screen:
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
-        # Create a Frame for the Treeview
-        treeFrame = ttk.Frame(self.inner_category)
-        treeFrame.place(x=420, y=20)
+        # # # Create a Frame for the Treeview
+        # treeFrame = ttk.Frame(self.inner_category)
+        # treeFrame.place(x=420, y=20,height=500, width=550)
 
-        # Scrollbar
-        treeScroll = ttk.Scrollbar(treeFrame)
-        treeScroll.pack(side='right', fill='y')
+        # # Scrollbar
+        # treeScroll = ttk.Scrollbar(treeFrame)
+        # treeScroll.pack(side='right', fill='y')
 
-        # Treeview
-        treeview = ttk.Treeview(treeFrame, selectmode="extended", 
-                                yscrollcommand=treeScroll.set, columns=(1, 2,3), height=20)
-        treeview.pack()
+        # # Treeview
+        # treeview = ttk.Treeview(treeFrame, selectmode="extended", 
+        #                         yscrollcommand=treeScroll.set, columns=(1, 2,3), height=12)
+        
+        # treeview.pack()
 
-        treeScroll.config(command=treeview.yview)
+        # treeScroll.config(command=treeview.yview)
 
-        # Treeview columns
-        treeview.column("#0", width=120)
-        treeview.column(1, anchor='w', width=100)
-        treeview.column(2, anchor='w', width=100)
+        # Frame for TreeView
+        frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
+        frame1.place(x=500, y=20, height=500, width=500)
 
-        # Treeview headings
-        treeview.heading("#0", text="Treeview", anchor='center')
-        treeview.heading(1, text="Column 1", anchor='center')
-        treeview.heading(2, text="Column 2", anchor='center')
+        # Frame for open file dialog
+        file_frame = tk.LabelFrame(self.inner_category, text="Open File")
+        file_frame.place(x=50, y=60,height=100, width=400, rely=0.65, relx=0)
 
-        # Insert data into Treeview
-        treeview.insert(parent='', index='end', iid=1, text="Parent", values=("Item 1", "Value 1"))
-        treeview.item(1, open=True)
-        treeview.insert(parent=1, index='end', iid=2, text="Child", values=("Subitem 1.1", "Value 1.1"))
-        treeview.insert(parent=1, index='end', iid=3, text="Child", values=("Subitem 1.2", "Value 1.2"))
-        treeview.insert(parent=1, index='end', iid=4, text="Child", values=("Subitem 1.3", "Value 1.3"))
-        treeview.insert(parent=1, index='end', iid=5, text="Child", values=("Subitem 1.4", "Value 1.4"))
-        treeview.insert(parent='', index='end', iid=6, text="Parent", values=("Item 2", "Value 2"))
-        treeview.item(6, open=True)
-        treeview.insert(parent=6, index='end', iid=13, text="Child", values=("Subitem 2.1", "Value 2.1"))
-        treeview.insert(parent=6, index='end', iid=7, text="Sub-parent", values=("Subitem 2.2", "Value 2.2"))
-        treeview.item(7, open=True)
-        treeview.insert(parent=7, index='end', iid=8, text="Child", values=("Subitem 2.2.1", "Value 2.2.1"))
-        treeview.insert(parent=7, index='end', iid=9, text="Child", values=("Subitem 2.2.2", "Value 2.2.2"))
-        treeview.selection_set(9)
-        treeview.insert(parent=7, index='end', iid=10, text="Child", values=("Subitem 2.2.3", "Value 2.2.3"))
-        treeview.insert(parent=6, index='end', iid=11, text="Child", values=("Subitem 2.3", "Value 2.3"))
-        treeview.insert(parent=6, index='end', iid=12, text="Child", values=("Subitem 2.4", "Value 2.4"))
-        treeview.insert(parent='', index='end', iid=14, text="Parent", values=("Item 3", "Value 3"))
-        treeview.item(14, open=True)
-        treeview.insert(parent=14, index='end', iid=15, text="Child", values=("Subitem 3.1", "Value 3.1"))
-        treeview.insert(parent=14, index='end', iid=16, text="Child", values=("Subitem 3.2", "Value 3.2"))
-        treeview.insert(parent=14, index='end', iid=17, text="Child", values=("Subitem 3.3", "Value 3.3"))
-        treeview.insert(parent=14, index='end', iid=18, text="Child", values=("Subitem 3.4", "Value 3.4"))
-        treeview.insert(parent='', index='end', iid=19, text="Parent", values=("Item 4", "Value 4"))
-        treeview.item(19, open=True)
-        treeview.insert(parent=19, index='end', iid=20, text="Child", values=("Subitem 4.1", "Value 4.1"))
-        treeview.insert(parent=19, index='end', iid=21, text="Sub-parent", values=("Subitem 4.2", "Value 4.2"))
-        treeview.item(21, open=True)
-        treeview.insert(parent=21, index='end', iid=22, text="Child", values=("Subitem 4.2.1", "Value 4.2.1"))
-        treeview.insert(parent=21, index='end', iid=23, text="Child", values=("Subitem 4.2.2", "Value 4.2.2"))
-        treeview.insert(parent=21, index='end', iid=24, text="Child", values=("Subitem 4.2.3", "Value 4.2.3"))
-        treeview.insert(parent=19, index='end', iid=25, text="Child", values=("Subitem 4.3", "Value 4.3"))
+        # Buttons
+        button1 = ttk.Button(file_frame, text="< Browse A File >", command=lambda: File_dialog())
+        button1.place(x=80, y=45)
+
+        button2 = ttk.Button(file_frame, text="< Load File >", command=lambda: Load_excel_data())
+        button2.place(x=220, y=45)
+
+        # The file/file path text
+        label_file = ttk.Label(file_frame, text="No File Selected")
+        label_file.place(rely=0, relx=0)
 
 
+        ## Treeview Widget
+        tv1 = ttk.Treeview(frame1)
+        tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
+
+        treescrolly = ttk.Scrollbar(frame1, orient="vertical", command=tv1.yview) # command means update the yaxis view of the widget
+        treescrollx = ttk.Scrollbar(frame1, orient="horizontal", command=tv1.xview) # command means update the xaxis view of the widget
+        tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
+        treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
+        treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
+
+         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Load file JAAAAA
+        
+        def File_dialog():
+            """This Function will open the file explorer and assign the chosen file path to label_file"""
+            filename = filedialog.askopenfilename(initialdir="/",
+                                                title="Select A File",
+                                                filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))
+            label_file["text"] = filename
+            return None
+
+
+        def Load_excel_data():
+            """If the file selected is valid this will load the file into the Treeview"""
+            file_path = label_file["text"]
+            # try:
+            #     excel_filename = r"{}".format(file_path)
+            #     if excel_filename[-4:] == ".csv":
+                   
+            #     else:
+            #         df = pd.read_excel(excel_filename)
+
+            # except ValueError:
+            #     tk.messagebox.showerror("Information", "The file you have chosen is invalid")
+            #     return None
+            # except FileNotFoundError:
+            #     tk.messagebox.showerror("Information", f"No such file as {file_path}")
+            #     return None
+            df = pd.read_csv("UnknownShop\DataBookList.csv")
+            clear_data()
+            tv1["column"] = list(df.columns)
+            tv1["show"] = "headings"
+            for column in tv1["columns"]:
+                tv1.heading(column, text=column ,font = 'TRACK' ) # let the column heading = column name
+
+            df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
+            for row in df_rows:
+                tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+            return None
+
+
+        def clear_data():
+            tv1.delete(*tv1.get_children())
+            return None
+
+       
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
