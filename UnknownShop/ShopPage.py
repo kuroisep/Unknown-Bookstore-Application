@@ -504,31 +504,37 @@ class Shop_main_screen:
         name_detail_book = tk.Label(detail_frame,text='Name')
         name_detail_book.place(x=200,y=20)
         self.name_detail_book_entry = tk.Entry(detail_frame)
+        self.name_detail_book_entry.bind("<Key>", lambda e: "break")
         self.name_detail_book_entry.place(x=200,y=40)
         #Author Of Book
         author_detail_book = tk.Label(detail_frame,text='Author')
         author_detail_book.place(x=200,y=70)
         self.author_detail_book_entry = tk.Entry(detail_frame)
+        self.author_detail_book_entry.bind("<Key>", lambda e: "break")
         self.author_detail_book_entry.place(x=200,y=90)
         #Category Of Book
         category_detail_book = tk.Label(detail_frame,text='Category')
         category_detail_book.place(x=200,y=120)
         self.category_detail_book_entry = tk.Entry(detail_frame)
+        self.category_detail_book_entry.bind("<Key>", lambda e: "break")
         self.category_detail_book_entry.place(x=200,y=140)
         #Language Of Book
         language_detail_book = tk.Label(detail_frame,text='Language')
         language_detail_book.place(x=200,y=170)
         self.language_detail_book_entry = tk.Entry(detail_frame)
+        self.language_detail_book_entry.bind("<Key>", lambda e: "break")
         self.language_detail_book_entry.place(x=200,y=190)
         #Price Of Book
         price_detail_book = tk.Label(detail_frame,text='Price')
         price_detail_book.place(x=200,y=220)
         self.price_detail_book_entry = tk.Entry(detail_frame)
+        self.price_detail_book_entry.bind("<Key>", lambda e: "break")
         self.price_detail_book_entry.place(x=200,y=240)
         #Code Of Book
         code_detail_book = tk.Label(detail_frame,text='Code')
         code_detail_book.place(x=200,y=270)
         self.code_detail_book_entry = tk.Entry(detail_frame)
+        self.code_detail_book_entry.bind("<Key>", lambda e: "break")
         self.code_detail_book_entry.place(x=200,y=290)
 
         # # Frame for open file dialog
