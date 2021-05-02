@@ -595,6 +595,8 @@ class Shop_main_screen:
             #     tk.messagebox.showerror("Information", f"No such file as {file_path}")
             #     return None
             df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
+            print(df)
+
             clear_data()
             self.tv1["column"] = list(df.columns)
             # self.tv1.column('ลำดับ', width=30)
