@@ -191,7 +191,7 @@ treeview = ttk.Treeview(treeFrame, selectmode="extended",
                         yscrollcommand=treeScroll.set, columns=(1, 2), height=12)
 treeview.pack()
 
-treeScroll.config(command=treeview.yview)
+# treeScroll.config(command=treeview.yview)
 
 # Treeview columns
 treeview.column("#0", width=120)
@@ -200,7 +200,7 @@ treeview.column(2, anchor='w', width=100)
 
 # Treeview headings
 treeview.heading("#0", text="Treeview", anchor='center')
-treeview.heading(1, text="Column 1", anchor='center')
+treeview.heading("", text="Column 1", anchor='center')
 treeview.heading(2, text="Column 2", anchor='center')
 
 # Insert data into Treeview

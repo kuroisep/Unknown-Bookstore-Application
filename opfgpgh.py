@@ -93,9 +93,6 @@
 
 
 
-
-
-
 # # # # # # from tkinter import *
 # # # # # # def shift():
 # # # # # #     x1,y1,x2,y2 = canvas.bbox("marquee")
