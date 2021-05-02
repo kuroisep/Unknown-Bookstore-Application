@@ -44,7 +44,7 @@ class Shop_main_screen:
         # Set the theme with the theme_use method
         style.theme_use('azure')
         style.configure('flat.TButton', borderwidth=0)
-        style.configure("Treeview", font=('TH Sarabun New',13,'bold'))
+        style.configure("Treeview", font=('TRACK',13,'bold'))
         """ 
         THEAM
         """
@@ -489,7 +489,7 @@ class Shop_main_screen:
         
 
     def categoryPage(self):
-        self.inner_category = Canvas(self.canvas, width=1000, height=550)
+        self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
         # Frame for TreeView
@@ -597,9 +597,9 @@ class Shop_main_screen:
             df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
             clear_data()
             self.tv1["column"] = list(df.columns)
-            self.tv1.column('ลำดับ', width=30)
-            self.tv1.column('CODE', width=70)
-            # print(df.columns[0])
+            # self.tv1.column('ลำดับ', width=30)
+            # self.tv1.column('CODE', width=70)
+            print(df)
             self.tv1["show"] = "headings"
             for column in self.tv1["columns"]:
                 self.tv1.heading(column, text=column ) # let the column heading = column name
