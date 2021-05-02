@@ -31,7 +31,7 @@ def op():
             out = Image.alpha_composite(im, txt)
             out.save(abs_path) # saves the image to the input file name. 
 
-global filename
+
 filename = ''
 def openfn():
     filename = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')

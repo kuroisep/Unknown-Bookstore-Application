@@ -8,6 +8,8 @@ from tkinter import filedialog, messagebox
 import pandas
 import os, sys
 import re
+import cv2
+from tkinter.filedialog import SaveFileDialog, askopenfilename
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
@@ -42,6 +44,7 @@ class Shop_main_screen:
         # Set the theme with the theme_use method
         style.theme_use('azure')
         style.configure('flat.TButton', borderwidth=0)
+        style.configure("Treeview", font=('TH Sarabun New',13,'bold'))
         """ 
         THEAM
         """
@@ -49,14 +52,14 @@ class Shop_main_screen:
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
+        self.imagefile = ''
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
             print("NO USER LOGIN FOUND")
             self.user = [['T', '\" Login Required \"', '', 
             'You are not logged in', 'You are not logged in', 
             '-','-/-/-', 'You are not logged in', 
-            'You are not logged in']]
-
+            'You are not logged in','account']]
         #self.user[0][1] = username
         #self.user[0][2] = password
         #self.user[0][3] = name
@@ -65,8 +68,7 @@ class Shop_main_screen:
         #self.user[0][6] = birthday
         #self.user[0][7] = email
         #self.user[0][8] = telphone
-
-
+        #self.user[0][9] = picture
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
@@ -357,6 +359,28 @@ class Shop_main_screen:
             self.done_info_button = Button(self.inner_infomation,text='Done',state=DISABLED, command=self.edit_infomation_state)
             self.inner_infomation.create_window(370, 450, window=self.done_info_button, anchor="nw")
 
+            ##PICTURE
+            image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
+            self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((100, 100)))
+
+            self.imageselect_info_button = Button(self.inner_infomation,text='select', command=self.openimage)
+            self.inner_infomation.create_window(500, 300, window=self.imageselect_info_button, anchor="nw")
+            self.inner_infomation.create_text(550, 180, anchor=NW, text='Picture : ')
+            self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
+            
+
+    def openfn(self):
+        self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
+        return self.imagefile
+
+    def openimage(self):
+        self.x = self.openfn()
+        self.user_img = ImageTk.PhotoImage(Image.open(self.x).resize((100, 100)))
+        self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
+        # self.user_img = self.user_img.resize((100, 150), Image.ANTIALIAS)
+        # self.user_img = ImageTk.PhotoImage(self.user_img)
+        
+
 
     def edit_infomation_state(self):
         if str(self.name_entry['state']) == 'disabled':
@@ -428,29 +452,18 @@ class Shop_main_screen:
                 self.df.loc[self.df['USER'] == self.user[0][1], 'BIRTHDAY'] = str(birthday_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'EMAIL'] = str(email_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
+                self.df.loc[self.df['USER'] == self.user[0][1], 'PICTURE'] = str(self.user[0][1])
                 self.df.to_csv("login.csv", index=False)
+                temp_img = cv2.imread(self.x)
+                cv2.imwrite('UnknownShop\\Picture\\ShopPage\\USER_PIC\\{}.png'.format(self.user[0][1]), temp_img)
                 
-
+    def selectItem(self,a):
+        curItem = self.tv1.focus()
+        print(self.tv1.item(curItem)['values'][2])
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
-
-        # # # Create a Frame for the Treeview
-        # treeFrame = ttk.Frame(self.inner_category)
-        # treeFrame.place(x=420, y=20,height=500, width=550)
-
-        # # Scrollbar
-        # treeScroll = ttk.Scrollbar(treeFrame)
-        # treeScroll.pack(side='right', fill='y')
-
-        # # Treeview
-        # treeview = ttk.Treeview(treeFrame, selectmode="extended", 
-        #                         yscrollcommand=treeScroll.set, columns=(1, 2,3), height=12)
-        
-        # treeview.pack()
-
-        # treeScroll.config(command=treeview.yview)
 
         # Frame for TreeView
         frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
@@ -471,36 +484,18 @@ class Shop_main_screen:
         label_file = ttk.Label(file_frame, text="No File Selected")
         label_file.place(rely=0, relx=0)
 
-
-
-        # class CustomTreeview(ttk.Treeview):
-        #     def __init__(self, parent, *args, **kwargs):
-        #         ttk.Treeview.__init__(self, parent, *args, **kwargs)
-        #         self.vanilla_xview = tk.XView.xview
-
-        #     def xview(self, *args):
-        #         #   here's our multiplier
-        #         multiplier = 100
-
-        #         if 'units' in args:
-        #             #   units in args - user clicked the arrows
-        #             #   time to build a new args with desired increment
-        #             mock_args = args[:1] + (str(multiplier * int(args[1])),) + args[2:]
-        #             return self.vanilla_xview(self, *mock_args)
-        #         else:
-        #             #   just do default things
-        #             return self.vanilla_xview(self, *args)
-        
         ## Treeview Widget
-        tv1 = ttk.Treeview(frame1)
-        # tv1 = CustomTreeview(tv)
-        tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
+        self.tv1 = ttk.Treeview(frame1)
+        # self.tv1 = CustomTreeview(tv)
+        self.tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
+   
+        self.tv1.bind('<ButtonRelease-1>', self.selectItem)
 
 
 
-        treescrolly = tk.Scrollbar(frame1, orient="vertical", command=tv1.yview) # command means update the yaxis view of the widget
-        treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=tv1.xview) # command means update the xaxis view of the widget
-        tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
+        treescrolly = tk.Scrollbar(frame1, orient="vertical", command=self.tv1.yview) # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=self.tv1.xview) # command means update the xaxis view of the widget
+        self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
 
@@ -533,20 +528,23 @@ class Shop_main_screen:
             #     return None
             df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
             clear_data()
-            tv1["column"] = list(df.columns)
-            tv1["show"] = "headings"
-            for column in tv1["columns"]:
-                tv1.heading(column, text=column ) # let the column heading = column name
+            self.tv1["column"] = list(df.columns)
+            self.tv1.column('ลำดับ', width=30)
+            self.tv1.column('CODE', width=70)
+            # print(df.columns[0])
+            self.tv1["show"] = "headings"
+            for column in self.tv1["columns"]:
+                self.tv1.heading(column, text=column ) # let the column heading = column name
 
             df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
             
             for row in df_rows:
-                tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+                self.tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
             return None
 
 
         def clear_data():
-            tv1.delete(*tv1.get_children())
+            self.tv1.delete(*self.tv1.get_children())
             return None
 
        

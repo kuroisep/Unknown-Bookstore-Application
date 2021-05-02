@@ -475,7 +475,7 @@ class main_account_screen:
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(['F',username_info, password_info,
-                                    name_info.capitalize(), lastname_info.capitalize(), gender_info,birthday_info, email_info, str(tel_info)])
+                                    name_info.capitalize(), lastname_info.capitalize(), gender_info,birthday_info, email_info, str(tel_info),'account'])
                 self.clear_user()
                 self.register_screen.destroy()
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
