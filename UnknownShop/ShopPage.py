@@ -24,6 +24,7 @@ import pandas as pd
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
+        self.shop_window.protocol("WM_DELETE_WINDOW", self.deleteX_show_window)
         self.shop_window.title("Unknown Book Store")
         x = (700) - (750/2)
         y = (420) - (500/2)
@@ -53,7 +54,7 @@ class Shop_main_screen:
             print("NO USER LOGIN FOUND")
             self.user = [['T', '\" Login Required \"', '', 
             'You are not logged in', 'You are not logged in', 
-            'You are not logged in','-/-/-', 'You are not logged in', 
+            '-','-/-/-', 'You are not logged in', 
             'You are not logged in']]
 
         #self.user[0][1] = username
@@ -283,6 +284,12 @@ class Shop_main_screen:
             self.shop_window.destroy()
             # self.shop_window.after_cancel(after_id)
             # LoginPage.showLoginPage()
+    def deleteX_show_window(self):
+        self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+        self.df.to_csv("login.csv", index=False)
+        self.shop_window.destroy()
+        # self.shop_window.after_cancel(after_id)
+
     
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
@@ -465,12 +472,34 @@ class Shop_main_screen:
         label_file.place(rely=0, relx=0)
 
 
+
+        # class CustomTreeview(ttk.Treeview):
+        #     def __init__(self, parent, *args, **kwargs):
+        #         ttk.Treeview.__init__(self, parent, *args, **kwargs)
+        #         self.vanilla_xview = tk.XView.xview
+
+        #     def xview(self, *args):
+        #         #   here's our multiplier
+        #         multiplier = 100
+
+        #         if 'units' in args:
+        #             #   units in args - user clicked the arrows
+        #             #   time to build a new args with desired increment
+        #             mock_args = args[:1] + (str(multiplier * int(args[1])),) + args[2:]
+        #             return self.vanilla_xview(self, *mock_args)
+        #         else:
+        #             #   just do default things
+        #             return self.vanilla_xview(self, *args)
+        
         ## Treeview Widget
         tv1 = ttk.Treeview(frame1)
+        # tv1 = CustomTreeview(tv)
         tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
 
-        treescrolly = ttk.Scrollbar(frame1, orient="vertical", command=tv1.yview) # command means update the yaxis view of the widget
-        treescrollx = ttk.Scrollbar(frame1, orient="horizontal", command=tv1.xview) # command means update the xaxis view of the widget
+
+
+        treescrolly = tk.Scrollbar(frame1, orient="vertical", command=tv1.yview) # command means update the yaxis view of the widget
+        treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=tv1.xview) # command means update the xaxis view of the widget
         tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
         treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
         treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
@@ -502,7 +531,7 @@ class Shop_main_screen:
             # except FileNotFoundError:
             #     tk.messagebox.showerror("Information", f"No such file as {file_path}")
             #     return None
-            df = pd.read_csv("UnknownShop\DataBookList.csv")
+            df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
             clear_data()
             tv1["column"] = list(df.columns)
             tv1["show"] = "headings"
@@ -510,6 +539,7 @@ class Shop_main_screen:
                 tv1.heading(column, text=column ) # let the column heading = column name
 
             df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
+            
             for row in df_rows:
                 tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
             return None

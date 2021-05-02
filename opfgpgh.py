@@ -182,7 +182,7 @@ def Load_excel_data():
     try:
         excel_filename = r"{}".format(file_path)
         if excel_filename[-4:] == ".csv":
-            df = pd.read_csv(excel_filename)
+            df = pd.read_csv(excel_filename,engine='python')
         else:
             df = pd.read_excel(excel_filename)
 
