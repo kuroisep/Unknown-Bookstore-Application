@@ -507,7 +507,7 @@ class Shop_main_screen:
             tv1["column"] = list(df.columns)
             tv1["show"] = "headings"
             for column in tv1["columns"]:
-                tv1.heading(column, text=column ,font = 'TRACK' ) # let the column heading = column name
+                tv1.heading(column, text=column ) # let the column heading = column name
 
             df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
             for row in df_rows:

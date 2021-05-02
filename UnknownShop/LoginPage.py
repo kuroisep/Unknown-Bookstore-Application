@@ -159,7 +159,7 @@ class main_account_screen:
         x = (960) - (400/2)
         y = (540) - (300/2)
         self.login_success_screen.geometry("400x300+%d+%d" % (x, y))
-        canvas = Canvas(self.login_success_screen, width=400, height=300)
+        canvas = Canvas(self.login_success_screen, width=400, height=300, background = "#2ECC71")
         canvas.pack(fill="both", expand=True)
 
         if self.info_GENDER == 'MALE':
@@ -168,10 +168,10 @@ class main_account_screen:
             sex = 'Mrs.'
 
         canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
-            sex, self.info_NAME, self.info_LNAME))
-        canvas.create_text(200, 130, text="Email : {}   Phone Number : {} ".format(
-            self.info_EMAIL, self.info_telphone))
-        ok_button = Button(self.login_success_screen, text="OK",
+            sex, self.info_NAME, self.info_LNAME), font = (self.myfont, 15))
+        canvas.create_text(200, 130, text="Email : {}   Phone Number : 0{} ".format(
+            self.info_EMAIL, self.info_telphone), font = (self.myfont, 10))
+        ok_button = ttk.Button(self.login_success_screen, text="OK",
                         command=self.delete_login_success)
         canvas.create_window(200, 200, window=ok_button)
 
