@@ -1,14 +1,7 @@
- stretch=NO)
-            # tv1.column(df.columns[1], minwidth=0, width=20, stretch=NO)
-            # tv1.column(df.columns[2], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[3], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[4], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[5], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[6], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[7], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[8], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[9], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[10], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[11], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[12], minwidth=0, width=100, stretch=NO)
-            # tv1.column(df.columns[13], minwidth=0, width=100, stretch=NO)
+og():
+        #     """This Function will open the file explorer and assign the chosen file path to label_file"""
+        #     filename = filedialog.askopenfilename(initialdir="/",
+        #                                         title="Select A File",
+        #                                         filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))
+        #     label_file["text"] = filename
+        #     return None

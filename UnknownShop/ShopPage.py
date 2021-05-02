@@ -70,6 +70,21 @@ class Shop_main_screen:
         #self.user[0][8] = telphone
         #self.user[0][9] = picture
 
+        #BOOK Variable
+        self.current_book = ['','','','','','','','','','','','','','','','','','','']
+        #self.current_book[0] = ลำดับที่
+        #self.current_book[1] = code
+        #self.current_book[2] = ชื่อหนังสือ
+        #self.current_book[3] = ผู้แต่ง
+        #self.current_book[4] = เรื่องย่อ
+        #self.current_book[5] = ราคา
+        #self.current_book[6] = จำนวนหน้า
+        #self.current_book[7] = หมวด
+        #self.current_book[8] = ภาษา
+        #self.current_book[9] = จำนวนสินค้า
+        #self.current_book[10] = rating
+
+
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
         
@@ -88,20 +103,12 @@ class Shop_main_screen:
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
-
-
-
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
         self.deliveryPage()
-
-
         self.create_background()
-
         self.create_logo()
-
         self.search_bar()
         # self.shift()
         self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -109,7 +116,6 @@ class Shop_main_screen:
 
         self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.button_state()
-
 
         self.shop_window.resizable(0, 0)
         self.shop_window.overrideredirect(0)
@@ -205,9 +211,6 @@ class Shop_main_screen:
             canvas.move("marquee", -2, 0)
         canvas.after(1000//fps,shift)    
         
-       
-    
-    
     def button_state(self):
 
 
@@ -268,8 +271,6 @@ class Shop_main_screen:
                                 relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
     
-        
-
     def get_data(self, row, column):
         self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.credentials = ServiceAccountCredentials.from_json_keyfile_name('UnknownShop\minor1981-a976b13f378a.json', self.scope)
@@ -368,11 +369,9 @@ class Shop_main_screen:
             self.inner_infomation.create_text(550, 180, anchor=NW, text='Picture : ')
             self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
             
-
     def openfn(self):
         self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
         return self.imagefile
-
     def openimage(self):
         self.x = self.openfn()
         self.user_img = ImageTk.PhotoImage(Image.open(self.x).resize((100, 100)))
@@ -380,7 +379,6 @@ class Shop_main_screen:
         # self.user_img = self.user_img.resize((100, 150), Image.ANTIALIAS)
         # self.user_img = ImageTk.PhotoImage(self.user_img)
         
-
 
     def edit_infomation_state(self):
         if str(self.name_entry['state']) == 'disabled':
@@ -459,7 +457,36 @@ class Shop_main_screen:
                 
     def selectItem(self,a):
         curItem = self.tv1.focus()
-        print(self.tv1.item(curItem)['values'][2])
+        self.current_book = self.tv1.item(curItem)['values']
+        #self.current_book[0] = ลำดับที่
+        #self.current_book[1] = code
+        #self.current_book[2] = ชื่อหนังสือ
+        #self.current_book[3] = ผู้แต่ง
+        #self.current_book[4] = เรื่องย่อ
+        #self.current_book[5] = ราคา
+        #self.current_book[6] = จำนวนหน้า
+        #self.current_book[7] = หมวด
+        #self.current_book[8] = ภาษา
+        #self.current_book[9] = จำนวนสินค้า
+        #self.current_book[10] = rating
+
+        #Update Detail Entry
+        self.name_detail_book_entry.delete(0,END)
+        self.author_detail_book_entry.delete(0,END)
+        self.category_detail_book_entry.delete(0,END)
+        self.language_detail_book_entry.delete(0,END)
+        self.price_detail_book_entry.delete(0,END)
+        self.code_detail_book_entry.delete(0,END)
+        
+        self.name_detail_book_entry.insert(0,self.current_book[2])
+        self.author_detail_book_entry.insert(0,self.current_book[3])
+        self.category_detail_book_entry.insert(0,self.current_book[7])
+        self.language_detail_book_entry.insert(0,self.current_book[8])
+        self.price_detail_book_entry.insert(0,self.current_book[5])
+        self.code_detail_book_entry.insert(0,self.current_book[1])
+        
+
+        
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550)
@@ -469,20 +496,55 @@ class Shop_main_screen:
         frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
         frame1.place(x=500, y=20, height=500, width=500)
 
-        # Frame for open file dialog
-        file_frame = tk.LabelFrame(self.inner_category, text="Open File")
-        file_frame.place(x=50, y=60,height=100, width=400, rely=0.65, relx=0)
+        ##Frame for book details
+        detail_frame = tk.LabelFrame(self.inner_category, text="Book Details")
+        detail_frame.place(x=50, y=20,height=500, width=400)
 
-        # Buttons
-        button1 = ttk.Button(file_frame, text="< Browse A File >", command=lambda: File_dialog())
-        button1.place(x=80, y=45)
+        #Name Of Book
+        name_detail_book = tk.Label(detail_frame,text='Name')
+        name_detail_book.place(x=200,y=20)
+        self.name_detail_book_entry = tk.Entry(detail_frame)
+        self.name_detail_book_entry.place(x=200,y=40)
+        #Author Of Book
+        author_detail_book = tk.Label(detail_frame,text='Author')
+        author_detail_book.place(x=200,y=70)
+        self.author_detail_book_entry = tk.Entry(detail_frame)
+        self.author_detail_book_entry.place(x=200,y=90)
+        #Category Of Book
+        category_detail_book = tk.Label(detail_frame,text='Category')
+        category_detail_book.place(x=200,y=120)
+        self.category_detail_book_entry = tk.Entry(detail_frame)
+        self.category_detail_book_entry.place(x=200,y=140)
+        #Language Of Book
+        language_detail_book = tk.Label(detail_frame,text='Language')
+        language_detail_book.place(x=200,y=170)
+        self.language_detail_book_entry = tk.Entry(detail_frame)
+        self.language_detail_book_entry.place(x=200,y=190)
+        #Price Of Book
+        price_detail_book = tk.Label(detail_frame,text='Price')
+        price_detail_book.place(x=200,y=220)
+        self.price_detail_book_entry = tk.Entry(detail_frame)
+        self.price_detail_book_entry.place(x=200,y=240)
+        #Code Of Book
+        code_detail_book = tk.Label(detail_frame,text='Code')
+        code_detail_book.place(x=200,y=270)
+        self.code_detail_book_entry = tk.Entry(detail_frame)
+        self.code_detail_book_entry.place(x=200,y=290)
 
-        button2 = ttk.Button(file_frame, text="< Load File >", command=lambda: Load_excel_data())
-        button2.place(x=220, y=45)
+        # # Frame for open file dialog
+        # file_frame = tk.LabelFrame(self.inner_category, text="Open File")
+        # file_frame.place(x=50, y=60,height=100, width=400, rely=0.65, relx=0)
+
+        # # Buttons
+        # button1 = ttk.Button(file_frame, text="< Browse A File >", command=lambda: File_dialog())
+        # button1.place(x=80, y=45)
+
+        button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
+        button2.place(x=200, y=400)
 
         # The file/file path text
-        label_file = ttk.Label(file_frame, text="No File Selected")
-        label_file.place(rely=0, relx=0)
+        # label_file = ttk.Label(file_frame, text="No File Selected")
+        # label_file.place(rely=0, relx=0)
 
         ## Treeview Widget
         self.tv1 = ttk.Treeview(frame1)
@@ -501,18 +563,18 @@ class Shop_main_screen:
 
          # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Load file JAAAAA
         
-        def File_dialog():
-            """This Function will open the file explorer and assign the chosen file path to label_file"""
-            filename = filedialog.askopenfilename(initialdir="/",
-                                                title="Select A File",
-                                                filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))
-            label_file["text"] = filename
-            return None
+        # def File_dialog():
+        #     """This Function will open the file explorer and assign the chosen file path to label_file"""
+        #     filename = filedialog.askopenfilename(initialdir="/",
+        #                                         title="Select A File",
+        #                                         filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))
+        #     label_file["text"] = filename
+        #     return None
 
 
         def Load_excel_data():
-            """If the file selected is valid this will load the file into the Treeview"""
-            file_path = label_file["text"]
+            # """If the file selected is valid this will load the file into the Treeview"""
+            # file_path = label_file["text"]
             # try:
             #     excel_filename = r"{}".format(file_path)
             #     if excel_filename[-4:] == ".csv":
