@@ -15,14 +15,30 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
+import mysql.connector
 
 from UnknownShop import LoginPage
 import pandas as pd
-# from UnknownShop import example
-# ss = r"Azure-ttk-theme-main"
-# from UnknownShop import example
 
-# 
+mydb = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    passwd="Minor4810540114.",
+    database="world",
+    auth_plugin="mysql_native_password"
+)
+cursor = mydb.cursor()
+
+options = []
+# sql = "SELECT Code, Name FROM country"
+sql = "SELECT * FROM city"
+cursor.execute(sql)
+ids = cursor.fetchall()
+for i in ids:
+    options.append(str(i[0]) + " - " + i[1])
+
+
+
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
@@ -33,6 +49,16 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
+
+        self.Name = StringVar()
+        self.Author = StringVar()
+        self.Category = StringVar()
+        self.Language = StringVar()
+        self.Price = StringVar()
+        self.Code = StringVar()
+
+
+
 
         """ 
         THEAM
@@ -70,8 +96,8 @@ class Shop_main_screen:
         #self.user[0][8] = telphone
         #self.user[0][9] = picture
 
-        #BOOK Variable
-        self.current_book = ['','','','','','','','','','','','','','','','','','','']
+        # #BOOK Variable
+        # self.current_book = ['','','','','','','','','','','','','','','','','','','']
         #self.current_book[0] = ลำดับที่
         #self.current_book[1] = code
         #self.current_book[2] = ชื่อหนังสือ
@@ -102,7 +128,6 @@ class Shop_main_screen:
 
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
@@ -184,22 +209,37 @@ class Shop_main_screen:
         after_id = self.banner_label.after(200, self.moveBanner)
         
 
+    def search(self):
+        q2 = self.Name.get()
+        query = "SELECT id, name, countrycode, district, population FROM city WHERE name LIKE '%"+q2+"%'"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        self.update(rows)
+
+
+    def clear(self):
+        query = "SELECT id, name, countrycode, district, population FROM city"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        self.update(rows)
+
+
     def search_bar(self): 
         self.canvas.create_text(385, 65, text="Search By", font=('TRACK', 12))
 
-        name = tk.StringVar()
-        nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = name)
-        nameEntered.place(x=535, y=50)
+        # name = tk.StringVar()
+        nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = self.Name)
+        nameEntered.place(x=440, y=50)
 
-        drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books"])
-        drop.current((0))
-        drop.place(x=440, y=50)
+        # drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books"])
+        # drop.current((0))
+        # drop.place(x=440, y=50)
 
-        search_button = ttk.Button(self.shop_window, text = "Search")
-        search_button.place(x=913, y=50)
+        search_button = ttk.Button(self.shop_window, text = "Search", command=self.search)
+        search_button.place(x=820, y=50)
 
-        show_all_books_button = ttk.Button(self.shop_window, text = "Show All")
-        show_all_books_button.place(x=1000, y=50)
+        show_all_books_button = ttk.Button(self.shop_window, text = "Clear", command=self.clear)
+        show_all_books_button.place(x=908, y=50)
         
     def shift(self):
         x1,y1,x2,y2 = canvas.bbox("marquee")
@@ -210,30 +250,19 @@ class Shop_main_screen:
         else:
             canvas.move("marquee", -2, 0)
         canvas.after(1000//fps,shift)    
+
+    def value_set_one(self):
+        self.value = 1
+
+    def print_value(self):
+        print(self.value)
         
     def button_state(self):
-
 
         button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
         self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
         # self.canvas.create_image(200,200,image=self.img_button1)
-        self.button1 = tk.Button(self.shop_window,image=self.img_button1,command = self.show_infomationPage, borderwidth=0)
-
-
-
-
-        # canvas1 = Canvas(self.shop_window, width=400, height=400)
-        # button = canvas1.create_image(100, 100, anchor=NW, image=button1_path)
-        # blank = canvas1.create_image(100, 100, anchor=NW, image=button1_path, state=NORMAL)
-        # canvas1.tag_bind(blank, "<Button-1>", self.show_infomationPage)
-        # canvas1.pack()
-
-        # button1 = Button(self, text = "Quit", command = self.quit, anchor = W)
-        # button1.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
-        # button1_window = canvas.create_window(10, 10, anchor=NW, window=button1)
-            
-        # self.button1.pack()
-        # self.button1.configure(width = 10, activebackground = "#33B5E5", relief = FLAT)
+        self.button1 = tk.Button(self.shop_window,image=self.img_button1, command = self.show_infomationPage, borderwidth=0)
         
         self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
@@ -271,25 +300,17 @@ class Shop_main_screen:
                                 relief=FLAT, bg="#856fff",activebackground='#4444ff')
         self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
     
-    def get_data(self, row, column):
-        self.scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-        self.credentials = ServiceAccountCredentials.from_json_keyfile_name('UnknownShop\minor1981-a976b13f378a.json', self.scope)
-        self.gc = gspread.authorize(self.credentials)
-        self.data = self.gc.open('รายชื่อหนังสือ').sheet1
-        self.row = self.data.row_values(row)[column]
-        
-        return str(self.row)
 
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
-            self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
-            self.df.to_csv("login.csv", index=False)
+            # self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+            # self.df.to_csv("login.csv", index=False)
             self.shop_window.destroy()
             # self.shop_window.after_cancel(after_id)
             # LoginPage.showLoginPage()
     def deleteX_show_window(self):
-        self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
-        self.df.to_csv("login.csv", index=False)
+        # self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+        # self.df.to_csv("login.csv", index=False)
         self.shop_window.destroy()
         # self.shop_window.after_cancel(after_id)
 
@@ -455,35 +476,35 @@ class Shop_main_screen:
                 temp_img = cv2.imread(self.x)
                 cv2.imwrite('UnknownShop\\Picture\\ShopPage\\USER_PIC\\{}.png'.format(self.user[0][1]), temp_img)
                 
-    def selectItem(self,a):
-        curItem = self.tv1.focus()
-        self.current_book = self.tv1.item(curItem)['values']
-        #self.current_book[0] = ลำดับที่
-        #self.current_book[1] = code
-        #self.current_book[2] = ชื่อหนังสือ
-        #self.current_book[3] = ผู้แต่ง
-        #self.current_book[4] = เรื่องย่อ
-        #self.current_book[5] = ราคา
-        #self.current_book[6] = จำนวนหน้า
-        #self.current_book[7] = หมวด
-        #self.current_book[8] = ภาษา
-        #self.current_book[9] = จำนวนสินค้า
-        #self.current_book[10] = rating
+    # def selectItem(self,a):
+    #     curItem = self.tv1.focus()
+    #     self.current_book = self.tv1.item(curItem)['values']
+    #     #self.current_book[0] = ลำดับที่
+    #     #self.current_book[1] = code
+    #     #self.current_book[2] = ชื่อหนังสือ
+    #     #self.current_book[3] = ผู้แต่ง
+    #     #self.current_book[4] = เรื่องย่อ
+    #     #self.current_book[5] = ราคา
+    #     #self.current_book[6] = จำนวนหน้า
+    #     #self.current_book[7] = หมวด
+    #     #self.current_book[8] = ภาษา
+    #     #self.current_book[9] = จำนวนสินค้า
+    #     #self.current_book[10] = rating
 
-        #Update Detail Entry
-        self.name_detail_book_entry.delete(0,END)
-        self.author_detail_book_entry.delete(0,END)
-        self.category_detail_book_entry.delete(0,END)
-        self.language_detail_book_entry.delete(0,END)
-        self.price_detail_book_entry.delete(0,END)
-        self.code_detail_book_entry.delete(0,END)
+    #     #Update Detail Entry
+    #     self.name_detail_book_entry.delete(0,END)
+    #     self.author_detail_book_entry.delete(0,END)
+    #     self.category_detail_book_entry.delete(0,END)
+    #     self.language_detail_book_entry.delete(0,END)
+    #     self.price_detail_book_entry.delete(0,END)
+    #     self.code_detail_book_entry.delete(0,END)
         
-        self.name_detail_book_entry.insert(0,self.current_book[2])
-        self.author_detail_book_entry.insert(0,self.current_book[3])
-        self.category_detail_book_entry.insert(0,self.current_book[7])
-        self.language_detail_book_entry.insert(0,self.current_book[8])
-        self.price_detail_book_entry.insert(0,self.current_book[5])
-        self.code_detail_book_entry.insert(0,self.current_book[1])
+    #     self.name_detail_book_entry.insert(0,self.current_book[2])
+    #     self.author_detail_book_entry.insert(0,self.current_book[3])
+    #     self.category_detail_book_entry.insert(0,self.current_book[7])
+    #     self.language_detail_book_entry.insert(0,self.current_book[8])
+    #     self.price_detail_book_entry.insert(0,self.current_book[5])
+    #     self.code_detail_book_entry.insert(0,self.current_book[1])
         
 
         
@@ -494,128 +515,167 @@ class Shop_main_screen:
 
         # Frame for TreeView
         frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
-        frame1.place(x=500, y=20, height=500, width=500)
+        frame1.place(x=480, y=20, height=500, width=500)
 
         ##Frame for book details
         detail_frame = tk.LabelFrame(self.inner_category, text="Book Details")
         detail_frame.place(x=50, y=20,height=500, width=400)
 
         #Name Of Book
-        name_detail_book = tk.Label(detail_frame,text='Name')
-        name_detail_book.place(x=200,y=20)
-        self.name_detail_book_entry = tk.Entry(detail_frame)
-        self.name_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.name_detail_book_entry.place(x=200,y=40)
+        # name_detail_book = tk.Label(detail_frame,text='Name')
+        # name_detail_book.place(x=200,y=20)
+        # self.name_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Name)
+        # self.name_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.name_detail_book_entry.place(x=200,y=40)
+
+        lbl1 = Label(detail_frame, text="Name")
+        lbl1.grid(row=0, column=0, padx=10, pady=5)
+        self.lbl1_entry = Entry(detail_frame, textvariable=self.Name)
+        self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
+
+
         #Author Of Book
-        author_detail_book = tk.Label(detail_frame,text='Author')
-        author_detail_book.place(x=200,y=70)
-        self.author_detail_book_entry = tk.Entry(detail_frame)
-        self.author_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.author_detail_book_entry.place(x=200,y=90)
+        lbl2 = Label(detail_frame, text="Author")
+        lbl2.grid(row=1, column=0, padx=10, pady=5)
+        self.lbl2_entry = Entry(detail_frame, textvariable=self.Author)
+        self.lbl2_entry.grid(row=1, column=1, padx=10, pady=5)
+        # author_detail_book = tk.Label(detail_frame,text='Author')
+        # author_detail_book.place(x=200,y=70)
+        # self.author_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Author)
+        # self.author_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.author_detail_book_entry.place(x=200,y=90)
+
         #Category Of Book
-        category_detail_book = tk.Label(detail_frame,text='Category')
-        category_detail_book.place(x=200,y=120)
-        self.category_detail_book_entry = tk.Entry(detail_frame)
-        self.category_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.category_detail_book_entry.place(x=200,y=140)
+        lbl3 = Label(detail_frame, text="Category")
+        lbl3.grid(row=2, column=0, padx=10, pady=5)
+        self.lbl3_entry = Entry(detail_frame, textvariable=self.Category)
+        self.lbl3_entry.grid(row=2, column=1, padx=10, pady=5)
+        # category_detail_book = tk.Label(detail_frame,text='Category')
+        # category_detail_book.place(x=200,y=120)
+        # self.category_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Category)
+        # self.category_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.category_detail_book_entry.place(x=200,y=140)
+
         #Language Of Book
-        language_detail_book = tk.Label(detail_frame,text='Language')
-        language_detail_book.place(x=200,y=170)
-        self.language_detail_book_entry = tk.Entry(detail_frame)
-        self.language_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.language_detail_book_entry.place(x=200,y=190)
+        lbl4 = Label(detail_frame, text="Language")
+        lbl4.grid(row=3, column=0, padx=10, pady=5)
+        self.lbl4_entry = Entry(detail_frame, textvariable=self.Language)
+        self.lbl4_entry.grid(row=3, column=1, padx=10, pady=5)
+        # language_detail_book = tk.Label(detail_frame,text='Language')
+        # language_detail_book.place(x=200,y=170)
+        # self.language_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Language)
+        # self.language_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.language_detail_book_entry.place(x=200,y=190)
+
         #Price Of Book
-        price_detail_book = tk.Label(detail_frame,text='Price')
-        price_detail_book.place(x=200,y=220)
-        self.price_detail_book_entry = tk.Entry(detail_frame)
-        self.price_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.price_detail_book_entry.place(x=200,y=240)
+        lbl5 = Label(detail_frame, text="Price")
+        lbl5.grid(row=4, column=0, padx=10, pady=5)
+        self.lbl5_entry = Entry(detail_frame, textvariable=self.Price)
+        self.lbl5_entry.grid(row=4, column=1, padx=10, pady=5)
+        # price_detail_book = tk.Label(detail_frame,text='Price')
+        # price_detail_book.place(x=200,y=220)
+        # self.price_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Price)
+        # self.price_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.price_detail_book_entry.place(x=200,y=240)
+
         #Code Of Book
-        code_detail_book = tk.Label(detail_frame,text='Code')
-        code_detail_book.place(x=200,y=270)
-        self.code_detail_book_entry = tk.Entry(detail_frame)
-        self.code_detail_book_entry.bind("<Key>", lambda e: "break")
-        self.code_detail_book_entry.place(x=200,y=290)
+        lbl6 = Label(detail_frame, text="Code")
+        lbl6.grid(row=5, column=0, padx=10, pady=5)
+        self.lbl6_entry = Entry(detail_frame, textvariable=self.Code)
+        self.lbl6_entry.grid(row=5, column=1, padx=10, pady=5)
+        # code_detail_book = tk.Label(detail_frame,text='Code')
+        # code_detail_book.place(x=200,y=270)
+        # self.code_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Code)
+        # self.code_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.code_detail_book_entry.place(x=200,y=290)
 
-        # # Frame for open file dialog
-        # file_frame = tk.LabelFrame(self.inner_category, text="Open File")
-        # file_frame.place(x=50, y=60,height=100, width=400, rely=0.65, relx=0)
+        # button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
+        # button2.place(x=200, y=400)
 
-        # # Buttons
-        # button1 = ttk.Button(file_frame, text="< Browse A File >", command=lambda: File_dialog())
-        # button1.place(x=80, y=45)
+        self.treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="22")
+        self.treeview.pack()
 
-        button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
-        button2.place(x=200, y=400)
+        self.treeview.pack(side=LEFT)
+        self.treeview.place(x=0, y=0)
+        self.treeview.heading(1, text="Name")
+        self.treeview.heading(2, text="Author")
+        self.treeview.heading(3, text="Category")
+        self.treeview.heading(4, text="Language")
+        self.treeview.heading(5, text="Price")
+        self.treeview.heading(6, text="Code")
 
-        # The file/file path text
-        # label_file = ttk.Label(file_frame, text="No File Selected")
-        # label_file.place(rely=0, relx=0)
 
-        ## Treeview Widget
-        self.tv1 = ttk.Treeview(frame1)
-        # self.tv1 = CustomTreeview(tv)
-        self.tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
+        self.treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
+
+
+        yscrollbar = tk.Scrollbar(frame1, orient="vertical", command=self.treeview.yview)
+        xscrollbar = tk.Scrollbar(frame1, orient="horizontal", command=self.treeview.xview)
+
+        self.treeview.configure(yscrollcommand=yscrollbar.set, xscrollcommand=xscrollbar.set)
+
+        yscrollbar.pack(side="right", fill="y")
+        xscrollbar.pack(side="bottom", fill="x")
+
+
+        self.update(ids)
+
+
+
+        # ## Treeview Widget
+        # self.tv1 = ttk.Treeview(frame1)
+        # # self.tv1 = CustomTreeview(tv)
+        # self.tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
    
-        self.tv1.bind('<ButtonRelease-1>', self.selectItem)
+        # self.tv1.bind('<ButtonRelease-1>', self.selectItem)
 
 
 
-        treescrolly = tk.Scrollbar(frame1, orient="vertical", command=self.tv1.yview) # command means update the yaxis view of the widget
-        treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=self.tv1.xview) # command means update the xaxis view of the widget
-        self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
-        treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
-        treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
+        # treescrolly = tk.Scrollbar(frame1, orient="vertical", command=self.tv1.yview) # command means update the yaxis view of the widget
+        # treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=self.tv1.xview) # command means update the xaxis view of the widget
+        # self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
+        # treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
+        # treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
 
-         # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  Load file JAAAAA
-        
-        # def File_dialog():
-        #     """This Function will open the file explorer and assign the chosen file path to label_file"""
-        #     filename = filedialog.askopenfilename(initialdir="/",
-        #                                         title="Select A File",
-        #                                         filetype=(("xlsx files", "*.xlsx"),("All Files", "*.*")))
-        #     label_file["text"] = filename
+
+        # def Load_excel_data():
+        #     df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
+        #     # print(df)
+        #     # print(str(self.current_book[2]))
+
+        #     clear_data()
+        #     self.tv1["column"] = list(df.columns)
+        #     self.tv1["show"] = "headings"
+        #     for column in self.tv1["columns"]:
+        #         self.tv1.heading(column, text=column ) # let the column heading = column name
+
+        #     df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
+            
+        #     for row in df_rows:
+        #         self.tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
         #     return None
 
-
-        def Load_excel_data():
-            # """If the file selected is valid this will load the file into the Treeview"""
-            # file_path = label_file["text"]
-            # try:
-            #     excel_filename = r"{}".format(file_path)
-            #     if excel_filename[-4:] == ".csv":
-                   
-            #     else:
-            #         df = pd.read_excel(excel_filename)
-
-            # except ValueError:
-            #     tk.messagebox.showerror("Information", "The file you have chosen is invalid")
-            #     return None
-            # except FileNotFoundError:
-            #     tk.messagebox.showerror("Information", f"No such file as {file_path}")
-            #     return None
-            df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
-            print(df)
-
-            clear_data()
-            self.tv1["column"] = list(df.columns)
-            # self.tv1.column('ลำดับ', width=30)
-            # self.tv1.column('CODE', width=70)
-            print(df)
-            self.tv1["show"] = "headings"
-            for column in self.tv1["columns"]:
-                self.tv1.heading(column, text=column ) # let the column heading = column name
-
-            df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
             
-            for row in df_rows:
-                self.tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
-            return None
 
 
-        def clear_data():
-            self.tv1.delete(*self.tv1.get_children())
-            return None
+    #     def clear_data():
+    #         self.tv1.delete(*self.tv1.get_children())
+    #         return None
+
+    
+    def lookupCustomer(self, event):
+        curItem = self.treeview.focus()
+        cur = self.treeview.item(curItem)['values']
+        self.Name.set(cur[0])
+        self.Author.set(cur[1])
+        self.Category.set(cur[2])
+        self.Language.set(cur[3])
+        self.Price.set(cur[4])
+        # self.Code.set(cur[5])
+
+    def update(self, ids):
+        self.treeview.delete(*self.treeview.get_children())
+        for i in ids:
+            self.treeview.insert('', 'end', values=i)
 
        
     def paymentPage(self):
