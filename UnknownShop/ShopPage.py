@@ -608,8 +608,8 @@ class Shop_main_screen:
         self.treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
 
 
-        yscrollbar = tk.Scrollbar(frame1, orient="vertical", command=self.treeview.yview)
-        xscrollbar = tk.Scrollbar(frame1, orient="horizontal", command=self.treeview.xview)
+        yscrollbar = ttk.Scrollbar(frame1, orient="vertical", command=self.treeview.yview)
+        xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.treeview.xview)
 
         self.treeview.configure(yscrollcommand=yscrollbar.set, xscrollcommand=xscrollbar.set)
 
