@@ -19,6 +19,8 @@ import mysql.connector
 
 from UnknownShop import LoginPage
 import pandas as pd
+from time import sleep
+import time
 
 mydb = mysql.connector.connect(
     host="localhost",
@@ -241,15 +243,6 @@ class Shop_main_screen:
         show_all_books_button = ttk.Button(self.shop_window, text = "Clear", command=self.clear)
         show_all_books_button.place(x=908, y=50)
         
-    def shift(self):
-        x1,y1,x2,y2 = canvas.bbox("marquee")
-        if(x2<0 or y1<0): #reset the coordinates
-            x1 = canvas.winfo_width()
-            y1 = canvas.winfo_height()//2
-            canvas.coords("marquee",x1,y1)
-        else:
-            canvas.move("marquee", -2, 0)
-        canvas.after(1000//fps,shift)    
 
     def value_set_one(self):
         self.value = 1
@@ -385,7 +378,7 @@ class Shop_main_screen:
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
             self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((100, 100)))
 
-            self.imageselect_info_button = Button(self.inner_infomation,text='select', command=self.openimage)
+            self.imageselect_info_button = Button(self.inner_infomation,text='select',state=DISABLED, command=self.openimage)
             self.inner_infomation.create_window(500, 300, window=self.imageselect_info_button, anchor="nw")
             self.inner_infomation.create_text(550, 180, anchor=NW, text='Picture : ')
             self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
@@ -413,6 +406,7 @@ class Shop_main_screen:
             self.telphone_entry.config(state=NORMAL)
             self.edit_info_button.config(state=DISABLED)
             self.done_info_button.config(state=NORMAL)
+            self.imageselect_info_button.config(state=NORMAL)
         else:
             self.edit_infomation_file()
 
@@ -465,6 +459,7 @@ class Shop_main_screen:
                 self.telphone_entry.config(state=DISABLED)
                 self.edit_info_button.config(state=NORMAL)
                 self.done_info_button.config(state=DISABLED)
+                self.imageselect_info_button.config(state=DISABLED)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'NAME'] = str(name_info).capitalize()
                 self.df.loc[self.df['USER'] == self.user[0][1], 'LNAME'] = str(lastname_info).capitalize()
                 self.df.loc[self.df['USER'] == self.user[0][1], 'GENDER'] = str(self.gender_entry.get())
@@ -508,6 +503,9 @@ class Shop_main_screen:
         
 
         
+    def selected_categoryPages(self):
+        self.inner_selected_categoryPages = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
+        self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
@@ -681,6 +679,47 @@ class Shop_main_screen:
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
+
+        paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
+        paymentPageFrame1.place(x=0, y=0, height=100, width=1000)
+
+        
+
+
+        paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
+        paymentPageFrame2.place(x=0, y=100, height=450, width=1000)
+
+        Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        Back_bottom.pack(side = LEFT)
+        # Back_bottom.place(x=500, y=400,anchor="center")
+
+        Del_bottom = tk.Button(paymentPageFrame2,text="< Del >", command = self.pp )
+        Del_bottom.pack(side = BOTTOM)    
+        # Del_bottom.place(x=400, y=400,anchor="center")
+
+        Next_bottom = tk.Button(paymentPageFrame2,text="< Next >", command = self.pp )
+        Next_bottom.pack(side = RIGHT) 
+
+        Seemore_bottom = tk.Button(paymentPageFrame2,text="< See more >", command = self.pp )
+        Seemore_bottom.pack(side = TOP) 
+
+        
+
+        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom.place(x=500, y=400,anchor="center")
+
+        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom.place(x=500, y=400,anchor="center")
+
+        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom.place(x=500, y=400,anchor="center")
+
+
+
+    def pp(self):
+        print("OOPPPPPPPPPPPPPPPPPPPPPPPPPs")
+
+
     def deliveryPage(self):
         self.inner_delivery = Canvas(self.canvas, width=1000, height=550)   
         self.inner_delivery.create_text(500, 275, font = 50, anchor=CENTER, text="deliveryPage")
@@ -697,6 +736,11 @@ class Shop_main_screen:
     def show_deliveryPage(self):
         self.delete_canvas()
         self.canvas.create_window(250,150, anchor=NW, window=self.inner_delivery)
+        
+                
+            
+
+            
 
     def delete_canvas(self): # ปุ่ม 2                #3
         self.canvas.create_window(2000, 700, anchor=NW, window=self.inner_infomation)
@@ -713,7 +757,6 @@ class Shop_main_screen:
     ## 3. ใน def delete เอาหน้านั้นไปใส่
 
 
-        
 
 def showShopPage():
     run = Shop_main_screen()
