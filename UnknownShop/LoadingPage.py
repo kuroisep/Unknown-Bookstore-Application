@@ -1,7 +1,6 @@
 from tkinter.ttk import Progressbar
 from tkinter import *
 from tkinter import ttk
-import csv
 
 
 import os, sys
