@@ -40,7 +40,6 @@ for i in ids:
     options.append(str(i[0]) + " - " + i[1])
 
 
-
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
@@ -140,6 +139,7 @@ class Shop_main_screen:
         # self.shift()
         self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
+        self.shift()
 
         self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.button_state()
@@ -592,9 +592,35 @@ class Shop_main_screen:
 
         self.treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="22")
         self.treeview.pack()
+        # def treeview_sort_column(tv, col, reverse):
+        #     l = [(tv.set(k, col), k) for k in tv.get_children('')]
+        #     l.sort(key=lambda t: int(t[0]), reverse=reverse)
+        #     #      ^^^^^^^^^^^^^^^^^^^^^^^
+
+        #     for index, (val, k) in enumerate(l):
+        #         tv.move(k, '', index)
+
+        #     tv.heading(col,
+        #             command=lambda: treeview_sort_column(tv, col, not reverse))
+
+        # root = Tk()
+        # columns = ('number',)
+        # treeview = ttk.Treeview(root, columns=columns, show='headings')
+        # for t in ('1', '10', '11', '2', '3'):
+        #     treeview.insert('', END, values=(t,))
+        # treeview.pack()
+        # for col in columns:
+        #     treeview.heading(col, text=col,
+        #                     command=lambda c=col: treeview_sort_column(treeview, c, False))
 
         self.treeview.pack(side=LEFT)
         self.treeview.place(x=0, y=0)
+        self.treeview.column(1, anchor='w', width=100)
+        self.treeview.column(2, anchor='w', width=200)
+        self.treeview.column(3, anchor='w', width=100)
+        self.treeview.column(4, anchor='w', width=100)
+        self.treeview.column(5, anchor='w', width=100)
+        self.treeview.column(1, anchor='w', width=100)
         self.treeview.heading(1, text="Name")
         self.treeview.heading(2, text="Author")
         self.treeview.heading(3, text="Category")
@@ -609,10 +635,13 @@ class Shop_main_screen:
         yscrollbar = ttk.Scrollbar(frame1, orient="vertical", command=self.treeview.yview)
         xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.treeview.xview)
 
-        self.treeview.configure(yscrollcommand=yscrollbar.set, xscrollcommand=xscrollbar.set)
+        self.treeview.config(xscrollcommand=xscrollbar.set)
+        self.treeview.config(yscrollcommand=yscrollbar.set)
 
         yscrollbar.pack(side="right", fill="y")
         xscrollbar.pack(side="bottom", fill="x")
+
+
 
 
         self.update(ids)
@@ -675,6 +704,15 @@ class Shop_main_screen:
         for i in ids:
             self.treeview.insert('', 'end', values=i)
 
+    def shift(self):
+            x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
+            if(x2<0 or y1<0): #reset the coordinates
+                x1 = self.inner_payment_slidetext.winfo_width()
+                y1 = self.inner_payment_slidetext.winfo_height()//2
+                self.inner_payment_slidetext.coords("marquee",x1,y1)
+            else:
+                self.inner_payment_slidetext.move("marquee", -2, 0)
+            self.inner_payment_slidetext.after(1000//self.fps,self.shift)
        
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
@@ -682,7 +720,20 @@ class Shop_main_screen:
 
         paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
         paymentPageFrame1.place(x=0, y=0, height=100, width=1000)
-
+        
+        ############# Main program ###############
+        text_var="______|   Welcome to the land of bookS   |______" 
+        self.inner_payment_slidetext = Canvas(paymentPageFrame1, width=1000, height=100)   
+        self.inner_payment_slidetext.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='black',tags=("marquee",),anchor='w')
+        x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
+        
+        width = x2-x1
+        # height = y2-y1
+        self.inner_payment_slidetext['width']=width+500
+        self.inner_payment_slidetext['height']=60
+        self.fps=40    #Change the fps to make the animation faster/slower
+        self.inner_payment_slidetext.pack()
+        
         
 
 
