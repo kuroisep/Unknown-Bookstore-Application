@@ -640,9 +640,9 @@ class Shop_main_screen:
         #                     command=lambda c=col: book_treeview_sort_column(book_treeview, c, False))
 
         # self.book_treeview.pack(side=LEFT)
-        self.book_treeview.place(x=25, y=15)
+        self.book_treeview.place(x= 80, y=15)
         self.book_treeview.column(1, anchor='w', width=50)
-        self.book_treeview.column(2, anchor='w', width=200)
+        self.book_treeview.column(2, anchor='w', width=100)
         self.book_treeview.column(3, anchor='w', width=50)
         self.book_treeview.column(4, anchor='w', width=50)
         self.book_treeview.column(5, anchor='w', width=50)
@@ -836,7 +836,7 @@ class Shop_main_screen:
         # self.review_bottom.place(x=500, y=400,anchor="center")
         self.review_bottom.pack(side = BOTTOM) 
 
-        Back_bottom = tk.Button(deliveryPageFrame1,text="< Back >", command = self.pp )    
+        Back_bottom = tk.Button(deliveryPageFrame1,text="< Back >", command = self.backk )    
         # Back_bottom.place(x=, y=400,anchor="center")
         Back_bottom.pack(side = LEFT) 
 
@@ -848,6 +848,8 @@ class Shop_main_screen:
     def review_bottomOn(self):
         self.review_bottom.config(state=NORMAL)
         print("Review JAA")
+    def backk(self):
+        self.review_bottom.config(state=DISABLED)
 
     def checkDeliverySuccess(self):
         print("Checking...")
