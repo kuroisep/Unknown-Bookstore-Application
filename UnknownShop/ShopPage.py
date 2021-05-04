@@ -511,13 +511,16 @@ class Shop_main_screen:
         self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
-        # Frame for book_TreeView
-        frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
-        frame1.place(x=480, y=20, height=500, width=500)
 
         ##Frame for book details
-        detail_frame = tk.LabelFrame(self.inner_category, text="Book Details")
-        detail_frame.place(x=50, y=20,height=500, width=400)
+        detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
+        detail_frame.place(x=0, y=20,height=500, width=400)
+
+        # Frame for book_TreeView
+        frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
+        frame1.place(x=410, y=20, height=450, width=590)
+
+       
 
         #Name Of Book
         # name_detail_book = tk.Label(detail_frame,text='Name')
@@ -761,24 +764,24 @@ class Shop_main_screen:
         self.cart_treeview.heading(4, text="Item (s)")
         self.cart_treeview.heading(5, text="Price")
         for i in range(0,100):
-            self.cart_treeview.insert('', 'end', values=[i,'code'])
+            self.cart_treeview.insert('', 'end', values=[i,'code','SAASASAS_ '+ str(i) ,"55555","159.50"])
 
 
 
         Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.pack(side = BOTTOM,anchor='')
-        Back_bottom.place(x=500, y=415,anchor="center")
+        Back_bottom.place(x=300, y=415,anchor="center")
 
         Del_bottom = tk.Button(paymentPageFrame2,text="< Del >", command = self.pp )
         # Del_bottom.pack(side = BOTTOM)    
         Del_bottom.place(x=400, y=415,anchor="center")
 
         Next_bottom = tk.Button(paymentPageFrame2,text="< Next >", command = self.pp )
-        Next_bottom.place(x=300, y=415,anchor="center")
+        Next_bottom.place(x=650, y=415,anchor="center")
         # Next_bottom.pack(side = BOTTOM) 
 
         Seemore_bottom = tk.Button(paymentPageFrame2,text="< See more >", command = self.pp )
-        Seemore_bottom.place(x=200, y=415,anchor="center")
+        Seemore_bottom.place(x=550, y=415,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
         
@@ -801,6 +804,12 @@ class Shop_main_screen:
     def deliveryPage(self):
         self.inner_delivery = Canvas(self.canvas, width=1000, height=550)   
         self.inner_delivery.create_text(500, 275, font = 50, anchor=CENTER, text="deliveryPage")
+
+        deliveryPageFrame1 = tk.LabelFrame(self.inner_delivery, text="Status")
+        deliveryPageFrame1.place(x=0, y=0, height=500, width=300)
+
+        deliveryPageFrame2 = tk.LabelFrame(self.inner_delivery, text="Review Book")
+        deliveryPageFrame2.place(x=300, y=0, height=500, width=700)
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
