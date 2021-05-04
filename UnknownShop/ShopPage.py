@@ -51,15 +51,15 @@ class Shop_main_screen:
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
 
+
+        # Variable User
         self.Name = StringVar()
         self.Author = StringVar()
         self.Category = StringVar()
         self.Language = StringVar()
         self.Price = StringVar()
         self.Code = StringVar()
-
-
-
+        self.Rating = StringVar()
 
         """ 
         THEAM
@@ -311,6 +311,13 @@ class Shop_main_screen:
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
         
+        infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")
+        infomationPageFrame1.place(x=0, y=0, height=550, width=500)
+
+        infomationPageFrame2 = tk.LabelFrame(self.inner_infomation , text="PICTURE")
+        infomationPageFrame2.place(x=500, y=0, height=400, width=500)
+
+
         if self.user != []:
             ## USERNAME
             self.inner_infomation.create_text(150, 50, anchor=NW, text='Username : {}'.format(self.user[0][1]))
@@ -518,7 +525,7 @@ class Shop_main_screen:
 
         # Frame for book_TreeView
         frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
-        frame1.place(x=410, y=20, height=450, width=590)
+        frame1.place(x=410, y=20, height=500, width=590)
 
        
 
@@ -590,10 +597,26 @@ class Shop_main_screen:
         # self.code_detail_book_entry.bind("<Key>", lambda e: "break")
         # self.code_detail_book_entry.place(x=200,y=290)
 
+
+        # Rating Of Book
+        lbl7 = Label(detail_frame, text="Rating")
+        lbl7.grid(row=6, column=0, padx=10, pady=5)
+        self.lbl7_entry = Entry(detail_frame, textvariable=self.Rating)
+        self.lbl7_entry.grid(row=6, column=1, padx=10, pady=5)
+        # code_detail_book = tk.Label(detail_frame,text='Code')
+        # code_detail_book.place(x=200,y=270)
+        # self.code_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Code)
+        # self.code_detail_book_entry.bind("<Key>", lambda e: "break")
+        # self.code_detail_book_entry.place(x=200,y=290)
+
+
+
+
+
         # button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
         # button2.place(x=200, y=400)
 
-        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="22")
+        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
         # self.book_treeview.pack()
         # def book_treeview_sort_column(tv, col, reverse):
         #     l = [(tv.set(k, col), k) for k in tv.get_children('')]
@@ -617,13 +640,13 @@ class Shop_main_screen:
         #                     command=lambda c=col: book_treeview_sort_column(book_treeview, c, False))
 
         # self.book_treeview.pack(side=LEFT)
-        self.book_treeview.place(x=0, y=0)
-        self.book_treeview.column(1, anchor='w', width=100)
+        self.book_treeview.place(x=25, y=15)
+        self.book_treeview.column(1, anchor='w', width=50)
         self.book_treeview.column(2, anchor='w', width=200)
-        self.book_treeview.column(3, anchor='w', width=100)
-        self.book_treeview.column(4, anchor='w', width=100)
-        self.book_treeview.column(5, anchor='w', width=100)
-        self.book_treeview.column(1, anchor='w', width=100)
+        self.book_treeview.column(3, anchor='w', width=50)
+        self.book_treeview.column(4, anchor='w', width=50)
+        self.book_treeview.column(5, anchor='w', width=50)
+        self.book_treeview.column(6, anchor='w', width=100)
         self.book_treeview.heading(1, text="Name")
         self.book_treeview.heading(2, text="Author")
         self.book_treeview.heading(3, text="Category")
@@ -631,7 +654,7 @@ class Shop_main_screen:
         self.book_treeview.heading(5, text="Price")
         self.book_treeview.heading(6, text="Code")
 
-
+        # Click on table book data
         self.book_treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
 
 
@@ -683,10 +706,7 @@ class Shop_main_screen:
         #     for row in df_rows:
         #         self.tv1.insert("", "end", values=row) # inserts each list into the book_treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.book_Treeview.insert
         #     return None
-
-            
-
-
+        
     #     def clear_data():
     #         self.tv1.delete(*self.tv1.get_children())
     #         return None
@@ -810,6 +830,32 @@ class Shop_main_screen:
 
         deliveryPageFrame2 = tk.LabelFrame(self.inner_delivery, text="Review Book")
         deliveryPageFrame2.place(x=300, y=0, height=500, width=700)
+
+
+        self.review_bottom = tk.Button(deliveryPageFrame2,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
+        # self.review_bottom.place(x=500, y=400,anchor="center")
+        self.review_bottom.pack(side = BOTTOM) 
+
+        Back_bottom = tk.Button(deliveryPageFrame1,text="< Back >", command = self.pp )    
+        # Back_bottom.place(x=, y=400,anchor="center")
+        Back_bottom.pack(side = LEFT) 
+
+
+        Next_bottom = tk.Button(deliveryPageFrame1,text="< Next >", command = self.checkDeliverySuccess)    
+        # Next_bottom.place(x=500, y=400,anchor="center")
+        Next_bottom.pack(side = RIGHT) 
+
+    def review_bottomOn(self):
+        self.review_bottom.config(state=NORMAL)
+        print("Review JAA")
+
+    def checkDeliverySuccess(self):
+        print("Checking...")
+        print("Success...")
+        self.review_bottomOn()
+       
+
+
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
