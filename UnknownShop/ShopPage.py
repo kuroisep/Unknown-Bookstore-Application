@@ -840,7 +840,6 @@ class Shop_main_screen:
         # Back_bottom.place(x=, y=400,anchor="center")
         Back_bottom.pack(side = LEFT) 
 
-
         Next_bottom = tk.Button(deliveryPageFrame1,text="< Next >", command = self.checkDeliverySuccess)    
         # Next_bottom.place(x=500, y=400,anchor="center")
         Next_bottom.pack(side = RIGHT) 
@@ -855,9 +854,6 @@ class Shop_main_screen:
         print("Checking...")
         print("Success...")
         self.review_bottomOn()
-       
-
-
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
