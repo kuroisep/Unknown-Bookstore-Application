@@ -71,7 +71,7 @@ class Shop_main_screen:
         # Set the theme with the theme_use method
         style.theme_use('azure')
         style.configure('flat.TButton', borderwidth=0)
-        style.configure("Treeview", font=('TRACK',13,'bold'))
+        # style.configure("Treeview", font=('TRACK',13,'bold'))
         """ 
         THEAM
         """
@@ -511,7 +511,7 @@ class Shop_main_screen:
         self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
         self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
-        # Frame for TreeView
+        # Frame for book_TreeView
         frame1 = tk.LabelFrame(self.inner_category, text="Excel Data")
         frame1.place(x=480, y=20, height=500, width=500)
 
@@ -590,9 +590,9 @@ class Shop_main_screen:
         # button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
         # button2.place(x=200, y=400)
 
-        self.treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="22")
-        self.treeview.pack()
-        # def treeview_sort_column(tv, col, reverse):
+        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="22")
+        # self.book_treeview.pack()
+        # def book_treeview_sort_column(tv, col, reverse):
         #     l = [(tv.set(k, col), k) for k in tv.get_children('')]
         #     l.sort(key=lambda t: int(t[0]), reverse=reverse)
         #     #      ^^^^^^^^^^^^^^^^^^^^^^^
@@ -601,42 +601,42 @@ class Shop_main_screen:
         #         tv.move(k, '', index)
 
         #     tv.heading(col,
-        #             command=lambda: treeview_sort_column(tv, col, not reverse))
+        #             command=lambda: book_treeview_sort_column(tv, col, not reverse))
 
         # root = Tk()
         # columns = ('number',)
-        # treeview = ttk.Treeview(root, columns=columns, show='headings')
+        # book_treeview = ttk.book_Treeview(root, columns=columns, show='headings')
         # for t in ('1', '10', '11', '2', '3'):
-        #     treeview.insert('', END, values=(t,))
-        # treeview.pack()
+        #     book_treeview.insert('', END, values=(t,))
+        # book_treeview.pack()
         # for col in columns:
-        #     treeview.heading(col, text=col,
-        #                     command=lambda c=col: treeview_sort_column(treeview, c, False))
+        #     book_treeview.heading(col, text=col,
+        #                     command=lambda c=col: book_treeview_sort_column(book_treeview, c, False))
 
-        self.treeview.pack(side=LEFT)
-        self.treeview.place(x=0, y=0)
-        self.treeview.column(1, anchor='w', width=100)
-        self.treeview.column(2, anchor='w', width=200)
-        self.treeview.column(3, anchor='w', width=100)
-        self.treeview.column(4, anchor='w', width=100)
-        self.treeview.column(5, anchor='w', width=100)
-        self.treeview.column(1, anchor='w', width=100)
-        self.treeview.heading(1, text="Name")
-        self.treeview.heading(2, text="Author")
-        self.treeview.heading(3, text="Category")
-        self.treeview.heading(4, text="Language")
-        self.treeview.heading(5, text="Price")
-        self.treeview.heading(6, text="Code")
-
-
-        self.treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
+        # self.book_treeview.pack(side=LEFT)
+        self.book_treeview.place(x=0, y=0)
+        self.book_treeview.column(1, anchor='w', width=100)
+        self.book_treeview.column(2, anchor='w', width=200)
+        self.book_treeview.column(3, anchor='w', width=100)
+        self.book_treeview.column(4, anchor='w', width=100)
+        self.book_treeview.column(5, anchor='w', width=100)
+        self.book_treeview.column(1, anchor='w', width=100)
+        self.book_treeview.heading(1, text="Name")
+        self.book_treeview.heading(2, text="Author")
+        self.book_treeview.heading(3, text="Category")
+        self.book_treeview.heading(4, text="Language")
+        self.book_treeview.heading(5, text="Price")
+        self.book_treeview.heading(6, text="Code")
 
 
-        yscrollbar = ttk.Scrollbar(frame1, orient="vertical", command=self.treeview.yview)
-        xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.treeview.xview)
+        self.book_treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
 
-        self.treeview.config(xscrollcommand=xscrollbar.set)
-        self.treeview.config(yscrollcommand=yscrollbar.set)
+
+        yscrollbar = ttk.Scrollbar(frame1, orient="vertical", command=self.book_treeview.yview)
+        xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.book_treeview.xview)
+
+        self.book_treeview.config(xscrollcommand=xscrollbar.set)
+        self.book_treeview.config(yscrollcommand=yscrollbar.set)
 
         yscrollbar.pack(side="right", fill="y")
         xscrollbar.pack(side="bottom", fill="x")
@@ -648,9 +648,9 @@ class Shop_main_screen:
 
 
 
-        # ## Treeview Widget
-        # self.tv1 = ttk.Treeview(frame1)
-        # # self.tv1 = CustomTreeview(tv)
+        # ## book_Treeview Widget
+        # self.tv1 = ttk.book_Treeview(frame1)
+        # # self.tv1 = Custombook_Treeview(tv)
         # self.tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
    
         # self.tv1.bind('<ButtonRelease-1>', self.selectItem)
@@ -659,9 +659,9 @@ class Shop_main_screen:
 
         # treescrolly = tk.Scrollbar(frame1, orient="vertical", command=self.tv1.yview) # command means update the yaxis view of the widget
         # treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=self.tv1.xview) # command means update the xaxis view of the widget
-        # self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the Treeview Widget
-        # treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the Treeview widget
-        # treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the Treeview widget
+        # self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the book_Treeview Widget
+        # treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the book_Treeview widget
+        # treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the book_Treeview widget
 
 
         # def Load_excel_data():
@@ -678,7 +678,7 @@ class Shop_main_screen:
         #     df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
             
         #     for row in df_rows:
-        #         self.tv1.insert("", "end", values=row) # inserts each list into the treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.Treeview.insert
+        #         self.tv1.insert("", "end", values=row) # inserts each list into the book_treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.book_Treeview.insert
         #     return None
 
             
@@ -690,8 +690,8 @@ class Shop_main_screen:
 
     
     def lookupCustomer(self, event):
-        curItem = self.treeview.focus()
-        cur = self.treeview.item(curItem)['values']
+        curItem = self.book_treeview.focus()
+        cur = self.book_treeview.item(curItem)['values']
         self.Name.set(cur[0])
         self.Author.set(cur[1])
         self.Category.set(cur[2])
@@ -700,9 +700,9 @@ class Shop_main_screen:
         # self.Code.set(cur[5])
 
     def update(self, ids):
-        self.treeview.delete(*self.treeview.get_children())
+        self.book_treeview.delete(*self.book_treeview.get_children())
         for i in ids:
-            self.treeview.insert('', 'end', values=i)
+            self.book_treeview.insert('', 'end', values=i)
 
     def shift(self):
             x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
@@ -722,6 +722,7 @@ class Shop_main_screen:
         paymentPageFrame1.place(x=0, y=0, height=100, width=1000)
         
         ############# Main program ###############
+        ##Text Slide
         text_var="______|   Welcome to the land of bookS   |______" 
         self.inner_payment_slidetext = Canvas(paymentPageFrame1, width=1000, height=100)   
         self.inner_payment_slidetext.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='black',tags=("marquee",),anchor='w')
@@ -734,25 +735,51 @@ class Shop_main_screen:
         self.fps=40    #Change the fps to make the animation faster/slower
         self.inner_payment_slidetext.pack()
         
-        
-
-
+        ##cart table
         paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
         paymentPageFrame2.place(x=0, y=100, height=450, width=1000)
 
+        self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5), show="headings", height="18")
+        yscrollbar = ttk.Scrollbar(paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
+        xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
+
+        self.cart_treeview.config(xscrollcommand=xscrollbar.set)
+        self.cart_treeview.config(yscrollcommand=yscrollbar.set)
+
+        yscrollbar.pack(side="right", fill="y")
+        xscrollbar.pack(side="bottom", fill="x")
+        self.cart_treeview.pack()
+        # self.cart_treeview.place(x=500,y=225,anchor=CENTER)
+        self.cart_treeview.column(1, anchor='w', width=50)
+        self.cart_treeview.column(2, anchor='w', width=50)
+        self.cart_treeview.column(3, anchor='w', width=200)
+        self.cart_treeview.column(4, anchor='w', width=100)
+        self.cart_treeview.column(5, anchor='w', width=100)
+        self.cart_treeview.heading(1, text="no.")
+        self.cart_treeview.heading(2, text="Code")
+        self.cart_treeview.heading(3, text="Name")
+        self.cart_treeview.heading(4, text="Item (s)")
+        self.cart_treeview.heading(5, text="Price")
+        for i in range(0,100):
+            self.cart_treeview.insert('', 'end', values=[i,'code'])
+
+
+
         Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
-        Back_bottom.pack(side = LEFT)
-        # Back_bottom.place(x=500, y=400,anchor="center")
+        # Back_bottom.pack(side = BOTTOM,anchor='')
+        Back_bottom.place(x=500, y=415,anchor="center")
 
         Del_bottom = tk.Button(paymentPageFrame2,text="< Del >", command = self.pp )
-        Del_bottom.pack(side = BOTTOM)    
-        # Del_bottom.place(x=400, y=400,anchor="center")
+        # Del_bottom.pack(side = BOTTOM)    
+        Del_bottom.place(x=400, y=415,anchor="center")
 
         Next_bottom = tk.Button(paymentPageFrame2,text="< Next >", command = self.pp )
-        Next_bottom.pack(side = RIGHT) 
+        Next_bottom.place(x=300, y=415,anchor="center")
+        # Next_bottom.pack(side = BOTTOM) 
 
         Seemore_bottom = tk.Button(paymentPageFrame2,text="< See more >", command = self.pp )
-        Seemore_bottom.pack(side = TOP) 
+        Seemore_bottom.place(x=200, y=415,anchor="center")
+        # Seemore_bottom.pack(side = BOTTOM) 
 
         
 
