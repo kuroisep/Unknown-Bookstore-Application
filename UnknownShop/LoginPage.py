@@ -169,7 +169,7 @@ class main_account_screen:
 
         canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
             sex, self.info_NAME, self.info_LNAME), font = (self.myfont, 15))
-        canvas.create_text(200, 130, text="Email : {}   Phone Number : 0{} ".format(
+        canvas.create_text(200, 130, text="Email : {}   \nPhone Number : 0{} ".format(
             self.info_EMAIL, self.info_telphone), font = (self.myfont, 10))
         ok_button = ttk.Button(self.login_success_screen, text="OK",
                         command=self.delete_login_success)
