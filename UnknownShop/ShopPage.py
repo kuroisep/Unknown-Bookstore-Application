@@ -149,7 +149,7 @@ class Shop_main_screen:
         self.shop_window.mainloop()
 
     def create_background(self):
-        bg_path = "Shop_Page\PICTURE\Shop_bg.png"
+        bg_path = "UnknownShop\Picture\Draf BG.png" 
         self.bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
         # self.canvas = Canvas(self.shop_window, width=1280, height=720)

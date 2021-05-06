@@ -1,6 +1,7 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import messagebox, ttk
 import pymysql
+from IPython.terminal.pt_inputhooks import tk
 class Students():
     def __init__(self,root):
        self.root = root
@@ -22,7 +23,7 @@ class Students():
        Manage_Frame = Frame(self.root,bd=4,relief=RIDGE,bg="blue")
        Manage_Frame.place(x=20,y=100,width=450,height=585)
 
-       m_title = Label(Manage_Frame,text="Manage Student",bd="yellow",fg="black",font=("times new roman",40,"bold"))
+       m_title = Label(Manage_Frame,text="Manage Student",bd="white",fg="black",font=("times new roman",40,"bold"))
        m_title.grid(row=0,columnspan=2,pady=20)
 
        lbl_roll = Label(Manage_Frame,text="Roll No",bg="blue",fg="white",font=("times new roman",20,"bold"))
@@ -155,10 +156,10 @@ class Students():
             con.commit()
         con.close()
     
-     def get_cursor(self,ev):
+    def get_cursor(self,ev):
         curosor_row = self.Student_table.focus()
         contents = self.Student_table.item(curosor_row)
-        rows = contents['values']
+        row = contents['values']
         self.Roll_No_var.set(row[0])
         self.name_var.set(row[1])
         self.email_var.set(row[2])
@@ -179,7 +180,7 @@ class Students():
         self.txt_Address.delete("1.0",END)
     
     def update_data(self):
-      con = pymysql.connect(host="localhost",user="root",password="",database="sms2")
+        con = pymysql.connect(host="localhost",user="root",password="",database="sms2")
         cur = con.cursor()
         cur.execute("update students set name=%s,email=%s,gender=%s,contact=%s,dob=%s,address=%s where roll_no=%s",(
                                                                           self.name_var.grt(),                     
@@ -195,7 +196,7 @@ class Students():
         con.close()
         messagebox.showinfo("success","Recored has been inserted")
     
-     def delete_data(self):
+    def delete_data(self):
         con = pymysql.connect(host="localhost",user="root",password="",database="sms2")
         cur = con.cursor()
         cur.execute("delete from student where roll_no=%s",self.Roll_No_var.get())
@@ -219,8 +220,7 @@ class Students():
            
 
    
-
 class Students():
-    root = Tk
+    root = Tk()
     ob = Students(root)
     root.mainloop()

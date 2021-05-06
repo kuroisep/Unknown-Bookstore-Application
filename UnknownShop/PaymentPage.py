@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-from tkinter import font as tkFont
+from tkinter import font, ttk
 import pandas
 from PIL import ImageTk, Image
 import re
@@ -24,9 +24,9 @@ class Payment_screen:
         """ 
         THEAM
         """
-        style = ttk.Style(self.shop_window)
+        style = ttk.Style(self.payment_window)
         # Import the tcl file
-        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+        self.payment_window.tk.call('source', 'UnknownShop/azure.tcl')
 
         # Set the theme with the theme_use method
         style.theme_use('azure')
