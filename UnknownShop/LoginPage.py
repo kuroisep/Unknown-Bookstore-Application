@@ -17,6 +17,7 @@ sys.path.append(parentdir)
 
 
 from UnknownShop import ShopPage
+from numpy.core.defchararray import upper
 
 class main_account_screen:
 
@@ -156,6 +157,9 @@ class main_account_screen:
     def login_sucess(self):
         self.login_success_screen = Toplevel(self.main_screen)
         self.login_success_screen.title("Login Success.")
+        self.login_success_screen.focus_set()
+        self.login_success_screen.grab_set()
+        self.login_success_screen.overrideredirect(1)
         x = (960) - (400/2)
         y = (540) - (300/2)
         self.login_success_screen.geometry("400x300+%d+%d" % (x, y))
@@ -166,11 +170,15 @@ class main_account_screen:
             sex = 'Mr.'
         else:
             sex = 'Mrs.'
+        
+        # image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
+        # self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((100, 100)))
 
-        canvas.create_text(200, 100, text="WELCOME  {} {}  {}".format(
-            sex, self.info_NAME, self.info_LNAME), font = (self.myfont, 15))
-        canvas.create_text(200, 130, text="Email : {}   \nPhone Number : 0{} ".format(
-            self.info_EMAIL, self.info_telphone), font = (self.myfont, 10))
+        # canvas.create_image(550,200,image=self.user_img, anchor="")
+
+        canvas.create_text(200, 70, text="<< Login Successfully >>", font = (self.myfont, 15))
+        canvas.create_text(200, 100, text="WELCOME  {} {}  {}.".format(sex, self.info_LNAME, upper(self.info_NAME[0]) ), font = (self.myfont, 12))
+        canvas.create_text(200, 130, text="Email : {}   \nPhone Number : 0{} ".format(self.info_EMAIL, self.info_telphone), font = (self.myfont, 10))
         ok_button = ttk.Button(self.login_success_screen, text="OK",
                         command=self.delete_login_success)
         canvas.create_window(200, 200, window=ok_button)
