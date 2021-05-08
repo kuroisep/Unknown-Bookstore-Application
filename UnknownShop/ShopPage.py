@@ -26,18 +26,21 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     passwd="Minor4810540114.",
-    database="world",
+    database="new_book",
     auth_plugin="mysql_native_password"
 )
 cursor = mydb.cursor()
 
 options = []
 # sql = "SELECT Code, Name FROM country"
-sql = "SELECT * FROM city"
+sql = "SELECT * FROM books"
 cursor.execute(sql)
 ids = cursor.fetchall()
 for i in ids:
     options.append(str(i[0]) + " - " + i[1])
+
+
+print(ids)
 
 
 class Shop_main_screen:
@@ -53,6 +56,7 @@ class Shop_main_screen:
 
 
         # Variable User
+        self.No = StringVar()
         self.Name = StringVar()
         self.Author = StringVar()
         self.Category = StringVar()
@@ -530,72 +534,44 @@ class Shop_main_screen:
        
 
         #Name Of Book
-        # name_detail_book = tk.Label(detail_frame,text='Name')
-        # name_detail_book.place(x=200,y=20)
-        # self.name_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Name)
         # self.name_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.name_detail_book_entry.place(x=200,y=40)
 
-        lbl1 = Label(detail_frame, text="Name")
+        lbl1 = Label(detail_frame, text="No")
         lbl1.grid(row=0, column=0, padx=10, pady=5)
-        self.lbl1_entry = Entry(detail_frame, textvariable=self.Name)
+        self.lbl1_entry = Entry(detail_frame, textvariable=self.No)
         self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
 
 
         #Author Of Book
-        lbl2 = Label(detail_frame, text="Author")
+        lbl2 = Label(detail_frame, text="Code")
         lbl2.grid(row=1, column=0, padx=10, pady=5)
-        self.lbl2_entry = Entry(detail_frame, textvariable=self.Author)
+        self.lbl2_entry = Entry(detail_frame, textvariable=self.Code)
         self.lbl2_entry.grid(row=1, column=1, padx=10, pady=5)
-        # author_detail_book = tk.Label(detail_frame,text='Author')
-        # author_detail_book.place(x=200,y=70)
-        # self.author_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Author)
-        # self.author_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.author_detail_book_entry.place(x=200,y=90)
+
 
         #Category Of Book
-        lbl3 = Label(detail_frame, text="Category")
+        lbl3 = Label(detail_frame, text="Name")
         lbl3.grid(row=2, column=0, padx=10, pady=5)
-        self.lbl3_entry = Entry(detail_frame, textvariable=self.Category)
+        self.lbl3_entry = Entry(detail_frame, textvariable=self.Name)
         self.lbl3_entry.grid(row=2, column=1, padx=10, pady=5)
-        # category_detail_book = tk.Label(detail_frame,text='Category')
-        # category_detail_book.place(x=200,y=120)
-        # self.category_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Category)
-        # self.category_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.category_detail_book_entry.place(x=200,y=140)
 
         #Language Of Book
-        lbl4 = Label(detail_frame, text="Language")
+        lbl4 = Label(detail_frame, text="Author")
         lbl4.grid(row=3, column=0, padx=10, pady=5)
-        self.lbl4_entry = Entry(detail_frame, textvariable=self.Language)
+        self.lbl4_entry = Entry(detail_frame, textvariable=self.Author)
         self.lbl4_entry.grid(row=3, column=1, padx=10, pady=5)
-        # language_detail_book = tk.Label(detail_frame,text='Language')
-        # language_detail_book.place(x=200,y=170)
-        # self.language_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Language)
-        # self.language_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.language_detail_book_entry.place(x=200,y=190)
 
         #Price Of Book
-        lbl5 = Label(detail_frame, text="Price")
+        lbl5 = Label(detail_frame, text="Category")
         lbl5.grid(row=4, column=0, padx=10, pady=5)
-        self.lbl5_entry = Entry(detail_frame, textvariable=self.Price)
+        self.lbl5_entry = Entry(detail_frame, textvariable=self.Category)
         self.lbl5_entry.grid(row=4, column=1, padx=10, pady=5)
-        # price_detail_book = tk.Label(detail_frame,text='Price')
-        # price_detail_book.place(x=200,y=220)
-        # self.price_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Price)
-        # self.price_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.price_detail_book_entry.place(x=200,y=240)
 
         #Code Of Book
-        lbl6 = Label(detail_frame, text="Code")
+        lbl6 = Label(detail_frame, text="Price")
         lbl6.grid(row=5, column=0, padx=10, pady=5)
-        self.lbl6_entry = Entry(detail_frame, textvariable=self.Code)
+        self.lbl6_entry = Entry(detail_frame, textvariable=self.Price)
         self.lbl6_entry.grid(row=5, column=1, padx=10, pady=5)
-        # code_detail_book = tk.Label(detail_frame,text='Code')
-        # code_detail_book.place(x=200,y=270)
-        # self.code_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Code)
-        # self.code_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.code_detail_book_entry.place(x=200,y=290)
 
 
         # Rating Of Book
@@ -603,43 +579,9 @@ class Shop_main_screen:
         lbl7.grid(row=6, column=0, padx=10, pady=5)
         self.lbl7_entry = Entry(detail_frame, textvariable=self.Rating)
         self.lbl7_entry.grid(row=6, column=1, padx=10, pady=5)
-        # code_detail_book = tk.Label(detail_frame,text='Code')
-        # code_detail_book.place(x=200,y=270)
-        # self.code_detail_book_entry = tk.Entry(detail_frame, textvariable=self.Code)
-        # self.code_detail_book_entry.bind("<Key>", lambda e: "break")
-        # self.code_detail_book_entry.place(x=200,y=290)
-
-
-
-
-
-        # button2 = ttk.Button(detail_frame, text="< Load File >", command=lambda: Load_excel_data())
-        # button2.place(x=200, y=400)
 
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
-        # self.book_treeview.pack()
-        # def book_treeview_sort_column(tv, col, reverse):
-        #     l = [(tv.set(k, col), k) for k in tv.get_children('')]
-        #     l.sort(key=lambda t: int(t[0]), reverse=reverse)
-        #     #      ^^^^^^^^^^^^^^^^^^^^^^^
 
-        #     for index, (val, k) in enumerate(l):
-        #         tv.move(k, '', index)
-
-        #     tv.heading(col,
-        #             command=lambda: book_treeview_sort_column(tv, col, not reverse))
-
-        # root = Tk()
-        # columns = ('number',)
-        # book_treeview = ttk.book_Treeview(root, columns=columns, show='headings')
-        # for t in ('1', '10', '11', '2', '3'):
-        #     book_treeview.insert('', END, values=(t,))
-        # book_treeview.pack()
-        # for col in columns:
-        #     book_treeview.heading(col, text=col,
-        #                     command=lambda c=col: book_treeview_sort_column(book_treeview, c, False))
-
-        # self.book_treeview.pack(side=LEFT)
         self.book_treeview.place(x= 80, y=15)
         self.book_treeview.column(1, anchor='w', width=50)
         self.book_treeview.column(2, anchor='w', width=100)
@@ -647,12 +589,13 @@ class Shop_main_screen:
         self.book_treeview.column(4, anchor='w', width=50)
         self.book_treeview.column(5, anchor='w', width=50)
         self.book_treeview.column(6, anchor='w', width=100)
-        self.book_treeview.heading(1, text="Name")
-        self.book_treeview.heading(2, text="Author")
-        self.book_treeview.heading(3, text="Category")
-        self.book_treeview.heading(4, text="Language")
-        self.book_treeview.heading(5, text="Price")
-        self.book_treeview.heading(6, text="Code")
+        self.book_treeview.heading(1, text="No")
+        self.book_treeview.heading(2, text="Code")
+        self.book_treeview.heading(3, text="Name")
+        self.book_treeview.heading(4, text="Author")
+        self.book_treeview.heading(5, text="Category")
+        self.book_treeview.heading(6, text="Price")
+        
 
         # Click on table book data
         self.book_treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
@@ -671,56 +614,16 @@ class Shop_main_screen:
 
 
         self.update(ids)
-
-
-
-        # ## book_Treeview Widget
-        # self.tv1 = ttk.book_Treeview(frame1)
-        # # self.tv1 = Custombook_Treeview(tv)
-        # self.tv1.place(relheight=1, relwidth=1) # set the height and width of the widget to 100% of its container (frame1).
-   
-        # self.tv1.bind('<ButtonRelease-1>', self.selectItem)
-
-
-
-        # treescrolly = tk.Scrollbar(frame1, orient="vertical", command=self.tv1.yview) # command means update the yaxis view of the widget
-        # treescrollx = tk.Scrollbar(frame1, orient="horizontal", command=self.tv1.xview) # command means update the xaxis view of the widget
-        # self.tv1.configure(xscrollcommand=treescrollx.set, yscrollcommand=treescrolly.set) # assign the scrollbars to the book_Treeview Widget
-        # treescrollx.pack(side="bottom", fill="x") # make the scrollbar fill the x axis of the book_Treeview widget
-        # treescrolly.pack(side="right", fill="y") # make the scrollbar fill the y axis of the book_Treeview widget
-
-
-        # def Load_excel_data():
-        #     df = pd.read_csv("UnknownShop\DataBookList.csv",engine='python')
-        #     # print(df)
-        #     # print(str(self.current_book[2]))
-
-        #     clear_data()
-        #     self.tv1["column"] = list(df.columns)
-        #     self.tv1["show"] = "headings"
-        #     for column in self.tv1["columns"]:
-        #         self.tv1.heading(column, text=column ) # let the column heading = column name
-
-        #     df_rows = df.to_numpy().tolist() # turns the dataframe into a list of lists
-            
-        #     for row in df_rows:
-        #         self.tv1.insert("", "end", values=row) # inserts each list into the book_treeview. For parameters see https://docs.python.org/3/library/tkinter.ttk.html#tkinter.ttk.book_Treeview.insert
-        #     return None
-        
-    #     def clear_data():
-    #         self.tv1.delete(*self.tv1.get_children())
-    #         return None
-
     
     def lookupCustomer(self, event):
         curItem = self.book_treeview.focus()
         cur = self.book_treeview.item(curItem)['values']
-        self.Name.set(cur[0])
-        self.Author.set(cur[1])
-        self.Category.set(cur[2])
-        self.Language.set(cur[3])
-        self.Price.set(cur[4])
-        # self.Code.set(cur[5])
+        self.No.set(cur[0])
+        self.Code.set(cur[1])
+        self.Name.set(cur[3])
+        self.Author.set(cur[4])
+        self.Category.set(cur[8])
+        self.Price.set(cur[6])
 
     def update(self, ids):
         self.book_treeview.delete(*self.book_treeview.get_children())
