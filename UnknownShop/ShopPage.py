@@ -728,30 +728,65 @@ class Shop_main_screen:
         self.inner_delivery = Canvas(self.canvas, width=1000, height=550)   
         self.inner_delivery.create_text(500, 275, font = 50, anchor=CENTER, text="deliveryPage")
 
-        deliveryPageFrame1 = tk.LabelFrame(self.inner_delivery, text="Status")
+        deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
         deliveryPageFrame1.place(x=0, y=0, height=500, width=300)
 
-        deliveryPageFrame2 = tk.LabelFrame(self.inner_delivery, text="Review Book")
+        deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
         deliveryPageFrame2.place(x=300, y=0, height=500, width=700)
 
+        deliveryPageFrame2_1 = ttk.LabelFrame(deliveryPageFrame2, text="Picture")
+        deliveryPageFrame2_1.place(x=275, y=10, height=150, width=150)
 
-        self.review_bottom = tk.Button(deliveryPageFrame2,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
+
+        self.review_bottom = ttk.Button(deliveryPageFrame2,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
         # self.review_bottom.place(x=500, y=400,anchor="center")
         self.review_bottom.pack(side = BOTTOM) 
 
-        Back_bottom = tk.Button(deliveryPageFrame1,text="< Back >", command = self.backk )    
+        Back_bottom = ttk.Button(deliveryPageFrame1,text="< Back >", command = self.backk )    
         # Back_bottom.place(x=, y=400,anchor="center")
         Back_bottom.pack(side = LEFT) 
 
-        Next_bottom = tk.Button(deliveryPageFrame1,text="< Next >", command = self.checkDeliverySuccess)    
+        Next_bottom = ttk.Button(deliveryPageFrame1,text="< Next >", command = self.checkDeliverySuccess)    
         # Next_bottom.place(x=500, y=400,anchor="center")
-        Next_bottom.pack(side = RIGHT) 
+        Next_bottom.pack(side = RIGHT)
+
+        commenttext = Label(deliveryPageFrame2,text="Comment : ", font=('TRACK', 12))
+        commenttext.place(x=50,y=200)
+        self.commentbox = tk.Text(deliveryPageFrame2,width=60,height=5, font=('TRACK', 8),state=DISABLED)
+        self.commentbox.place(x=200,y=200)
+       
+        Comboboxtext = Label(deliveryPageFrame2,text="Rating : ", font=('TRACK', 12))
+        Comboboxtext.place(x=50,y=300)
+        listofRating = ["1","2","3","4","5"]
+        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2,values=listofRating,width=10)
+        self.Rating_Combobox.current(0)
+        self.Rating_Combobox.place(x=200,y=300)
+
+        self.Comment_boutton1 = ttk.Button(deliveryPageFrame2,text="< Send >",command = self.printcomment, state=DISABLED)
+        self.Comment_boutton1.place(x=300,y=370)
+        self.Comment_boutton2 = ttk.Button(deliveryPageFrame2,text="< Clear >",command = self.clearcomment, state=DISABLED)
+        self.Comment_boutton2.place(x=450,y=370)
+
+    def printcomment(self):
+        # self.commenttext2.config(text=self.commentbox.get(1.0,END))
+        print(f"Rating is : {self.Rating_Combobox.get()}")
+        print(self.commentbox.get(1.0,END),end ="")
+    def clearcomment(self):
+        self.commentbox.delete(1.0,END)
+        print("<<< delete >>> ")
+
 
     def review_bottomOn(self):
+        self.commentbox.config(state=NORMAL)
         self.review_bottom.config(state=NORMAL)
+        self.Comment_boutton1.config(state=NORMAL)
+        self.Comment_boutton2.config(state=NORMAL)
         print("Review JAA")
     def backk(self):
+        self.commentbox.config(state=DISABLED)
         self.review_bottom.config(state=DISABLED)
+        self.Comment_boutton1.config(state=DISABLED)
+        self.Comment_boutton2.config(state=DISABLED)
 
     def checkDeliverySuccess(self):
         print("Checking...")
