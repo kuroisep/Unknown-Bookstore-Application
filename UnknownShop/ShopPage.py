@@ -758,7 +758,7 @@ class Shop_main_screen:
         Comboboxtext = Label(deliveryPageFrame2,text="Rating : ", font=('TRACK', 12))
         Comboboxtext.place(x=50,y=300)
         listofRating = ["1","2","3","4","5"]
-        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2,values=listofRating,width=10)
+        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2,values=listofRating,width=10,state=DISABLED)
         self.Rating_Combobox.current(0)
         self.Rating_Combobox.place(x=200,y=300)
 
@@ -781,13 +781,15 @@ class Shop_main_screen:
         self.review_bottom.config(state=NORMAL)
         self.Comment_boutton1.config(state=NORMAL)
         self.Comment_boutton2.config(state=NORMAL)
+        self.Rating_Combobox.config(state=NORMAL)
         print("Review JAA")
     def backk(self):
         self.commentbox.config(state=DISABLED)
         self.review_bottom.config(state=DISABLED)
         self.Comment_boutton1.config(state=DISABLED)
         self.Comment_boutton2.config(state=DISABLED)
-
+        self.Rating_Combobox.config(state=DISABLED)
+        
     def checkDeliverySuccess(self):
         print("Checking...")
         print("Success...")
