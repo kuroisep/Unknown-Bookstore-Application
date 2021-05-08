@@ -720,18 +720,18 @@ root.mainloop()
 
 #     app.mainloop()
 
-from tkinter import *
+# from tkinter import *
 
-class Output:
-    def __init__(self,master):
-        self.u=Text(master,width=40)
-        self.u.grid(row=0,column=0)
-        self.v=Button(master,text="Add text",command=Write)
-        self.v.grid(row=1,column=0)
+# class Output:
+#     def __init__(self,master):
+#         self.u=Text(master,width=40)
+#         self.u.grid(row=0,column=0)
+#         self.v=Button(master,text="Add text",command=Write)
+#         self.v.grid(row=1,column=0)
 
-def Write(self):
-    self.u.insert(1.0,"Meh")
+# def Write(self):
+#     self.u.insert(1.0,"Meh")
 
-root=Tk()
-output=Output(root)
-root.mainloop()
+# root=Tk()
+# output=Output(root)
+# root.mainloop()
