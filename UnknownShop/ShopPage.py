@@ -385,6 +385,7 @@ class Shop_main_screen:
             ##PICTURE
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
             self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((300, 300)))
+            self.imginput = ''
 
             self.imageselect_info_button = Button(infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
             self.imageselect_info_button.pack(side="bottom")
@@ -395,8 +396,8 @@ class Shop_main_screen:
         self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
         return self.imagefile
     def openimage(self):
-        self.x = self.openfn()
-        self.user_img = ImageTk.PhotoImage(Image.open(self.x).resize((100, 100)))
+        self.imginput = self.openfn()
+        self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((100, 100)))
         self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
         # self.user_img = self.user_img.resize((100, 150), Image.ANTIALIAS)
         # self.user_img = ImageTk.PhotoImage(self.user_img)
@@ -476,8 +477,9 @@ class Shop_main_screen:
                 self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'PICTURE'] = str(self.user[0][1])
                 self.df.to_csv("login.csv", index=False)
-                temp_img = cv2.imread(self.x)
-                cv2.imwrite('UnknownShop\\Picture\\ShopPage\\USER_PIC\\{}.png'.format(self.user[0][1]), temp_img)
+                if self.imginput != '':
+                    temp_img = cv2.imread(self.imginput)
+                    cv2.imwrite('UnknownShop\\Picture\\ShopPage\\USER_PIC\\{}.png'.format(self.user[0][1]), temp_img)
                 
     # def selectItem(self,a):
     #     curItem = self.tv1.focus()
