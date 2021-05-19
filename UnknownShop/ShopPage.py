@@ -398,9 +398,10 @@ class Shop_main_screen:
         return self.imagefile
     def openimage(self):
         self.imginput = self.openfn()
-        self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((300, 300)))
-        self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
-        self.user_image.pack()
+        if self.imginput != '':
+            self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((300, 300)))
+            self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
+            self.user_image.pack()
         
 
     def edit_infomation_state(self):
