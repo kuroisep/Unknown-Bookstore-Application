@@ -305,8 +305,8 @@ class Shop_main_screen:
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")
         infomationPageFrame1.place(x=0, y=0, height=550, width=500)
 
-        infomationPageFrame2 = tk.LabelFrame(self.inner_infomation , text="PICTURE")
-        infomationPageFrame2.place(x=500, y=0, height=400, width=500)
+        self.infomationPageFrame2 = tk.LabelFrame(self.inner_infomation , text="PICTURE")
+        self.infomationPageFrame2.place(x=500, y=0, height=400, width=500)
 
 
         if self.user != []:
@@ -388,20 +388,19 @@ class Shop_main_screen:
             self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((300, 300)))
             self.imginput = ''
 
-            self.imageselect_info_button = Button(infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
+            self.imageselect_info_button = Button(self.infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
             self.imageselect_info_button.pack(side="bottom")
-            user_image = Label(infomationPageFrame2, image=self.user_img)
-            user_image.pack()
+            self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
+            self.user_image.pack()
             
     def openfn(self):
         self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
         return self.imagefile
     def openimage(self):
         self.imginput = self.openfn()
-        self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((100, 100)))
-        self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
-        # self.user_img = self.user_img.resize((100, 150), Image.ANTIALIAS)
-        # self.user_img = ImageTk.PhotoImage(self.user_img)
+        self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((300, 300)))
+        self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
+        self.user_image.pack()
         
 
     def edit_infomation_state(self):
