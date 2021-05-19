@@ -40,7 +40,7 @@ for i in ids:
     options.append(str(i[0]) + " - " + i[1])
 
 
-print(ids)
+# print(ids)
 
 
 class Shop_main_screen:
@@ -84,6 +84,7 @@ class Shop_main_screen:
         self.df = pandas.read_csv('login.csv')
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
         self.imagefile = ''
+        self.usercart = []
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
             print("NO USER LOGIN FOUND")
@@ -579,6 +580,16 @@ class Shop_main_screen:
         self.lbl7_entry = Entry(detail_frame, textvariable=self.Rating)
         self.lbl7_entry.grid(row=6, column=1, padx=10, pady=5)
 
+        ## number of items book
+        self.spinboxvar = IntVar(detail_frame)
+        self.spinboxvar.set(1)
+        self.items_book_spinbox = Spinbox(detail_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
+        Label(detail_frame, text="").grid(row=7, column=0, padx=10, pady=5)
+        self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5,sticky="E")
+
+        add_book_button = Button(detail_frame,text=' + ', command=self.add_book)
+        add_book_button.grid(row=7, column=2, padx=10, pady=5)
+
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
 
         self.book_treeview.place(x= 80, y=15)
@@ -623,6 +634,16 @@ class Shop_main_screen:
         self.Author.set(cur[4])
         self.Category.set(cur[8])
         self.Price.set(cur[6])
+
+    def add_book(self):
+        if self.usercart != []:
+            for i in self.usercart:
+                if i[0] == self.Code.get():
+                    i[2] = int(i[2]) + int(self.items_book_spinbox.get())
+                    print('UserCart :',self.usercart)
+                    return
+        self.usercart.append([self.Code.get(),self.Name.get(),self.items_book_spinbox.get(),self.Price.get()])
+        print('UserCart :',self.usercart)
 
     def update(self, ids):
         self.book_treeview.delete(*self.book_treeview.get_children())
