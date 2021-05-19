@@ -101,20 +101,6 @@ class Shop_main_screen:
         #self.user[0][8] = telphone
         #self.user[0][9] = picture
 
-        # #BOOK Variable
-        # self.current_book = ['','','','','','','','','','','','','','','','','','','']
-        #self.current_book[0] = ลำดับที่
-        #self.current_book[1] = code
-        #self.current_book[2] = ชื่อหนังสือ
-        #self.current_book[3] = ผู้แต่ง
-        #self.current_book[4] = เรื่องย่อ
-        #self.current_book[5] = ราคา
-        #self.current_book[6] = จำนวนหน้า
-        #self.current_book[7] = หมวด
-        #self.current_book[8] = ภาษา
-        #self.current_book[9] = จำนวนสินค้า
-        #self.current_book[10] = rating
-
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
@@ -324,75 +310,86 @@ class Shop_main_screen:
 
         if self.user != []:
             ## USERNAME
-            self.inner_infomation.create_text(150, 50, anchor=NW, text='Username : {}'.format(self.user[0][1]))
+            username_text = Label(infomationPageFrame1, text="Username".format(self.user[0][1]))
+            username1_text = Label(infomationPageFrame1, text=self.user[0][1])
+            username_text.grid(row=0, column=0, padx=10, pady=10,sticky="E")
+            username1_text.grid(row=0, column=1, padx=10, pady=5,sticky="W")
             ## NAME
-            self.inner_infomation.create_text(150, 100, anchor=NW, text='Name : ')
-            self.name_entry = Entry(self.inner_infomation,font=('Verdana',15))
+            name_text = Label(infomationPageFrame1, text="Name")
+            name_text.grid(row=1, column=0, padx=10, pady=5,sticky="E")
+            self.name_entry = Entry(infomationPageFrame1)
             self.name_entry.insert(0,self.user[0][3])
             self.name_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(210,80,window=self.name_entry,anchor = 'nw')
+            self.name_entry.grid(row=1, column=1, padx=10, pady=5)
             ##LASTNAME
-            self.inner_infomation.create_text(150, 150, anchor=NW, text='Lastname : ')
-            self.lname_entry = Entry(self.inner_infomation)
+            lname_text = Label(infomationPageFrame1, text="Lastname")
+            lname_text.grid(row=2, column=0, padx=10, pady=5,sticky="E")
+            self.lname_entry = Entry(infomationPageFrame1)
             self.lname_entry.insert(0,self.user[0][4])
             self.lname_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(280,155,window=self.lname_entry)
+            self.lname_entry.grid(row=2, column=1, padx=10, pady=5)
             ##GENDER
-            self.inner_infomation.create_text(150, 200, anchor=NW, text='Gender : ')
-            self.gender_entry = Combobox(self.inner_infomation, width=8,value=['MALE','FEMALE']) 
+            gender_text = Label(infomationPageFrame1, text="Gender")
+            gender_text.grid(row=3, column=0, padx=10, pady=5,sticky="E")
+            self.gender_entry = Combobox(infomationPageFrame1, width=8,value=['MALE','FEMALE']) 
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(250,200,window=self.gender_entry)
+            self.gender_entry.grid(row=3, column=1, padx=10, pady=5,sticky="W")
             ##BIRTHDAY
                     #DATE
-            self.inner_infomation.create_text(150, 250, anchor=NW, text='Birthday : ')
-            self.birthday_date_entry = Combobox(self.inner_infomation, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
+            birthday_text = Label(infomationPageFrame1, text="Birthday")
+            birthday_text.grid(row=4, column=0, padx=10, pady=5,sticky="E")
+            self.birthday_date_entry = Combobox(infomationPageFrame1, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
                                                                              '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
                                                                              '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
             self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
             self.birthday_date_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(240,255,window=self.birthday_date_entry)
+            self.birthday_date_entry.grid(row=4, column=1, padx=10, pady=5,sticky="W")
                     #MONTH
-            self.birthday_month_entry = Combobox(self.inner_infomation, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+            self.birthday_month_entry = Combobox(infomationPageFrame1, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                                                                                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(300,255,window=self.birthday_month_entry)
+            self.birthday_month_entry.place(x=180,y=165)
                     #YEAR
             year_list = []
             for i in range(1920,2022):
                 year_list.append(str(i))
-            self.birthday_year_entry = Combobox(self.inner_infomation, width=5, value=year_list)
+            self.birthday_year_entry = Combobox(infomationPageFrame1, width=5, value=year_list)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(370,255,window=self.birthday_year_entry)
+            self.birthday_year_entry.place(x=260,y=165)
             ##EMAIL
-            self.inner_infomation.create_text(150, 300, anchor=NW, text='Email : ')
-            self.email_entry = Entry(self.inner_infomation)
+            email_text = Label(infomationPageFrame1, text="Email")
+            email_text.grid(row=5, column=0, padx=10, pady=5,sticky="E")
+            self.email_entry = Entry(infomationPageFrame1)
             self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(280,305,window=self.email_entry)
+            self.email_entry.grid(row=5, column=1, padx=10, pady=5)
             ##PHONE
-            self.inner_infomation.create_text(150, 350, anchor=NW, text='Telphone : ')
-            self.telphone_entry = Entry(self.inner_infomation)
+            telphone_text = Label(infomationPageFrame1, text="Phone Number")
+            telphone_text.grid(row=6, column=0, padx=10, pady=5,sticky="E")
+            self.telphone_entry = Entry(infomationPageFrame1)
             self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
-            self.inner_infomation.create_window(280,355,window=self.telphone_entry)
+            self.telphone_entry.grid(row=6, column=1, padx=10, pady=5)
             ##EDIT BUTTON
-            self.edit_info_button = Button(self.inner_infomation,text='Edit', command=self.edit_infomation_state)
-            self.inner_infomation.create_window(275, 450, window=self.edit_info_button, anchor="nw")
+            Label(infomationPageFrame1, text="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n").grid(row=8, column=0, padx=10, pady=5)
+            Label(infomationPageFrame1, text="").grid(row=8, column=1, padx=10, pady=5)
+            self.edit_info_button = Button(infomationPageFrame1,text='Edit', command=self.edit_infomation_state)
+            self.edit_info_button.grid(row=8, column=2, padx=10, pady=5)
             ##DONE BUTTON
-            self.done_info_button = Button(self.inner_infomation,text='Done',state=DISABLED, command=self.edit_infomation_state)
-            self.inner_infomation.create_window(370, 450, window=self.done_info_button, anchor="nw")
+            self.done_info_button = Button(infomationPageFrame1,text='Done',state=DISABLED, command=self.edit_infomation_state)
+            self.done_info_button.grid(row=8, column=3, padx=10, pady=5)
 
             ##PICTURE
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
-            self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((100, 100)))
+            self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((300, 300)))
 
-            self.imageselect_info_button = Button(self.inner_infomation,text='select',state=DISABLED, command=self.openimage)
-            self.inner_infomation.create_window(500, 300, window=self.imageselect_info_button, anchor="nw")
-            self.inner_infomation.create_text(550, 180, anchor=NW, text='Picture : ')
-            self.inner_infomation.create_image(550,200,image=self.user_img, anchor="nw")
+            self.imageselect_info_button = Button(infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
+            self.imageselect_info_button.pack(side="bottom")
+            user_image = Label(infomationPageFrame2, image=self.user_img)
+            user_image.pack()
             
     def openfn(self):
         self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
