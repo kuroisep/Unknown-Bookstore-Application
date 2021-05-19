@@ -83,7 +83,7 @@ class Shop_main_screen:
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
-        self.imagefile = ''
+        self.user_imagefile = ''
         self.usercart = []
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
@@ -386,7 +386,7 @@ class Shop_main_screen:
             ##PICTURE
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
             self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((300, 300)))
-            self.imginput = ''
+            self.user_imginput = ''
 
             self.imageselect_info_button = Button(self.infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
             self.imageselect_info_button.pack(side="bottom")
@@ -394,12 +394,12 @@ class Shop_main_screen:
             self.user_image.pack()
             
     def openfn(self):
-        self.imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
-        return self.imagefile
+        self.user_imagefile = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
+        return self.user_imagefile
     def openimage(self):
-        self.imginput = self.openfn()
-        if self.imginput != '':
-            self.user_img = ImageTk.PhotoImage(Image.open(self.imginput).resize((300, 300)))
+        self.user_imginput = self.openfn()
+        if self.user_imginput != '':
+            self.user_img = ImageTk.PhotoImage(Image.open(self.user_imginput).resize((300, 300)))
             self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
             self.user_image.pack()
         
@@ -478,8 +478,8 @@ class Shop_main_screen:
                 self.df.loc[self.df['USER'] == self.user[0][1], 'TEL'] = str(tel_info)
                 self.df.loc[self.df['USER'] == self.user[0][1], 'PICTURE'] = str(self.user[0][1])
                 self.df.to_csv("login.csv", index=False)
-                if self.imginput != '':
-                    temp_img = cv2.imread(self.imginput)
+                if self.user_imginput != '':
+                    temp_img = cv2.imread(self.user_imginput)
                     cv2.imwrite('UnknownShop\\Picture\\ShopPage\\USER_PIC\\{}.png'.format(self.user[0][1]), temp_img)
                 
     # def selectItem(self,a):
@@ -524,8 +524,8 @@ class Shop_main_screen:
 
 
         ##Frame for book details
-        detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
-        detail_frame.place(x=0, y=20,height=500, width=400)
+        self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
+        self.detail_frame.place(x=0, y=20,height=500, width=400)
 
         # Frame for book_TreeView
         frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
@@ -536,62 +536,68 @@ class Shop_main_screen:
         #Name Of Book
         # self.name_detail_book_entry.bind("<Key>", lambda e: "break")
 
-        lbl1 = Label(detail_frame, text="No")
+        lbl1 = Label(self.detail_frame, text="No")
         lbl1.grid(row=0, column=0, padx=10, pady=5)
-        self.lbl1_entry = Entry(detail_frame, textvariable=self.No)
+        self.lbl1_entry = Entry(self.detail_frame, textvariable=self.No)
         self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
 
 
         #Author Of Book
-        lbl2 = Label(detail_frame, text="Code")
+        lbl2 = Label(self.detail_frame, text="Code")
         lbl2.grid(row=1, column=0, padx=10, pady=5)
-        self.lbl2_entry = Entry(detail_frame, textvariable=self.Code)
+        self.lbl2_entry = Entry(self.detail_frame, textvariable=self.Code)
         self.lbl2_entry.grid(row=1, column=1, padx=10, pady=5)
 
 
         #Category Of Book
-        lbl3 = Label(detail_frame, text="Name")
+        lbl3 = Label(self.detail_frame, text="Name")
         lbl3.grid(row=2, column=0, padx=10, pady=5)
-        self.lbl3_entry = Entry(detail_frame, textvariable=self.Name)
+        self.lbl3_entry = Entry(self.detail_frame, textvariable=self.Name)
         self.lbl3_entry.grid(row=2, column=1, padx=10, pady=5)
 
         #Language Of Book
-        lbl4 = Label(detail_frame, text="Author")
+        lbl4 = Label(self.detail_frame, text="Author")
         lbl4.grid(row=3, column=0, padx=10, pady=5)
-        self.lbl4_entry = Entry(detail_frame, textvariable=self.Author)
+        self.lbl4_entry = Entry(self.detail_frame, textvariable=self.Author)
         self.lbl4_entry.grid(row=3, column=1, padx=10, pady=5)
 
         #Price Of Book
-        lbl5 = Label(detail_frame, text="Category")
+        lbl5 = Label(self.detail_frame, text="Category")
         lbl5.grid(row=4, column=0, padx=10, pady=5)
-        self.lbl5_entry = Entry(detail_frame, textvariable=self.Category)
+        self.lbl5_entry = Entry(self.detail_frame, textvariable=self.Category)
         self.lbl5_entry.grid(row=4, column=1, padx=10, pady=5)
 
         #Code Of Book
-        lbl6 = Label(detail_frame, text="Price")
+        lbl6 = Label(self.detail_frame, text="Price")
         lbl6.grid(row=5, column=0, padx=10, pady=5)
-        self.lbl6_entry = Entry(detail_frame, textvariable=self.Price)
+        self.lbl6_entry = Entry(self.detail_frame, textvariable=self.Price)
         self.lbl6_entry.grid(row=5, column=1, padx=10, pady=5)
 
 
         # Rating Of Book
-        lbl7 = Label(detail_frame, text="Rating")
+        lbl7 = Label(self.detail_frame, text="Rating")
         lbl7.grid(row=6, column=0, padx=10, pady=5)
-        self.lbl7_entry = Entry(detail_frame, textvariable=self.Rating)
+        self.lbl7_entry = Entry(self.detail_frame, textvariable=self.Rating)
         self.lbl7_entry.grid(row=6, column=1, padx=10, pady=5)
 
         ## number of items book
-        self.spinboxvar = IntVar(detail_frame)
+        self.spinboxvar = IntVar(self.detail_frame)
         self.spinboxvar.set(1)
-        self.items_book_spinbox = Spinbox(detail_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
-        Label(detail_frame, text="").grid(row=7, column=0, padx=10, pady=5)
+        self.items_book_spinbox = Spinbox(self.detail_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
+        Label(self.detail_frame, text="").grid(row=7, column=0, padx=10, pady=5)
         self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5,sticky="E")
 
-        self.add_book_button = Button(detail_frame,text=' + ', command=self.add_book,state=DISABLED)
+        self.add_book_button = Button(self.detail_frame,text=' + ', command=self.add_book,state=DISABLED)
         self.add_book_button.grid(row=7, column=2, padx=10, pady=5)
-        add_favbook_button = Button(detail_frame,text=' ♥ ', command=self.add_book)
+        add_favbook_button = Button(self.detail_frame,text=' ♥ ', command=self.add_book)
         add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
-       
+
+        ##Book Image
+        self.book_img_input = 'BookPics\\NOT_FOUND.png'
+        self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
+        Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
+        self.list_img_book = os.listdir('BookPics')
+
 
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
 
@@ -638,6 +644,14 @@ class Shop_main_screen:
         self.Category.set(cur[8])
         self.Price.set(cur[6])
         self.add_book_button.config(state=NORMAL)
+        if str(self.Code.get()) +'.png' in self.list_img_book:
+            self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
+            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
+            Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
+        else:
+            self.book_img_input = 'BookPics\\NOT_FOUND.png'
+            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
+            Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
 
     def add_book(self):
         if self.usercart != []:
@@ -648,6 +662,7 @@ class Shop_main_screen:
                     return
         self.usercart.append([self.Code.get(),self.Name.get(),self.items_book_spinbox.get(),self.Price.get()])
         print('UserCart :',self.usercart)
+        self.spinboxvar.set(1)
 
     def update(self, ids):
         self.book_treeview.delete(*self.book_treeview.get_children())
