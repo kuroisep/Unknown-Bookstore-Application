@@ -589,6 +589,9 @@ class Shop_main_screen:
 
         add_book_button = Button(detail_frame,text=' + ', command=self.add_book)
         add_book_button.grid(row=7, column=2, padx=10, pady=5)
+        add_favbook_button = Button(detail_frame,text=' ♥ ', command=self.add_book)
+        add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
+       
 
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
 
