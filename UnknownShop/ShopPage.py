@@ -587,8 +587,8 @@ class Shop_main_screen:
         Label(detail_frame, text="").grid(row=7, column=0, padx=10, pady=5)
         self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5,sticky="E")
 
-        add_book_button = Button(detail_frame,text=' + ', command=self.add_book)
-        add_book_button.grid(row=7, column=2, padx=10, pady=5)
+        self.add_book_button = Button(detail_frame,text=' + ', command=self.add_book,state=DISABLED)
+        self.add_book_button.grid(row=7, column=2, padx=10, pady=5)
         add_favbook_button = Button(detail_frame,text=' ♥ ', command=self.add_book)
         add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
        
@@ -637,6 +637,7 @@ class Shop_main_screen:
         self.Author.set(cur[4])
         self.Category.set(cur[8])
         self.Price.set(cur[6])
+        self.add_book_button.config(state=NORMAL)
 
     def add_book(self):
         if self.usercart != []:
