@@ -36,6 +36,7 @@ class main_admin_screen:
         """
         style = ttk.Style(self.admin_window)
         style.configure('Treeview', rowheight=30)
+        # style.configure("TButton", foreground="blue", background="orange")
         # Import the tcl file
         # self.admin_window.tk.call('source', 'UnknownShop/azure.tcl')
 
@@ -73,25 +74,31 @@ class main_admin_screen:
         self.orderframe = LabelFrame(self.admin_window , text="Order Management")
         self.order_table_frame = LabelFrame(self.orderframe)
         ###############################    Table Plane     #######################################################
-        self.order_treeview = Treeview(self.order_table_frame, column=(1,2,3,4,5,6), show="headings", height="20")
+        columns = ("Order Time","Order ID","Customer","Address","Total","Status")
+        self.order_treeview = Treeview(self.order_table_frame, column=columns, show="headings", height="20")
         yscrollbar = ttk.Scrollbar(self.order_table_frame, orient="vertical", command=self.order_treeview.yview)
         self.order_treeview.config(yscrollcommand=yscrollbar.set)
         yscrollbar.pack(side="right", fill="y")
         self.order_treeview.bind("<ButtonRelease-1>", self.orderPage_lookuptreeview)
+        for col in columns:
+            self.order_treeview.heading(col, text=col,command=lambda _col=col: self.treeview_sort_column(self.order_treeview, _col, False))
 
-        self.order_treeview.column(1, anchor='center', width=150)
-        self.order_treeview.column(2, anchor='center', width=100)
-        self.order_treeview.column(3, anchor='center', width=150)
-        self.order_treeview.column(4, anchor='w', width=250)
-        self.order_treeview.column(5, anchor='center', width=100)
-        self.order_treeview.column(6, anchor='center', width=150)
-        self.order_treeview.heading(1, text="Order Time")
-        self.order_treeview.heading(2, text="Order ID")
-        self.order_treeview.heading(3, text="Customer")
-        self.order_treeview.heading(4, text="Address")
-        self.order_treeview.heading(5, text="Total")
-        self.order_treeview.heading(6, text="Status")
-        self.order_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
+        self.order_treeview.column(0, anchor='center', width=150)
+        self.order_treeview.column(1, anchor='center', width=100)
+        self.order_treeview.column(2, anchor='center', width=150)
+        self.order_treeview.column(3, anchor='w', width=250)
+        self.order_treeview.column(4, anchor='center', width=100)
+        self.order_treeview.column(5, anchor='center', width=150)
+
+        # self.order_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
+        self.order_treeview.insert('', 'end', values=['A','1','Name '])
+        self.order_treeview.insert('', 'end', values=['C','3','Name '])
+        self.order_treeview.insert('', 'end', values=['D','4','Name '])
+        self.order_treeview.insert('', 'end', values=['B','0','Name ','212 LA','5 items','Payment confirmed'])
+        for i in range(1,100):
+            self.order_treeview.insert('', 'end', values=[100-i,i,'Name ','212 LA','5 items','Payment confirmed'])
+        
+        
 
         self.order_treeview.pack()
         self.order_table_frame.place(x=20,y=10,height=400, width=1000)
@@ -141,7 +148,7 @@ class main_admin_screen:
 
         ###############################    Option Plane     #######################################################
         self.order_option_frame = LabelFrame(self.orderframe , text="Option")
-        self.order_update_button = Button(self.order_option_frame,text='Update',command=self.orderPage_update_state)
+        self.order_update_button = Button(self.order_option_frame,text='Update',command=self.orderPage_update_state,state=DISABLED)
         self.order_update_button.grid(row=0, column=1, padx=10, pady=5)
         self.order_option_frame.place(x=750,y=430,height=200, width=250)
 
@@ -154,19 +161,28 @@ class main_admin_screen:
 
     def orderPage_update_state(self):
         self.nowtime = datetime.datetime.now()
-        if self.order_status_entry.get() == 'Shipped':
-            self.order_shiptime_entry.delete('1.0',END)
-            self.order_shiptime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
-            focused = self.order_treeview.focus()
-            self.order_treeview.insert("", str(focused)[1:], values=("", str(self.order_status_entry)))
-            self.order_treeview.delete(focused)
-        elif self.order_status_entry.get() == 'Delivered':
-            self.order_completedtime_entry.delete('1.0',END)
-            self.order_completedtime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
+        if(messagebox.askokcancel("Confirmation", "Update OrderID {} ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
+            self.order_update_button.config(state=DISABLED)
+            if self.order_status_entry.get() == 'Shipped':
+                self.order_shiptime_entry.delete('1.0',END)
+                self.order_shiptime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
+                focused = self.order_treeview.focus()
+                self.order_treeview.insert("", str(focused)[1:], values=("", str(self.order_status_entry)))
+                self.order_treeview.delete(focused)
+            elif self.order_status_entry.get() == 'Delivered':
+                self.order_completedtime_entry.delete('1.0',END)
+                self.order_completedtime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
 
     def orderPage_lookuptreeview(self,event):
+        self.order_update_button.config(state=NORMAL)
         curItem = self.order_treeview.focus()
         cur = self.order_treeview.item(curItem)['values']
+        # print('cur:',cur)
+        if cur == '':
+            return
+        if len(cur) != 6:
+            for i in range(6-len(cur)):
+                cur.append('')
         self.OrderTime.set(cur[0])
         self.OrderID.set(cur[1])
         self.Customer.set(cur[2])
@@ -189,6 +205,17 @@ class main_admin_screen:
         self.order_completedtime_entry.insert(1.0,'Completed Time')
         self.order_address_entry.insert(1.0,self.Address.get())
         self.order_status_entry.insert(0,self.Status.get())
+
+    def treeview_sort_column(self,tv, col, reverse):
+        l = [(tv.set(k, col), k) for k in tv.get_children('')]
+        l.sort(reverse=reverse)
+
+        # rearrange items in sorted positions
+        for index, (val, k) in enumerate(l):
+            tv.move(k, '', index)
+
+        # reverse sort next time
+        tv.heading(col, command=lambda _col=col: self.treeview_sort_column(tv, _col, not reverse))
 
 
 
