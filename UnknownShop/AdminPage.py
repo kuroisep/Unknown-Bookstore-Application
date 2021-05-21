@@ -29,8 +29,6 @@ class main_admin_screen:
 
         self.menubar()
         
-
-
         """ 
         THEAM
         """
@@ -46,16 +44,25 @@ class main_admin_screen:
         THEAM
         """
 
-        ###############################    OrderPage     #######################################################
+        #---------------------------    OrderPage     -------------------------------------------------------------#
         self.OrderTime = StringVar()
         self.OrderID = StringVar()
         self.Customer = StringVar()
         self.Address = StringVar()
         self.Total = StringVar()
         self.Status = StringVar()
+        self.ShippedTime = StringVar()
+        self.CompletedTime = StringVar()
 
-        ###############################    Database     #######################################################
-        self.df = pandas.read_csv('login.csv')
+        #---------------------------     Database     ------------------------------------------------------------ #
+        ### Order Manangement
+        self.df = pandas.read_csv('UnknownShop\\database\\order.csv')
+        # print(self.df)
+        self.order_data = self.df.values.tolist()
+
+        ###Order Detail
+        self.df1 = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
+        self.order_detail_data = self.df1.values.tolist()
 
         self.admin_window.resizable(0, 0)
         self.admin_window.mainloop()
@@ -70,12 +77,12 @@ class main_admin_screen:
         Button(menuframe, text='Member management',width=27,command=self.menberPage).grid(row=3,padx=5,pady=10)
         Button(menuframe, text='Admin',width=27).grid(row=4,padx=5,pady=10)
 
-
+    #########################  Order Page  ####################################################################
     def orderPage(self):
-        ###############################    init    #######################################################
+        #------------------------------    init    ------------------------------------------------------------#
         self.orderframe = LabelFrame(self.admin_window , text="Order Management")
         self.order_table_frame = LabelFrame(self.orderframe)
-        ###############################    Table Plane     #######################################################
+        #------------------------------   Table Plane     ------------------------------------------------------------#
         columns = ("Order Time","Order ID","Customer","Address","Quantity","Total Amount","Status")
         self.order_treeview = Treeview(self.order_table_frame, column=columns, show="headings", height="20")
         yscrollbar = ttk.Scrollbar(self.order_table_frame, orient="vertical", command=self.order_treeview.yview)
@@ -93,20 +100,16 @@ class main_admin_screen:
         self.order_treeview.column(5, anchor='center', width=100)
         self.order_treeview.column(6, anchor='center', width=150)
 
-        # self.order_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
-        self.order_treeview.insert('', 'end', values=['A','1','Name '])
-        self.order_treeview.insert('', 'end', values=['C','3','Name '])
-        self.order_treeview.insert('', 'end', values=['D','4','Name '])
-        self.order_treeview.insert('', 'end', values=['B','0','Name ','212 LA','5 items','1000','Payment confirmed'])
-        for i in range(1,100):
-            self.order_treeview.insert('', 'end', values=[100-i,i,'Name ','212 LA','5 items','500','Payment confirmed'])
+        # self.order_treeview.insert('', 'end', values=["Order Time","Order ID","Customer","Address","Quantity","Total Amount","Status"])
+        for i in self.order_data:
+            self.order_treeview.insert('', 'end', values=[i][0])
         
         
 
         self.order_treeview.pack()
         self.order_table_frame.place(x=20,y=10,height=400, width=1000)
 
-        ###############################    Detail Plane     #######################################################
+        #------------------------------    Detail Plane     ------------------------------------------------------------#
         self.order_detail_frame = LabelFrame(self.orderframe , text="Details")
 
         Label(self.order_detail_frame, text="Order ID#").grid(row=0, column=0, padx=10, pady=5,sticky="E")
@@ -149,7 +152,7 @@ class main_admin_screen:
 
         self.order_detail_frame.place(x=20,y=430,height=200, width=700)
 
-        ###############################    Option Plane     #######################################################
+        #------------------------------  Option Plane     ------------------------------------------------------------#
         self.order_option_frame = LabelFrame(self.orderframe , text="Option")
         self.order_update_button = Button(self.order_option_frame,text='Update',command=self.orderPage_update_state,state=DISABLED)
         self.order_update_button.grid(row=0, column=1, padx=10, pady=5)
@@ -161,6 +164,8 @@ class main_admin_screen:
         
         self.orderframe.place(x=220,y=20,height=680, width=1040)
 
+    
+    ##################################    Update Button   <Order Page>  #######################################################
     def orderPage_update_state(self):
         self.nowtime = datetime.datetime.now()
         if(messagebox.askokcancel("Confirmation", "Update OrderID {} ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
@@ -168,30 +173,42 @@ class main_admin_screen:
             if self.order_status_entry.get() == 'Shipped':
                 self.order_shiptime_entry.delete('1.0',END)
                 self.order_shiptime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
-                focused = self.order_treeview.focus()
-                self.order_treeview.insert("", str(focused)[1:], values=("", str(self.order_status_entry)))
-                self.order_treeview.delete(focused)
             elif self.order_status_entry.get() == 'Delivered':
                 self.order_completedtime_entry.delete('1.0',END)
                 self.order_completedtime_entry.insert(1.0,self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
+            self.df.loc[self.df['Order_ID'] == self.OrderID.get(), 'Address'] = self.order_address_entry.get('1.0','end-1c')
+            self.df.loc[self.df['Order_ID'] == self.OrderID.get(), 'Shipped_time'] = self.order_shiptime_entry.get('1.0','end-1c')
+            self.df.loc[self.df['Order_ID'] == self.OrderID.get(), 'Completed_time'] = self.order_completedtime_entry.get('1.0','end-1c')
+            self.df.loc[self.df['Order_ID'] == self.OrderID.get(), 'Status'] = self.order_status_entry.get()
+            self.df.to_csv("UnknownShop\\database\\order.csv", index=False)
+            ### Treeview Update 
+            self.order_treeview.delete(*self.order_treeview.get_children())
+            treeview = pandas.read_csv('UnknownShop\\database\\order.csv')
+            treeview_update = treeview.values.tolist()
+            for i in treeview_update:
+                self.order_treeview.insert('', 'end', values=[i][0])
 
+    ###############################    Treeview Focus    <Order Page> #########################################################
     def orderPage_lookuptreeview(self,event):
         self.order_update_button.config(state=NORMAL)
         curItem = self.order_treeview.focus()
         cur = self.order_treeview.item(curItem)['values']
-        # print('cur:',cur)
         if cur == '':
             return
-        if len(cur) != 7:
-            for i in range(7-len(cur)):
+        if len(cur) != 9:
+            for i in range(9-len(cur)):
                 cur.append('')
         self.OrderTime.set(cur[0])
         self.OrderID.set(cur[1])
         self.Customer.set(cur[2])
         self.Address.set(cur[3])
         self.Total.set(cur[4])
-        self.Status.set(cur[6])    
+        self.Status.set(cur[6])
+        self.ShippedTime.set(cur[7])
+        self.CompletedTime.set(cur[8])
         self.orderPage_detailupdate()
+
+    ###############################    Detail Plane Update    <Order Page> #########################################################
     def orderPage_detailupdate(self):
         self.order_id_entry.delete('1.0',END)
         self.order_user_entry.delete('1.0',END)
@@ -202,14 +219,14 @@ class main_admin_screen:
         self.order_status_entry.delete(0,END)
         self.order_id_entry.insert(1.0,self.OrderID.get())
         self.order_user_entry.insert(1.0,self.Customer.get())
-        self.order_ordertime_entry.insert(1.0,'Order Time')
-        self.order_shiptime_entry.insert(1.0,'Ship Time')
-        self.order_completedtime_entry.insert(1.0,'Completed Time')
+        self.order_ordertime_entry.insert(1.0,self.OrderTime.get())
+        self.order_shiptime_entry.insert(1.0,self.ShippedTime.get())
+        self.order_completedtime_entry.insert(1.0,self.CompletedTime.get())
         self.order_address_entry.insert(1.0,self.Address.get())
         self.order_status_entry.insert(0,self.Status.get())
 
 
-    ###############################    Treeview sort     #######################################################
+    ###############################    Treeview sort   <Function> #######################################################
     def treeview_sort_column(self,tv, col, reverse):
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
@@ -221,9 +238,9 @@ class main_admin_screen:
         # reverse sort next time
         tv.heading(col, command=lambda _col=col: self.treeview_sort_column(tv, _col, not reverse))
 
-
+    ###############################    Pop-up OrderDetail Page  <Order Page>    #######################################################
     def orderdetailPage(self):
-        ###############################    init     #######################################################
+        #------------------------------    init     ------------------------------------------------------------#
         self.detail_screen = Toplevel(self.admin_window)
         self.detail_screen.title("Order Details")
         self.detail_screen.focus_set()
@@ -235,7 +252,7 @@ class main_admin_screen:
 
         self.orderdetail_table_frame = LabelFrame(self.detail_screen , text="Order List")
         self.orderdetail_detail_frame = LabelFrame(self.detail_screen,text ='')
-        ###############################    Table Plane     #######################################################
+        #------------------------------   Table Plane     ------------------------------------------------------------#
         columns = ("BookCode","BookName","Quantity","Total amount")
         self.orderdetail_treeview = Treeview(self.orderdetail_table_frame, column=columns, show="headings", height="20")
         yscrollbar = ttk.Scrollbar(self.orderdetail_table_frame, orient="vertical", command=self.orderdetail_treeview.yview)
@@ -251,25 +268,27 @@ class main_admin_screen:
         self.orderdetail_treeview.column(3, anchor='center', width=100)
 
         # self.orderdetail_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
-        self.orderdetail_treeview.insert('', 'end', values=['A','1','Name '])
-        self.orderdetail_treeview.insert('', 'end', values=['C','3','Name '])
-        self.orderdetail_treeview.insert('', 'end', values=['D','4','Name '])
-        self.orderdetail_treeview.insert('', 'end', values=['B','0','Name ','212 LA','5 items','Payment confirmed'])
-        for i in range(1,100):
-            self.orderdetail_treeview.insert('', 'end', values=[100-i,i,'Name ','212 LA','5 items','Payment confirmed'])
+
+        data_check = False
+        for i in self.order_detail_data:
+            if i[0] == self.OrderID.get(): 
+                self.orderdetail_treeview.insert('', 'end', values=i[1:])
+                data_check = True
+
         self.orderdetail_treeview.pack()
-        ###############################    Detail Plane     #######################################################
+        #------------------------------    Detail Plane     ------------------------------------------------------------#
         
 
-        
         self.orderdetail_table_frame.place(x=20,y=10,height=400, width=700)
         self.orderdetail_detail_frame.place(x=20,y=430,height=150, width=700)
+        if not data_check:
+            messagebox.showerror("Error", "The selected order not found",parent=self.detail_screen)
 
-
+    ###############################    Order History Page     #######################################################
     def orderhistoryPage(self):
         self.orderhistoryframe = LabelFrame(self.admin_window , text="Order History")
         self.orderhistory_table_frame = LabelFrame(self.orderhistoryframe)
-        ###############################    Table Plane     #######################################################
+        #------------------------------    Table Plane     ------------------------------#
         columns = ("Order Time","Order ID","Customer","Shipped Time","Completed Time","Status")
         self.orderhistory_treeview = Treeview(self.orderhistory_table_frame, column=columns, show="headings", height="20")
         yscrollbar = ttk.Scrollbar(self.orderhistory_table_frame, orient="vertical", command=self.orderhistory_treeview.yview)
@@ -287,19 +306,14 @@ class main_admin_screen:
         self.orderhistory_treeview.column(5, anchor='center', width=150)
 
         # self.orderhistory_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
-        self.orderhistory_treeview.insert('', 'end', values=['A','1','Name '])
-        self.orderhistory_treeview.insert('', 'end', values=['C','3','Name '])
-        self.orderhistory_treeview.insert('', 'end', values=['D','4','Name '])
-        self.orderhistory_treeview.insert('', 'end', values=['B','0','Name ','212 LA','5 items','Payment confirmed'])
         for i in range(1,100):
             self.orderhistory_treeview.insert('', 'end', values=[100-i,i,'Name ','212 LA','5 items','Payment confirmed'])
         
         
-
         self.orderhistory_treeview.pack()
         self.orderhistory_table_frame.place(x=20,y=10,height=400, width=1000)
 
-        ###############################    Detail Plane     #######################################################
+        #------------------------------   Detail Plane     ------------------------------------------------------------#
         # self.order_detail_frame = LabelFrame(self.orderframe , text="Details")
 
         # Label(self.order_detail_frame, text="Order ID#").grid(row=0, column=0, padx=10, pady=5,sticky="E")
@@ -339,10 +353,9 @@ class main_admin_screen:
         # self.order_status_entry.grid(row=3, column=3, padx=10, pady=5,sticky="W")
 
 
-
         # self.order_detail_frame.place(x=20,y=430,height=200, width=700)
 
-        ###############################    Option Plane     #######################################################
+        #------------------------------    Option Plane     ------------------------------------------------------------#
         # self.order_option_frame = LabelFrame(self.orderframe , text="Option")
         # self.order_update_button = Button(self.order_option_frame,text='Update',command=self.orderPage_update_state,state=DISABLED)
         # self.order_update_button.grid(row=0, column=1, padx=10, pady=5)
@@ -351,10 +364,12 @@ class main_admin_screen:
         
         self.orderhistoryframe.place(x=220,y=20,height=680, width=1040)
 
+    ###############################    Book Manangment Page     #######################################################
     def bookPage(self):
         self.bookframe = LabelFrame(self.admin_window , text="Book Management")
         self.bookframe.place(x=220,y=20,height=680, width=1040)
         
+    ###############################    Menber Manangment Page     #######################################################
     def menberPage(self):
         self.menberframe = LabelFrame(self.admin_window , text="Member Management")
         self.menberframe.place(x=220,y=20,height=680, width=1040)
