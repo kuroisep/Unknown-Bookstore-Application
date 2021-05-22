@@ -182,7 +182,7 @@ class main_admin_screen:
     ##################################    Update Button   <Order Page>  #######################################################
     def orderPage_update_state(self):
         self.nowtime = datetime.datetime.now()
-        if(messagebox.askokcancel("Confirmation", "Update OrderID [ {} ] ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
+        if(messagebox.askokcancel("Confirmation", "Update OrderID \n[ {} ] ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
             self.order_update_button.config(state=DISABLED)
             if self.order_status_entry.get() == 'Shipped':
                 self.order_shiptime_entry.delete('1.0',END)
@@ -581,7 +581,7 @@ class main_admin_screen:
 
     ##################################    Update Button   <Book Page>  #######################################################
     def bookPage_update_state(self):
-        if(messagebox.askokcancel("Confirmation", "Update Book [ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+        if(messagebox.askokcancel("Confirmation", "Update Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
             self.update_book_button.config(state=DISABLED)
             
             self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
