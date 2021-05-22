@@ -43,7 +43,6 @@ class main_admin_screen:
         """ 
         THEAM
         """
-
         #---------------------------    OrderPage     -------------------------------------------------------------#
         self.OrderTime = StringVar()
         self.OrderID = StringVar()

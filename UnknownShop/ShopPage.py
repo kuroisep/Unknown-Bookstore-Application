@@ -22,25 +22,25 @@ import pandas as pd
 from time import sleep
 import time
 
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    passwd="Minor4810540114.",
-    database="new_book",
-    auth_plugin="mysql_native_password"
-)
-cursor = mydb.cursor()
+# mydb = mysql.connector.connect(
+#     host="localhost",
+#     user="root",
+#     passwd="Minor4810540114.",
+#     database="new_book",
+#     auth_plugin="mysql_native_password"
+# )
+# cursor = mydb.cursor()
 
-options = []
-# sql = "SELECT Code, Name FROM country"
-sql = "SELECT * FROM books"
-cursor.execute(sql)
-ids = cursor.fetchall()
-for i in ids:
-    options.append(str(i[0]) + " - " + i[1])
+# options = []
+# # sql = "SELECT Code, Name FROM country"
+# sql = "SELECT * FROM books"
+# cursor.execute(sql)
+# ids = cursor.fetchall()
+# for i in ids:
+#     options.append(str(i[0]) + " - " + i[1])
 
 
-# print(ids)
+# # print(ids)
 
 
 class Shop_main_screen:
@@ -103,8 +103,17 @@ class Shop_main_screen:
         #self.user[0][9] = picture
 
 
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load data book >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        self.loadbookfile = pandas.read_csv('UnknownShop\database\DataBookList.csv')
+        print(self.loadbookfile)
+        self.book_data = self.loadbookfile.values.tolist()
+
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        
+
+
+
+
+
         
         # self.canvas=Canvas(self.shop_window,bg='#7242f5')
         # self.canvas.pack(fill=BOTH, expand=1)
@@ -202,21 +211,6 @@ class Shop_main_screen:
         after_id = self.banner_label.after(200, self.moveBanner)
         
 
-    def search(self):
-        q2 = self.Name.get()
-        query = "SELECT id, name, countrycode, district, population FROM city WHERE name LIKE '%"+q2+"%'"
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        self.update(rows)
-
-
-    def clear(self):
-        query = "SELECT id, name, countrycode, district, population FROM city"
-        cursor.execute(query)
-        rows = cursor.fetchall()
-        self.update(rows)
-
-
     def search_bar(self): 
         self.canvas.create_text(385, 65, text="Search By", font=('TRACK', 12))
 
@@ -228,10 +222,10 @@ class Shop_main_screen:
         # drop.current((0))
         # drop.place(x=440, y=50)
 
-        search_button = ttk.Button(self.shop_window, text = "Search", command=self.search)
+        search_button = ttk.Button(self.shop_window, text = "Search")
         search_button.place(x=820, y=50)
 
-        show_all_books_button = ttk.Button(self.shop_window, text = "Clear", command=self.clear)
+        show_all_books_button = ttk.Button(self.shop_window, text = "Clear")
         show_all_books_button.place(x=908, y=50)
         
 
@@ -243,46 +237,47 @@ class Shop_main_screen:
         
     def button_state(self):
 
-        button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
-        self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        # self.canvas.create_image(200,200,image=self.img_button1)
-        self.button1 = tk.Button(self.shop_window,image=self.img_button1, command = self.show_infomationPage, borderwidth=0)
+        # button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
+        # self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
+        # # self.canvas.create_image(200,200,image=self.img_button1)
+        # self.button1 = tk.Button(self.shop_window,image=self.img_button1, command = self.show_infomationPage, borderwidth=0)
         
-        self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
+        # self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
 
-        button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
-        self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        # self.canvas.create_image(200,300,image=self.img_button2)
-        self.button2 = tk.Button(image=self.img_button2,command= self.show_categoryPage, borderwidth=0, )
-        self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
+        # button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
+        # self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
+        # # self.canvas.create_image(200,300,image=self.img_button2)
+        # self.button2 = tk.Button(image=self.img_button2,command= self.show_categoryPage, borderwidth=0, )
+        # self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
 
-        button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
-        self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
-        # self.canvas.create_image(200,400,image=self.img_button3)
-        self.button3 = tk.Button(image=self.img_button3,command=self.show_paymentPage, borderwidth=0)
-        self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
+        # button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
+        # self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
+        # # self.canvas.create_image(200,400,image=self.img_button3)
+        # self.button3 = tk.Button(image=self.img_button3,command=self.show_paymentPage, borderwidth=0)
+        # self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
 
-        button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
-        self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
-        # self.canvas.create_image(200,500,image=self.img_button4)
-        self.button4 = tk.Button(image=self.img_button4,command=self.show_deliveryPage, borderwidth=0, 
-                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
+        # button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
+        # self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
+        # # self.canvas.create_image(200,500,image=self.img_button4)
+        # self.button4 = tk.Button(image=self.img_button4,command=self.show_deliveryPage, borderwidth=0, 
+        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
+        # self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
 
-        button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
-        self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
-        # self.canvas.create_image(200,600,image=self.img_button5)
-        self.button5 = tk.Button(self.shop_window, image=self.img_button5, command=self.delete_canvas, border=0,
-                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
+        # button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
+        # self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
+        # # self.canvas.create_image(200,600,image=self.img_button5)
+        # self.button5 = tk.Button(self.shop_window, image=self.img_button5, command=self.delete_canvas, border=0,
+        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
+        # self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
        
 
-        button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
-        self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
-        # self.canvas.create_image(200,600,image=self.img_button6)
-        self.button6 = tk.Button(self.shop_window, image=self.img_button6, command=self.delete_show_window, border=0,
-                                relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
+        # button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
+        # self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
+        # # self.canvas.create_image(200,600,image=self.img_button6)
+        # self.button6 = tk.Button(self.shop_window, image=self.img_button6, command=self.delete_show_window, border=0,
+        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
+        # self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
+        pass
     
 
     def delete_show_window(self):
@@ -298,7 +293,6 @@ class Shop_main_screen:
         self.shop_window.destroy()
         # self.shop_window.after_cancel(after_id)
 
-    
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
         
@@ -516,16 +510,16 @@ class Shop_main_screen:
         
     def selected_categoryPages(self):
         self.inner_selected_categoryPages = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
-        self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
+        # self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
-        self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
+        # self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
 
         ##Frame for book details
         self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
-        self.detail_frame.place(x=0, y=20,height=500, width=400)
+        self.detail_frame.place(x=0, y=20,height=500, width=1000)
 
         # Frame for book_TreeView
         frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
@@ -536,10 +530,10 @@ class Shop_main_screen:
         #Name Of Book
         # self.name_detail_book_entry.bind("<Key>", lambda e: "break")
 
-        lbl1 = Label(self.detail_frame, text="No")
-        lbl1.grid(row=0, column=0, padx=10, pady=5)
-        self.lbl1_entry = Entry(self.detail_frame, textvariable=self.No)
-        self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
+        # lbl1 = Label(self.detail_frame, text="No")
+        # lbl1.grid(row=0, column=0, padx=10, pady=5)
+        # self.lbl1_entry = Entry(self.detail_frame, textvariable=self.No)
+        # self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
 
 
         #Author Of Book
@@ -573,7 +567,6 @@ class Shop_main_screen:
         self.lbl6_entry = Entry(self.detail_frame, textvariable=self.Price)
         self.lbl6_entry.grid(row=5, column=1, padx=10, pady=5)
 
-
         # Rating Of Book
         lbl7 = Label(self.detail_frame, text="Rating")
         lbl7.grid(row=6, column=0, padx=10, pady=5)
@@ -601,13 +594,13 @@ class Shop_main_screen:
 
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
 
-        self.book_treeview.place(x= 80, y=15)
-        self.book_treeview.column(1, anchor='w', width=50)
-        self.book_treeview.column(2, anchor='w', width=100)
-        self.book_treeview.column(3, anchor='w', width=50)
-        self.book_treeview.column(4, anchor='w', width=50)
-        self.book_treeview.column(5, anchor='w', width=50)
-        self.book_treeview.column(6, anchor='w', width=100)
+        self.book_treeview.place(x= 20, y=15)
+        self.book_treeview.column(1, anchor='center', width=50)
+        self.book_treeview.column(2, anchor='center', width=120)
+        self.book_treeview.column(3, anchor='center', width=100)
+        self.book_treeview.column(4, anchor='center', width=100)
+        self.book_treeview.column(5, anchor='center', width=100)
+        self.book_treeview.column(6, anchor='center', width=50)
         self.book_treeview.heading(1, text="No")
         self.book_treeview.heading(2, text="Code")
         self.book_treeview.heading(3, text="Name")
@@ -615,6 +608,13 @@ class Shop_main_screen:
         self.book_treeview.heading(5, text="Category")
         self.book_treeview.heading(6, text="Price")
         
+
+        # Book table
+        for i in self.book_data:
+            self.book_treeview.insert('', 'end', values = [i][0])
+            # print(int(i[0]))
+
+
 
         # Click on table book data
         self.book_treeview.bind("<ButtonRelease-1>", self.lookupCustomer)
@@ -629,20 +629,18 @@ class Shop_main_screen:
         yscrollbar.pack(side="right", fill="y")
         xscrollbar.pack(side="bottom", fill="x")
 
-
-
-
-        self.update(ids)
     
     def lookupCustomer(self, event):
         curItem = self.book_treeview.focus()
         cur = self.book_treeview.item(curItem)['values']
         self.No.set(cur[0])
         self.Code.set(cur[1])
-        self.Name.set(cur[3])
-        self.Author.set(cur[4])
-        self.Category.set(cur[8])
-        self.Price.set(cur[6])
+        self.Name.set(cur[2])
+        self.Author.set(cur[3])
+        self.Category.set(cur[4])
+        self.Price.set(cur[5])
+        self.Rating.set(cur[9])
+        
         self.add_book_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
             self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
@@ -663,11 +661,6 @@ class Shop_main_screen:
         self.usercart.append([self.Code.get(),self.Name.get(),self.items_book_spinbox.get(),self.Price.get()])
         print('UserCart :',self.usercart)
         self.spinboxvar.set(1)
-
-    def update(self, ids):
-        self.book_treeview.delete(*self.book_treeview.get_children())
-        for i in ids:
-            self.book_treeview.insert('', 'end', values=i)
 
     def shift(self):
             x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
@@ -822,6 +815,7 @@ class Shop_main_screen:
         self.Comment_boutton2.config(state=NORMAL)
         self.Rating_Combobox.config(state=NORMAL)
         print("Review JAA")
+
     def backk(self):
         self.commentbox.config(state=DISABLED)
         self.review_bottom.config(state=DISABLED)
@@ -837,12 +831,17 @@ class Shop_main_screen:
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
         self.canvas.create_window(250, 150, anchor=NW, window=self.inner_infomation)
+
     def show_categoryPage(self):
         self.delete_canvas()
         self.canvas.create_window(250, 150, anchor=NW, window=self.inner_category)
+
+
     def show_paymentPage(self):
         self.delete_canvas()
         self.canvas.create_window(250,150, anchor=NW, window=self.inner_payment)
+
+
     def show_deliveryPage(self):
         self.delete_canvas()
         self.canvas.create_window(250,150, anchor=NW, window=self.inner_delivery)
@@ -857,6 +856,7 @@ class Shop_main_screen:
         self.canvas.create_window(2200,750, anchor=NW, window=self.inner_category)
         self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
         self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
+        pass
         
          # ลบหน้า info
 
