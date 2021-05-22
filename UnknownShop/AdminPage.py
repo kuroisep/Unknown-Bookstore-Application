@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox,filedialog
 from PIL import ImageTk, Image
 from tkinter.ttk import *
 from tkinter import ttk
 import pandas
 import datetime
+import cv2
 
 import os, sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -63,6 +64,7 @@ class main_admin_screen:
         self.Ex = StringVar()
         self.Stock = StringVar()
         self.Rating = StringVar()
+        self.list_img_book = os.listdir('BookPics')
 
 
         #---------------------------     Database     ------------------------------------------------------------ #
@@ -381,8 +383,11 @@ class main_admin_screen:
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Book Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def bookPage(self):
+        #------------------------------    init     ------------------------------#
         self.bookframe = LabelFrame(self.admin_window , text="Book Management")
         self.book_table_frame = LabelFrame(self.bookframe)
+        self.book_pic_input = 'BookPics\\NOT_FOUND.png'
+        
          #------------------------------    Table Plane     ------------------------------#
         columns = ("No","Code","Name","Author","Category","Price")
         self.book_treeview = Treeview(self.book_table_frame, column=columns, show="headings", height="20")
@@ -448,6 +453,8 @@ class main_admin_screen:
         self.rating_entry = Text(self.book_detail_frame,width=10,height=1)
         self.rating_entry.insert(1.0,'')
         self.rating_entry.grid(row=3, column=4, padx=10, pady=5)
+        self.viewpic_book_button = Button(self.book_detail_frame,text='Show Pic',command=self.viewPicbookPage)
+        self.viewpic_book_button.grid(row=3, column=5, padx=5, pady=5)
 
 
         self.book_detail_frame.place(x=20,y=430,height=230, width=800)
@@ -465,7 +472,76 @@ class main_admin_screen:
         self.book_table_frame.place(x=20,y=10,height=400, width=1000)
         self.bookframe.place(x=220,y=20,height=680, width=1040)
 
-    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up BookDetail Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up ViewPic Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    def viewPicbookPage(self):
+        #------------------------------    init     ------------------------------------------------------------#
+        self.viewpic_book_screen = Toplevel(self.admin_window)
+        self.viewpic_book_screen.title("{} : {}".format(self.Code.get(),self.Name.get()))
+        self.viewpic_book_screen.focus_set()
+        self.viewpic_book_screen.grab_set()
+        self.viewpic_book_screen.resizable(0, 0)
+        x = (960) - (400/2)
+        y = (540) - (300/2)
+        self.viewpic_book_screen.geometry("400x300+%d+%d" % (x, y))
+
+        #------------------------------  Picture Plane     ------------------------------------------------------------#
+        
+        self.book_pic = ImageTk.PhotoImage(Image.open(self.book_pic_input).resize((120, 170)))
+        self.viewpic_book_frame = LabelFrame(self.viewpic_book_screen,text ='Picture')
+        self.pic_book_label = Label(self.viewpic_book_frame, image=self.book_pic)
+        self.pic_book_label.pack(anchor=CENTER)
+        
+
+        #------------------------------  Option Plane     ------------------------------------------------------------#
+        self.viewpic_book_option_frame = LabelFrame(self.viewpic_book_screen,text ='Option')
+        self.select_pic_button = Button(self.viewpic_book_option_frame,text='Select',command=self.openimage)
+        self.select_pic_button.grid(row=0, column=0, padx=25, pady=5)
+        self.save_pic_button = Button(self.viewpic_book_option_frame,text='Save',state=DISABLED,command=self.saveimage)
+        self.save_pic_button.grid(row=0, column=1, padx=25, pady=5)
+        self.delete_pic_button = Button(self.viewpic_book_option_frame,text='Delete',state=DISABLED,command=self.deleteimage)
+        self.delete_pic_button.grid(row=0, column=2, padx=25, pady=5)
+        if self.book_pic_input != 'BookPics\\NOT_FOUND.png':
+            self.delete_pic_button.config(state=NORMAL)
+
+
+        self.viewpic_book_frame.place(x=10,y=10,height=200, width=380)
+        self.viewpic_book_option_frame.place(x=10,y=210,height=80, width=380)
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Picture Function  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    def openfn(self):
+        temp = filedialog.askopenfilename(initialdir='BookPics\\',title='open')
+        return temp
+    def openimage(self):
+        self.book_pic_input = self.openfn()
+        if self.book_pic_input != '':
+            self.delete_pic_button.config(state=NORMAL)
+            self.save_pic_button.config(state=NORMAL)
+            self.book_pic = ImageTk.PhotoImage(Image.open(self.book_pic_input).resize((120, 170)))
+            self.pic_book_label.destroy()
+            self.pic_book_label = Label(self.viewpic_book_frame, image=self.book_pic)
+            self.pic_book_label.pack(anchor=CENTER)
+    def deleteimage(self):
+        self.save_pic_button.config(state=NORMAL)
+        self.delete_pic_button.config(state=DISABLED)
+        self.book_pic_input = 'BookPics\\NOT_FOUND.png'
+        self.book_pic = ImageTk.PhotoImage(Image.open(self.book_pic_input).resize((120, 170)))
+        self.pic_book_label.destroy()
+        self.pic_book_label = Label(self.viewpic_book_frame, image=self.book_pic)
+        self.pic_book_label.pack(anchor=CENTER)
+
+    def saveimage(self):
+        if self.book_pic_input != '':
+            if(messagebox.askokcancel("Confirmation", "Save Picture \n[ {} ] ?".format(self.Name.get()), parent=self.viewpic_book_screen)) == True:
+                self.save_pic_button.config(state=DISABLED)
+                messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.viewpic_book_screen)
+                # temp_img = cv2.imread(self.book_pic_input)
+                # cv2.imwrite('BookPics\\{}.png'.format(self.Code.get()), temp_img)
+        else:
+            messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
+            self.save_pic_button.config(state=DISABLED)
+
+        
+       
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up AddBook Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
     def addbookPage(self):
         #------------------------------    init     ------------------------------------------------------------#
         self.add_book_screen = Toplevel(self.admin_window)
@@ -554,6 +630,14 @@ class main_admin_screen:
         self.Ex.set(cur[7])
         self.Stock.set(cur[8])
         self.Rating.set(cur[9])
+        self.book_pic_input = 'BookPics\\{}.png'.format(self.Code.get())
+        if str(self.Code.get()) +'.png' in self.list_img_book:
+            self.book_pic_input = 'BookPics\\{}.png'.format(self.Code.get())
+            self.book_pic = ImageTk.PhotoImage(Image.open(self.book_pic_input).resize((80, 130)))
+        else:
+            self.book_pic_input = 'BookPics\\NOT_FOUND.png'
+            self.book_pic = ImageTk.PhotoImage(Image.open(self.book_pic_input).resize((80, 130)))
+
         self.bookPage_detailupdate()
 
     ###############################    Detail Plane Update    <Book Page> #########################################################
@@ -592,7 +676,8 @@ class main_admin_screen:
             self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
             self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
             self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
-            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+            messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
+            # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
             ### Treeview Update 
             self.book_treeview.delete(*self.book_treeview.get_children())
@@ -609,7 +694,8 @@ class main_admin_screen:
             
             ## Database
             self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
-            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+            messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
+            # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
             ### Treeview Update 
             self.book_treeview.delete(*self.book_treeview.get_children())
