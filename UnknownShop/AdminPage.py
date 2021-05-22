@@ -52,6 +52,18 @@ class main_admin_screen:
         self.Status = StringVar()
         self.ShippedTime = StringVar()
         self.CompletedTime = StringVar()
+        #---------------------------    BookPage     -------------------------------------------------------------#
+        self.No = StringVar()
+        self.Code = StringVar()
+        self.Name = StringVar()
+        self.Author = StringVar()
+        self.Category = StringVar()
+        self.Price = StringVar()
+        self.Page = StringVar()
+        self.Ex = StringVar()
+        self.Stock = StringVar()
+        self.Rating = StringVar()
+
 
         #---------------------------     Database     ------------------------------------------------------------ #
         ### Order Manangement
@@ -62,6 +74,9 @@ class main_admin_screen:
         ###Order Detail
         self.df1 = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
         self.order_detail_data = self.df1.values.tolist()
+
+        self.df2 = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+        self.book_data = self.df2.values.tolist()
 
         self.admin_window.resizable(0, 0)
         self.admin_window.mainloop()
@@ -76,7 +91,7 @@ class main_admin_screen:
         Button(menuframe, text='Member management',width=27,command=self.menberPage).grid(row=3,padx=5,pady=10)
         Button(menuframe, text='Admin',width=27).grid(row=4,padx=5,pady=10)
 
-    #########################  Order Page  ####################################################################
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Order Page      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderPage(self):
         #------------------------------    init    ------------------------------------------------------------#
         self.orderframe = LabelFrame(self.admin_window , text="Order Management")
@@ -167,7 +182,7 @@ class main_admin_screen:
     ##################################    Update Button   <Order Page>  #######################################################
     def orderPage_update_state(self):
         self.nowtime = datetime.datetime.now()
-        if(messagebox.askokcancel("Confirmation", "Update OrderID {} ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
+        if(messagebox.askokcancel("Confirmation", "Update OrderID [ {} ] ?".format(self.OrderID.get()), parent=self.orderframe)) == True:
             self.order_update_button.config(state=DISABLED)
             if self.order_status_entry.get() == 'Shipped':
                 self.order_shiptime_entry.delete('1.0',END)
@@ -237,20 +252,20 @@ class main_admin_screen:
         # reverse sort next time
         tv.heading(col, command=lambda _col=col: self.treeview_sort_column(tv, _col, not reverse))
 
-    ###############################    Pop-up OrderDetail Page  <Order Page>    #######################################################
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up OrderDetail Page  <Order Page>   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderdetailPage(self):
         #------------------------------    init     ------------------------------------------------------------#
-        self.detail_screen = Toplevel(self.admin_window)
-        self.detail_screen.title("Order Details")
-        self.detail_screen.focus_set()
-        self.detail_screen.grab_set()
-        self.detail_screen.resizable(0, 0)
+        self.order_detail_screen = Toplevel(self.admin_window)
+        self.order_detail_screen.title("Order Details")
+        self.order_detail_screen.focus_set()
+        self.order_detail_screen.grab_set()
+        self.order_detail_screen.resizable(0, 0)
         x = (960) - (750/2)
         y = (540) - (650/2)
-        self.detail_screen.geometry("750x600+%d+%d" % (x, y))
+        self.order_detail_screen.geometry("750x600+%d+%d" % (x, y))
 
-        self.orderdetail_table_frame = LabelFrame(self.detail_screen , text="Order List")
-        self.orderdetail_detail_frame = LabelFrame(self.detail_screen,text ='')
+        self.orderdetail_table_frame = LabelFrame(self.order_detail_screen , text="Order List")
+        self.orderdetail_detail_frame = LabelFrame(self.order_detail_screen,text ='')
         #------------------------------   Table Plane     ------------------------------------------------------------#
         columns = ("BookCode","BookName","Quantity","Total amount")
         self.orderdetail_treeview = Treeview(self.orderdetail_table_frame, column=columns, show="headings", height="20")
@@ -281,9 +296,10 @@ class main_admin_screen:
         self.orderdetail_table_frame.place(x=20,y=10,height=400, width=700)
         self.orderdetail_detail_frame.place(x=20,y=430,height=150, width=700)
         if not data_check:
-            messagebox.showerror("Error", "The selected order not found",parent=self.detail_screen)
+            messagebox.showerror("Error", "The selected order not found",parent=self.order_detail_screen)
 
-    ###############################    Order History Page     #######################################################
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Order History Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderhistoryPage(self):
         self.orderhistoryframe = LabelFrame(self.admin_window , text="Order History")
         self.orderhistory_table_frame = LabelFrame(self.orderhistoryframe)
@@ -293,7 +309,6 @@ class main_admin_screen:
         yscrollbar = ttk.Scrollbar(self.orderhistory_table_frame, orient="vertical", command=self.orderhistory_treeview.yview)
         self.orderhistory_treeview.config(yscrollcommand=yscrollbar.set)
         yscrollbar.pack(side="right", fill="y")
-        self.orderhistory_treeview.bind("<ButtonRelease-1>", self.orderPage_lookuptreeview)
         for col in columns:
             self.orderhistory_treeview.heading(col, text=col,command=lambda _col=col: self.treeview_sort_column(self.orderhistory_treeview, _col, False))
 
@@ -305,9 +320,9 @@ class main_admin_screen:
         self.orderhistory_treeview.column(5, anchor='center', width=150)
 
         # self.orderhistory_treeview.insert('', 'end', values=['Timestamp','Order ID','Name ',"Address","Order Total","status"])
-        for i in range(1,100):
-            self.orderhistory_treeview.insert('', 'end', values=[100-i,i,'Name ','212 LA','5 items','Payment confirmed'])
         
+        for i in self.order_data:
+            self.orderhistory_treeview.insert('', 'end', values=[i[0],i[1],i[2],i[7],i[8],i[6]])
         
         self.orderhistory_treeview.pack()
         self.orderhistory_table_frame.place(x=20,y=10,height=400, width=1000)
@@ -363,12 +378,253 @@ class main_admin_screen:
         
         self.orderhistoryframe.place(x=220,y=20,height=680, width=1040)
 
-    ###############################    Book Manangment Page     #######################################################
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Book Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def bookPage(self):
         self.bookframe = LabelFrame(self.admin_window , text="Book Management")
-        self.bookframe.place(x=220,y=20,height=680, width=1040)
+        self.book_table_frame = LabelFrame(self.bookframe)
+         #------------------------------    Table Plane     ------------------------------#
+        columns = ("No","Code","Name","Author","Category","Price")
+        self.book_treeview = Treeview(self.book_table_frame, column=columns, show="headings", height="20")
+        yscrollbar = ttk.Scrollbar(self.book_table_frame, orient="vertical", command=self.book_treeview.yview)
+        self.book_treeview.config(yscrollcommand=yscrollbar.set)
+        yscrollbar.pack(side="right", fill="y")
+        self.book_treeview.bind("<ButtonRelease-1>", self.bookpage_lookuptreeview)
+        for col in columns:
+            self.book_treeview.heading(col, text=col,command=lambda _col=col: self.treeview_sort_column(self.book_treeview, _col, False))
+
+        self.book_treeview.column(0, anchor='center', width=50)
+        self.book_treeview.column(1, anchor='center', width=100)
+        self.book_treeview.column(2, anchor='center', width=150)
+        self.book_treeview.column(3, anchor='center', width=150)
+        self.book_treeview.column(4, anchor='center', width=150)
+        self.book_treeview.column(5, anchor='center', width=150)
+
         
-    ###############################    Menber Manangment Page     #######################################################
+        for i in self.book_data:
+            self.book_treeview.insert('', 'end', values=[i][0])
+        
+        self.book_treeview.pack()
+
+        #------------------------------  Detail Plane     ------------------------------------------------------------#
+        self.book_detail_frame = LabelFrame(self.bookframe , text="Details")
+        Label(self.book_detail_frame, text="No").grid(row=0, column=0, padx=10, pady=5,sticky="E")
+        self.no_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.no_entry.insert(1.0,'')
+        self.no_entry.grid(row=0, column=1, padx=10, pady=5)
+        Label(self.book_detail_frame, text="Code").grid(row=1, column=0, padx=10, pady=5,sticky="E")
+        self.code_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.code_entry.insert(1.0,'')
+        self.code_entry.grid(row=1, column=1, padx=10, pady=5)
+        Label(self.book_detail_frame, text="Name").grid(row=0, column=2, padx=10, pady=5,sticky="E")
+        self.name_entry = Text(self.book_detail_frame,width=65,height=1)
+        self.name_entry.insert(1.0,'')
+        self.name_entry.grid(row=0, column=3, padx=10, pady=5,columnspan=4)
+        Label(self.book_detail_frame, text="Author").grid(row=1, column=2, padx=10, pady=5,sticky="E")
+        self.author_entry = Text(self.book_detail_frame,width=65,height=1)
+        self.author_entry.insert(1.0,'')
+        self.author_entry.grid(row=1, column=3, padx=10, pady=5,columnspan=4)
+        Label(self.book_detail_frame, text="Category").grid(row=2, column=2, padx=10, pady=5,sticky="E")
+        self.category_entry = Text(self.book_detail_frame,width=50,height=1)
+        self.category_entry.insert(1.0,'')
+        self.category_entry.grid(row=2, column=3, padx=10, pady=5,columnspan=2)
+        Label(self.book_detail_frame, text="Price").grid(row=2, column=0, padx=10, pady=5,sticky="E")
+        self.price_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.price_entry.insert(1.0,'')
+        self.price_entry.grid(row=2, column=1, padx=10, pady=5)
+        Label(self.book_detail_frame, text="Page").grid(row=3, column=0, padx=10, pady=5,sticky="E")
+        self.page_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.page_entry.insert(1.0,'')
+        self.page_entry.grid(row=3, column=1, padx=10, pady=5)
+        Label(self.book_detail_frame, text="Ex").grid(row=4, column=0, padx=10, pady=5,sticky="E")
+        self.ex_entry = Text(self.book_detail_frame,width=90,height=5)
+        self.ex_entry.insert(1.0,'')
+        self.ex_entry.grid(row=4, column=1, padx=10, pady=5,columnspan=15,rowspan=5)
+        Label(self.book_detail_frame, text="Stock").grid(row=3, column=2, padx=10, pady=5,sticky="E")
+        self.stock_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.stock_entry.insert(1.0,'')
+        self.stock_entry.grid(row=3, column=3, padx=10, pady=5,sticky='W')
+        Label(self.book_detail_frame, text="Rating").grid(row=3, column=3, padx=10, pady=5,sticky="E")
+        self.rating_entry = Text(self.book_detail_frame,width=10,height=1)
+        self.rating_entry.insert(1.0,'')
+        self.rating_entry.grid(row=3, column=4, padx=10, pady=5)
+
+
+        self.book_detail_frame.place(x=20,y=430,height=230, width=800)
+        #------------------------------  Option Plane     ------------------------------------------------------------#
+        self.book_option_frame = LabelFrame(self.bookframe , text="Option")
+        self.update_book_button = Button(self.book_option_frame,text='Update',state=DISABLED,command=self.bookPage_update_state)
+        self.update_book_button.grid(row=0, column=0, padx=5, pady=5)
+        self.delete_book_button = Button(self.book_option_frame,text='Delete',state=DISABLED,command=self.bookPage_delete_state)
+        self.delete_book_button.grid(row=0, column=1, padx=5, pady=5)
+        self.add_book_button = Button(self.book_option_frame,text='Add New',command=self.addbookPage)
+        self.add_book_button.grid(row=1, column=0, padx=5, pady=5)
+        
+        self.book_option_frame.place(x=850,y=430,height=230, width=180)
+
+        self.book_table_frame.place(x=20,y=10,height=400, width=1000)
+        self.bookframe.place(x=220,y=20,height=680, width=1040)
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up BookDetail Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    def addbookPage(self):
+        #------------------------------    init     ------------------------------------------------------------#
+        self.add_book_screen = Toplevel(self.admin_window)
+        self.add_book_screen.title("Add Book")
+        self.add_book_screen.focus_set()
+        self.add_book_screen.grab_set()
+        self.add_book_screen.resizable(0, 0)
+        x = (960) - (750/2)
+        y = (540) - (650/2)
+        self.add_book_screen.geometry("750x600+%d+%d" % (x, y))
+
+        self.add_book_frame = LabelFrame(self.add_book_screen,text ='Book Details')
+        self.add_book_option_frame = LabelFrame(self.add_book_screen,text ='')
+        
+        #------------------------------    Detail Plane     ------------------------------------------------------------#
+        Label(self.add_book_frame, text="No").grid(row=0, column=0, padx=10, pady=5,sticky="E")
+        self.no_entry = Text(self.add_book_frame,width=20,height=1)
+        self.no_entry.insert(1.0,'')
+        self.no_entry.grid(row=0, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Code").grid(row=1, column=0, padx=10, pady=5,sticky="E")
+        self.code_entry = Text(self.add_book_frame,width=20,height=1)
+        self.code_entry.insert(1.0,'')
+        self.code_entry.grid(row=1, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Name").grid(row=2, column=0, padx=10, pady=5,sticky="E")
+        self.name_entry = Text(self.add_book_frame,width=20,height=1)
+        self.name_entry.insert(1.0,'')
+        self.name_entry.grid(row=2, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Author").grid(row=3, column=0, padx=10, pady=5,sticky="E")
+        self.author_entry = Text(self.add_book_frame,width=20,height=1)
+        self.author_entry.insert(1.0,'')
+        self.author_entry.grid(row=3, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Category").grid(row=4, column=0, padx=10, pady=5,sticky="E")
+        self.category_entry = Text(self.add_book_frame,width=20,height=1)
+        self.category_entry.insert(1.0,'')
+        self.category_entry.grid(row=4, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Price").grid(row=0, column=2, padx=10, pady=5,sticky="E")
+        self.price_entry = Text(self.add_book_frame,width=20,height=1)
+        self.price_entry.insert(1.0,'')
+        self.price_entry.grid(row=0, column=3, padx=10, pady=5)
+        Label(self.add_book_frame, text="Page").grid(row=1, column=2, padx=10, pady=5,sticky="E")
+        self.page_entry = Text(self.add_book_frame,width=20,height=1)
+        self.page_entry.insert(1.0,'')
+        self.page_entry.grid(row=1, column=3, padx=10, pady=5)
+        Label(self.add_book_frame, text="Ex").grid(row=5, column=0, padx=10, pady=5,sticky="E")
+        self.ex_entry = Text(self.add_book_frame,width=50,height=3)
+        self.ex_entry.insert(1.0,'')
+        self.ex_entry.grid(row=5, column=1, padx=10, pady=5,columnspan=3,rowspan=3)
+        Label(self.add_book_frame, text="Stock").grid(row=2, column=2, padx=10, pady=5,sticky="E")
+        self.stock_entry = Text(self.add_book_frame,width=20,height=1)
+        self.stock_entry.insert(1.0,'')
+        self.stock_entry.grid(row=2, column=3, padx=10, pady=5)
+        Label(self.add_book_frame, text="Rating").grid(row=3, column=2, padx=10, pady=5,sticky="E")
+        self.rating_entry = Text(self.add_book_frame,width=20,height=1)
+        self.rating_entry.insert(1.0,'')
+        self.rating_entry.grid(row=3, column=3, padx=10, pady=5)
+
+
+
+        #------------------------------    Option Plane     ------------------------------------------------------------#
+        
+
+        self.add_book_option_frame.place(x=20,y=430,height=150, width=700)
+
+        self.add_book_frame.place(x=20,y=10,height=400, width=700)
+        # if not data_check:
+        #     messagebox.showerror("Error", "The selected order not found",parent=self.order_detail_screen)
+    
+     ###############################    Treeview Focus    <Order Page> #########################################################
+    def bookpage_lookuptreeview(self,event):
+        self.update_book_button.config(state=NORMAL)
+        self.delete_book_button.config(state=NORMAL)
+        curItem = self.book_treeview.focus()
+        cur = self.book_treeview.item(curItem)['values']
+        if cur == '':
+            return
+        if len(cur) != 10:
+            for i in range(10-len(cur)):
+                cur.append('')
+        self.No.set(cur[0])
+        self.Code.set(cur[1])
+        self.Name.set(cur[2])
+        self.Author.set(cur[3])
+        self.Category.set(cur[4])
+        self.Price.set(cur[5])
+        self.Page.set(cur[6])
+        self.Ex.set(cur[7])
+        self.Stock.set(cur[8])
+        self.Rating.set(cur[9])
+        self.bookPage_detailupdate()
+
+    ###############################    Detail Plane Update    <Book Page> #########################################################
+    def bookPage_detailupdate(self):
+        self.no_entry.delete('1.0',END)
+        self.code_entry.delete('1.0',END)
+        self.name_entry.delete('1.0',END)
+        self.author_entry.delete('1.0',END)
+        self.category_entry.delete('1.0',END)
+        self.price_entry.delete('1.0',END)
+        self.page_entry.delete('1.0',END)
+        self.ex_entry.delete('1.0',END)
+        self.stock_entry.delete('1.0',END)
+        self.rating_entry.delete('1.0',END)
+        self.no_entry.insert(1.0,self.No.get())
+        self.code_entry.insert(1.0,self.Code.get())
+        self.name_entry.insert(1.0,self.Name.get())
+        self.author_entry.insert(1.0,self.Author.get())
+        self.category_entry.insert(1.0,self.Category.get())
+        self.price_entry.insert(1.0,self.Price.get())
+        self.page_entry.insert(1.0,self.Page.get())
+        self.ex_entry.insert(1.0,self.Ex.get())
+        self.stock_entry.insert(1.0,self.Stock.get())
+        self.rating_entry.insert(1.0,self.Rating.get())
+
+    ##################################    Update Button   <Book Page>  #######################################################
+    def bookPage_update_state(self):
+        if(messagebox.askokcancel("Confirmation", "Update Book [ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+            self.update_book_button.config(state=DISABLED)
+            
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Author'] = self.author_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Category'] = self.category_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Price'] = self.price_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Page'] = self.page_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
+            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+
+            ### Treeview Update 
+            self.book_treeview.delete(*self.book_treeview.get_children())
+            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+            treeview_update = treeview.values.tolist()
+            for i in treeview_update:
+                self.book_treeview.insert('', 'end', values=[i][0])
+
+    ##################################    Delete Button   <Book Page>  #######################################################
+    def bookPage_delete_state(self):
+        if(messagebox.askokcancel("Confirmation", "Delete Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+            self.delete_book_button.config(state=DISABLED)
+            self.update_book_button.config(state=DISABLED)
+            
+            ## Database
+            self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
+            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+
+            ### Treeview Update 
+            self.book_treeview.delete(*self.book_treeview.get_children())
+            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+            treeview_update = treeview.values.tolist()
+            for i in treeview_update:
+                self.book_treeview.insert('', 'end', values=[i][0])
+
+
+            messagebox.showinfo("Info", "Deleted book \n[ {} ]".format(self.Name.get()), parent=self.bookframe)
+
+
+
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Menber Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def menberPage(self):
         self.menberframe = LabelFrame(self.admin_window , text="Member Management")
         self.menberframe.place(x=220,y=20,height=680, width=1040)
