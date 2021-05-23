@@ -64,6 +64,7 @@ class Shop_main_screen:
         self.Price = StringVar()
         self.Code = StringVar()
         self.Rating = StringVar()
+        self.Example = StringVar()
 
         """ 
         THEAM
@@ -134,33 +135,28 @@ class Shop_main_screen:
         self.paymentPage()
         self.deliveryPage()
         self.create_background()
-        self.create_logo()
-        self.search_bar()
+        # self.search_bar()
         # self.shift()
-        self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        self.menuTab()
+
+        # self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
         self.shift()
 
-        self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.button_state()
 
         self.shop_window.resizable(0, 0)
         self.shop_window.overrideredirect(0)
         self.shop_window.mainloop()
 
-    def create_background(self):
+    def create_background(self): # <<<<<<<<<<<<<<<<<<<<<<<<<<< BG
         bg_path = "UnknownShop\Picture\Draf BG.png" 
         self.bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
 
         # self.canvas = Canvas(self.shop_window, width=1280, height=720)
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
-
-    def create_logo(self):
-        
-        img_logo_path = "Shop_Page\PICTURE\logo.png"
-        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
-        self.canvas.create_image(15, 15, image=self.img_logo, anchor="nw")
 
     def set_banner(self):
         banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
@@ -212,21 +208,57 @@ class Shop_main_screen:
         
 
     def search_bar(self): 
-        self.canvas.create_text(385, 65, text="Search By", font=('TRACK', 12))
+        self.canvas.create_text(290, 65, text="Search By", font=('TRACK', 12))
 
-        # name = tk.StringVar()
-        nameEntered = ttk.Entry(self.shop_window, width = 60, textvariable = self.Name)
-        nameEntered.place(x=440, y=50)
+        drop1 = ttk.Combobox(self.shop_window, width=10, value=["Arts / Design / Decoration", "Literature", 
+                                                                "Administration / Management", "Humanities / Science", 
+                                                                "Children's Books","Career Academic Textbooks", "Psychology"])
+        drop1.current((0))
+        drop1.place(x=345, y=50)
 
-        # drop = ttk.Combobox(self.shop_window, width=10, value=["All", "English Books", "Thai Books"])
-        # drop.current((0))
-        # drop.place(x=440, y=50)
+        drop2 = ttk.Combobox(self.shop_window, width=10, value=["Code", "Name", "Author"])
+        drop2.current((0))
+        drop2.place(x=440, y=50)
+
+        nameEntered = ttk.Entry(self.shop_window, width = 50, textvariable = self.Name)
+        nameEntered.place(x=535, y=50)
 
         search_button = ttk.Button(self.shop_window, text = "Search")
-        search_button.place(x=820, y=50)
+        search_button.place(x=855, y=50)
 
         show_all_books_button = ttk.Button(self.shop_window, text = "Clear")
-        show_all_books_button.place(x=908, y=50)
+        show_all_books_button.place(x=943, y=50)
+
+    def menuTab(self):
+
+        img_logo_path = "Shop_Page\PICTURE\logo.png"
+        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 85)))
+        self.canvas.create_image(0, 0, image=self.img_logo, anchor="nw")
+
+        Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
+        Frame1.place(x=100, y=0, height=30, width=1280)
+        
+        tk.Label(Frame1, text=' Welcome User',background="#1200db", fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12)
+               ).grid(column=0, row=0)
+
+
+        Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
+        Frame2.place(x=100, y=30, height=45, width=1280)
+
+        tk.Label(Frame2, text='',background="#1200db", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12)
+               ).grid(column=0, row=0, padx=20, pady=10)
+        tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
+               ).grid(column=1, row=0, padx=5, pady=10)
+        tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_categoryPage
+               ).grid(column=2, row=0, padx=5, pady=10)
+        tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#7496db",command=self.show_paymentPage
+               ).grid(column=3,row=0, padx=5, pady=10)
+        tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),command=self.show_deliveryPage
+               ).grid(column=4,row=0, padx=5, pady=10)
+        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),command=self.delete_canvas
+               ).grid(column=5,row=0, padx=5, pady=10)
+
+        
         
 
     def value_set_one(self):
@@ -294,13 +326,13 @@ class Shop_main_screen:
         # self.shop_window.after_cancel(after_id)
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
-        self.inner_infomation = Canvas(self.canvas, width=1000, height=550)
+        self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
         
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")
-        infomationPageFrame1.place(x=0, y=0, height=550, width=500)
+        infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
 
         self.infomationPageFrame2 = tk.LabelFrame(self.inner_infomation , text="PICTURE")
-        self.infomationPageFrame2.place(x=500, y=0, height=400, width=500)
+        self.infomationPageFrame2.place(x=700, y=0, height=400, width=500)
 
 
         if self.user != []:
@@ -513,17 +545,31 @@ class Shop_main_screen:
         # self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
 
     def categoryPage(self):
-        self.inner_category = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
+        self.inner_category = Canvas(self.canvas,width=1280, height=720,bd=0, highlightthickness=0)
         # self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
 
         ##Frame for book details
         self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
-        self.detail_frame.place(x=0, y=20,height=500, width=1000)
+        self.detail_frame.place(x=20, y=0,height=620, width=650)
+
+        self.picbook_frame = ttk.LabelFrame(self.detail_frame, text="picbook_frame")
+        self.picbook_frame.place(x=10, y=0,height=330, width=230)
+
+        self.detail_data = ttk.LabelFrame(self.detail_frame, text="detail_data")
+        self.detail_data.place(x=310, y=10,height=300, width=250)
+
+        self.example_frame = ttk.LabelFrame(self.detail_frame, text="example_frame")
+        self.example_frame.place(x=10, y=350,height=100, width=600)
+        
+        self.option_frame = ttk.LabelFrame(self.detail_frame, text="option_frame")
+        self.option_frame.place(x=120, y=500,height=60, width=360)
+
+
 
         # Frame for book_TreeView
         frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
-        frame1.place(x=410, y=20, height=500, width=590)
+        frame1.place(x=680, y=0, height=620, width=590)
 
        
 
@@ -537,58 +583,65 @@ class Shop_main_screen:
 
 
         #Author Of Book
-        lbl2 = Label(self.detail_frame, text="Code")
-        lbl2.grid(row=1, column=0, padx=10, pady=5)
-        self.lbl2_entry = Entry(self.detail_frame, textvariable=self.Code)
-        self.lbl2_entry.grid(row=1, column=1, padx=10, pady=5)
+        lbl2 = Label(self.detail_data, text="Code")
+        lbl2.grid(row=0, column=1, padx=10, pady=5)
+        self.lbl2_entry = Entry(self.detail_data, textvariable=self.Code)
+        self.lbl2_entry.grid(row=0, column=2, padx=10, pady=5)
 
 
         #Category Of Book
-        lbl3 = Label(self.detail_frame, text="Name")
-        lbl3.grid(row=2, column=0, padx=10, pady=5)
-        self.lbl3_entry = Entry(self.detail_frame, textvariable=self.Name)
-        self.lbl3_entry.grid(row=2, column=1, padx=10, pady=5)
+        lbl3 = Label(self.detail_data, text="Name")
+        lbl3.grid(row=1, column=1, padx=10, pady=5)
+        self.lbl3_entry = Entry(self.detail_data, textvariable=self.Name)
+        self.lbl3_entry.grid(row=1, column=2, padx=10, pady=5)
 
         #Language Of Book
-        lbl4 = Label(self.detail_frame, text="Author")
-        lbl4.grid(row=3, column=0, padx=10, pady=5)
-        self.lbl4_entry = Entry(self.detail_frame, textvariable=self.Author)
-        self.lbl4_entry.grid(row=3, column=1, padx=10, pady=5)
+        lbl4 = Label(self.detail_data, text="Author")
+        lbl4.grid(row=3, column=1, padx=10, pady=5)
+        self.lbl4_entry = Entry(self.detail_data, textvariable=self.Author)
+        self.lbl4_entry.grid(row=3, column=2, padx=10, pady=5)
 
         #Price Of Book
-        lbl5 = Label(self.detail_frame, text="Category")
-        lbl5.grid(row=4, column=0, padx=10, pady=5)
-        self.lbl5_entry = Entry(self.detail_frame, textvariable=self.Category)
-        self.lbl5_entry.grid(row=4, column=1, padx=10, pady=5)
+        lbl5 = Label(self.detail_data, text="Category")
+        lbl5.grid(row=4, column=1, padx=10, pady=5)
+        self.lbl5_entry = Entry(self.detail_data, textvariable=self.Category)
+        self.lbl5_entry.grid(row=4, column=2, padx=10, pady=5)
 
         #Code Of Book
-        lbl6 = Label(self.detail_frame, text="Price")
-        lbl6.grid(row=5, column=0, padx=10, pady=5)
-        self.lbl6_entry = Entry(self.detail_frame, textvariable=self.Price)
-        self.lbl6_entry.grid(row=5, column=1, padx=10, pady=5)
+        lbl6 = Label(self.detail_data, text="Price")
+        lbl6.grid(row=5, column=1, padx=10, pady=5)
+        self.lbl6_entry = Entry(self.detail_data, textvariable=self.Price)
+        self.lbl6_entry.grid(row=5, column=2, padx=10, pady=5)
 
         # Rating Of Book
-        lbl7 = Label(self.detail_frame, text="Rating")
-        lbl7.grid(row=6, column=0, padx=10, pady=5)
-        self.lbl7_entry = Entry(self.detail_frame, textvariable=self.Rating)
-        self.lbl7_entry.grid(row=6, column=1, padx=10, pady=5)
+        lbl7 = Label(self.detail_data, text="Rating")
+        lbl7.grid(row=6, column=1, padx=10, pady=5)
+        self.lbl7_entry = Entry(self.detail_data, textvariable=self.Rating)
+        self.lbl7_entry.grid(row=6, column=2, padx=10, pady=5)
+
+        # Example Of Book
+        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example)
+        self.commentbox.place(x=10,y=0,width=550,height=70)
+       
 
         ## number of items book
-        self.spinboxvar = IntVar(self.detail_frame)
+        self.spinboxvar = IntVar(self.option_frame)
         self.spinboxvar.set(1)
-        self.items_book_spinbox = Spinbox(self.detail_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
-        Label(self.detail_frame, text="").grid(row=7, column=0, padx=10, pady=5)
-        self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5,sticky="E")
+        self.items_book_spinbox = Spinbox(self.option_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
+        Label(self.option_frame, text="").grid(row=7, column=0, padx=10, pady=5)
+        self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5)
 
-        self.add_book_button = Button(self.detail_frame,text=' + ', command=self.add_book,state=DISABLED)
-        self.add_book_button.grid(row=7, column=2, padx=10, pady=5)
-        add_favbook_button = Button(self.detail_frame,text=' ♥ ', command=self.add_book)
+        add_favbook_button = Button(self.option_frame,text=' ♥ ', command=self.add_book, width=15)
         add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
+
+        self.add_book_button = Button(self.option_frame,text=' + ', command=self.add_book,state=DISABLED,width=15)
+        self.add_book_button.grid(row=7, column=2, padx=10, pady=5)
+   
 
         ##Book Image
         self.book_img_input = 'BookPics\\NOT_FOUND.png'
-        self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
-        Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
+        self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
+        Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
         self.list_img_book = os.listdir('BookPics')
 
 
@@ -640,16 +693,17 @@ class Shop_main_screen:
         self.Category.set(cur[4])
         self.Price.set(cur[5])
         self.Rating.set(cur[9])
+        self.Example.set(cur[7])
         
         self.add_book_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
             self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
-            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
-            Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
+            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
+            Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
         else:
             self.book_img_input = 'BookPics\\NOT_FOUND.png'
-            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((80, 130)))
-            Label(self.detail_frame, image=self.book_img).grid(row=8, column=1, padx=10, pady=5)
+            self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
+            Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
 
     def add_book(self):
         if self.usercart != []:
@@ -830,21 +884,21 @@ class Shop_main_screen:
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
-        self.canvas.create_window(250, 150, anchor=NW, window=self.inner_infomation)
+        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_infomation)
 
     def show_categoryPage(self):
         self.delete_canvas()
-        self.canvas.create_window(250, 150, anchor=NW, window=self.inner_category)
+        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_category)
 
 
     def show_paymentPage(self):
         self.delete_canvas()
-        self.canvas.create_window(250,150, anchor=NW, window=self.inner_payment)
+        self.canvas.create_window(0,100, anchor=NW, window=self.inner_payment)
 
 
     def show_deliveryPage(self):
         self.delete_canvas()
-        self.canvas.create_window(250,150, anchor=NW, window=self.inner_delivery)
+        self.canvas.create_window(0,100, anchor=NW, window=self.inner_delivery)
         
                 
             
