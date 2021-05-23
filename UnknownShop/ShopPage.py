@@ -324,18 +324,18 @@ class Shop_main_screen:
         buy_button.grid(row=0,column=0,padx=20, pady=5)
         buy_button = tk.Button(HomePageFrame2,text="2", width=10)
         buy_button.grid(row=1,column=0,padx=20, pady=5)
-        bbuy_button = tk.Button(HomePageFrame2,text="3", width=10)
-        bbuy_button.grid(row=2,column=0,padx=20, pady=5)
+        # bbuy_button = tk.Button(HomePageFrame2,text="3", width=10)
+        # bbuy_button.grid(row=2,column=0,padx=20, pady=5)
     
 
         buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15)
-        buy_button.grid(row=2,column=2,padx=40, pady=10)
+        buy_button.grid(row=2,column=2,padx=80, pady=10)
 
         Status_button = tk.Button(HomePageFrame2,text="Status",width=15)
-        Status_button.grid(row=2,column=3,padx=40, pady=10)
+        Status_button.grid(row=2,column=3,padx=10, pady=10)
 
         Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15)
-        Review_button.grid(row=2,column=4,padx=40, pady=10)
+        Review_button.grid(row=2,column=4,padx=50, pady=10)
 
         ContactUs_button = tk.Button(HomePageFrame2,text="Buy Books",width=15)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
@@ -639,7 +639,7 @@ class Shop_main_screen:
         self.lbl7_entry.grid(row=6, column=2, padx=10, pady=5)
 
         # Example Of Book
-        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example)
+        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example, state="readonly")
         self.commentbox.place(x=10,y=0,width=550,height=70)
        
 
@@ -746,11 +746,11 @@ class Shop_main_screen:
             self.inner_payment_slidetext.after(1000//self.fps,self.shift)
        
     def paymentPage(self):
-        self.inner_payment = Canvas(self.canvas, width=1000, height=550)   
+        self.inner_payment = Canvas(self.canvas, width=1280, height=720)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
 
         paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
-        paymentPageFrame1.place(x=0, y=0, height=100, width=1000)
+        paymentPageFrame1.place(x=0, y=0, height=50, width=1280)
         
         ############# Main program ###############
         ##Text Slide
@@ -768,7 +768,7 @@ class Shop_main_screen:
         
         ##cart table
         paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
-        paymentPageFrame2.place(x=0, y=100, height=450, width=1000)
+        paymentPageFrame2.place(x=50, y=55, height=700, width=1180)
 
         self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5), show="headings", height="18")
         yscrollbar = ttk.Scrollbar(paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
@@ -830,17 +830,61 @@ class Shop_main_screen:
 
 
     def deliveryPage(self):
-        self.inner_delivery = Canvas(self.canvas, width=1000, height=550)   
-        self.inner_delivery.create_text(500, 275, font = 50, anchor=CENTER, text="deliveryPage")
+        self.inner_delivery = Canvas(self.canvas, width=1280, height=720)   
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
-        deliveryPageFrame1.place(x=0, y=0, height=500, width=300)
+        deliveryPageFrame1.place(x=30, y=20, height=500, width=510)
 
         deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
-        deliveryPageFrame2.place(x=300, y=0, height=500, width=700)
+        deliveryPageFrame2.place(x=550, y=20, height=500, width=700)
 
         deliveryPageFrame2_1 = ttk.LabelFrame(deliveryPageFrame2, text="Picture")
-        deliveryPageFrame2_1.place(x=275, y=10, height=150, width=150)
+        deliveryPageFrame2_1.place(x=50, y=10, height=200, width=150)
+
+        deliveryPageFrame2_2 = ttk.LabelFrame(deliveryPageFrame2, text="Databook")
+        deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
+
+
+        #Author Of Book
+        lbl2 = Label(deliveryPageFrame2_2, text="Code")
+        lbl2.grid(row=0, column=1, padx=10, pady=5)
+        self.lbl2_entry = Entry(deliveryPageFrame2_2, textvariable=self.Code,state= "readonly")
+        self.lbl2_entry.grid(row=0, column=2, padx=10, pady=10)
+
+
+        #Category Of Book
+        lbl3 = Label(deliveryPageFrame2_2, text="Name")
+        lbl3.grid(row=1, column=1, padx=10, pady=5)
+        self.lbl3_entry = Entry(deliveryPageFrame2_2, textvariable=self.Name,state= "readonly")
+        self.lbl3_entry.grid(row=1, column=2, padx=10, pady=5)
+
+        #Language Of Book
+        lbl4 = Label(deliveryPageFrame2_2, text="Author")
+        lbl4.grid(row=3, column=1, padx=10, pady=5)
+        self.lbl4_entry = Entry(deliveryPageFrame2_2, textvariable=self.Author,state= "readonly")
+        self.lbl4_entry.grid(row=3, column=2, padx=10, pady=5)
+
+        #Price Of Book
+        lbl5 = Label(deliveryPageFrame2_2, text="Category")
+        lbl5.grid(row=4, column=1, padx=10, pady=5)
+        self.lbl5_entry = Entry(deliveryPageFrame2_2, textvariable=self.Category,state= "readonly")
+        self.lbl5_entry.grid(row=4, column=2, padx=10, pady=5)
+
+        #Code Of Book
+        lbl6 = Label(deliveryPageFrame2_2, text="Price")
+        lbl6.grid(row=5, column=1, padx=10, pady=5)
+        self.lbl6_entry = Entry(deliveryPageFrame2_2, textvariable=self.Price,state= "readonly")
+        self.lbl6_entry.grid(row=5, column=2, padx=10, pady=5)
+
+        # Rating Of Book
+        lbl7 = Label(deliveryPageFrame2_2, text="Rating")
+        lbl7.grid(row=6, column=1, padx=10, pady=5)
+        listofRating = ["1","2","3","4","5"]
+        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2_2,values=listofRating,width=18,state=DISABLED)
+        self.Rating_Combobox.current(0)
+        self.Rating_Combobox.grid(row=6, column=2, padx=10, pady=5)
+
+
 
 
         self.review_bottom = ttk.Button(deliveryPageFrame2,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
@@ -855,22 +899,18 @@ class Shop_main_screen:
         # Next_bottom.place(x=500, y=400,anchor="center")
         Next_bottom.pack(side = RIGHT)
 
+
+
         commenttext = Label(deliveryPageFrame2,text="Comment : ", font=('TRACK', 12))
-        commenttext.place(x=50,y=200)
+        commenttext.place(x=50,y=300)
         self.commentbox = tk.Text(deliveryPageFrame2,width=60,height=5, font=('TRACK', 8),state=DISABLED)
-        self.commentbox.place(x=200,y=200)
+        self.commentbox.place(x=200,y=300)
        
-        Comboboxtext = Label(deliveryPageFrame2,text="Rating : ", font=('TRACK', 12))
-        Comboboxtext.place(x=50,y=300)
-        listofRating = ["1","2","3","4","5"]
-        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2,values=listofRating,width=10,state=DISABLED)
-        self.Rating_Combobox.current(0)
-        self.Rating_Combobox.place(x=200,y=300)
 
         self.Comment_boutton1 = ttk.Button(deliveryPageFrame2,text="< Send >",command = self.printcomment, state=DISABLED)
-        self.Comment_boutton1.place(x=300,y=370)
+        self.Comment_boutton1.place(x=300,y=400)
         self.Comment_boutton2 = ttk.Button(deliveryPageFrame2,text="< Clear >",command = self.clearcomment, state=DISABLED)
-        self.Comment_boutton2.place(x=450,y=370)
+        self.Comment_boutton2.place(x=450,y=400)
 
     def printcomment(self):
         # self.commenttext2.config(text=self.commentbox.get(1.0,END))
