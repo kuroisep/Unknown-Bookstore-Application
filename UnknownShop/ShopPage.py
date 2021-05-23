@@ -22,25 +22,6 @@ import pandas as pd
 from time import sleep
 import time
 
-# mydb = mysql.connector.connect(
-#     host="localhost",
-#     user="root",
-#     passwd="Minor4810540114.",
-#     database="new_book",
-#     auth_plugin="mysql_native_password"
-# )
-# cursor = mydb.cursor()
-
-# options = []
-# # sql = "SELECT Code, Name FROM country"
-# sql = "SELECT * FROM books"
-# cursor.execute(sql)
-# ids = cursor.fetchall()
-# for i in ids:
-#     options.append(str(i[0]) + " - " + i[1])
-
-
-# # print(ids)
 
 
 class Shop_main_screen:
@@ -136,14 +117,16 @@ class Shop_main_screen:
         self.deliveryPage()
         self.create_background()
         # self.search_bar()
-        # self.shift()
+        self.shift()
         self.menuTab()
 
-        # self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        self.set_banner()
         self.count = 0
-        # self.shift()
+        self.moveBanner()
+        ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 
-        # self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
         self.button_state()
 
         self.shop_window.resizable(0, 0)
@@ -159,6 +142,7 @@ class Shop_main_screen:
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
 
     def set_banner(self):
+        # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
         banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
         banner2_path = "Shop_Page\PICTURE\\banner2.jpg"
         banner3_path = "Shop_Page\PICTURE\\banner3.jpg"
@@ -180,31 +164,31 @@ class Shop_main_screen:
         self.dot_label.pack()
 
     def moveBanner(self):
-        global after_id
-       
-        if self.count == 30 :
-            self.count = 0
+            global after_id
+        
+            if self.count == 30 :
+                self.count = 0
 
-        if self.count == 0 :
-            self.banner_label.config(image = self.banner1)
-            self.dot_label.config(image = self.dot1)
-            self.canvas.create_image(700,300,image=self.banner1)
-            self.canvas.create_image(700,475,image=self.dot1)
-            self.banner_label.place()
-            self.dot_label.place()
-        elif self.count == 10 :
-            self.banner_label.config(image = self.banner2)
-            self.canvas.create_image(700,300,image=self.banner2)
-            self.canvas.create_image(700,475,image=self.dot2)
-            self.dot_label.config(image = self.dot2)
-        elif self.count == 20 :
-            self.banner_label.config(image = self.banner3)
-            self.canvas.create_image(700,300,image=self.banner3)
-            self.canvas.create_image(700,475,image=self.dot3)
-            self.dot_label.config(image = self.dot3)
+            if self.count == 0 :
+                self.banner_label.config(image = self.banner1)
+                self.dot_label.config(image = self.dot1)
+                self.canvas.create_image(700,300,image=self.banner1)
+                self.canvas.create_image(700,475,image=self.dot1)
+                self.banner_label.place()
+                self.dot_label.place()
+            elif self.count == 10 :
+                self.banner_label.config(image = self.banner2)
+                self.canvas.create_image(700,300,image=self.banner2)
+                self.canvas.create_image(700,475,image=self.dot2)
+                self.dot_label.config(image = self.dot2)
+            elif self.count == 20 :
+                self.banner_label.config(image = self.banner3)
+                self.canvas.create_image(700,300,image=self.banner3)
+                self.canvas.create_image(700,475,image=self.dot3)
+                self.dot_label.config(image = self.dot3)
 
-        self.count += 1
-        after_id = self.banner_label.after(200, self.moveBanner)
+            self.count += 1
+            after_id = self.banner_label.after(200, self.moveBanner)
         
 
     def search_bar(self): 
@@ -245,7 +229,7 @@ class Shop_main_screen:
         Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
         Frame2.place(x=100, y=30, height=45, width=1280)
 
-        tk.Label(Frame2, text='',background="#1200db", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12)
+        tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12),command = self.show_HomePage
                ).grid(column=0, row=0, padx=20, pady=10)
         tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
                ).grid(column=1, row=0, padx=5, pady=10)
@@ -324,6 +308,41 @@ class Shop_main_screen:
         # self.df.to_csv("login.csv", index=False)
         self.shop_window.destroy()
         # self.shop_window.after_cancel(after_id)
+
+    def HomePage(self):
+        self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
+
+        self.HomePageFrame1 = tk.LabelFrame(self.inner_HomePage , text="HomePage_BANNER")
+        self.HomePageFrame1.place(x=100, y=10, height=350, width=1080)
+
+
+        HomePageFrame2 = tk.LabelFrame(self.inner_HomePage , text="Selected Menu")
+        HomePageFrame2.place(x=100, y=370, height=150, width=1080)
+
+        
+        buy_button = tk.Button(HomePageFrame2,text="1", width=10)
+        buy_button.grid(row=0,column=0,padx=20, pady=5)
+        buy_button = tk.Button(HomePageFrame2,text="2", width=10)
+        buy_button.grid(row=1,column=0,padx=20, pady=5)
+        bbuy_button = tk.Button(HomePageFrame2,text="3", width=10)
+        bbuy_button.grid(row=2,column=0,padx=20, pady=5)
+    
+
+        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15)
+        buy_button.grid(row=2,column=2,padx=40, pady=10)
+
+        Status_button = tk.Button(HomePageFrame2,text="Status",width=15)
+        Status_button.grid(row=2,column=3,padx=40, pady=10)
+
+        Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15)
+        Review_button.grid(row=2,column=4,padx=40, pady=10)
+
+        ContactUs_button = tk.Button(HomePageFrame2,text="Buy Books",width=15)
+        ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
+       
+        
+
+        
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
@@ -876,7 +895,12 @@ class Shop_main_screen:
         self.Comment_boutton1.config(state=DISABLED)
         self.Comment_boutton2.config(state=DISABLED)
         self.Rating_Combobox.config(state=DISABLED)
-        
+
+    def show_HomePage(self): 
+        self.delete_canvas()
+        self.HomePage()
+        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_HomePage)  
+
     def checkDeliverySuccess(self):
         print("Checking...")
         print("Success...")
