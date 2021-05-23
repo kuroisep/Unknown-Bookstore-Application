@@ -66,20 +66,20 @@ class Shop_main_screen:
         self.Rating = StringVar()
         self.Example = StringVar()
 
-        """ 
-        THEAM
-        """
-        style = ttk.Style(self.shop_window)
-        # Import the tcl file
-        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+        # """ 
+        # THEAM
+        # """
+        # style = ttk.Style(self.shop_window)
+        # # Import the tcl file
+        # self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
 
-        # Set the theme with the theme_use method
-        style.theme_use('azure')
-        style.configure('flat.TButton', borderwidth=0)
-        # style.configure("Treeview", font=('TRACK',13,'bold'))
-        """ 
-        THEAM
-        """
+        # # Set the theme with the theme_use method
+        # style.theme_use('azure')
+        # style.configure('flat.TButton', borderwidth=0)
+        # # style.configure("Treeview", font=('TRACK',13,'bold'))
+        # """ 
+        # THEAM
+        # """
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -141,7 +141,7 @@ class Shop_main_screen:
 
         # self.set_banner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.count = 0
-        self.shift()
+        # self.shift()
 
         # self.moveBanner()  ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         self.button_state()
@@ -884,6 +884,7 @@ class Shop_main_screen:
 
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
+        self.infomationPage()
         self.canvas.create_window(0, 100, anchor=NW, window=self.inner_infomation)
 
     def show_categoryPage(self):
@@ -893,26 +894,34 @@ class Shop_main_screen:
 
     def show_paymentPage(self):
         self.delete_canvas()
+        self.paymentPage()
+        # self.shift()
         self.canvas.create_window(0,100, anchor=NW, window=self.inner_payment)
 
 
     def show_deliveryPage(self):
         self.delete_canvas()
+        self.deliveryPage()
         self.canvas.create_window(0,100, anchor=NW, window=self.inner_delivery)
         
                 
             
 
             
-
+    # ลบหน้า info
     def delete_canvas(self): # ปุ่ม 2                #3
-        self.canvas.create_window(2000, 700, anchor=NW, window=self.inner_infomation)
-        self.canvas.create_window(2200,750, anchor=NW, window=self.inner_category)
-        self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
-        self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
-        pass
+        # self.canvas.create_window(2000, 700, anchor=NW, window=self.inner_infomation)
+        # self.canvas.create_window(2200,750, anchor=NW, window=self.inner_category)
+        # self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
+        # self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
+        # pass
+        self.canvas.delete(ALL)
+        self.create_background()
+        # self.create_logo()
+        # self.search_bar()
+        self.button_state()
         
-         # ลบหน้า info
+
 
 
 
