@@ -14,6 +14,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 class main_admin_screen:
+    #---------------------------    init     -------------------------------------------------------------#
     def __init__(self):
         self.admin_window = tk.Tk()
         self.admin_window.title("Unknown Book Store // Admin")
@@ -29,6 +30,16 @@ class main_admin_screen:
         Label(image=self.img_logo).place(x=0,y=0)
 
         self.menubar()
+        self.orderframe = LabelFrame(self.admin_window , text="Order Management")
+        self.bookframe = LabelFrame(self.admin_window , text="Book Management")
+        self.menberframe = LabelFrame(self.admin_window , text="Member Management")
+        self.orderhistoryframe = LabelFrame(self.admin_window , text="Order History")
+
+        self.time_label = Label(self.admin_window, font = ('calibri', 12, 'bold'), background = 'black',foreground = 'white')
+        self.time_label.place(x=1135,y=2)
+        self.time()
+  
+
         
         """ 
         THEAM
@@ -77,12 +88,22 @@ class main_admin_screen:
         self.df1 = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
         self.order_detail_data = self.df1.values.tolist()
 
+        ###Book Page
         self.df2 = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
         self.book_data = self.df2.values.tolist()
 
+        ###Member Page
+        self.df3 = pandas.read_csv('login.csv')
+        self.member_data = self.df3.values.tolist()
+
         self.admin_window.resizable(0, 0)
         self.admin_window.mainloop()
-    
+    def time(self):
+        nowtime = datetime.datetime.now()
+        string = nowtime.strftime("%Y-%m-%d %H:%M:%S")
+        self.time_label.config(text = string)
+        self.time_label.after(1000, self.time)
+        
     def menubar(self):
         #Menubar
         menuframe = LabelFrame(self.admin_window , text="Menu")
@@ -95,6 +116,7 @@ class main_admin_screen:
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Order Page      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderPage(self):
+        self.destoryframe()
         #------------------------------    init    ------------------------------------------------------------#
         self.orderframe = LabelFrame(self.admin_window , text="Order Management")
         self.order_table_frame = LabelFrame(self.orderframe)
@@ -178,7 +200,7 @@ class main_admin_screen:
         self.order_option_frame.place(x=750,y=430,height=200, width=250)
 
         
-        self.orderframe.place(x=220,y=20,height=680, width=1040)
+        self.orderframe.place(x=220,y=25,height=680, width=1040)
 
     
     ##################################    Update Button   <Order Page>  #######################################################
@@ -303,11 +325,12 @@ class main_admin_screen:
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Order History Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderhistoryPage(self):
+        self.destoryframe()
         self.orderhistoryframe = LabelFrame(self.admin_window , text="Order History")
         self.orderhistory_table_frame = LabelFrame(self.orderhistoryframe)
         #------------------------------    Table Plane     ------------------------------#
         columns = ("Order Time","Order ID","Customer","Shipped Time","Completed Time","Status")
-        self.orderhistory_treeview = Treeview(self.orderhistory_table_frame, column=columns, show="headings", height="20")
+        self.orderhistory_treeview = Treeview(self.orderhistory_table_frame, column=columns, show="headings", height="22")
         yscrollbar = ttk.Scrollbar(self.orderhistory_table_frame, orient="vertical", command=self.orderhistory_treeview.yview)
         self.orderhistory_treeview.config(yscrollcommand=yscrollbar.set)
         yscrollbar.pack(side="right", fill="y")
@@ -327,62 +350,14 @@ class main_admin_screen:
             self.orderhistory_treeview.insert('', 'end', values=[i[0],i[1],i[2],i[7],i[8],i[6]])
         
         self.orderhistory_treeview.pack()
-        self.orderhistory_table_frame.place(x=20,y=10,height=400, width=1000)
-
-        #------------------------------   Detail Plane     ------------------------------------------------------------#
-        # self.order_detail_frame = LabelFrame(self.orderframe , text="Details")
-
-        # Label(self.order_detail_frame, text="Order ID#").grid(row=0, column=0, padx=10, pady=5,sticky="E")
-        # self.order_id_entry = Text(self.order_detail_frame,width=20,height=1)
-        # self.order_id_entry.insert(1.0,'')
-        # self.order_id_entry.grid(row=0, column=1, padx=10, pady=5)
-
-        # Label(self.order_detail_frame, text="Customer :").grid(row=1, column=0, padx=10, pady=5,sticky="E")
-        # self.order_user_entry = Text(self.order_detail_frame,width=20,height=1)
-        # self.order_user_entry.insert(1.0,'')
-        # self.order_user_entry.grid(row=1, column=1, padx=10, pady=5)
-
-        # Label(self.order_detail_frame, text="Order Time :").grid(row=2, column=0, padx=10, pady=5,sticky="E")
-        # self.order_ordertime_entry = Text(self.order_detail_frame,width=20,height=1)
-        # self.order_ordertime_entry.insert(1.0,'')
-        # self.order_ordertime_entry.grid(row=2, column=1, padx=10, pady=5)
-
-        # Label(self.order_detail_frame, text="Shipped Time :").grid(row=3, column=0, padx=10, pady=5,sticky="E")
-        # self.order_shiptime_entry = Text(self.order_detail_frame,width=20,height=1)
-        # self.order_shiptime_entry.insert(1.0,'')
-        # self.order_shiptime_entry.grid(row=3, column=1, padx=10, pady=5)
-
-        # Label(self.order_detail_frame, text="Completed Time :").grid(row=4, column=0, padx=10, pady=5,sticky="E")
-        # self.order_completedtime_entry = Text(self.order_detail_frame,width=20,height=1)
-        # self.order_completedtime_entry.insert(1.0,'')
-        # self.order_completedtime_entry.grid(row=4, column=1, padx=10, pady=5)
-
-        # Label(self.order_detail_frame, text="Address :").grid(row=0, column=2, padx=10, pady=5,sticky="E")
-        # self.order_address_entry = Text(self.order_detail_frame,width=20, height=5)
-        # self.order_address_entry.insert(1.0,'')
-        # self.order_address_entry.grid(row=0, column=3, padx=10, pady=5,sticky="W",rowspan = 3)
-
-        # Label(self.order_detail_frame, text="Order Status :").grid(row=3, column=2, padx=10, pady=5,sticky="E")
-        # self.order_status_entry = Combobox(self.order_detail_frame,value=['Payment confirmed','Waiting for shipment','Shipped','Delivered','Cancelled order'])
-        # self.order_status_entry.insert(0,'')
+        self.orderhistory_table_frame.place(x=20,y=10,height=620, width=1000)
         
-        # self.order_status_entry.grid(row=3, column=3, padx=10, pady=5,sticky="W")
-
-
-        # self.order_detail_frame.place(x=20,y=430,height=200, width=700)
-
-        #------------------------------    Option Plane     ------------------------------------------------------------#
-        # self.order_option_frame = LabelFrame(self.orderframe , text="Option")
-        # self.order_update_button = Button(self.order_option_frame,text='Update',command=self.orderPage_update_state,state=DISABLED)
-        # self.order_update_button.grid(row=0, column=1, padx=10, pady=5)
-        # self.order_option_frame.place(x=750,y=430,height=200, width=250)
-
-        
-        self.orderhistoryframe.place(x=220,y=20,height=680, width=1040)
+        self.orderhistoryframe.place(x=220,y=25,height=680, width=1040)
 
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Book Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def bookPage(self):
+        self.destoryframe()
         #------------------------------    init     ------------------------------#
         self.bookframe = LabelFrame(self.admin_window , text="Book Management")
         self.book_table_frame = LabelFrame(self.bookframe)
@@ -457,7 +432,7 @@ class main_admin_screen:
         self.viewpic_book_button.grid(row=3, column=5, padx=5, pady=5)
 
 
-        self.book_detail_frame.place(x=20,y=430,height=230, width=800)
+        self.book_detail_frame.place(x=20,y=430,height=235, width=800)
         #------------------------------  Option Plane     ------------------------------------------------------------#
         self.book_option_frame = LabelFrame(self.bookframe , text="Option")
         self.update_book_button = Button(self.book_option_frame,text='Update',state=DISABLED,command=self.bookPage_update_state)
@@ -470,7 +445,7 @@ class main_admin_screen:
         self.book_option_frame.place(x=850,y=430,height=230, width=180)
 
         self.book_table_frame.place(x=20,y=10,height=400, width=1000)
-        self.bookframe.place(x=220,y=20,height=680, width=1040)
+        self.bookframe.place(x=220,y=25,height=690, width=1040)
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up ViewPic Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
     def viewPicbookPage(self):
@@ -529,15 +504,16 @@ class main_admin_screen:
         self.pic_book_label.pack(anchor=CENTER)
 
     def saveimage(self):
-        if self.book_pic_input != '':
-            if(messagebox.askokcancel("Confirmation", "Save Picture \n[ {} ] ?".format(self.Name.get()), parent=self.viewpic_book_screen)) == True:
-                self.save_pic_button.config(state=DISABLED)
-                messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.viewpic_book_screen)
+        messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.viewpic_book_screen)
+        # if self.book_pic_input != '':
+        #     if(messagebox.askokcancel("Confirmation", "Save Picture \n[ {} ] ?".format(self.Name.get()), parent=self.viewpic_book_screen)) == True:
+        #         self.save_pic_button.config(state=DISABLED)
+                
                 # temp_img = cv2.imread(self.book_pic_input)
                 # cv2.imwrite('BookPics\\{}.png'.format(self.Code.get()), temp_img)
-        else:
-            messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
-            self.save_pic_button.config(state=DISABLED)
+        # else:
+        #     messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
+        #     self.save_pic_button.config(state=DISABLED)
 
         
        
@@ -549,65 +525,116 @@ class main_admin_screen:
         self.add_book_screen.focus_set()
         self.add_book_screen.grab_set()
         self.add_book_screen.resizable(0, 0)
-        x = (960) - (750/2)
-        y = (540) - (650/2)
-        self.add_book_screen.geometry("750x600+%d+%d" % (x, y))
+        x = (960) - (800/2)
+        y = (540) - (350/2)
+        self.add_book_screen.geometry("800x300+%d+%d" % (x, y))
+        self.addbook_pic_input = 'BookPics\\NOT_FOUND.png'
 
-        self.add_book_frame = LabelFrame(self.add_book_screen,text ='Book Details')
-        self.add_book_option_frame = LabelFrame(self.add_book_screen,text ='')
+        #------------------------------    Picture Plane     ------------------------------------------------------------#
+        self.add_picbook_frame = LabelFrame(self.add_book_screen,text ='Picture')
+        self.addbook_pic = ImageTk.PhotoImage(Image.open(self.addbook_pic_input).resize((120, 170)))
+        self.addpic_book_label = Label(self.add_picbook_frame, image=self.addbook_pic)
+        self.addpic_book_label.pack(anchor=CENTER)
         
         #------------------------------    Detail Plane     ------------------------------------------------------------#
+        self.add_book_frame = LabelFrame(self.add_book_screen,text ='Book Details')
         Label(self.add_book_frame, text="No").grid(row=0, column=0, padx=10, pady=5,sticky="E")
-        self.no_entry = Text(self.add_book_frame,width=20,height=1)
-        self.no_entry.insert(1.0,'')
-        self.no_entry.grid(row=0, column=1, padx=10, pady=5)
+        self.addbook_no_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_no_entry.insert(1.0,'')
+        self.addbook_no_entry.grid(row=0, column=1, padx=10, pady=5)
         Label(self.add_book_frame, text="Code").grid(row=1, column=0, padx=10, pady=5,sticky="E")
-        self.code_entry = Text(self.add_book_frame,width=20,height=1)
-        self.code_entry.insert(1.0,'')
-        self.code_entry.grid(row=1, column=1, padx=10, pady=5)
-        Label(self.add_book_frame, text="Name").grid(row=2, column=0, padx=10, pady=5,sticky="E")
-        self.name_entry = Text(self.add_book_frame,width=20,height=1)
-        self.name_entry.insert(1.0,'')
-        self.name_entry.grid(row=2, column=1, padx=10, pady=5)
-        Label(self.add_book_frame, text="Author").grid(row=3, column=0, padx=10, pady=5,sticky="E")
-        self.author_entry = Text(self.add_book_frame,width=20,height=1)
-        self.author_entry.insert(1.0,'')
-        self.author_entry.grid(row=3, column=1, padx=10, pady=5)
-        Label(self.add_book_frame, text="Category").grid(row=4, column=0, padx=10, pady=5,sticky="E")
-        self.category_entry = Text(self.add_book_frame,width=20,height=1)
-        self.category_entry.insert(1.0,'')
-        self.category_entry.grid(row=4, column=1, padx=10, pady=5)
-        Label(self.add_book_frame, text="Price").grid(row=0, column=2, padx=10, pady=5,sticky="E")
-        self.price_entry = Text(self.add_book_frame,width=20,height=1)
-        self.price_entry.insert(1.0,'')
-        self.price_entry.grid(row=0, column=3, padx=10, pady=5)
-        Label(self.add_book_frame, text="Page").grid(row=1, column=2, padx=10, pady=5,sticky="E")
-        self.page_entry = Text(self.add_book_frame,width=20,height=1)
-        self.page_entry.insert(1.0,'')
-        self.page_entry.grid(row=1, column=3, padx=10, pady=5)
-        Label(self.add_book_frame, text="Ex").grid(row=5, column=0, padx=10, pady=5,sticky="E")
-        self.ex_entry = Text(self.add_book_frame,width=50,height=3)
-        self.ex_entry.insert(1.0,'')
-        self.ex_entry.grid(row=5, column=1, padx=10, pady=5,columnspan=3,rowspan=3)
-        Label(self.add_book_frame, text="Stock").grid(row=2, column=2, padx=10, pady=5,sticky="E")
-        self.stock_entry = Text(self.add_book_frame,width=20,height=1)
-        self.stock_entry.insert(1.0,'')
-        self.stock_entry.grid(row=2, column=3, padx=10, pady=5)
-        Label(self.add_book_frame, text="Rating").grid(row=3, column=2, padx=10, pady=5,sticky="E")
-        self.rating_entry = Text(self.add_book_frame,width=20,height=1)
-        self.rating_entry.insert(1.0,'')
-        self.rating_entry.grid(row=3, column=3, padx=10, pady=5)
+        self.addbook_code_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_code_entry.insert(1.0,'')
+        self.addbook_code_entry.grid(row=1, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Name").grid(row=0, column=2, padx=10, pady=5,sticky="E")
+        self.addbook_name_entry = Text(self.add_book_frame,width=40,height=1)
+        self.addbook_name_entry.insert(1.0,'')
+        self.addbook_name_entry.grid(row=0, column=3, padx=10, pady=5,columnspan=3)
+        Label(self.add_book_frame, text="Author").grid(row=1, column=2, padx=10, pady=5,sticky="E")
+        self.addbook_author_entry = Text(self.add_book_frame,width=40,height=1)
+        self.addbook_author_entry.insert(1.0,'')
+        self.addbook_author_entry.grid(row=1, column=3, padx=10, pady=5,columnspan=3)
+        Label(self.add_book_frame, text="Category").grid(row=2, column=2, padx=10, pady=5,sticky="W")
+        self.addbook_category_entry = Text(self.add_book_frame,width=30,height=1)
+        self.addbook_category_entry.insert(1.0,'')
+        self.addbook_category_entry.grid(row=2, column=3, padx=10, pady=5,columnspan=2)
+        Label(self.add_book_frame, text="Price").grid(row=2, column=0, padx=10, pady=5,sticky="E")
+        self.addbook_price_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_price_entry.insert(1.0,'')
+        self.addbook_price_entry.grid(row=2, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Page").grid(row=3, column=0, padx=10, pady=5,sticky="E")
+        self.addbook_page_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_page_entry.insert(1.0,'')
+        self.addbook_page_entry.grid(row=3, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Ex").grid(row=3, column=2, padx=10, pady=5,sticky="E")
+        self.addbook_ex_entry = Text(self.add_book_frame,width=40,height=5)
+        self.addbook_ex_entry.insert(1.0,'')
+        self.addbook_ex_entry.grid(row=3, column=3, padx=10, pady=5,columnspan=3,rowspan=3)
+        Label(self.add_book_frame, text="Stock").grid(row=4, column=0, padx=10, pady=5,sticky="E")
+        self.addbook_stock_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_stock_entry.insert(1.0,'')
+        self.addbook_stock_entry.grid(row=4, column=1, padx=10, pady=5)
+        Label(self.add_book_frame, text="Rating").grid(row=5, column=0, padx=10, pady=5,sticky="E")
+        self.addbook_rating_entry = Text(self.add_book_frame,width=10,height=1)
+        self.addbook_rating_entry.insert(1.0,'')
+        self.addbook_rating_entry.grid(row=5, column=1, padx=10, pady=5)
 
+        #------------------------------    Option Detail Plane     ------------------------------------------------------------#
+        self.add_book_option_frame = LabelFrame(self.add_book_screen,text ='')
+        self.clear_addbook_button = Button(self.add_book_option_frame,text='Clear',command=self.clear_addbook)
+        self.clear_addbook_button.grid(row=0, column=0, padx=12, pady=0)
+        self.save_addbook_button = Button(self.add_book_option_frame,text='Save',state=DISABLED,command=self.saveimage)
+        self.save_addbook_button.grid(row=0, column=1, padx=12, pady=0)
 
-
-        #------------------------------    Option Plane     ------------------------------------------------------------#
+        #------------------------------    Option Picture Plane     ------------------------------------------------------------#
+        self.add_picbook_option_frame = LabelFrame(self.add_book_screen,text ='')
+        self.select_addpic_button = Button(self.add_picbook_option_frame,text='Select',command=self.openimage_new)
+        self.select_addpic_button.grid(row=0, column=0, padx=3, pady=0)
         
+        self.delete_addpic_button = Button(self.add_picbook_option_frame,text='Delete',state=DISABLED,command=self.deleteimage_new)
+        self.delete_addpic_button.grid(row=0, column=1, padx=3, pady=0)
+        
+        self.add_book_option_frame.place(x=585,y=220,height=50, width=200)
+        self.add_picbook_frame.place(x=10,y=10,height=210, width=170)
+        self.add_picbook_option_frame.place(x=10,y=220,height=50, width=170)
+        self.add_book_frame.place(x=200,y=10,height=210, width=585)
 
-        self.add_book_option_frame.place(x=20,y=430,height=150, width=700)
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Addbook Picture Function  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    def openimage_new(self):
+        self.addbook_pic_input = self.openfn()
+        if self.addbook_pic_input != '':
+            self.delete_addpic_button.config(state=NORMAL)
+            self.addbook_pic = ImageTk.PhotoImage(Image.open(self.addbook_pic_input).resize((120, 170)))
+            self.addpic_book_label.destroy()
+            self.addpic_book_label = Label(self.add_picbook_frame, image=self.addbook_pic)
+            self.addpic_book_label.pack(anchor=CENTER)
+    def deleteimage_new(self):
+        self.delete_addpic_button.config(state=DISABLED)
+        self.addbook_pic_input = 'BookPics\\NOT_FOUND.png'
+        self.addbook_pic = ImageTk.PhotoImage(Image.open(self.addbook_pic_input).resize((120, 170)))
+        self.addpic_book_label.destroy()
+        self.addpic_book_label = Label(self.add_picbook_frame, image=self.addbook_pic)
+        self.addpic_book_label.pack(anchor=CENTER)
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Addbook Clear Function  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
+    def clear_addbook(self):
+        if(messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.add_book_screen)) == True:
+            self.addbook_no_entry.delete('1.0',END)
+            self.addbook_code_entry.delete('1.0',END)
+            self.addbook_name_entry.delete('1.0',END)
+            self.addbook_author_entry.delete('1.0',END)
+            self.addbook_category_entry.delete('1.0',END)
+            self.addbook_price_entry.delete('1.0',END)
+            self.addbook_page_entry.delete('1.0',END)
+            self.addbook_ex_entry.delete('1.0',END)
+            self.addbook_stock_entry.delete('1.0',END)
+            self.addbook_rating_entry.delete('1.0',END)
+       
 
-        self.add_book_frame.place(x=20,y=10,height=400, width=700)
-        # if not data_check:
-        #     messagebox.showerror("Error", "The selected order not found",parent=self.order_detail_screen)
+       
+
+
+
+    #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Addbook Save Function  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<# 
     
      ###############################    Treeview Focus    <Order Page> #########################################################
     def bookpage_lookuptreeview(self,event):
@@ -665,56 +692,155 @@ class main_admin_screen:
 
     ##################################    Update Button   <Book Page>  #######################################################
     def bookPage_update_state(self):
-        if(messagebox.askokcancel("Confirmation", "Update Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
-            self.update_book_button.config(state=DISABLED)
+        messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
+        # if(messagebox.askokcancel("Confirmation", "Update Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+        #     self.update_book_button.config(state=DISABLED)
             
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Author'] = self.author_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Category'] = self.category_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Price'] = self.price_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Page'] = self.page_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
-            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
-            messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
-            # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Author'] = self.author_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Category'] = self.category_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Price'] = self.price_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Page'] = self.page_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
+        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
+            
+        #     # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
-            ### Treeview Update 
-            self.book_treeview.delete(*self.book_treeview.get_children())
-            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
-            treeview_update = treeview.values.tolist()
-            for i in treeview_update:
-                self.book_treeview.insert('', 'end', values=[i][0])
+        #     ### Treeview Update 
+        #     self.book_treeview.delete(*self.book_treeview.get_children())
+        #     treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+        #     treeview_update = treeview.values.tolist()
+        #     for i in treeview_update:
+        #         self.book_treeview.insert('', 'end', values=[i][0])
 
     ##################################    Delete Button   <Book Page>  #######################################################
     def bookPage_delete_state(self):
-        if(messagebox.askokcancel("Confirmation", "Delete Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
-            self.delete_book_button.config(state=DISABLED)
-            self.update_book_button.config(state=DISABLED)
+        messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
+        # if(messagebox.askokcancel("Confirmation", "Delete Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+        #     self.delete_book_button.config(state=DISABLED)
+        #     self.update_book_button.config(state=DISABLED)
             
-            ## Database
-            self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
-            messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",parent=self.bookframe)
-            # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+        #     ## Database
+        #     self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
+           
+        #     # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
-            ### Treeview Update 
-            self.book_treeview.delete(*self.book_treeview.get_children())
-            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
-            treeview_update = treeview.values.tolist()
-            for i in treeview_update:
-                self.book_treeview.insert('', 'end', values=[i][0])
+        #     ### Treeview Update 
+        #     self.book_treeview.delete(*self.book_treeview.get_children())
+        #     treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+        #     treeview_update = treeview.values.tolist()
+        #     for i in treeview_update:
+        #         self.book_treeview.insert('', 'end', values=[i][0])
 
 
-            messagebox.showinfo("Info", "Deleted book \n[ {} ]".format(self.Name.get()), parent=self.bookframe)
+        #     messagebox.showinfo("Info", "Deleted book \n[ {} ]".format(self.Name.get()), parent=self.bookframe)
 
 
 
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Menber Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def menberPage(self):
-        self.menberframe = LabelFrame(self.admin_window , text="Member Management")
-        self.menberframe.place(x=220,y=20,height=680, width=1040)
+        self.destoryframe()
+        #------------------------------    init    ------------------------------------------------------------#
+        self.memberframe = LabelFrame(self.admin_window , text="Member Management")
+        
+    
+        #------------------------------   Table Plane     ------------------------------------------------------------#
+        self.member_table_frame = LabelFrame(self.memberframe)
+        columns = ("0","Username","Password","Name","LastName","Gender","Birthday","Email","PhoneNumber")
+        self.member_treeview = Treeview(self.member_table_frame, column=columns, show="headings", height="20")
+        yscrollbar = ttk.Scrollbar(self.member_table_frame, orient="vertical", command=self.member_treeview.yview)
+        self.member_treeview.config(yscrollcommand=yscrollbar.set)
+        yscrollbar.pack(side="right", fill="y")
+        # self.member_treeview.bind("<ButtonRelease-1>", self.orderPage_lookuptreeview)
+        for col in columns:
+            self.member_treeview.heading(col, text=col,command=lambda _col=col: self.treeview_sort_column(self.member_treeview, _col, False))
 
+        self.member_treeview.column(0, anchor='center', width=50)
+        self.member_treeview.column(1, anchor='center', width=100)
+        self.member_treeview.column(2, anchor='center', width=80)
+        self.member_treeview.column(3, anchor='w', width=100)
+        self.member_treeview.column(4, anchor='w', width=100)
+        self.member_treeview.column(5, anchor='center', width=80)
+        self.member_treeview.column(6, anchor='center', width=100)
+        self.member_treeview.column(7, anchor='center', width=200)
+        self.member_treeview.column(8, anchor='center', width=150)
+
+
+        for i in self.member_data:
+            self.member_treeview.insert('', 'end', values=[i][0])
+        
+        
+
+        self.member_treeview.pack()
+        self.member_table_frame.place(x=20,y=10,height=400, width=1000)
+
+        #------------------------------    Detail Plane     ------------------------------------------------------------#
+        self.member_detail_frame = LabelFrame(self.memberframe , text="Details")
+
+        Label(self.member_detail_frame, text="Order ID#").grid(row=0, column=0, padx=10, pady=5,sticky="E")
+        self.order_id_entry = Text(self.member_detail_frame,width=20,height=1)
+        self.order_id_entry.insert(1.0,'')
+        self.order_id_entry.grid(row=0, column=1, padx=10, pady=5)
+
+        Label(self.member_detail_frame, text="Customer :").grid(row=1, column=0, padx=10, pady=5,sticky="E")
+        self.order_user_entry = Text(self.member_detail_frame,width=20,height=1)
+        self.order_user_entry.insert(1.0,'')
+        self.order_user_entry.grid(row=1, column=1, padx=10, pady=5)
+
+        Label(self.member_detail_frame, text="Order Time :").grid(row=2, column=0, padx=10, pady=5,sticky="E")
+        self.order_ordertime_entry = Text(self.member_detail_frame,width=20,height=1)
+        self.order_ordertime_entry.insert(1.0,'')
+        self.order_ordertime_entry.grid(row=2, column=1, padx=10, pady=5)
+
+        Label(self.member_detail_frame, text="Shipped Time :").grid(row=3, column=0, padx=10, pady=5,sticky="E")
+        self.order_shiptime_entry = Text(self.member_detail_frame,width=20,height=1)
+        self.order_shiptime_entry.insert(1.0,'')
+        self.order_shiptime_entry.grid(row=3, column=1, padx=10, pady=5)
+
+        Label(self.member_detail_frame, text="Completed Time :").grid(row=4, column=0, padx=10, pady=5,sticky="E")
+        self.order_completedtime_entry = Text(self.member_detail_frame,width=20,height=1)
+        self.order_completedtime_entry.insert(1.0,'')
+        self.order_completedtime_entry.grid(row=4, column=1, padx=10, pady=5)
+
+        Label(self.member_detail_frame, text="Address :").grid(row=0, column=2, padx=10, pady=5,sticky="E")
+        self.order_address_entry = Text(self.member_detail_frame,width=20, height=5)
+        self.order_address_entry.insert(1.0,'')
+        self.order_address_entry.grid(row=0, column=3, padx=10, pady=5,sticky="W",rowspan = 3)
+
+        Label(self.member_detail_frame, text="Order Status :").grid(row=3, column=2, padx=10, pady=5,sticky="E")
+        self.order_status_entry = Combobox(self.member_detail_frame,value=['Payment confirmed','Waiting for shipment','Shipped','Delivered','Cancelled order'])
+        self.order_status_entry.insert(0,'')
+        
+        self.order_status_entry.grid(row=3, column=3, padx=10, pady=5,sticky="W")
+
+
+
+        self.member_detail_frame.place(x=20,y=430,height=200, width=700)
+
+        #------------------------------  Option Plane     ------------------------------------------------------------#
+        self.member_option_frame = LabelFrame(self.memberframe , text="Option")
+        self.member_update_button = Button(self.member_option_frame,text='Update',state=DISABLED)
+        self.member_update_button.grid(row=0, column=1, padx=10, pady=5)
+        
+        self.member_delete_button = Button(self.member_option_frame,text='Delete',state=DISABLED)
+        self.member_delete_button.grid(row=0, column=2, padx=10, pady=5)
+        self.member_add_button = Button(self.member_option_frame,text='Add')
+        self.member_add_button.grid(row=1, column=1, padx=10, pady=5)
+        
+        self.member_option_frame.place(x=750,y=430,height=200, width=250)
+
+        self.memberframe.place(x=220,y=25,height=680, width=1040)
+  
+
+
+
+    def destoryframe(self):
+        self.orderframe.destroy()
+        self.orderhistoryframe.destroy()
+        self.menberframe.destroy()
+        self.bookframe.destroy()
 
 
 
