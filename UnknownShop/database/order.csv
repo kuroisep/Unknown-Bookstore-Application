@@ -1,5 +1,5 @@
 Order_time,Order_ID,Customer,Address,Quantity,Total_amount,Status,Shipped_time,Completed_time
 2021-05-21 18:14:17,UB_0001,Ummmmmmmm,123 LA srgfs,5,1000,Cancelled order,2021-05-21 19:37:10,2021-05-21 19:12:07
-2021-05-21 18:14:14,UB_0002,Ummmmmmmm,456 LA srgfs,5,200,Delivered,2021-05-21 19:41:50,2021-05-21 19:42:07
+2021-05-21 18:14:14,UB_0002,Ummmmmmmm,456 LA srgfs,5,200,Delivered,2021-05-24 07:17:54,2021-05-24 07:18:08
 2021-05-21 18:14:18,UB_0003,Ummmmmmmm,112 LA srgfs,5,4000,Payment confirmed,2021-05-21 19:04:38,2021-05-21 19:12:07
 2021-05-21 18:14:20,UB_0004,Ummmmmmmm,123 LA srgfs,5,250,Shipped,2021-05-21 21:52:43,2021-05-21 19:12:07
