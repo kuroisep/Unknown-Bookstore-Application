@@ -628,17 +628,14 @@ class main_admin_screen:
         self.pic_book_label.pack(anchor=CENTER)
 
     def saveimage(self):
-        messagebox.showerror("Error", "อย่ากดเล่นจ้าาาาาาาาาา",
-                             parent=self.viewpic_book_screen)
-        # if self.book_pic_input != '':
-        #     if(messagebox.askokcancel("Confirmation", "Save Picture \n[ {} ] ?".format(self.Name.get()), parent=self.viewpic_book_screen)) == True:
-        #         self.save_pic_button.config(state=DISABLED)
-
-        # temp_img = cv2.imread(self.book_pic_input)
-        # cv2.imwrite('BookPics\\{}.png'.format(self.Code.get()), temp_img)
-        # else:
-        #     messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
-        #     self.save_pic_button.config(state=DISABLED)
+        if self.book_pic_input != '':
+            if(messagebox.askokcancel("Confirmation", "Save Picture \n[ {} ] ?".format(self.Name.get()), parent=self.viewpic_book_screen)) == True:
+                self.save_pic_button.config(state=DISABLED)
+                temp_img = cv2.imread(self.book_pic_input)
+                cv2.imwrite('BookPics\\{}.png'.format(self.Code.get()), temp_img)
+        else:
+            messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
+            self.save_pic_button.config(state=DISABLED)
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up AddBook Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
@@ -878,50 +875,46 @@ class main_admin_screen:
 
     ##################################    Update Button   <Book Page>  #######################################################
     def bookPage_update_state(self):
-        messagebox.showerror(
-            "Error", "อย่ากดเล่นจ้าาาาาาาาาา", parent=self.bookframe)
-        # if(messagebox.askokcancel("Confirmation", "Update Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
-        #     self.update_book_button.config(state=DISABLED)
+        if(messagebox.askokcancel("Confirmation", "Update Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+            self.update_book_button.config(state=DISABLED)
 
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Author'] = self.author_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Category'] = self.category_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Price'] = self.price_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Page'] = self.page_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
-        #     self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Name'] = self.name_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Author'] = self.author_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Category'] = self.category_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Price'] = self.price_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Page'] = self.page_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Ex.'] = self.ex_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Stock(s)'] = self.stock_entry.get('1.0','end-1c')
+            self.df2.loc[self.df2['Code'] == self.Code.get(), 'Rating'] = self.rating_entry.get('1.0','end-1c')
 
-        #     # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
-        #     ### Treeview Update
-        #     self.book_treeview.delete(*self.book_treeview.get_children())
-        #     treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
-        #     treeview_update = treeview.values.tolist()
-        #     for i in treeview_update:
-        #         self.book_treeview.insert('', 'end', values=[i][0])
+            ### Treeview Update
+            self.book_treeview.delete(*self.book_treeview.get_children())
+            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+            treeview_update = treeview.values.tolist()
+            for i in treeview_update:
+                self.book_treeview.insert('', 'end', values=[i][0])
 
     ##################################    Delete Button   <Book Page>  #######################################################
     def bookPage_delete_state(self):
-        messagebox.showerror(
-            "Error", "อย่ากดเล่นจ้าาาาาาาาาา", parent=self.bookframe)
-        # if(messagebox.askokcancel("Confirmation", "Delete Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
-        #     self.delete_book_button.config(state=DISABLED)
-        #     self.update_book_button.config(state=DISABLED)
+        if(messagebox.askokcancel("Confirmation", "Delete Book \n[ {} ] ?".format(self.Name.get()), parent=self.bookframe)) == True:
+            self.delete_book_button.config(state=DISABLED)
+            self.update_book_button.config(state=DISABLED)
 
-        #     ## Database
-        #     self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
+            ## Database
+            self.df2.drop(self.df2.loc[self.df2['Code']==self.Code.get()].index, inplace=True)
 
-        #     # self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
+            self.df2.to_csv("UnknownShop\\database\\DataBookList.csv", index=False)
 
-        #     ### Treeview Update
-        #     self.book_treeview.delete(*self.book_treeview.get_children())
-        #     treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
-        #     treeview_update = treeview.values.tolist()
-        #     for i in treeview_update:
-        #         self.book_treeview.insert('', 'end', values=[i][0])
+            ### Treeview Update
+            self.book_treeview.delete(*self.book_treeview.get_children())
+            treeview = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+            treeview_update = treeview.values.tolist()
+            for i in treeview_update:
+                self.book_treeview.insert('', 'end', values=[i][0])
 
-        #     messagebox.showinfo("Info", "Deleted book \n[ {} ]".format(self.Name.get()), parent=self.bookframe)
+            messagebox.showinfo("Info", "Deleted book \n[ {} ]".format(self.Name.get()), parent=self.bookframe)
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Menber Manangment Page     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 

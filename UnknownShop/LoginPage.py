@@ -16,7 +16,7 @@ parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
 
 
-from UnknownShop import ShopPage
+from UnknownShop import ShopPage,AdminPage
 from numpy.core.defchararray import upper
 
 class main_account_screen:
@@ -143,11 +143,15 @@ class main_account_screen:
                 df.to_csv("login.csv", index=False)
                 print(df)
                 self.login_sucess()
-
             else:
                 self.password_not_recognised()
                 password_login_entry.delete(0, END)
-        
+        elif str(self.username1) == 'admin' and str(self.password1) == 'admin':
+                username_login_entry.delete(0, END)
+                password_login_entry.delete(0, END)
+                self.delete_main_screen()
+                AdminPage.showAdminPage()
+
         else:
             self.user_not_found()
             username_login_entry.delete(0, END)
