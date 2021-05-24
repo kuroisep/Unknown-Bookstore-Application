@@ -36,7 +36,7 @@ class Shop_main_screen:
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
 
 
-        # Variable User
+        # Variable Book
         self.No = StringVar()
         self.Name = StringVar()
         self.Author = StringVar()
@@ -650,11 +650,11 @@ class Shop_main_screen:
         Label(self.option_frame, text="").grid(row=7, column=0, padx=10, pady=5)
         self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5)
 
-        add_favbook_button = Button(self.option_frame,text=' ♥ ', command=self.add_book, width=15)
+        add_favbook_button = Button(self.option_frame,text=' ♥ ', command=self.add_bookcart, width=15)
         add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
 
-        self.add_book_button = Button(self.option_frame,text=' + ', command=self.add_book,state=DISABLED,width=15)
-        self.add_book_button.grid(row=7, column=2, padx=10, pady=5)
+        self.add_bookcart_button = Button(self.option_frame,text=' + ', command=self.add_bookcart,state=DISABLED,width=15)
+        self.add_bookcart_button.grid(row=7, column=2, padx=10, pady=5)
    
 
         ##Book Image
@@ -667,9 +667,9 @@ class Shop_main_screen:
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
 
         self.book_treeview.place(x= 20, y=15)
-        self.book_treeview.column(1, anchor='center', width=50)
-        self.book_treeview.column(2, anchor='center', width=120)
-        self.book_treeview.column(3, anchor='center', width=100)
+        self.book_treeview.column(1, anchor='center', width=40)
+        self.book_treeview.column(2, anchor='center', width=80)
+        self.book_treeview.column(3, anchor='center', width=140)
         self.book_treeview.column(4, anchor='center', width=100)
         self.book_treeview.column(5, anchor='center', width=100)
         self.book_treeview.column(6, anchor='center', width=50)
@@ -714,7 +714,7 @@ class Shop_main_screen:
         self.Rating.set(cur[9])
         self.Example.set(cur[7])
         
-        self.add_book_button.config(state=NORMAL)
+        self.add_bookcart_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
             self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
             self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
@@ -724,16 +724,40 @@ class Shop_main_screen:
             self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
             Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
 
-    def add_book(self):
+    def add_bookcart(self):
         if self.usercart != []:
             for i in self.usercart:
                 if i[0] == self.Code.get():
-                    i[2] = int(i[2]) + int(self.items_book_spinbox.get())
+                    i[2] = str(int(i[2]) + int(self.items_book_spinbox.get()))
+                    i[4] = str(float(i[2]) * float(i[3]))
                     print('UserCart :',self.usercart)
                     return
-        self.usercart.append([self.Code.get(),self.Name.get(),self.items_book_spinbox.get(),self.Price.get()])
+        self.usercart.append([self.Code.get(),self.Name.get(),str(self.items_book_spinbox.get()),self.Price.get(),self.Price.get()])
         print('UserCart :',self.usercart)
         self.spinboxvar.set(1)
+    def delete_bookcart(self):
+        # print('current :',self.current_bookcart)
+        # print('usercart :',self.usercart)
+        if self.current_bookcart in self.usercart:
+            self.usercart.remove(self.current_bookcart)
+        else:
+            print('cart is empty')
+        self.Del_botton.config(state=DISABLED)
+        self.cart_treeview.delete(*self.cart_treeview.get_children())
+        index = 1
+        for i in self.usercart:
+            self.cart_treeview.insert('', 'end', values=[index,i[0],i[1],i[2],i[3],i[4]])
+            index += 1
+    def lookupCart(self, event):
+        curItem = self.cart_treeview.focus()
+        cur = self.cart_treeview.item(curItem)['values']
+        self.current_bookcart = []
+        if cur != '':
+            self.Del_botton.config(state=NORMAL)
+            for i in cur[1:]:
+                self.current_bookcart.append(str(i))
+
+        
 
     def shift(self):
             x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
@@ -770,7 +794,7 @@ class Shop_main_screen:
         paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
         paymentPageFrame2.place(x=50, y=55, height=700, width=1180)
 
-        self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5), show="headings", height="18")
+        self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5,6), show="headings", height="18")
         yscrollbar = ttk.Scrollbar(paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
         xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
 
@@ -781,28 +805,33 @@ class Shop_main_screen:
         xscrollbar.pack(side="bottom", fill="x")
         self.cart_treeview.pack()
         # self.cart_treeview.place(x=500,y=225,anchor=CENTER)
-        self.cart_treeview.column(1, anchor='w', width=50)
-        self.cart_treeview.column(2, anchor='w', width=50)
-        self.cart_treeview.column(3, anchor='w', width=200)
-        self.cart_treeview.column(4, anchor='w', width=100)
-        self.cart_treeview.column(5, anchor='w', width=100)
+        self.cart_treeview.column(1, anchor='center', width=50)
+        self.cart_treeview.column(2, anchor='center', width=100)
+        self.cart_treeview.column(3, anchor='w', width=300)
+        self.cart_treeview.column(4, anchor='center', width=100)
+        self.cart_treeview.column(5, anchor='center', width=100)
+        self.cart_treeview.column(6, anchor='center', width=100)
         self.cart_treeview.heading(1, text="no.")
         self.cart_treeview.heading(2, text="Code")
         self.cart_treeview.heading(3, text="Name")
         self.cart_treeview.heading(4, text="Item (s)")
         self.cart_treeview.heading(5, text="Price")
-        for i in range(0,100):
-            self.cart_treeview.insert('', 'end', values=[i,'code','SAASASAS_ '+ str(i) ,"55555","159.50"])
-
+        self.cart_treeview.heading(6, text="Total amount")
+        self.cart_treeview.bind("<ButtonRelease-1>", self.lookupCart)
+        
+        index = 1
+        for i in self.usercart:
+            self.cart_treeview.insert('', 'end', values=[index,i[0],i[1],i[2],i[3],i[4]])
+            index += 1
 
 
         Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.pack(side = BOTTOM,anchor='')
         Back_bottom.place(x=300, y=415,anchor="center")
 
-        Del_bottom = tk.Button(paymentPageFrame2,text="< Del >", command = self.pp )
+        self.Del_botton = tk.Button(paymentPageFrame2,text="< Del >", command = self.delete_bookcart,state=DISABLED)
         # Del_bottom.pack(side = BOTTOM)    
-        Del_bottom.place(x=400, y=415,anchor="center")
+        self.Del_botton.place(x=400, y=415,anchor="center")
 
         Next_bottom = tk.Button(paymentPageFrame2,text="< Next >", command = self.pp )
         Next_bottom.place(x=650, y=415,anchor="center")
