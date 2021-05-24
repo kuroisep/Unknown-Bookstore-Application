@@ -108,7 +108,7 @@ class main_admin_screen:
         # Book Page
         self.df2 = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
         self.book_data = self.df2.values.tolist()
-
+        
         # Member Page
         self.df3 = pandas.read_csv('login.csv')
         self.member_data = self.df3.values.tolist()
