@@ -240,7 +240,7 @@ class Shop_main_screen:
                ).grid(column=3,row=0, padx=5, pady=10)
         tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_deliveryPage
                ).grid(column=4,row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.delete_canvas
+        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_ContactUSPage
                ).grid(column=5,row=0, padx=5, pady=10)
 
         
@@ -338,7 +338,7 @@ class Shop_main_screen:
         Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15, command= self.show_deliveryPage)
         Review_button.grid(row=2,column=4,padx=50, pady=10)
 
-        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15)
+        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15,  command= self.show_ContactUSPage)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
        
         
@@ -943,6 +943,34 @@ class Shop_main_screen:
         self.Comment_boutton2 = ttk.Button(deliveryPageFrame2,text="< Clear >",command = self.clearcomment, state=DISABLED)
         self.Comment_boutton2.place(x=450,y=400)
 
+    def ContactUSPage(self): # ข้อมูลหน้า info       #1
+        self.inner_ContactUS = Canvas(self.canvas, width=1280, height=550)
+        
+        ContactUSPageFrame1 = tk.LabelFrame(self.inner_ContactUS , text="Contact Us")
+        ContactUSPageFrame1.place(x=750, y=0, height=550, width=500)
+
+        ContactUSPageFrame1_1 = tk.LabelFrame(self.inner_ContactUS , text="Feedback")
+        ContactUSPageFrame1_1.place(x=50, y=0, height=550, width=600)
+
+        ContactUSPageFrame2 = tk.LabelFrame(ContactUSPageFrame1 , text="Chat")
+        ContactUSPageFrame2.place(x=10, y=0, height=480, width=480)
+
+        ContactUSPageFrame3 = tk.LabelFrame(ContactUSPageFrame1 , text="Button option")
+        ContactUSPageFrame3.place(x=10, y=480, height=50, width=480)
+
+
+
+        ###############  ContactUSPageFrame1 : "Contact Us"
+        ##############   ContactUSPageFrame1_1 : "Feedback" 
+        FeedbackFrame1 = tk.LabelFrame( ContactUSPageFrame1_1 , text="BOX TEXT")
+        FeedbackFrame1.place(x=100, y=350, height=150, width=400)
+
+        FeedbackFrame2 = tk.LabelFrame( ContactUSPageFrame1_1 , text="Assessment")
+        FeedbackFrame2.place(x=50, y=0, height=350, width=500)
+
+        ##############   ContactUSPageFrame2 : "Chat"
+        ##############   ContactUSPageFrame3 : "Button option"
+
     def printcomment(self):
         # self.commenttext2.config(text=self.commentbox.get(1.0,END))
         print(f"Rating is : {self.Rating_Combobox.get()}")
@@ -998,6 +1026,12 @@ class Shop_main_screen:
         self.delete_canvas()
         self.deliveryPage()
         self.canvas.create_window(0,100, anchor=NW, window=self.inner_delivery)
+
+    def show_ContactUSPage(self):
+        self.delete_canvas()
+        self.ContactUSPage()
+        self.canvas.create_window(0,100, anchor=NW, window=self.inner_ContactUS)
+        
         
                 
             
