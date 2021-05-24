@@ -229,17 +229,17 @@ class Shop_main_screen:
         Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
         Frame2.place(x=100, y=30, height=45, width=1280)
 
-        tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12),command = self.show_HomePage
+        tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_HomePage
                ).grid(column=0, row=0, padx=20, pady=10)
         tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
                ).grid(column=1, row=0, padx=5, pady=10)
         tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_categoryPage
                ).grid(column=2, row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#7496db",command=self.show_paymentPage
+        tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_paymentPage
                ).grid(column=3,row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),command=self.show_deliveryPage
+        tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_deliveryPage
                ).grid(column=4,row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),command=self.delete_canvas
+        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.delete_canvas
                ).grid(column=5,row=0, padx=5, pady=10)
 
         
