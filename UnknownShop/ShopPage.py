@@ -87,7 +87,6 @@ class Shop_main_screen:
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load data book >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         self.loadbookfile = pandas.read_csv('UnknownShop\database\DataBookList.csv')
-        print(self.loadbookfile)
         self.book_data = self.loadbookfile.values.tolist()
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
