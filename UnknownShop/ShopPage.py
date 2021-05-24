@@ -34,7 +34,9 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
-
+        pathcursor = "BookPics\ADM_AM003.png"
+        # self.pathcursor = ImageTk.PhotoImage(Image.open(pathcursor).resize((50, 50)))
+        self.shop_window.configure(cursor='watch')
 
         # Variable Book
         self.No = StringVar()
@@ -327,16 +329,16 @@ class Shop_main_screen:
         # bbuy_button.grid(row=2,column=0,padx=20, pady=5)
     
 
-        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15)
+        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15, command= self.show_categoryPage)
         buy_button.grid(row=2,column=2,padx=80, pady=10)
 
-        Status_button = tk.Button(HomePageFrame2,text="Status",width=15)
+        Status_button = tk.Button(HomePageFrame2,text="Status",width=15, command= self.show_deliveryPage)
         Status_button.grid(row=2,column=3,padx=10, pady=10)
 
-        Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15)
+        Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15, command= self.show_deliveryPage)
         Review_button.grid(row=2,column=4,padx=50, pady=10)
 
-        ContactUs_button = tk.Button(HomePageFrame2,text="Buy Books",width=15)
+        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
        
         
@@ -395,7 +397,7 @@ class Shop_main_screen:
                                                                                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
-            self.birthday_month_entry.place(x=180,y=165)
+            self.birthday_month_entry.grid(row=4, column=2, padx=10, pady=5,sticky="W")
                     #YEAR
             year_list = []
             for i in range(1920,2022):
@@ -403,7 +405,7 @@ class Shop_main_screen:
             self.birthday_year_entry = Combobox(infomationPageFrame1, width=5, value=year_list)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.birthday_year_entry.place(x=260,y=165)
+            self.birthday_year_entry.grid(row=4, column=3, padx=10, pady=5,sticky="W")
             ##EMAIL
             email_text = Label(infomationPageFrame1, text="Email")
             email_text.grid(row=5, column=0, padx=10, pady=5,sticky="E")
@@ -639,6 +641,7 @@ class Shop_main_screen:
 
         # Example Of Book
         self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example, state="readonly")
+
         self.commentbox.place(x=10,y=0,width=550,height=70)
        
 
