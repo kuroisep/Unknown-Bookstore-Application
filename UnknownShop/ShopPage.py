@@ -227,16 +227,16 @@ class Shop_main_screen:
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-    def menuTab(self):
-
-        Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12ad5b")
-        Frame0.place(x=0, y=0, height=75, width=100)
-
+    def menuTab_logo(self):
         img_logo_path = "Shop_Page\PICTURE\logo.png"
-        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path))
-        self.img_logo.place(x=0, y=0)
+        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
+        self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
 
+        # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
+        # self.Frame0.place(x=0, y=0, height=75, width=100)
 
+    def menuTab(self):
+        self.menuTab_logo()
 
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
         Frame1.place(x=100, y=0, height=30, width=1280)
@@ -261,7 +261,6 @@ class Shop_main_screen:
         tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_ContactUSPage
                ).grid(column=5,row=0, padx=5, pady=10)
 
-        
         
 
     def value_set_one(self):
@@ -1025,7 +1024,7 @@ class Shop_main_screen:
     def show_HomePage(self): 
         self.delete_canvas()
         self.HomePage()
-        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_HomePage)  
+        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_HomePage)  
 
     def checkDeliverySuccess(self):
         print("Checking...")
@@ -1035,36 +1034,36 @@ class Shop_main_screen:
     def show_infomationPage(self): # ุปุ่ม 1
         self.delete_canvas()
         self.infomationPage()
-        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_infomation)
+        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_infomation)
 
     def show_selected_categoryPages(self): 
         self.delete_canvas()
         self.selected_categoryPages()
-        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_selected_categoryPages)
+        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_selected_categoryPages)
      
     def show_categoryPage(self):
         self.delete_canvas()
-        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_category)
+        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_category)
 
 
     def show_paymentPage(self):
         self.delete_canvas()
         self.paymentPage()
         # self.shift()
-        self.canvas.create_window(0,100, anchor=NW, window=self.inner_payment)
+        self.canvas.create_window(0,150, anchor=NW, window=self.inner_payment)
 
 
     def show_deliveryPage(self):
         self.delete_canvas()
         self.deliveryPage()
-        self.canvas.create_window(0,100, anchor=NW, window=self.inner_delivery)
+        self.canvas.create_window(0,150, anchor=NW, window=self.inner_delivery)
 
     def show_ContactUSPage(self):
         self.delete_canvas()
         self.ContactUSPage()
-        self.canvas.create_window(0,100, anchor=NW, window=self.inner_ContactUS)
+        self.canvas.create_window(0,150, anchor=NW, window=self.inner_ContactUS)
         
-        
+    
                 
             
 
@@ -1076,11 +1075,14 @@ class Shop_main_screen:
         # self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
         # self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
         # pass
+        
         self.canvas.delete(ALL)
         self.create_background()
+        
         # self.create_logo()
         # self.search_bar()
         self.button_state()
+        self.menuTab_logo()
         
 
 
