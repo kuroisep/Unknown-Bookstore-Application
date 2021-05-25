@@ -235,15 +235,14 @@ class Shop_main_screen:
         self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
         self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
 
-        
-
+   
     def menuTab(self):
         
-        Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
-        Frame1.place(x=0, y=0, height=30, width=1280)
+        self.Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
+        self.Frame1.place(x=0, y=0, height=30, width=1280)
         
-        tk.Label(Frame1, text=' Welcome User',background="#1200db", fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12)
-               ).grid(column=0, row=0)
+        # tk.Label(Frame1, text=' Welcome User',background="#1200db", fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12)
+        #        ).grid(column=0, row=0)
 
 
         Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
@@ -802,16 +801,17 @@ class Shop_main_screen:
                 self.current_bookcart.append(str(i))
 
         
-
     def shift(self):
-            x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
-            if(x2<0 or y1<0): #reset the coordinates
-                x1 = self.inner_payment_slidetext.winfo_width()
-                y1 = self.inner_payment_slidetext.winfo_height()//2
-                self.inner_payment_slidetext.coords("marquee",x1,y1)
-            else:
-                self.inner_payment_slidetext.move("marquee", -2, 0)
-            self.inner_payment_slidetext.after(1000//self.fps,self.shift)
+        x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
+        if(x2<0 or y1<0): #reset the coordinates
+            x1 = self.inner_payment_slidetext.winfo_width()
+            y1 = self.inner_payment_slidetext.winfo_height()//2
+            self.inner_payment_slidetext.coords("marquee",x1,y1)
+        else:
+            self.inner_payment_slidetext.move("marquee", -2, 0)
+        self.inner_payment_slidetext.after(1000//self.fps,self.shift)      
+
+    
        
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1280, height=720)   
@@ -820,8 +820,7 @@ class Shop_main_screen:
         paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
         paymentPageFrame1.place(x=0, y=0, height=50, width=1280)
         
-        ############# Main program ###############
-        ##Text Slide
+         ##Text Slide
         text_var="______|   Welcome to the land of bookS   |______" 
         self.inner_payment_slidetext = Canvas(paymentPageFrame1, width=1000, height=100)   
         self.inner_payment_slidetext.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='black',tags=("marquee",),anchor='w')
@@ -829,11 +828,12 @@ class Shop_main_screen:
         
         width = x2-x1
         # height = y2-y1
-        self.inner_payment_slidetext['width']=width+500
-        self.inner_payment_slidetext['height']=60
+        self.inner_payment_slidetext['width'] = width+500
+        self.inner_payment_slidetext['height'] = 60
         self.fps=40    #Change the fps to make the animation faster/slower
         self.inner_payment_slidetext.pack()
-        
+        ############# Main program ###############
+       
         ##cart table
         paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
         paymentPageFrame2.place(x=50, y=55, height=700, width=1180)
