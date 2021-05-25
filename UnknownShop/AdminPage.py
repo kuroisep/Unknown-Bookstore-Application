@@ -20,6 +20,35 @@ sys.path.append(parentdir)
 
 from UnknownShop import LoginPage
 
+class Stack:
+    def __init__(self):
+        self.items = []
+    def push(self,data):
+        self.items.append(data)
+    def pop(self):
+        return self.items.pop()
+    def __str__(self):
+        return str(self.items)
+    def isEmpty(self):
+        return self.items == []
+    def peek(self):
+        return self.items[len(self.items)-1]
+    def size(self):
+        return len(self.items)
+class Queue:
+    def __init__(self):
+        self.items = []
+    def isEmpty(self):
+        return self.items == []
+    def enqueue(self, item):
+        self.items.append(item)
+    def dequeue(self):
+        return self.items.pop(0)
+    def size(self):
+        return len(self.items)
+    def __str__(self):
+        return str(self.items)
+
 class main_admin_screen:
     #---------------------------    init     -------------------------------------------------------------#
     def __init__(self):
@@ -28,6 +57,7 @@ class main_admin_screen:
         x = (700) - (750/2)
         y = (420) - (500/2)
         self.admin_window.geometry("1280x720+%d+%d" % (x, y))
+        
 
         # LOGO
         img_logo_path = "Shop_Page\PICTURE\logo.png"
@@ -101,6 +131,7 @@ class main_admin_screen:
         # print(self.df)
         self.order_data = self.df.values.tolist()
 
+
         # Order Detail
         self.df1 = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
         self.order_detail_data = self.df1.values.tolist()
@@ -127,7 +158,7 @@ class main_admin_screen:
         menuframe = LabelFrame(self.admin_window, text="Menu")
         menuframe.place(x=2, y=150, height=570, width=200)
         Button(menuframe, text='Check Order', width=27,
-               command=self.orderPage).grid(row=0, padx=5, pady=10)
+               command=self.orderPage).grid(row=0, padx=10, pady=10)
         Button(menuframe, text='Order history', width=27,
                command=self.orderhistoryPage).grid(row=1, padx=5, pady=10)
         Button(menuframe, text='Book management', width=27,
@@ -238,11 +269,19 @@ class main_admin_screen:
         self.order_option_frame = LabelFrame(self.orderframe, text="Option")
         self.order_update_button = Button(
             self.order_option_frame, text='Update', command=self.orderPage_update_state, state=DISABLED)
-        self.order_update_button.grid(row=0, column=1, padx=10, pady=5)
+        self.order_update_button.grid(row=0, column=0, padx=10, pady=5)
 
         self.order_detail_button = Button(
             self.order_option_frame, text='Order Details', command=self.orderdetailPage)
-        self.order_detail_button.grid(row=0, column=2, padx=10, pady=5)
+        self.order_detail_button.grid(row=0, column=1, padx=10, pady=5)
+        self.order_option_frame.place(x=750, y=430, height=200, width=250)
+        self.order_search_entry = Text(self.order_option_frame, width=10, height=1)
+        self.order_search_entry.grid(row=1, column=0, padx=10, pady=5)
+        self.order_search_button = Button(
+            self.order_option_frame, text='Search Order', command=self.search_order_treeview)
+        self.order_search_entry.insert(1.0, 'Order ID')
+        self.order_search_entry.bind("<Button-1>", self.order_id_clear)
+        self.order_search_button.grid(row=1, column=1, padx=10, pady=5)
         self.order_option_frame.place(x=750, y=430, height=200, width=250)
 
         self.orderframe.place(x=220, y=25, height=680, width=1040)
@@ -282,6 +321,7 @@ class main_admin_screen:
         curItem = self.order_treeview.focus()
         cur = self.order_treeview.item(curItem)['values']
         if cur == '':
+            self.order_update_button.config(state=DISABLED)
             return
         if len(cur) != 9:
             for i in range(9-len(cur)):
@@ -312,7 +352,18 @@ class main_admin_screen:
         self.order_completedtime_entry.insert(1.0, self.CompletedTime.get())
         self.order_address_entry.insert(1.0, self.Address.get())
         self.order_status_entry.insert(0, self.Status.get())
-
+    ###############################    Searching    <Order Page> #########################################################
+    def order_id_clear(self,e):
+        if self.order_search_entry.get('1.0', 'end-1c') == 'Order ID':
+            self.order_search_entry.delete('1.0', END)
+    def search_order_treeview(self):
+        query = self.order_search_entry.get('1.0','end-1c')
+        selections = []
+        for child in self.order_treeview.get_children(''):
+            # print(self.order_treeview.item(child)['values'][1])
+            if query in self.order_treeview.item(child)['values'][1]:   # compare strings in  lower cases.
+                selections.append(child)
+        self.order_treeview.selection_set(selections)
     ###############################    Treeview sort   <Function> #######################################################
     def treeview_sort_column(self, tv, col, reverse):
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
@@ -438,8 +489,6 @@ class main_admin_screen:
          'Sales': list(check.values())
         }
         dataplot = DataFrame(data_plot,columns=['Date','Sales'])
-
-        print(data_plot)
         # ax2.plot([1, 2, 3, 4, 5, 6, 7, 8], [5, 6, 1, 3, 8, 9, 3, 5])
         dataplot = dataplot[['Date','Sales']].groupby('Date').sum()
         dataplot.plot(kind='line', legend=True, ax=ax2, color='r',marker='o', fontsize=5)
@@ -472,11 +521,11 @@ class main_admin_screen:
                 self.book_treeview, _col, False))
 
         self.book_treeview.column(0, anchor='center', width=50)
-        self.book_treeview.column(1, anchor='center', width=100)
-        self.book_treeview.column(2, anchor='center', width=150)
-        self.book_treeview.column(3, anchor='center', width=150)
-        self.book_treeview.column(4, anchor='center', width=150)
-        self.book_treeview.column(5, anchor='center', width=150)
+        self.book_treeview.column(1, anchor='center', width=80)
+        self.book_treeview.column(2, anchor='w', width=300)
+        self.book_treeview.column(3, anchor='w', width=150)
+        self.book_treeview.column(4, anchor='center', width=170)
+        self.book_treeview.column(5, anchor='center', width=100)
 
         for i in self.book_data:
             self.book_treeview.insert('', 'end', values=[i][0])
@@ -824,6 +873,8 @@ class main_admin_screen:
         curItem = self.book_treeview.focus()
         cur = self.book_treeview.item(curItem)['values']
         if cur == '':
+            self.update_book_button.config(state=DISABLED)
+            self.delete_book_button.config(state=DISABLED)
             return
         if len(cur) != 10:
             for i in range(10-len(cur)):
@@ -1027,7 +1078,7 @@ class main_admin_screen:
         self.member_delete_button = Button(
             self.member_option_frame, text='Delete', state=DISABLED,command=self.memberkPage_delete_state)
         self.member_delete_button.grid(row=0, column=2, padx=10, pady=5)
-        self.member_add_button = Button(self.member_option_frame, text='Register',command=self.register_member)
+        self.member_add_button = Button(self.member_option_frame, text='Register',command=self.add_member)
         self.member_add_button.grid(row=1, column=1, padx=10, pady=5)
 
         self.member_option_frame.place(x=750, y=430, height=200, width=250)
@@ -1040,6 +1091,8 @@ class main_admin_screen:
         curItem = self.member_treeview.focus()
         cur = self.member_treeview.item(curItem)['values']
         if cur == '':
+            self.member_update_button.config(state=DISABLED)
+            self.member_delete_button.config(state=DISABLED)
             return
         if len(cur) != 9:
             for i in range(9-len(cur)):
@@ -1072,7 +1125,7 @@ class main_admin_screen:
         self.email_entry.insert(1.0, self.email.get())
         self.tel_entry.insert(1.0, self.telphone.get())
     def password_clear(self,e):
-        if self.password_entry.get('1.0', END) != '********':
+        if self.password_entry.get('1.0', 'end-1c') == '********':
             self.password_entry.delete('1.0', END)
     ##################################    Delete Button   <Member Page>  #######################################################
     def memberkPage_delete_state(self):
@@ -1091,16 +1144,16 @@ class main_admin_screen:
             treeview_update = treeview.values.tolist()
             for i in treeview_update:
                 self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[2]])
-
             messagebox.showinfo("Info", "Deleted member \n[ {} {} ]".format(self.fname.get(),self.lname.get()), parent=self.memberframe)
+            
     ##################################    Update Button   <Member Page>  #######################################################
     def memberPage_update_state(self):
         if(messagebox.askokcancel("Confirmation", "Update Member \n[ {} {} ] ?".format(self.fname.get(),self.lname.get()), parent=self.memberframe)) == True:
             self.member_delete_button.config(state=DISABLED)
             self.member_update_button.config(state=DISABLED)
-
-            self.df3.loc[self.df3['USER'] == self.username.get(
-            ), 'PASSWORD'] = self.password_entry.get('1.0', 'end-1c')
+            if self.password_entry.get('1.0', 'end-1c') != '********' and self.password_entry.get('1.0', 'end-1c') != '':
+                self.df3.loc[self.df3['USER'] == self.username.get(
+                ), 'PASSWORD'] = self.password_entry.get('1.0', 'end-1c')
             self.df3.loc[self.df3['USER'] == self.username.get(
             ), 'NAME'] = self.fname_entry.get('1.0', 'end-1c')
             self.df3.loc[self.df3['USER'] == self.username.get(
@@ -1121,124 +1174,118 @@ class main_admin_screen:
             for i in treeview_update:
                 self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[2]])
     ##################################    Register Button   <Member Page>  #######################################################
-    def register_member(self):
-        self.register_screen = Toplevel(self.memberframe)
-        self.register_screen.title("Register")
-        self.register_screen.focus_set()
-        self.register_screen.grab_set()
-        self.register_screen.resizable(0, 0)
-        self.myfont = 'TRACK'
+    def add_member(self):
+         #------------------------------    init     ------------------------------------------------------------#
+        self.add_member_screen = Toplevel(self.memberframe)
+        self.add_member_screen.title("Register member")
+        self.add_member_screen.focus_set()
+        self.add_member_screen.grab_set()
+        self.add_member_screen.resizable(0, 0)
+        x = (960) - (620/2)
+        y = (540) - (310/2)
+        self.add_member_screen.geometry("620x260+%d+%d" % (x, y))
 
-        x = (960) - (750/2)
-        y = (540) - (650/2)
-        self.register_screen.geometry("750x600+%d+%d" % (x, y))
+        #------------------------------    Detail Plane     ------------------------------------------------------------#
+        self.add_member_frame = LabelFrame(
+            self.add_member_screen, text='Details')
+        Label(self.add_member_frame, text="Username").grid(
+            row=0, column=0, padx=10, pady=5, sticky="E")
+        self.addmember_username_entry = Text(self.add_member_frame, width=20, height=1)
+        self.addmember_username_entry.insert(1.0, '')
+        self.addmember_username_entry.grid(row=0, column=1, padx=10, pady=5)
+        Label(self.add_member_frame, text="Password").grid(
+            row=1, column=0, padx=10, pady=5, sticky="E")
+        self.addmember_pass_entry = Text(self.add_member_frame, width=20, height=1)
+        self.addmember_pass_entry.insert(1.0, '')
+        self.addmember_pass_entry.grid(row=1, column=1, padx=10, pady=5)
+        Label(self.add_member_frame, text="Confrimpassword").grid(
+            row=2, column=0, padx=10, pady=5, sticky="E")
+        self.addmember_cpass_entry = Text(self.add_member_frame, width=20, height=1)
+        self.addmember_cpass_entry.insert(1.0, '')
+        self.addmember_cpass_entry.grid(
+            row=2, column=1, padx=10, pady=5)
+        Label(self.add_member_frame, text="Firstname").grid(
+            row=0, column=2, padx=10, pady=5, sticky="E")
+        self.addmember_fname_entry = Text(
+            self.add_member_frame, width=20, height=1)
+        self.addmember_fname_entry.insert(1.0, '')
+        self.addmember_fname_entry.grid(
+            row=0, column=3, padx=10, pady=5)
+        Label(self.add_member_frame, text="Lastname").grid(
+            row=1, column=2, padx=10, pady=5, sticky="E")
+        self.addmember_lname_entry = Text(
+            self.add_member_frame, width=20, height=1)
+        self.addmember_lname_entry.insert(1.0, '')
+        self.addmember_lname_entry.grid(
+            row=1, column=3, padx=10, pady=5)
+        Label(self.add_member_frame, text="Gender").grid(
+            row=3, column=0, padx=10, pady=5, sticky="E")
+        self.addmember_gender_entry = Text(
+            self.add_member_frame, width=20, height=1)
+        self.addmember_gender_entry.insert(1.0, '')
+        self.addmember_gender_entry.grid(row=3, column=1, padx=10, pady=5)
+        Label(self.add_member_frame, text="Birthday").grid(
+            row=4, column=0, padx=10, pady=5, sticky="E")
+        self.addmember_birthday_entry = Text(self.add_member_frame, width=20, height=1)
+        self.addmember_birthday_entry.insert(1.0, '')
+        self.addmember_birthday_entry.grid(row=4, column=1, padx=10, pady=5)
+        Label(self.add_member_frame, text="Email").grid(
+            row=3, column=2, padx=10, pady=5, sticky="E")
+        self.addmember_email_entry = Text(self.add_member_frame, width=20, height=1)
+        self.addmember_email_entry.insert(1.0, '')
+        self.addmember_email_entry.grid(
+            row=3, column=3, padx=10, pady=5)
+        Label(self.add_member_frame, text="Phonenumber").grid(
+            row=2, column=2, padx=10, pady=5, sticky="E")
+        self.addmember_tel_entry = Text(
+            self.add_member_frame, width=20, height=1)
+        self.addmember_tel_entry.insert(1.0, '')
+        self.addmember_tel_entry.grid(row=2, column = 3, padx=10, pady=5)
 
-        regis_bg_path = "UnknownShop\Picture\LoginPage\REGISTER.png"
-        self.regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
 
-        canvas = Canvas(self.register_screen, width=750, height=600)
-        canvas.pack(fill="both", expand=True)
-        canvas.create_image(0, 0, image=self.regis_bg, anchor="nw")
+        #------------------------------    Option Detail Plane     ------------------------------------------------------------#
+        self.add_member_option_frame = LabelFrame(self.add_member_screen, text='')
+        self.clear_addmember_button = Button(
+            self.add_member_option_frame, text='Clear',command=self.clear_addmember)
+        self.clear_addmember_button.grid(row=0, column=0, padx=12, pady=0)
+        self.save_addmember_button = Button(
+            self.add_member_option_frame, text='Save',command=self.save_member)
+        self.save_addmember_button.grid(row=0, column=1, padx=12, pady=0)
 
-        self.username = StringVar()
-        self.password = StringVar()
-        self.confpassword = StringVar()
-        self.name = StringVar()
-        self.lastname = StringVar()
-        self.email = StringVar()
-        self.gender1 = IntVar()
-        self.gender2 = IntVar()
-        self.gender_choice1 = IntVar(self.register_screen)
-        self.gender_choice2 = IntVar(self.register_screen)
-        self.telphone = StringVar()
 
-        canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
-
-        canvas.create_text(65, 150, text="Username *", font=self.myfont)
-        self.new_username_entry = ttk.Entry(self.register_screen, textvariable=self.username)
-        canvas.create_window(115, 175, window=self.new_username_entry, width=180)
-
-        self.new_password_entry = ttk.Entry(self.register_screen, textvariable=self.password, show='●')
-        canvas.create_text(290, 150, text="Password *", font=self.myfont)
-        canvas.create_window(340, 175, window=self.new_password_entry, width=180)
-
-        self.confpassword_entry = ttk.Entry(self.register_screen, textvariable=self.confpassword, show='●')
-        canvas.create_text(580, 150, text="Confirm Password *", font=self.myfont)
-        canvas.create_window(610, 175, window=self.confpassword_entry, width=180)
-
-        self.new_fname_entry = ttk.Entry(self.register_screen, textvariable=self.name)
-        canvas.create_text(50, 225, text="Name *", font=self.myfont)
-        canvas.create_window(115, 250, window=self.new_fname_entry, width=180)
-
-        self.new_lname_entry = ttk.Entry(self.register_screen, textvariable=self.lastname)
-        canvas.create_text(292, 225, text="Last Name *", font=self.myfont)
-        canvas.create_window(340, 250, window=self.new_lname_entry, width=180)
-
-        canvas.create_text(500, 310, text="Gender *", font=self.myfont)
-
-        self.gender_choice1 = Checkbutton(self.register_screen, text="Male",  command=self.my_upd, variable=self.gender1)
-        self.gender_choice2 = Checkbutton(self.register_screen, text="Female", command=self.my_upd, variable=self.gender2)
-
-        canvas.create_window(450, 350, window=self.gender_choice1)
-        canvas.create_window(550, 350, window=self.gender_choice2)
-
-        
-        #DATE Combobox
-        canvas.create_text(470, 225, text="Day", font=self.myfont)
-        self.birth_date_entry = Combobox(self.register_screen, width=3,value=['----','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
-                                                                             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
-                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
-        self.birth_date_entry.current(0)
-        canvas.create_window(470, 250, window=self.birth_date_entry)
-        #MONTH Combobox
-        canvas.create_text(550, 225, text="Month", font=self.myfont)
-        self.birth_month_entry = Combobox(self.register_screen, width=5, value=['----','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
-        self.birth_month_entry.current(0)
-        canvas.create_window(550, 250, window=self.birth_month_entry)
-        #YEAR Combobox
-        canvas.create_text(630, 225, text="Year", font=self.myfont)
-        year_list = ['----']
-        for i in range(1920,2022):
-            year_list.append(str(i))
-        self.birth_year_entry = Combobox(self.register_screen, width=5, value=year_list)
-        self.birth_year_entry.current(0)
-        canvas.create_window(630, 250, window=self.birth_year_entry)
-        
-        canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
-        self.new_email_entry = ttk.Entry(self.register_screen, textvariable=self.email)
-        canvas.create_window(150, 335, window=self.new_email_entry, width=250)
-
-        canvas.create_text(85, 385, text="Phone Number * ", font=self.myfont)
-        self.telphone_entry = ttk.Entry(self.register_screen, textvariable=self.telphone)
-        canvas.create_window(150, 410, window=self.telphone_entry, width=250)
-
-        regis_button = Button(self.register_screen, text="Register",
-                            )
-        canvas.create_window(400, 420, window=regis_button)
-        clear_button = Button(self.register_screen, text="Clear",
-                            )
-        canvas.create_window(600, 420, window=clear_button)
-
-        cancel_button = Button(self.register_screen, text="CANCEL",
-                           width=20)
-        canvas.create_window(600, 500, window=cancel_button)
-    def my_upd(self):
-        i = 0
-        if(self.gender1.get() == 1):
-            i = i+1
-        if(self.gender2.get() == 1):
-            i = i+1
-        if(i >= 1):
-            if(self.gender1.get() != 1):
-                self.gender_choice1.config(state='disabled')
-            if(self.gender2.get() != 1):
-                self.gender_choice2.config(state='disabled')
+        self.add_member_option_frame.place(x=410, y=200, height=50, width=200)
+        self.add_member_frame.place(x=10, y=10, height=190, width=600)
+    def clear_addmember(self):
+        if(messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.add_member_screen)) == True:
+            self.addmember_username_entry.delete('1.0', END)
+            self.addmember_pass_entry.delete('1.0', END)
+            self.addmember_cpass_entry.delete('1.0', END)
+            self.addmember_fname_entry.delete('1.0', END)
+            self.addmember_lname_entry.delete('1.0', END)
+            self.addmember_gender_entry.delete('1.0', END)
+            self.addmember_birthday_entry.delete('1.0', END)
+            self.addmember_email_entry.delete('1.0', END)
+            self.addmember_tel_entry.delete('1.0', END)
+    def save_member(self):
+        if self.addmember_username_entry.get('1.0', 'end-1c') != '' and self.addmember_pass_entry.get('1.0', 'end-1c') != '' and self.addmember_cpass_entry.get('1.0', 'end-1c') != '' and self.addmember_fname_entry.get('1.0', 'end-1c') != '' and self.addmember_lname_entry.get('1.0', 'end-1c') != '' and self.addmember_gender_entry.get('1.0', 'end-1c') != '' and self.addmember_birthday_entry.get('1.0', 'end-1c') != '' and self.addmember_email_entry.get('1.0', 'end-1c') != '' and self.addmember_tel_entry.get('1.0', 'end-1c') != '' :
+            if(messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.add_member_screen)) == True:
+                with open('login.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(['F',self.addmember_username_entry.get('1.0', 'end-1c'), self.addmember_pass_entry.get('1.0', 'end-1c'),
+                                    self.addmember_fname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_lname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_gender_entry.get('1.0', 'end-1c'),self.addmember_birthday_entry.get('1.0', 'end-1c'), self.addmember_email_entry.get('1.0', 'end-1c'), str(self.addmember_tel_entry.get('1.0', 'end-1c')),'account'])
+                self.addmember_username_entry.delete('1.0', END)
+                self.addmember_pass_entry.delete('1.0', END)
+                self.addmember_cpass_entry.delete('1.0', END)
+                self.addmember_fname_entry.delete('1.0', END)
+                self.addmember_lname_entry.delete('1.0', END)
+                self.addmember_gender_entry.delete('1.0', END)
+                self.addmember_birthday_entry.delete('1.0', END)
+                self.addmember_email_entry.delete('1.0', END)
+                self.addmember_tel_entry.delete('1.0', END)
+                self.add_member_screen.destroy()
+                messagebox.showinfo("Alert", "Register Sucessfully!!")
         else:
-            self.gender_choice1.config(state='normal')
-            self.gender_choice2.config(state='normal')
-
-
+            messagebox.showerror("Error", "Please fill out all fields required", parent=self.add_member_screen)
 
     def destoryframe(self):
         self.orderframe.destroy()
