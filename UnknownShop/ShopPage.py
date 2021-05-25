@@ -22,9 +22,6 @@ import pandas as pd
 from time import sleep
 import time
 
-from tkinter import ttk  # Normal Tkinter.* widgets are not themed!
-from ttkthemes import ThemedTk
-
 
 
 class Shop_main_screen:
@@ -52,31 +49,20 @@ class Shop_main_screen:
         self.Rating = StringVar()
         self.Example = StringVar()
 
-        # """ 
-        # THEAM
-        # """
-        # style = ttk.Style(self.shop_window)
-        # # # Import the tcl file
-        # # self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
-
-        # # Set the theme with the theme_use method
-        # style.theme_use('Adapta')
-        # style.configure('flat.TButton', borderwidth=0)
-        # # style.configure("Treeview", font=('TRACK',13,'bold'))
-        # """ 
-        # THEAM
-        # """
-        # style = ttk.Style(self.shop_window)
-        # style.theme_use("arc")
-        # self.shop_window = ThemedTk(theme="arc")
-        # ttk.Button(self.shop_window, text="Quit", command=self.shop_window.destroy).pack()
-
+        """ 
+        THEAM
+        """
         style = ttk.Style(self.shop_window)
-        style.theme_use('default')
-        # self.shop_window = ThemedTk(theme='aqua')
-        # style = ttk.Style(self.shop_window)
-        # style.theme_use("arc")
-        # ttk.Button(window, text="Quit", command=window.destroy).pack()
+        # Import the tcl file
+        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+
+        # Set the theme with the theme_use method
+        style.theme_use('azure')
+        style.configure('flat.TButton', borderwidth=0)
+        # style.configure("Treeview", font=('TRACK',13,'bold'))
+        """ 
+        THEAM
+        """
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
