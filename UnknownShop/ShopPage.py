@@ -117,7 +117,7 @@ class Shop_main_screen:
         self.paymentPage()
         self.deliveryPage()
         self.create_background()
-        # self.search_bar()
+        self.search_bar()
         self.shift()
         self.menuTab()
 
@@ -192,27 +192,41 @@ class Shop_main_screen:
             after_id = self.banner_label.after(200, self.moveBanner)
         
 
-    def search_bar(self): 
-        self.canvas.create_text(290, 65, text="Search By", font=('TRACK', 12))
+    def search_bar(self):
+        
+        Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12aadb")
+        Frame1.place(x=0, y=90, height=40, width=1280)
 
-        drop1 = ttk.Combobox(self.shop_window, width=10, value=["Arts / Design / Decoration", "Literature", 
+        searchLabel0 = tk.Label(Frame1, text=" ", font=('TRACK', 12))
+        searchLabel0.pack(side= LEFT, padx=50, pady=10)
+
+        searchLabel = tk.Label(Frame1, text="Search By", font=('TRACK', 12))
+        searchLabel.pack(side= LEFT, padx=5, pady=10)
+
+        drop1 = ttk.Combobox(Frame1, width=10, value=["Arts / Design / Decoration", "Literature", 
                                                                 "Administration / Management", "Humanities / Science", 
                                                                 "Children's Books","Career Academic Textbooks", "Psychology"])
         drop1.current((0))
-        drop1.place(x=345, y=50)
+        # drop1.place(x=345, y=100)
+        drop1.pack(side= LEFT, padx=5, pady=10)
 
-        drop2 = ttk.Combobox(self.shop_window, width=10, value=["Code", "Name", "Author"])
+        drop2 = ttk.Combobox(Frame1, width=10, value=["Code", "Name", "Author"])
         drop2.current((0))
-        drop2.place(x=440, y=50)
+        # drop2.place(x=440, y=100)
+        drop2.pack(side= LEFT, padx=5, pady=10)
 
-        nameEntered = ttk.Entry(self.shop_window, width = 50, textvariable = self.Name)
-        nameEntered.place(x=535, y=50)
+        nameEntered = ttk.Entry(Frame1, width = 50, textvariable = self.Name)
+        # nameEntered.place(x=535, y=100)
+        nameEntered.pack(side= LEFT, padx=5, pady=10)
 
-        search_button = ttk.Button(self.shop_window, text = "Search")
-        search_button.place(x=855, y=50)
+        search_button = ttk.Button(Frame1, text = "Search")
+        # search_button.place(x=855, y=100)
+        search_button.pack(side=LEFT, padx=5, pady=10)
 
-        show_all_books_button = ttk.Button(self.shop_window, text = "Clear")
-        show_all_books_button.place(x=943, y=50)
+        show_all_books_button = ttk.Button(Frame1, text = "Clear")
+        # show_all_books_button.place(x=943, y=100)
+        show_all_books_button.pack(side= LEFT, padx=5, pady=10)
+
 
     def menuTab(self):
 
@@ -675,9 +689,9 @@ class Shop_main_screen:
         self.list_img_book = os.listdir('BookPics')
 
 
-        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="20")
+        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="25")
 
-        self.book_treeview.place(x= 20, y=15)
+        self.book_treeview.place(x= 20, y=30)
         self.book_treeview.column(1, anchor='center', width=40)
         self.book_treeview.column(2, anchor='center', width=80)
         self.book_treeview.column(3, anchor='center', width=140)
