@@ -766,18 +766,24 @@ class Shop_main_screen:
             self.book_img_input = 'BookPics\\NOT_FOUND.png'
             self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
             Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
-
+    
     def add_bookcart(self):
+        self.tempprice = 0
         if self.usercart != []:
             for i in self.usercart:
                 if i[0] == self.Code.get():
                     i[2] = str(int(i[2]) + int(self.items_book_spinbox.get()))
                     i[4] = str(float(i[2]) * float(i[3]))
+                    # self.tempprice += float(i[4])
+                    # self.tempprice += self.tempprice
                     print('UserCart :',self.usercart)
+                    # print("\n\n\n",self.tempprice)
                     return
+                    
         self.usercart.append([self.Code.get(),self.Name.get(),str(self.items_book_spinbox.get()),self.Price.get(),self.Price.get()])
         print('UserCart :',self.usercart)
         self.spinboxvar.set(1)
+
     def delete_bookcart(self):
         # print('current :',self.current_bookcart)
         # print('usercart :',self.usercart)
@@ -814,7 +820,7 @@ class Shop_main_screen:
     
        
     def paymentPage(self):
-        self.inner_payment = Canvas(self.canvas, width=1280, height=720)   
+        self.inner_payment = Canvas(self.canvas, width=1280, height=550)   
         self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
 
         paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
@@ -836,19 +842,72 @@ class Shop_main_screen:
        
         ##cart table
         paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
-        paymentPageFrame2.place(x=50, y=55, height=700, width=1180)
+        paymentPageFrame2.place(x=50, y=55, height=500, width=1180)
+
+        paymentPageFrame3 = tk.LabelFrame(paymentPageFrame2, text="Button NA JAJAAJAJ")
+        paymentPageFrame3.place(x=0, y=400, height=80, width=800)
+
+        ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        paymentPageFrame4 = tk.LabelFrame(paymentPageFrame2, text="Bai SEDDDD", fg="blue",bg="white",font=("times new roman",14,"bold"))
+        paymentPageFrame4.place(x=800, y=0, height=480, width=350)
+
+        lebel1 = tk.Label(paymentPageFrame4, text=" Sales : ", width = 15)
+        lebel1.place(x=50, y=10)
+
+        label1_1 = tk.Label(paymentPageFrame4, text=" Total ฿", width = 15)
+        label1_1.place(x=200, y=10)
+
+        lebel2 = tk.Label(paymentPageFrame4, text=" Member : ", width = 15)
+        lebel2.place(x=50, y=50)
+
+        label2_1 = tk.Label(paymentPageFrame4, text=" -15.25 ฿", width = 15)
+        label2_1.place(x=200, y=50)
+
+        lebel3 = tk.Label(paymentPageFrame4, text=" Promotion : ", width = 15)
+        lebel3.place(x=50, y=90)
+
+        label3_1 = tk.Label(paymentPageFrame4, text=" -12.50 ฿", width = 15)
+        label3_1.place(x=200, y=90)
+
+        lebel4 = tk.Label(paymentPageFrame4, text=" Shipping : ", width = 15)
+        lebel4.place(x=50, y=130)
+
+        label4_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 15)
+        label4_1.place(x=200, y=130)
+
+
+        lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 15)
+        lebel5.place(x=50, y=170)
+
+        label5_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 15)
+        label5_1.place(x=200, y=170)
+
+        lebel5 = tk.Label(paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
+        lebel5.place(x=1, y=210)
+
+        lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
+        lebel5.place(x=20, y=250)
+
+        label5_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 10, font=("times new roman",15,"bold"))
+        label5_1.place(x=200, y=250)
+
+        Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.pp , width = 15)
+        Payment_bottom.place(x=170, y=350,anchor="center")
+        ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
         self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5,6), show="headings", height="18")
         yscrollbar = ttk.Scrollbar(paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
         xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
 
+        # self.cart_treeview.place(x= 10, y=0)
         self.cart_treeview.config(xscrollcommand=xscrollbar.set)
         self.cart_treeview.config(yscrollcommand=yscrollbar.set)
 
         yscrollbar.pack(side="right", fill="y")
         xscrollbar.pack(side="bottom", fill="x")
         self.cart_treeview.pack()
-        # self.cart_treeview.place(x=500,y=225,anchor=CENTER)
+        self.cart_treeview.place(x=400,y=200,anchor=CENTER)
         self.cart_treeview.column(1, anchor='center', width=50)
         self.cart_treeview.column(2, anchor='center', width=100)
         self.cart_treeview.column(3, anchor='w', width=300)
@@ -869,20 +928,20 @@ class Shop_main_screen:
             index += 1
 
 
-        Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        Back_bottom = tk.Button(paymentPageFrame3,text="< Back >", command = self.pp, width = 10)    
         # Back_bottom.pack(side = BOTTOM,anchor='')
-        Back_bottom.place(x=300, y=415,anchor="center")
+        Back_bottom.place(x=100, y=30,anchor="center")
 
-        self.Del_botton = tk.Button(paymentPageFrame2,text="< Del >", command = self.delete_bookcart,state=DISABLED)
+        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart,state=DISABLED, width = 10)
         # Del_bottom.pack(side = BOTTOM)    
-        self.Del_botton.place(x=400, y=415,anchor="center")
+        self.Del_botton.place(x=300, y=30,anchor="center")
 
-        Next_bottom = tk.Button(paymentPageFrame2,text="< Next >", command = self.pp )
-        Next_bottom.place(x=650, y=415,anchor="center")
+        Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.pp , width = 10)
+        Next_bottom.place(x=500, y=30,anchor="center")
         # Next_bottom.pack(side = BOTTOM) 
 
-        Seemore_bottom = tk.Button(paymentPageFrame2,text="< See more >", command = self.pp )
-        Seemore_bottom.place(x=550, y=415,anchor="center")
+        Seemore_bottom = tk.Button(paymentPageFrame3,text="< See more >", command = self.pp , width = 10)
+        Seemore_bottom.place(x=700, y=30,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
         
