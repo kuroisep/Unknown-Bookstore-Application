@@ -234,7 +234,7 @@ class Shop_main_screen:
                ).grid(column=0, row=0, padx=20, pady=10)
         tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
                ).grid(column=1, row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_categoryPage
+        tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_selected_categoryPages
                ).grid(column=2, row=0, padx=5, pady=10)
         tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_paymentPage
                ).grid(column=3,row=0, padx=5, pady=10)
@@ -329,7 +329,7 @@ class Shop_main_screen:
         # bbuy_button.grid(row=2,column=0,padx=20, pady=5)
     
 
-        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15, command= self.show_categoryPage)
+        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15, command= self.show_selected_categoryPages)
         buy_button.grid(row=2,column=2,padx=80, pady=10)
 
         Status_button = tk.Button(HomePageFrame2,text="Status",width=15, command= self.show_deliveryPage)
@@ -561,8 +561,17 @@ class Shop_main_screen:
 
         
     def selected_categoryPages(self):
-        self.inner_selected_categoryPages = Canvas(self.canvas, width=1000, height=550,bd=0, highlightthickness=0)
+        self.inner_selected_categoryPages = Canvas(self.canvas, width=1280, height=720,bd=0, highlightthickness=0)
         # self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
+
+        self.selected_frame1 = ttk.LabelFrame(self.inner_selected_categoryPages, text="selected_categoryPages")
+        self.selected_frame1.place(x=100, y=0,height=620, width=1050)
+
+        Button_frame = ttk.LabelFrame(self.selected_frame1, text="Button State")
+        Button_frame.place(x=300, y=500,height=100, width=500)
+
+        Nextbutton = tk.Button(Button_frame,text="Buy Books", width=15, command= self.show_categoryPage)
+        Nextbutton.grid(row=2,column=3,padx=180, pady=20)
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas,width=1280, height=720,bd=0, highlightthickness=0)
@@ -958,8 +967,6 @@ class Shop_main_screen:
         ContactUSPageFrame3 = tk.LabelFrame(ContactUSPageFrame1 , text="Button option")
         ContactUSPageFrame3.place(x=10, y=480, height=50, width=480)
 
-
-
         ###############  ContactUSPageFrame1 : "Contact Us"
         ##############   ContactUSPageFrame1_1 : "Feedback" 
         FeedbackFrame1 = tk.LabelFrame( ContactUSPageFrame1_1 , text="BOX TEXT")
@@ -970,6 +977,8 @@ class Shop_main_screen:
 
         ##############   ContactUSPageFrame2 : "Chat"
         ##############   ContactUSPageFrame3 : "Button option"
+
+
 
     def printcomment(self):
         # self.commenttext2.config(text=self.commentbox.get(1.0,END))
@@ -1010,6 +1019,11 @@ class Shop_main_screen:
         self.infomationPage()
         self.canvas.create_window(0, 100, anchor=NW, window=self.inner_infomation)
 
+    def show_selected_categoryPages(self): 
+        self.delete_canvas()
+        self.selected_categoryPages()
+        self.canvas.create_window(0, 100, anchor=NW, window=self.inner_selected_categoryPages)
+     
     def show_categoryPage(self):
         self.delete_canvas()
         self.canvas.create_window(0, 100, anchor=NW, window=self.inner_category)
