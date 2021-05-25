@@ -49,20 +49,20 @@ class Shop_main_screen:
         self.Rating = StringVar()
         self.Example = StringVar()
 
-        # """ 
-        # THEAM
-        # """
-        # style = ttk.Style(self.shop_window)
-        # # Import the tcl file
-        # self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+        """ 
+        THEAM
+        """
+        style = ttk.Style(self.shop_window)
+        # Import the tcl file
+        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
 
-        # # Set the theme with the theme_use method
-        # style.theme_use('azure')
-        # style.configure('flat.TButton', borderwidth=0)
-        # # style.configure("Treeview", font=('TRACK',13,'bold'))
-        # """ 
-        # THEAM
-        # """
+        # Set the theme with the theme_use method
+        style.theme_use('azure')
+        style.configure('flat.TButton', borderwidth=0)
+        # style.configure("Treeview", font=('TRACK',13,'bold'))
+        """ 
+        THEAM
+        """
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -228,18 +228,19 @@ class Shop_main_screen:
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
     def menuTab_logo(self):
+        # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
+        # self.Frame0.place(x=0, y=0, height=75, width=100)
+
         img_logo_path = "Shop_Page\PICTURE\logo.png"
         self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
         self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
 
-        # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
-        # self.Frame0.place(x=0, y=0, height=75, width=100)
+        
 
     def menuTab(self):
-        self.menuTab_logo()
-
+        
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
-        Frame1.place(x=100, y=0, height=30, width=1280)
+        Frame1.place(x=0, y=0, height=30, width=1280)
         
         tk.Label(Frame1, text=' Welcome User',background="#1200db", fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12)
                ).grid(column=0, row=0)
@@ -261,7 +262,7 @@ class Shop_main_screen:
         tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_ContactUSPage
                ).grid(column=5,row=0, padx=5, pady=10)
 
-        
+        self.menuTab_logo()
 
     def value_set_one(self):
         self.value = 1
@@ -341,10 +342,7 @@ class Shop_main_screen:
         buy_button = tk.Button(HomePageFrame2,text="1", width=10)
         buy_button.grid(row=0,column=0,padx=20, pady=5)
         buy_button = tk.Button(HomePageFrame2,text="2", width=10)
-        buy_button.grid(row=1,column=0,padx=20, pady=5)
-        # bbuy_button = tk.Button(HomePageFrame2,text="3", width=10)
-        # bbuy_button.grid(row=2,column=0,padx=20, pady=5)
-    
+        buy_button.grid(row=1,column=0,padx=20, pady=5)    
 
         buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15, command= self.show_selected_categoryPages)
         buy_button.grid(row=2,column=2,padx=80, pady=10)
@@ -358,9 +356,6 @@ class Shop_main_screen:
         ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15,  command= self.show_ContactUSPage)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
        
-        
-
-        
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
@@ -466,7 +461,6 @@ class Shop_main_screen:
             self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
             self.user_image.pack()
         
-
     def edit_infomation_state(self):
         if str(self.name_entry['state']) == 'disabled':
             self.name_entry.config(state=NORMAL)
@@ -578,26 +572,26 @@ class Shop_main_screen:
 
         
     def selected_categoryPages(self):
-        self.inner_selected_categoryPages = Canvas(self.canvas, width=1280, height=720,bd=0, highlightthickness=0)
+        self.inner_selected_categoryPages = Canvas(self.canvas, width=1280, height=550,bd=0, highlightthickness=0)
         # self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
 
         self.selected_frame1 = ttk.LabelFrame(self.inner_selected_categoryPages, text="selected_categoryPages")
-        self.selected_frame1.place(x=100, y=0,height=620, width=1050)
+        self.selected_frame1.place(x=100, y=0,height=520, width=1050)
 
         Button_frame = ttk.LabelFrame(self.selected_frame1, text="Button State")
-        Button_frame.place(x=300, y=500,height=100, width=500)
+        Button_frame.place(x=300, y=400,height=100, width=500)
 
         Nextbutton = tk.Button(Button_frame,text="Buy Books", width=15, command= self.show_categoryPage)
         Nextbutton.grid(row=2,column=3,padx=180, pady=20)
 
     def categoryPage(self):
-        self.inner_category = Canvas(self.canvas,width=1280, height=720,bd=0, highlightthickness=0)
+        self.inner_category = Canvas(self.canvas,width=1280, height=550,bd=0, highlightthickness=0)
         # self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
 
 
         ##Frame for book details
         self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
-        self.detail_frame.place(x=20, y=0,height=620, width=650)
+        self.detail_frame.place(x=20, y=0,height=540, width=650)
 
         self.picbook_frame = ttk.LabelFrame(self.detail_frame, text="picbook_frame")
         self.picbook_frame.place(x=10, y=0,height=330, width=230)
@@ -609,13 +603,13 @@ class Shop_main_screen:
         self.example_frame.place(x=10, y=350,height=100, width=600)
         
         self.option_frame = ttk.LabelFrame(self.detail_frame, text="option_frame")
-        self.option_frame.place(x=120, y=500,height=60, width=360)
+        self.option_frame.place(x=120, y=450,height=60, width=360)
 
 
 
         # Frame for book_TreeView
         frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
-        frame1.place(x=680, y=0, height=620, width=590)
+        frame1.place(x=680, y=0, height=540, width=590)
 
        
 
@@ -692,9 +686,9 @@ class Shop_main_screen:
         self.list_img_book = os.listdir('BookPics')
 
 
-        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="25")
+        self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="23")
 
-        self.book_treeview.place(x= 20, y=30)
+        self.book_treeview.place(x= 20, y=10)
         self.book_treeview.column(1, anchor='center', width=40)
         self.book_treeview.column(2, anchor='center', width=80)
         self.book_treeview.column(3, anchor='center', width=140)
