@@ -34,7 +34,7 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
-        pathcursor = "BookPics\ADM_AM003.png"
+
         # self.pathcursor = ImageTk.PhotoImage(Image.open(pathcursor).resize((50, 50)))
         self.shop_window.configure(cursor='watch')
 
@@ -195,44 +195,48 @@ class Shop_main_screen:
     def search_bar(self):
         
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12aadb")
-        Frame1.place(x=0, y=90, height=40, width=1280)
+        Frame1.place(x=0, y=75, height=40, width=1280)
 
-        searchLabel0 = tk.Label(Frame1, text=" ", font=('TRACK', 12))
-        searchLabel0.pack(side= LEFT, padx=50, pady=10)
+        searchLabel0 = tk.Label(Frame1, text=":", font=('TRACK', 12))
+        searchLabel0.pack(side= LEFT, padx=125, pady=10, anchor=CENTER)
 
         searchLabel = tk.Label(Frame1, text="Search By", font=('TRACK', 12))
-        searchLabel.pack(side= LEFT, padx=5, pady=10)
+        searchLabel.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        drop1 = ttk.Combobox(Frame1, width=10, value=["Arts / Design / Decoration", "Literature", 
+        drop1 = ttk.Combobox(Frame1, width=10, value=["All","Arts / Design / Decoration", "Literature", 
                                                                 "Administration / Management", "Humanities / Science", 
                                                                 "Children's Books","Career Academic Textbooks", "Psychology"])
         drop1.current((0))
         # drop1.place(x=345, y=100)
-        drop1.pack(side= LEFT, padx=5, pady=10)
+        drop1.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        drop2 = ttk.Combobox(Frame1, width=10, value=["Code", "Name", "Author"])
+        drop2 = ttk.Combobox(Frame1, width=10, value=["All","Code", "Name", "Author"])
         drop2.current((0))
         # drop2.place(x=440, y=100)
-        drop2.pack(side= LEFT, padx=5, pady=10)
+        drop2.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
         nameEntered = ttk.Entry(Frame1, width = 50, textvariable = self.Name)
         # nameEntered.place(x=535, y=100)
-        nameEntered.pack(side= LEFT, padx=5, pady=10)
+        nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        search_button = ttk.Button(Frame1, text = "Search")
+        search_button = ttk.Button(Frame1, text = "Search", command = self.show_categoryPage)
         # search_button.place(x=855, y=100)
-        search_button.pack(side=LEFT, padx=5, pady=10)
+        search_button.pack(side=LEFT, padx=5, pady=10, anchor=CENTER)
 
         show_all_books_button = ttk.Button(Frame1, text = "Clear")
         # show_all_books_button.place(x=943, y=100)
-        show_all_books_button.pack(side= LEFT, padx=5, pady=10)
-
+        show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
     def menuTab(self):
 
+        Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12ad5b")
+        Frame0.place(x=0, y=0, height=75, width=100)
+
         img_logo_path = "Shop_Page\PICTURE\logo.png"
-        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 85)))
-        self.canvas.create_image(0, 0, image=self.img_logo, anchor="nw")
+        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path))
+        self.img_logo.place(x=0, y=0)
+
+
 
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
         Frame1.place(x=100, y=0, height=30, width=1280)
