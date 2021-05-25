@@ -49,20 +49,20 @@ class Shop_main_screen:
         self.Rating = StringVar()
         self.Example = StringVar()
 
-        """ 
-        THEAM
-        """
-        style = ttk.Style(self.shop_window)
-        # Import the tcl file
-        self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+        # """ 
+        # THEAM
+        # """
+        # style = ttk.Style(self.shop_window)
+        # # Import the tcl file
+        # self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
 
-        # Set the theme with the theme_use method
-        style.theme_use('azure')
-        style.configure('flat.TButton', borderwidth=0)
-        # style.configure("Treeview", font=('TRACK',13,'bold'))
-        """ 
-        THEAM
-        """
+        # # Set the theme with the theme_use method
+        # style.theme_use('azure')
+        # style.configure('flat.TButton', borderwidth=0)
+        # # style.configure("Treeview", font=('TRACK',13,'bold'))
+        # """ 
+        # THEAM
+        # """
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -363,83 +363,105 @@ class Shop_main_screen:
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")
         infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
 
-        self.infomationPageFrame2 = tk.LabelFrame(self.inner_infomation , text="PICTURE")
-        self.infomationPageFrame2.place(x=700, y=0, height=400, width=500)
+        self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE")
+        self.infomationPageFrame2.place(x=600, y=0, height=400, width=300)
+
+        infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info")
+        infomationPageFrame3.place(x=200, y=0, height=400, width=350)
+
+        infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info")
+        infomationPageFrame4.place(x=200, y= 400, height=100, width=700)
+
+        infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1 , text="นอน", bg="#12aadb")
+        infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
+
+        infomationPage_custom_Frame2 = tk.LabelFrame(infomationPageFrame1 , text="นอน", bg="#12bbdb")
+        infomationPage_custom_Frame2.place(x=1000, y=0, height=550, width=280)
 
 
         if self.user != []:
             ## USERNAME
-            username_text = Label(infomationPageFrame1, text="Username".format(self.user[0][1]))
-            username1_text = Label(infomationPageFrame1, text=self.user[0][1])
-            username_text.grid(row=0, column=0, padx=10, pady=10,sticky="E")
+            username_text = Label(infomationPageFrame3, text="Username".format(self.user[0][1]))
+            username1_text = Label(infomationPageFrame3, text=self.user[0][1])
+            username_text.grid(row=0, column=0, padx=10, pady=10,sticky="W")
             username1_text.grid(row=0, column=1, padx=10, pady=5,sticky="W")
             ## NAME
-            name_text = Label(infomationPageFrame1, text="Name")
-            name_text.grid(row=1, column=0, padx=10, pady=5,sticky="E")
-            self.name_entry = Entry(infomationPageFrame1)
+            name_text = Label(infomationPageFrame3, text="Name")
+            name_text.grid(row=1, column=0, padx=10, pady=5,sticky="W")
+            self.name_entry = Entry(infomationPageFrame3)
             self.name_entry.insert(0,self.user[0][3])
             self.name_entry.config(state=DISABLED)
             self.name_entry.grid(row=1, column=1, padx=10, pady=5)
             ##LASTNAME
-            lname_text = Label(infomationPageFrame1, text="Lastname")
-            lname_text.grid(row=2, column=0, padx=10, pady=5,sticky="E")
-            self.lname_entry = Entry(infomationPageFrame1)
+            lname_text = Label(infomationPageFrame3, text="Lastname")
+            lname_text.grid(row=2, column=0, padx=10, pady=5,sticky="W")
+            self.lname_entry = Entry(infomationPageFrame3)
             self.lname_entry.insert(0,self.user[0][4])
             self.lname_entry.config(state=DISABLED)
             self.lname_entry.grid(row=2, column=1, padx=10, pady=5)
             ##GENDER
-            gender_text = Label(infomationPageFrame1, text="Gender")
-            gender_text.grid(row=3, column=0, padx=10, pady=5,sticky="E")
-            self.gender_entry = Combobox(infomationPageFrame1, width=8,value=['MALE','FEMALE']) 
+            gender_text = Label(infomationPageFrame3, text="Gender")
+            gender_text.grid(row=3, column=0, padx=10, pady=5,sticky="W")
+            self.gender_entry = Combobox(infomationPageFrame3, width=8,value=['MALE','FEMALE']) 
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
             self.gender_entry.grid(row=3, column=1, padx=10, pady=5,sticky="W")
             ##BIRTHDAY
                     #DATE
-            birthday_text = Label(infomationPageFrame1, text="Birthday")
-            birthday_text.grid(row=4, column=0, padx=10, pady=5,sticky="E")
-            self.birthday_date_entry = Combobox(infomationPageFrame1, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
+            birthday_text = Label(infomationPageFrame3, text="Birthday")
+            birthday_text.grid(row=4, column=0, padx=10, pady=5,sticky="W")
+            self.birthday_date_entry = Combobox(infomationPageFrame3, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
                                                                              '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
                                                                              '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
             self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
             self.birthday_date_entry.config(state=DISABLED)
-            self.birthday_date_entry.grid(row=4, column=1, padx=10, pady=5,sticky="W")
+            self.birthday_date_entry.place(x=155, y=135)
                     #MONTH
-            self.birthday_month_entry = Combobox(infomationPageFrame1, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+            self.birthday_month_entry = Combobox(infomationPageFrame3, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                                                                                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
-            self.birthday_month_entry.grid(row=4, column=2, padx=10, pady=5,sticky="W")
+            self.birthday_month_entry.place(x=200, y=135)
                     #YEAR
             year_list = []
             for i in range(1920,2022):
                 year_list.append(str(i))
-            self.birthday_year_entry = Combobox(infomationPageFrame1, width=5, value=year_list)
+            self.birthday_year_entry = Combobox(infomationPageFrame3, width=5, value=year_list)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.birthday_year_entry.grid(row=4, column=3, padx=10, pady=5,sticky="W")
+            self.birthday_year_entry.place(x=258, y=135)
             ##EMAIL
-            email_text = Label(infomationPageFrame1, text="Email")
-            email_text.grid(row=5, column=0, padx=10, pady=5,sticky="E")
-            self.email_entry = Entry(infomationPageFrame1)
+            email_text = Label(infomationPageFrame3, text="Email")
+            email_text.grid(row=5, column=0, padx=10, pady=5,sticky="W")
+            self.email_entry = Entry(infomationPageFrame3)
             self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
             self.email_entry.grid(row=5, column=1, padx=10, pady=5)
             ##PHONE
-            telphone_text = Label(infomationPageFrame1, text="Phone Number")
-            telphone_text.grid(row=6, column=0, padx=10, pady=5,sticky="E")
-            self.telphone_entry = Entry(infomationPageFrame1)
+            telphone_text = Label(infomationPageFrame3, text="Phone Number")
+            telphone_text.grid(row=6, column=0, padx=10, pady=5,sticky="W")
+            self.telphone_entry = Entry(infomationPageFrame3)
             self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
             self.telphone_entry.grid(row=6, column=1, padx=10, pady=5)
+
+            point_text = Label(infomationPageFrame3, text="Member Point(s)")
+            point_text.grid(row=7, column=0, padx=10, pady=5,sticky="W")
+            self.point_entry = Entry(infomationPageFrame3)
+            self.point_entry.insert(0,self.user[0][9])
+            self.point_entry.config(state=DISABLED)
+            self.point_entry.grid(row=7, column=1, padx=10, pady=5)
+
+
+
             ##EDIT BUTTON
-            Label(infomationPageFrame1, text="\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n").grid(row=8, column=0, padx=10, pady=5)
-            Label(infomationPageFrame1, text="").grid(row=8, column=1, padx=10, pady=5)
-            self.edit_info_button = Button(infomationPageFrame1,text='Edit', command=self.edit_infomation_state)
-            self.edit_info_button.grid(row=8, column=2, padx=10, pady=5)
+            Label(infomationPageFrame3, text="\n\n\n\n\n\n\n\n\n\n").grid(row=8, column=0, padx=10, pady=5)
+            Label(infomationPageFrame3, text="").grid(row=8, column=1, padx=10, pady=5)
+            self.edit_info_button = Button(infomationPageFrame3,text='Edit', command=self.edit_infomation_state)
+            self.edit_info_button.grid(row=8, column=0, padx=35, pady=5)
             ##DONE BUTTON
-            self.done_info_button = Button(infomationPageFrame1,text='Done',state=DISABLED, command=self.edit_infomation_state)
-            self.done_info_button.grid(row=8, column=3, padx=10, pady=5)
+            self.done_info_button = Button(infomationPageFrame3,text='Done',state=DISABLED, command=self.edit_infomation_state)
+            self.done_info_button.grid(row=8, column=1, padx=10, pady=5)
 
             ##PICTURE
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
@@ -465,11 +487,11 @@ class Shop_main_screen:
         if str(self.name_entry['state']) == 'disabled':
             self.name_entry.config(state=NORMAL)
             self.lname_entry.config(state=NORMAL)
-            self.gender_entry.config(state=NORMAL)
+            # self.gender_entry.config(state=NORMAL)
             self.birthday_date_entry.config(state=NORMAL)
             self.birthday_month_entry.config(state=NORMAL)
             self.birthday_year_entry.config(state=NORMAL)
-            self.email_entry.config(state=NORMAL)
+            # self.email_entry.config(state=NORMAL)
             self.telphone_entry.config(state=NORMAL)
             self.edit_info_button.config(state=DISABLED)
             self.done_info_button.config(state=NORMAL)
