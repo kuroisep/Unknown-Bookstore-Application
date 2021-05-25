@@ -63,7 +63,7 @@ class main_admin_screen:
         img_logo_path = "Shop_Page\PICTURE\logo.png"
         self.img_logo = ImageTk.PhotoImage(
             Image.open(img_logo_path).resize((150, 150)))
-        Label(image=self.img_logo).place(x=0, y=0)
+        Label(image=self.img_logo).place(x=25, y=5)
 
         self.menubar()
         self.orderframe = LabelFrame(
