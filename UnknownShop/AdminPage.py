@@ -11,6 +11,7 @@ import datetime
 import cv2
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
 import os
 import sys
@@ -73,6 +74,7 @@ class main_admin_screen:
             self.admin_window, text="Member Management")
         self.orderhistoryframe = LabelFrame(
             self.admin_window, text="Order History")
+        self.chatframe = LabelFrame(self.admin_window, text="Chat")
 
         self.time_label = Label(self.admin_window, font=(
             'calibri', 12, 'bold'), background='black', foreground='white')
@@ -165,7 +167,8 @@ class main_admin_screen:
                command=self.bookPage).grid(row=2, padx=5, pady=10)
         Button(menuframe, text='Member management', width=27,
                command=self.menberPage).grid(row=3, padx=5, pady=10)
-        Button(menuframe, text='Admin', width=27).grid(row=4, padx=5, pady=10)
+        Button(menuframe, text='Chat', width=27,
+               command=self.chatPage).grid(row=4, padx=5, pady=10)
 
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Order Page      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def orderPage(self):
@@ -602,6 +605,9 @@ class main_admin_screen:
         self.add_book_button = Button(
             self.book_option_frame, text='Add New', command=self.addbookPage)
         self.add_book_button.grid(row=1, column=0, padx=5, pady=5)
+        self.show_graph_button = Button(
+            self.book_option_frame, text='Show Graph', command=self.show_categraph)
+        self.show_graph_button.grid(row=2, column=0, padx=5, pady=5)
 
         self.book_option_frame.place(x=850, y=430, height=230, width=180)
 
@@ -685,7 +691,47 @@ class main_admin_screen:
         else:
             messagebox.showerror("Error", "Please select .png file",parent=self.viewpic_book_screen)
             self.save_pic_button.config(state=DISABLED)
+    def show_categraph(self):
+         #------------------------------    init     ------------------------------------------------------------#
+        self.show_graph_screen = Toplevel(self.bookframe)
+        self.show_graph_screen.title("Graph")
+        self.show_graph_screen.focus_set()
+        self.show_graph_screen.grab_set()
+        self.show_graph_screen.resizable(0, 0)
+        x = (960) - (620/2)
+        y = (540) - (400/2)
+        self.show_graph_screen.geometry("620x350+%d+%d" % (x, y))
+        ###Graph Data
+        data = []
+        for i in self.book_data:
+            data.append(i[4])
+        check = dict()
+        for i in data:
+            if i in check:
+                check[i] += 1
+            else:
+                check[i] = 1
 
+        #------------------------------    Graph Plane     ------------------------------------------------------------#
+        self.show_graph_frame = LabelFrame(
+            self.show_graph_screen, text='Category Graph')
+        figure2 = Figure(figsize=(6,3), dpi=100) 
+        subplot2 = figure2.add_subplot(111) 
+        labels2 = [*check]
+        pieSizes = [*check.values()]
+        my_colors2 = ['#eae4e9','#fff1e6','#fde2e4','#fad2e1','#e2ece9','#bee1e6','#cddafd']
+        explode2 = list()
+        for k in labels2:
+            explode2.append(0.1)
+        subplot2.pie(pieSizes, colors=my_colors2, explode=explode2, labels=labels2, autopct='%1.0f%%', shadow=True, startangle=90) 
+        subplot2.axis('equal')  
+        pie2 = FigureCanvasTkAgg(figure2, self.show_graph_frame)
+        pie2.get_tk_widget().pack()
+        
+      
+
+
+        self.show_graph_frame.place(x=10, y=10, height=330, width=600)
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up AddBook Page  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
 
     def addbookPage(self):
@@ -797,6 +843,7 @@ class main_admin_screen:
         self.add_picbook_option_frame.place(x=10, y=220, height=50, width=170)
         self.add_book_frame.place(x=200, y=10, height=210, width=585)
 
+    
     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Addbook Picture Function  <Book Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
     def openimage_new(self):
         self.addbook_pic_input = self.openfn()
@@ -1286,12 +1333,40 @@ class main_admin_screen:
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.add_member_screen)
+     ##################################    Chat Page     #######################################################
+    def chatPage(self):
+        self.destoryframe()
+        #------------------------------    init     ------------------------------#
+        self.chatframe = LabelFrame(self.admin_window, text="Chat")
+        self.chat_list_frame = LabelFrame(self.chatframe, text="Customer")
+        self.chat_detail_frame = LabelFrame(self.chatframe, text="Chat window")
+        #------------------------------    Table Plane     ------------------------------#
+        columns = ("Customer")
+        self.chatlist_treeview = Treeview(
+            self.chat_list_frame, column=columns, show="headings", height="18")
+        yscrollbar = ttk.Scrollbar(self.chat_list_frame,
+                                   orient="vertical", command=self.chatlist_treeview.yview)
+        self.chatlist_treeview.config(yscrollcommand=yscrollbar.set)
+        yscrollbar.pack(side="right", fill="y")
+        self.chatlist_treeview.heading(0, text="Customer")
+        self.chatlist_treeview.column(0, anchor='w', width=100)
+
+        for i in self.order_data:
+            self.chatlist_treeview.insert(
+                '', 'end', values=[i][0])
+
+        self.chatlist_treeview.pack()
+
+        self.chat_list_frame.place(x=20,y=10, height=400, width=150)
+        self.chat_detail_frame.place(x=200,y=10, height=400, width=800)
+        self.chatframe.place(x=220, y=25, height=690, width=1040)
 
     def destoryframe(self):
         self.orderframe.destroy()
         self.orderhistoryframe.destroy()
         self.menberframe.destroy()
         self.bookframe.destroy()
+        self.chatframe.destroy()
 
 
 def showAdminPage():

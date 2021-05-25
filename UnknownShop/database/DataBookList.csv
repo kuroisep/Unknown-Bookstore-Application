@@ -1,8 +1,5 @@
-@@ -1,132 +1,8 @@
 s,Code,Name,Author,Category,Price,Page,Ex.,Stock(s),Rating,Unnamed: 10,Unnamed: 11,Unnamed: 12,Unnamed: 13,Unnamed: 14,Unnamed: 15,Unnamed: 16,Unnamed: 17,Unnamed: 18,Unnamed: 19,Unnamed: 20,Book_No.
 1,ADM_KE001,EMPIRE OF PAIN: THE SECRET HISTORY OF THE SACKLER DYNASTY,"KEEFE, PATRICK RADDEN",Administration / Management,553.35,480,"The Sackler name adorns the walls of many storied institutions Harvard; the Metropolitan Museum of Art; Oxford; the Louvre. They are one of the richest families in the world, known for their lavish donations in the arts and the sciences. The source of the family fortune was vague, however, until it emerged that the Sacklers were responsible for making and marketing Oxycontin, a blockbuster painkiller that was a catalyst for the opioid crisis-an international epidemic of drug addiction which has killed nearly half a million people.
-
-
 In this masterpiece of narrative reporting and writing, Patrick Radden Keefe exhaustively documents the jaw-dropping and ferociously compelling reality. Empire of Pain is the story of a dynasty: a parable of 21st century greed.",587,5,,,,,,,,,,,,1
 2,ADM_AL002,"HOW TO FIX MEETINGS: MEET LESS, FOCUS ON OUTCOMES AND GET STUFF DONE",ALLCOTT & WATTS,Administration / Management,404.55,304,"Providing realistic and practical advice, productivity professionals Graham Allcott and Hayley Watts show how to reduce the amount of time you spend in meetings, and ensure that the ones that you do attend are genuine opportunities to collaborate and get things done.
 
@@ -18,13 +15,13 @@ Learn how to hold and attend meetings where the focus is on the outcome; get to 
 
 There�s a language we understand, but rarely use. A language that�s sincere. Powerful. Compelling. A language of words�and actions�that can�t be denied.
 
-
 Leadership Language will help you to peel back the ineffective �business speak�, so you can change the conversation. And change your results. Imagine what could happen when you replace frustration with an irresistible vision�for yourself, your team and your organization.",118,5,,,,,,,,,,,,2
 9,ADM_TA009,Blockchain Revolution : How the Technology Behind Bitcoin and Other Cryptocurrencies Is Changing the World,"Tapscott, Don / Tapscott, Alex",Administration / Management,435.0,358,"Discusses blockchain technology, which facilitates peer-to-peer transactions without the need for such intermediaries as a bank or government, explaining such recent developments in the world of blockchain as cryptoassets, ICOs, and smart contracts.",250,5,,,,,,,,,,,,3
 10,ADM_CA010,STARTING A BUSINESS WHEN YOU'RE AFRAID TO: THE STEP-BY-STEP BLUEPRINT TO GETTING,"CAVALLARO, MICHAELA",Administration / Management,441.75,192,"This comprehensive guide provides all of the information you need to evaluate your big idea, find the perfect space, hire the right staff, and get a steady stream of customers coming in the door. From legal and accounting, to HR and inventory management, StartiYour Own Business and Be Free guides entrepreneurs through the essential steps and strategies to launch a company that will stand the test of time.",97,5,,,,,,,,,,,,4
 11,ADM_DA011,How to Win Friends and Influence People,Dale Carnegie,Administration / Management,309.0,482,- No Detail,69,5,,,,,,,,,,,,5
 12,ADM_CL012,"RICHEST MAN IN BABYLON, THE","CLASON, GEORGE S.",Administration / Management,274.35,160,"Countless readers have been helped by the famous,Babylonian parables, hailed as the greatest of,all inspirational works on the subject of thrift,financial planning and personal wealth. in simple,language, these fascinating and informative,stories will set readers on a sure path to,prosperity and its accompanying joys.",971,5,,,,,,,,,,,,6
 13,ADM_BR013,BUSINESS ADVENTURES,"BROOKS, JOHN",Administration / Management,488.25,464,"What do the $350 million Ford Motor Company disaster known as the Edsel, the fast and incredible rise of Xerox, and the unbelievable scandals at General Electric and Texas Gulf Sulphur have in common? Each is an example of how an iconic company was defined by a particular moment of fame or notoriety.
+
 
 
 These notable and fascinating accounts are as relevant today to understanding the intricacies of corporate life as they were when the events happened.
@@ -131,11 +128,3 @@ Toshikazu Kawaguchi's beautiful, moving story explores the age-old question: wha
 98,PSY_HO014,Tao of Pooh & the Te of Piglet,"Hoff, Benjamin / Shepard, E. H.",Psychology.,500.0,432,"""It's hard to be brave,' said Piglet, sniffing slightly, ""when you're only a Very Small Animal."" Rabbit, who had begun to write very busily, looked up and said: ""It is because you are a very small animal that you will be useful in the adventure before us.""",76,5,,,,,,,,,,,,12
 99,PSY_FR015,Pedagogy of the Oppressed (Penguin Modern Classics),"Freire, Paulo",Psychology.,460.0,160,"The foremost work on the key democratic task: helping people to identify and challenge the sources of their oppression ... a transformative text' George Monbiot, Guardian Arguing that 'education is freedom', Paulo Freire's radical international classic contends that traditional teaching styles keep the poor powerless by treating them as passive, silent recipients of knowledge. Grounded in Freire's own experience teaching impoverished and illiterate students in his native Brazil and over the world, this pioneering book instead suggests that through co-operation, dialogue and critical thinking, every human being can develop a sense of self and fulfil their right to be heard. 'Truly revolutionary' Ivan Illich",44,5,,,,,,,,,,,,13
 100,PSY_WO016,"Good Habits, Bad Habits : The Science of Making Positive Changes That Stick","Wood, Wendy",Psychology.,409.0,345,A profoundly insightful and helpful book on the power of habit and how to change your behaviour for a lifetime.,91,4,,,,,,,,,,,,14
-Type,total book
-Administration / Management,17
-Arts / Design / Decoration,13
-Career Academic Textbooks,10
-Children's Books,14
-Humanities / Science,16
-Literature,14
-Psychology.,16
