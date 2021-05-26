@@ -24,7 +24,7 @@ from time import sleep
 import time
 from ttkthemes.themed_tk import ThemedTk
 from ttkthemes import ThemedStyle
-
+print("saaaaaaaaaaaaaa")
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
@@ -885,7 +885,6 @@ class Shop_main_screen:
 
         lebel1 = tk.Label(paymentPageFrame4, text=" Sales : ", width = 15)
         lebel1.place(x=50, y=10)
-<<<<<<< HEAD
         self.total_amount = 0.00
         def listsum(numList):
             if len(numList) == 1:
@@ -898,10 +897,6 @@ class Shop_main_screen:
         
         
         label1_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(self.total_amount), width = 15)
-=======
-
-        label1_1 = tk.Label(paymentPageFrame4, text=" Total ฿", width = 15)
->>>>>>> parent of 4b5d84f (Update ShopPage.py)
         label1_1.place(x=200, y=10)
 
         lebel2 = tk.Label(paymentPageFrame4, text=" Member : ", width = 15)
@@ -932,11 +927,8 @@ class Shop_main_screen:
         lebel5 = tk.Label(paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
         lebel5.place(x=1, y=210)
 
-<<<<<<< HEAD
         total2 = member + promotion + shipping +self.total_amount
 
-=======
->>>>>>> parent of 4b5d84f (Update ShopPage.py)
         lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
         lebel5.place(x=20, y=250)
 
@@ -1022,7 +1014,6 @@ class Shop_main_screen:
     def dummy_payment(self):
         print("PAYMENT")
         self.Cancle_bottom.config(state=NORMAL)
-<<<<<<< HEAD
         #------------------------------    init     ------------------------------------------------------------#
         self.payment_screen = Toplevel(self.inner_payment)
         self.payment_screen.title("Payment")
@@ -1083,8 +1074,6 @@ class Shop_main_screen:
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.payment_screen)
 
-=======
->>>>>>> parent of 4b5d84f (Update ShopPage.py)
     def dummy_cancle(self):
         MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancle Order')
         if MB1 == True:
