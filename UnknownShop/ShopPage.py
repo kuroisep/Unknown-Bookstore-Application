@@ -51,6 +51,7 @@ class Shop_main_screen:
         self.Example = StringVar()
         self.confirm_order = False
         self.confirm_next = False
+        self.order_id = 0
 
 
        
@@ -1095,20 +1096,20 @@ class Shop_main_screen:
                 loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
                 order_temp = loadorder.values.tolist()
                 now_orderid = order_temp[len(order_temp)-1][1]
-                order_id = int(now_orderid) + 1
+                self.order_id = int(now_orderid) + 1
                 Quantity = 0
                 for i in self.usercart:
                     Quantity += int(i[2])
                 with open('UnknownShop\\database\\order.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow([self.nowtime.strftime("%Y-%m-%d %H:%M:%S"),order_id,self.user[0][3],self.payment_address_entry.get('1.0','end-1c'),Quantity,self.total_amount,'Payment confirmed - {}'.format(self.payment_method_entry.get()),'-','-'])
+                    writer.writerow([self.nowtime.strftime("%Y-%m-%d %H:%M:%S"),self.order_id,self.user[0][3],self.payment_address_entry.get('1.0','end-1c'),Quantity,self.total_amount,'Payment confirmed - {}'.format(self.payment_method_entry.get()),'-','-'])
                 with open('UnknownShop\\database\\order_detail.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     for i in self.usercart:
-                        writer.writerow([order_id,i[0],i[1],i[2],i[4]])
+                        writer.writerow([self.order_id,i[0],i[1],i[2],i[4]])
                 if self.pay_imginput != '':
                     temp_img = cv2.imread(self.pay_imginput)
-                    cv2.imwrite('UnknownShop\\database\\transfer_slip\\{}.png'.format(order_id), temp_img)
+                    cv2.imwrite('UnknownShop\\database\\transfer_slip\\{}.png'.format(self.order_id), temp_img)
                 messagebox.showinfo("Alert", "Order completed!!")
                 self.close_payment()
         else:
@@ -1162,18 +1163,41 @@ class Shop_main_screen:
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
         deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
-        
-        Satatus_message = ['Payment confirmed', 'Waiting for shipment', 'Shipped', 'Delivered', 'Cancelled order']
-        y = 50
-        for i in range(4):
-            tk.Button(deliveryPageFrame1, text=Satatus_message[i], font="BahnschriftLight 15", 
-                        bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
-                        bd=0, width=20).place(x=125, y=y)
-            y += 40
+        loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
+        order_status = loadorder.values.tolist()
+        Satatus_message = []
+        for i in order_status:
+            if self.order_id == i[1]:
+                if i[6] == 'Payment confirmed - Cash On Delivery' or i[6] == 'Payment confirmed - Promptpay':
+                    Satatus_message.append(i[0] + ' : Payment confirmed')
+                elif i[6] == 'Waiting for shipment':
+                    Satatus_message.append(i[0] + ' : Payment confirmed')
+                    Satatus_message.append(i[0] + ' : Waiting for shipment')
+                elif i[6] == 'Shipped':
+                    Satatus_message.append(i[0] + ' : Payment confirmed')
+                    Satatus_message.append(i[0] + ' :  for shipment')
+                    Satatus_message.append(i[7] + ' : Shipped')
+                elif i[6] == 'Delivered':
+                    Satatus_message.append(i[0] + ' : Payment confirmed')
+                    Satatus_message.append(i[0] + ' : Waiting for shipment')
+                    Satatus_message.append(i[7] + ' : Shipped')
+                    Satatus_message.append(i[8] + ' : Delivered')
+                else:
+                    Satatus_message.append('Cancelled order')
 
-        tk.Button(deliveryPageFrame1, text=Satatus_message[4], font="BahnschriftLight 15", 
-                        bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
-                        bd=0, width=20).place(x=125, y=240)
+
+        
+        y = 50
+        if len(Satatus_message) != 0:
+            for i in range(len(Satatus_message)):
+                tk.Button(deliveryPageFrame1, text=Satatus_message[i], font="BahnschriftLight 15", 
+                            bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
+                            bd=0, width=35,anchor='w').place(x=0, y=y)
+                y += 40
+
+        # tk.Button(deliveryPageFrame1, text=Satatus_message[4], font="BahnschriftLight 15", 
+        #                 bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
+        #                 bd=0, width=20).place(x=125, y=240)
 
         deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
         deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
