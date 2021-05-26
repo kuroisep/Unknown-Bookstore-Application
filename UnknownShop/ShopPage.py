@@ -121,6 +121,7 @@ class Shop_main_screen:
 
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        self.show_HomePage()
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
@@ -238,6 +239,7 @@ class Shop_main_screen:
         show_all_books_button = tk.Button(Frame1, text = "Clear",command = self.Cclear_SearchBox, height=10, width=10)
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
+    
     def GotoSearch(self):
         self.Cheack_Search()
         self.show_categoryPage()
@@ -988,16 +990,32 @@ class Shop_main_screen:
 
 
     def deliveryPage(self):
-        self.inner_delivery = Canvas(self.canvas, width=1280, height=720)   
+        self.inner_delivery = Canvas(self.canvas, width=1280, height=550)   
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
-        deliveryPageFrame1.place(x=30, y=20, height=500, width=510)
+        deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
+        
+        Satatus_message = ['Payment confirmed', 'Waiting for shipment', 'Shipped', 'Delivered', 'Cancelled order']
+        y = 50
+        for i in range(4):
+            tk.Button(deliveryPageFrame1, text=Satatus_message[i], font="BahnschriftLight 15", 
+                        bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
+                        bd=0, width=20).place(x=125, y=y)
+            y += 40
+
+        tk.Button(deliveryPageFrame1, text=Satatus_message[4], font="BahnschriftLight 15", 
+                        bg="#F2FBF9", fg="#f6b3d9", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
+                        bd=0, width=20).place(x=125, y=240)
+
+        deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
+        deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
+        
 
         deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
         deliveryPageFrame2.place(x=550, y=20, height=500, width=700)
 
         deliveryPageFrame2_1 = ttk.LabelFrame(deliveryPageFrame2, text="Picture")
-        deliveryPageFrame2_1.place(x=50, y=10, height=200, width=150)
+        deliveryPageFrame2_1.place(x=50, y=10, height=250, width=200)
 
         deliveryPageFrame2_2 = ttk.LabelFrame(deliveryPageFrame2, text="Databook")
         deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
@@ -1049,13 +1067,13 @@ class Shop_main_screen:
         # self.review_bottom.place(x=500, y=400,anchor="center")
         self.review_bottom.pack(side = BOTTOM) 
 
-        Back_bottom = ttk.Button(deliveryPageFrame1,text="< Back >", command = self.backk )    
-        # Back_bottom.place(x=, y=400,anchor="center")
-        Back_bottom.pack(side = LEFT) 
+        Back_bottom = ttk.Button(deliveryPageFrame1_1,text="< Back >", command = self.backk, width=10)    
+        Back_bottom.place(x=180, y=40,anchor="center")
+        # Back_bottom.pack(side = LEFT) 
 
-        Next_bottom = ttk.Button(deliveryPageFrame1,text="< Next >", command = self.checkDeliverySuccess)    
-        # Next_bottom.place(x=500, y=400,anchor="center")
-        Next_bottom.pack(side = RIGHT)
+        Next_bottom = ttk.Button(deliveryPageFrame1_1,text="< Next >", command = self.checkDeliverySuccess, width=10)    
+        Next_bottom.place(x=300, y=40,anchor="center")
+        # Next_bottom.pack(side = RIGHT)
 
 
 
