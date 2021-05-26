@@ -83,7 +83,6 @@ class Application(Frame):
                            ('Bob' , 'Freamen'), 
                            ('Amanda', 'Ling' ), 
                            ('Susan', 'Cascov')]
-
         self.pack()
         self.create_widgets()
 

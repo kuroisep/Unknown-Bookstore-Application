@@ -231,20 +231,29 @@ class Shop_main_screen:
         # nameEntered.place(x=535, y=100)
         self.nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        search_button = tk.Button(Frame1, text = "Search", command = self.show_categoryPage,height=10, width=10)
+        search_button = tk.Button(Frame1, text = "Search", command = self.GotoSearch ,height=10, width=10)
         # search_button.place(x=855, y=100)
         search_button.pack(side=LEFT, padx=5, pady=10, anchor=CENTER)
 
         show_all_books_button = tk.Button(Frame1, text = "Clear",command = self.Cclear_SearchBox, height=10, width=10)
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
-    
+    def GotoSearch(self):
+        self.Cheack_Search()
+        self.show_categoryPage()
     def Cclear_SearchBox(self):
         self.drop1.current((0))
         self.drop2.current((0))
         self.nameEntered.delete(0, 'end')
         MB1 = messagebox.showinfo(message='Clear Done!')
-
+    def Cheack_Search(self):
+        if self.drop1.get() == "All":
+            print("Please ALLLLLLL")
+            print(self.nameEntered.get())
+        
+        """"value=["All","Arts / Design / Decoration", "Literature", 
+                                                                "Administration / Management", "Humanities / Science", 
+                                                                "Children's Books","Career Academic Textbooks", "Psychology"])"""
     def menuTab_logo(self):
         # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
         # self.Frame0.place(x=0, y=0, height=75, width=100)
@@ -762,7 +771,6 @@ class Shop_main_screen:
         yscrollbar.pack(side="right", fill="y")
         xscrollbar.pack(side="bottom", fill="x")
 
-    
     def lookupCustomer(self, event):
         curItem = self.book_treeview.focus()
         cur = self.book_treeview.item(curItem)['values']
