@@ -286,6 +286,7 @@ class main_admin_screen:
             self.order_option_frame, text='Search Order', command=self.search_order_treeview)
         self.order_search_entry.insert(1.0, 'Order ID')
         self.order_search_entry.bind("<Button-1>", self.order_id_clear)
+        self.order_search_button.grid(row=1, column=1, padx=10, pady=5)
         
         self.order_viewslip_button = Button(
             self.order_option_frame, text='View Slip',state=DISABLED, command=self.viewPicOrderPage)
