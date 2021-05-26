@@ -104,6 +104,7 @@ class main_admin_screen:
         self.Status = StringVar()
         self.ShippedTime = StringVar()
         self.CompletedTime = StringVar()
+        self.list_img_order = os.listdir('UnknownShop\\database\\transfer_slip')
         #---------------------------    BookPage     -------------------------------------------------------------#
         self.No = StringVar()
         self.Code = StringVar()
@@ -284,10 +285,40 @@ class main_admin_screen:
             self.order_option_frame, text='Search Order', command=self.search_order_treeview)
         self.order_search_entry.insert(1.0, 'Order ID')
         self.order_search_entry.bind("<Button-1>", self.order_id_clear)
-        self.order_search_button.grid(row=1, column=1, padx=10, pady=5)
+        
+        self.order_viewslip_button = Button(
+            self.order_option_frame, text='View Slip',state=DISABLED, command=self.viewPicOrderPage)
+        self.order_viewslip_button.grid(row=2, column=0, padx=10, pady=5)
         self.order_option_frame.place(x=750, y=430, height=200, width=250)
 
         self.orderframe.place(x=220, y=25, height=680, width=1040)
+     #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Pop-up ViewPic Page  <Order Page>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<#
+    def viewPicOrderPage(self):
+        #------------------------------    init     ------------------------------------------------------------#
+        self.viewpic_order_screen = Toplevel(self.admin_window)
+        self.viewpic_order_screen.title(
+            "{} : {}".format(self.Code.get(), self.Name.get()))
+        self.viewpic_order_screen.focus_set()
+        self.viewpic_order_screen.grab_set()
+        self.viewpic_order_screen.resizable(0, 0)
+        x = (960) - (400/2)
+        y = (540) - (300/2)
+        self.viewpic_order_screen.geometry("400x300+%d+%d" % (x, y))
+        self.list_img_book = os.listdir('BookPics')
+
+        #------------------------------  Picture Plane     ------------------------------------------------------------#
+        
+        self.order_pic = ImageTk.PhotoImage(
+            Image.open(self.order_pic_input).resize((120, 170)))
+        self.viewpic_order_frame = LabelFrame(
+            self.viewpic_order_screen, text='Picture')
+        self.pic_order_label = Label(
+            self.viewpic_order_frame, image=self.book_pic)
+        self.pic_order_label.pack(anchor=CENTER)
+
+
+        self.viewpic_order_frame.place(x=10, y=10, height=200, width=380)
+
 
     ##################################    Update Button   <Order Page>  #######################################################
     def orderPage_update_state(self):
@@ -338,6 +369,11 @@ class main_admin_screen:
         self.ShippedTime.set(cur[7])
         self.CompletedTime.set(cur[8])
         self.orderPage_detailupdate()
+        if str(self.OrderID.get()) +'.png' in self.list_img_order:
+            self.order_pic_input = 'UnknownShop\\database\\transfer_slip\\{}.png'.format(self.OrderID.get())
+            self.order_viewslip_button.config(state=NORMAL)
+        else:
+            self.order_viewslip_button.config(state=NORMAL)
 
     ###############################    Detail Plane Update    <Order Page> #########################################################
     def orderPage_detailupdate(self):
@@ -360,11 +396,11 @@ class main_admin_screen:
         if self.order_search_entry.get('1.0', 'end-1c') == 'Order ID':
             self.order_search_entry.delete('1.0', END)
     def search_order_treeview(self):
-        query = self.order_search_entry.get('1.0','end-1c')
+        query = str(self.order_search_entry.get('1.0','end-1c'))
         selections = []
         for child in self.order_treeview.get_children(''):
             # print(self.order_treeview.item(child)['values'][1])
-            if query in self.order_treeview.item(child)['values'][1]:   # compare strings in  lower cases.
+            if query in str(self.order_treeview.item(child)['values'][1]):   # compare strings in  lower cases.
                 selections.append(child)
         self.order_treeview.selection_set(selections)
     ###############################    Treeview sort   <Function> #######################################################
