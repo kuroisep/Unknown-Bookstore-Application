@@ -6,6 +6,7 @@ UB_0002,codeeeeee,nameeeee,30,2000
 7,ADM_SO017,MANAGEMENT 101,1,553.35
 8,ADM_BR013,BUSINESS ADVENTURES,1,488.25
 9,ADM_CL012,"RICHEST MAN IN BABYLON, THE",1,274.35
+<<<<<<< HEAD
 10,ADM_BR013,BUSINESS ADVENTURES,1,488.25
 <<<<<<< Updated upstream
 =======
@@ -16,3 +17,5 @@ UB_0002,codeeeeee,nameeeee,30,2000
 10,CHI_BA002,Shadow and Bone,1,324.0
 10,CHI_SI003,Phoebe and Her Unicorn 13,1,391.0
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 62accb3 (added payment)
