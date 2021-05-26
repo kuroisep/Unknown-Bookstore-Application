@@ -49,8 +49,6 @@ class Shop_main_screen:
         self.Code = StringVar()
         self.Rating = StringVar()
         self.Example = StringVar()
-        self.confirm_order = False
-        self.confirm_next = False
 
 
        
@@ -733,7 +731,6 @@ class Shop_main_screen:
 
         self.add_bookcart_button = Button(self.option_frame,text=' + ', command=self.add_bookcart,state=DISABLED,width=15)
         self.add_bookcart_button.grid(row=7, column=2, padx=10, pady=5)
-        
    
 
         ##Book Image
@@ -791,8 +788,8 @@ class Shop_main_screen:
         self.Price.set(cur[5])
         self.Rating.set(cur[9])
         self.Example.set(cur[7])
-        if self.confirm_order == False:
-            self.add_bookcart_button.config(state=NORMAL)
+        
+        self.add_bookcart_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
             self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
             self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
@@ -837,8 +834,7 @@ class Shop_main_screen:
         cur = self.cart_treeview.item(curItem)['values']
         self.current_bookcart = []
         if cur != '':
-            if self.confirm_order == False:
-                self.Del_botton.config(state=NORMAL)
+            self.Del_botton.config(state=NORMAL)
             for i in cur[1:]:
                 self.current_bookcart.append(str(i))
 
@@ -884,19 +880,12 @@ class Shop_main_screen:
         paymentPageFrame3.place(x=0, y=400, height=80, width=800)
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        if self.usercart == []:
-            member = 0.00
-            promotion = 0.00
-            shipping = 0.00
-        else:
-            member = -15.25
-            promotion = -12.50
-            shipping = 40.00
         paymentPageFrame4 = tk.LabelFrame(paymentPageFrame2, text="Bai SEDDDD", fg="blue",bg="white",font=("times new roman",14,"bold"))
         paymentPageFrame4.place(x=800, y=0, height=480, width=350)
 
         lebel1 = tk.Label(paymentPageFrame4, text=" Sales : ", width = 15)
         lebel1.place(x=50, y=10)
+<<<<<<< HEAD
         self.total_amount = 0.00
         def listsum(numList):
             if len(numList) == 1:
@@ -909,50 +898,56 @@ class Shop_main_screen:
         
         
         label1_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(self.total_amount), width = 15)
+=======
+
+        label1_1 = tk.Label(paymentPageFrame4, text=" Total ฿", width = 15)
+>>>>>>> parent of 4b5d84f (Update ShopPage.py)
         label1_1.place(x=200, y=10)
-        
+
         lebel2 = tk.Label(paymentPageFrame4, text=" Member : ", width = 15)
         lebel2.place(x=50, y=50)
 
-        label2_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(member), width = 15)
+        label2_1 = tk.Label(paymentPageFrame4, text=" -15.25 ฿", width = 15)
         label2_1.place(x=200, y=50)
 
         lebel3 = tk.Label(paymentPageFrame4, text=" Promotion : ", width = 15)
         lebel3.place(x=50, y=90)
 
-        label3_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(promotion), width = 15)
+        label3_1 = tk.Label(paymentPageFrame4, text=" -12.50 ฿", width = 15)
         label3_1.place(x=200, y=90)
 
         lebel4 = tk.Label(paymentPageFrame4, text=" Shipping : ", width = 15)
         lebel4.place(x=50, y=130)
 
-        label4_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(shipping), width = 15)
+        label4_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 15)
         label4_1.place(x=200, y=130)
 
-        
+
         lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 15)
         lebel5.place(x=50, y=170)
 
-        label5_1 = tk.Label(paymentPageFrame4, text=" 0.00 ฿", width = 15)
+        label5_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 15)
         label5_1.place(x=200, y=170)
 
         lebel5 = tk.Label(paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
         lebel5.place(x=1, y=210)
 
+<<<<<<< HEAD
         total2 = member + promotion + shipping +self.total_amount
 
+=======
+>>>>>>> parent of 4b5d84f (Update ShopPage.py)
         lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
         lebel5.place(x=20, y=250)
 
-        label5_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(total2), width = 10, font=("times new roman",15,"bold"))
+        label5_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 10, font=("times new roman",15,"bold"))
         label5_1.place(x=200, y=250)
 
         self.Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
         self.Payment_bottom.place(x=170, y=350,anchor="center")
 
-        self.Cancle_bottom = tk.Button(paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
+        self.Cancle_bottom = tk.Button(paymentPageFrame4,text="< Cancle Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
         self.Cancle_bottom.place(x=170, y=400,anchor="center")
-
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -992,7 +987,7 @@ class Shop_main_screen:
         # Back_bottom.pack(side = BOTTOM,anchor='')
         self.Edit_bottom.place(x=100, y=30,anchor="center")
 
-        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart, width = 15)
+        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart,state=DISABLED, width = 15)
         # Del_bottom.pack(side = BOTTOM)    
         self.Del_botton.place(x=300, y=30,anchor="center")
 
@@ -1000,7 +995,7 @@ class Shop_main_screen:
         self.Confirm_bottom.place(x=500, y=30,anchor="center")
         # Next_bottom.pack(side = BOTTOM) 
 
-        self.Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment,state=DISABLED , width = 15)
+        self.Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment , width = 15,state=DISABLED)
         self.Next_bottom.place(x=700, y=30,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
@@ -1014,39 +1009,20 @@ class Shop_main_screen:
 
         # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.place(x=500, y=400,anchor="center")
-        if self.usercart == [] or self.confirm_order == True:
-            self.Edit_bottom.config(state=DISABLED)
-            self.Del_botton.config(state=DISABLED)
-            self.Confirm_bottom.config(state=DISABLED)
-        else:
-            self.Edit_bottom.config(state=NORMAL)
-            self.Del_botton.config(state=NORMAL)
-            self.Confirm_bottom.config(state=NORMAL)
-        if self.confirm_order == True and self.confirm_next == False:
-            print('self.confirm_next :',self.confirm_next)
-            self.Next_bottom.config(state=NORMAL)
-        elif self.confirm_next == True:
-            self.Payment_bottom.config(state=NORMAL)
 
 
     def confirmorder(self):
-        self.Edit_bottom.config(state=DISABLED)
-        self.Del_botton.config(state=DISABLED)
-        self.Confirm_bottom.config(state=DISABLED)
-        messagebox.showinfo(message='Your order have been confirmed',title='Confirm your Order')
+        MB1 = messagebox.showinfo(message='Your order have been confirmed',title='Confirm your dOrder')
         self.Cancle_bottom.config(state=DISABLED)
         self.Next_bottom.config(state=NORMAL)
-        self.confirm_order = True
     def pp(self):
         print("Test"*10)
     def topayment(self):
-        self.confirm_next = True
-        self.Next_bottom.config(state=DISABLED)
         self.Payment_bottom.config(state=NORMAL)
-
     def dummy_payment(self):
         print("PAYMENT")
         self.Cancle_bottom.config(state=NORMAL)
+<<<<<<< HEAD
         #------------------------------    init     ------------------------------------------------------------#
         self.payment_screen = Toplevel(self.inner_payment)
         self.payment_screen.title("Payment")
@@ -1107,8 +1083,10 @@ class Shop_main_screen:
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.payment_screen)
 
+=======
+>>>>>>> parent of 4b5d84f (Update ShopPage.py)
     def dummy_cancle(self):
-        MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancel Order')
+        MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancle Order')
         if MB1 == True:
             print("CANCEL")
             self.Cancle_bottom.config(state=DISABLED)
@@ -1116,7 +1094,6 @@ class Shop_main_screen:
             self.Next_bottom.config(state=DISABLED)
         else:
             print("...............")
-    
         
 
     def deliveryPage(self):
@@ -1300,8 +1277,6 @@ class Shop_main_screen:
     def show_categoryPage(self):
         self.delete_canvas()
         self.canvas.create_window(0, 150, anchor=NW, window=self.inner_category)
-        if self.confirm_order == True:
-            self.add_bookcart_button.config(state=DISABLED)
 
 
     def show_paymentPage(self):
