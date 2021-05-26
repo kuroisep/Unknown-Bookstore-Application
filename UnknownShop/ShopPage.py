@@ -1072,6 +1072,7 @@ class Shop_main_screen:
         self.payment_method_entry.grid(row=7, column=1, padx=10, pady=5,columnspan=2)
         self.pay_method_frame = LabelFrame(self.payment_frame, text='Upload File')
         self.pay_method_img_frame = LabelFrame(self.payment_frame, text='Preview')
+        self.pay_imginput=''
         
         #------------------------------    Option Detail Plane     ------------------------------------------------------------#
         self.payment_option_frame = LabelFrame(self.payment_screen, text='')
