@@ -179,7 +179,7 @@ class Shop_main_screen:
         
 
         self.shop_window.resizable(0, 0)
-        self.shop_window.overrideredirect(0)
+        self.shop_window.overrideredirect(1)
         self.shop_window.mainloop()
 
     def create_background(self): # <<<<<<<<<<<<<<<<<<<<<<<<<<< BG
@@ -244,7 +244,7 @@ class Shop_main_screen:
     def search_bar(self):
         
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12aadb")
-        Frame1.place(x=0, y=75, height=40, width=1280)
+        Frame1.place(x=0, y=65, height=40, width=1280)
 
         searchLabel0 = tk.Label(Frame1, text="", font=('TRACK', 12), bg="#12aadb")
         searchLabel0.pack(side= LEFT, padx=125, pady=10, anchor=CENTER)
@@ -300,33 +300,56 @@ class Shop_main_screen:
         self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
         self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
 
-   
+    def menuTabEnter(self, event):
+        self.label1.config(fg="#120896")
+        self.closebutton.config(fg="red")
+
+    def menuTabLeave(self, event):
+        self.label1.config(fg="white")
+        self.closebutton.config(fg="white")
+
+
     def menuTab(self):
         
         self.Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
         self.Frame1.place(x=0, y=0, height=30, width=1280)
         
-        # tk.Label(Frame1, text=' Welcome User',background="#1200db", fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12)
-        #        ).grid(column=0, row=0)
+        self.closebutton = tk.Button(self.Frame1, text='***',background="#1265db",fg="white", width=30, borderwidth=0, 
+                                highlightthickness=0, font=('TRACK', 12),activebackground="#1265db", 
+                                command = self.delete_show_window)
+        
+        self.closebutton.place(x=1100, y=5)
+        self.closebutton.bind("<Enter>", self.menuTabEnter)
+        self.closebutton.bind("<Leave>", self.menuTabLeave)
 
 
+        self.label1 = tk.Label(self.Frame1, text = "Welcome to The Land of books. ~~~",font=('TRACK', 15),background="#1265db")
+        self.label1.place(x=450, y=0)
+        self.label1.bind("<Enter>", self.menuTabEnter)
+        self.label1.bind("<Leave>", self.menuTabLeave)
+       
         Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
-        Frame2.place(x=100, y=30, height=45, width=1280)
+        Frame2.place(x=100, y=30, height=35, width=1280)
 
-        tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=40, borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_HomePage
-               ).grid(column=0, row=0, padx=20, pady=10)
-        tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
-               ).grid(column=1, row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_selected_categoryPages
-               ).grid(column=2, row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_paymentPage
-               ).grid(column=3,row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_deliveryPage
-               ).grid(column=4,row=0, padx=5, pady=10)
-        tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_ContactUSPage
-               ).grid(column=5,row=0, padx=5, pady=10)
+        self.one_button = tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=30, borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_HomePage
+               ).grid(column=0, row=0, padx=10, pady=2)
+        self.two_button = tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
+               ).grid(column=1, row=0, padx=5, pady=0)
+        self.three_button = tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_selected_categoryPages
+               ).grid(column=2, row=0, padx=5, pady=0)
+        self.four_button = tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_paymentPage
+               ).grid(column=3,row=0, padx=5, pady=0)
+        self.five_button = tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground="#120896",command=self.show_deliveryPage
+               ).grid(column=4,row=0, padx=5, pady=0)
+        self.six_button = tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground="#120896",command= self.show_ContactUSPage
+               ).grid(column=5,row=0, padx=5, pady=0)
+        self.seven_button = tk.Button(Frame2, text='Logout', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground= "#120896",command= self.delete_show_window,
+               ).grid(column=6,row=0, padx=5, pady=0)
 
         self.menuTab_logo()
+
+    def click_manuTab(self):
+        self.one_button.config(bg="#8ac126") 
 
     def value_set_one(self):
         self.value = 1
@@ -422,6 +445,7 @@ class Shop_main_screen:
        
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
+        
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
         
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")

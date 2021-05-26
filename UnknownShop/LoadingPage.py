@@ -114,11 +114,16 @@ lst3=('Calibri (Body)',13)
 l3.config(font=lst3)
 l3.place(x=50,y=110)
 
-img_logo_path = "UnknownShop\Picture\LoginPage\logo.png"
-img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((100, 100)))
+img_logo_path = "UnknownShop\Picture\LoginPage\white-logo.png"
+img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((150, 150)))
 
-l4 = Label(image=img_logo, borderwidth = 0,highlightthickness = 0,padx=0,pady=0)
-l4.place(x=270,y=60)
+# img_logo_path = "Shop_Page\PICTURE\logo.png"
+# self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((100, 100)))
+# self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
+
+
+l4 = Label(image=img_logo, borderwidth = 0,highlightthickness = 0,padx=0,pady=0, background=a)
+l4.place(x=250,y=35)
 
 w.mainloop()
 

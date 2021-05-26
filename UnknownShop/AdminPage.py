@@ -192,6 +192,7 @@ class main_admin_screen:
         for col in columns:
             self.order_treeview.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(
                 self.order_treeview, _col, False))
+        self.order_pic_input = ''
 
         self.order_treeview.column(0, anchor='center', width=150)
         self.order_treeview.column(1, anchor='center', width=100)
@@ -285,6 +286,7 @@ class main_admin_screen:
             self.order_option_frame, text='Search Order', command=self.search_order_treeview)
         self.order_search_entry.insert(1.0, 'Order ID')
         self.order_search_entry.bind("<Button-1>", self.order_id_clear)
+        self.order_search_button.grid(row=1, column=1, padx=10, pady=5)
         
         self.order_viewslip_button = Button(
             self.order_option_frame, text='View Slip',state=DISABLED, command=self.viewPicOrderPage)
@@ -297,27 +299,22 @@ class main_admin_screen:
         #------------------------------    init     ------------------------------------------------------------#
         self.viewpic_order_screen = Toplevel(self.admin_window)
         self.viewpic_order_screen.title(
-            "{} : {}".format(self.Code.get(), self.Name.get()))
+            "Order_ID : {}".format(self.OrderID.get()))
         self.viewpic_order_screen.focus_set()
         self.viewpic_order_screen.grab_set()
         self.viewpic_order_screen.resizable(0, 0)
         x = (960) - (400/2)
-        y = (540) - (300/2)
-        self.viewpic_order_screen.geometry("400x300+%d+%d" % (x, y))
-        self.list_img_book = os.listdir('BookPics')
+        y = (540) - (550/2)
+        self.viewpic_order_screen.geometry("400x500+%d+%d" % (x, y))
 
         #------------------------------  Picture Plane     ------------------------------------------------------------#
-        
-        self.order_pic = ImageTk.PhotoImage(
-            Image.open(self.order_pic_input).resize((120, 170)))
-        self.viewpic_order_frame = LabelFrame(
-            self.viewpic_order_screen, text='Picture')
-        self.pic_order_label = Label(
-            self.viewpic_order_frame, image=self.book_pic)
+        self.order_pic_input = 'UnknownShop\\database\\transfer_slip\\{}.png'.format(self.OrderID.get())
+        self.order_pic = ImageTk.PhotoImage(Image.open(self.order_pic_input).resize((350, 450)))
+        self.viewpic_order_frame = LabelFrame(self.viewpic_order_screen, text='Picture')
+        self.pic_order_label = Label(self.viewpic_order_frame, image=self.order_pic)
         self.pic_order_label.pack(anchor=CENTER)
 
-
-        self.viewpic_order_frame.place(x=10, y=10, height=200, width=380)
+        self.viewpic_order_frame.place(x=10, y=10, height=480, width=380)
 
 
     ##################################    Update Button   <Order Page>  #######################################################
@@ -333,15 +330,12 @@ class main_admin_screen:
                 self.order_completedtime_entry.delete('1.0', END)
                 self.order_completedtime_entry.insert(
                     1.0, self.nowtime.strftime("%Y-%m-%d %H:%M:%S"))
-            self.df.loc[self.df['Order_ID'] == self.OrderID.get(
-            ), 'Address'] = self.order_address_entry.get('1.0', 'end-1c')
-            self.df.loc[self.df['Order_ID'] == self.OrderID.get(
-            ), 'Shipped_time'] = self.order_shiptime_entry.get('1.0', 'end-1c')
-            self.df.loc[self.df['Order_ID'] == self.OrderID.get(
-            ), 'Completed_time'] = self.order_completedtime_entry.get('1.0', 'end-1c')
-            self.df.loc[self.df['Order_ID'] == self.OrderID.get(
-            ), 'Status'] = self.order_status_entry.get()
+            self.df.loc[self.df['Order_ID'] == int(self.OrderID.get()), 'Address'] = self.order_address_entry.get('1.0', 'end-1c')
+            self.df.loc[self.df['Order_ID'] == int(self.OrderID.get()), 'Shipped_time'] = self.order_shiptime_entry.get('1.0', 'end-1c')
+            self.df.loc[self.df['Order_ID'] == int(self.OrderID.get()), 'Completed_time'] = self.order_completedtime_entry.get('1.0', 'end-1c')
+            self.df.loc[self.df['Order_ID'] == int(self.OrderID.get()), 'Status'] = self.order_status_entry.get()
             self.df.to_csv("UnknownShop\\database\\order.csv", index=False)
+
             # Treeview Update
             self.order_treeview.delete(*self.order_treeview.get_children())
             treeview = pandas.read_csv('UnknownShop\\database\\order.csv')
@@ -373,7 +367,7 @@ class main_admin_screen:
             self.order_pic_input = 'UnknownShop\\database\\transfer_slip\\{}.png'.format(self.OrderID.get())
             self.order_viewslip_button.config(state=NORMAL)
         else:
-            self.order_viewslip_button.config(state=NORMAL)
+            self.order_viewslip_button.config(state=DISABLED)
 
     ###############################    Detail Plane Update    <Order Page> #########################################################
     def orderPage_detailupdate(self):
