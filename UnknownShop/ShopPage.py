@@ -919,8 +919,11 @@ class Shop_main_screen:
         label5_1 = tk.Label(paymentPageFrame4, text=" 40.00 ฿", width = 10, font=("times new roman",15,"bold"))
         label5_1.place(x=200, y=250)
 
-        Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.pp , width = 15)
-        Payment_bottom.place(x=170, y=350,anchor="center")
+        self.Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
+        self.Payment_bottom.place(x=170, y=350,anchor="center")
+
+        self.Cancle_bottom = tk.Button(paymentPageFrame4,text="< Cancle Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
+        self.Cancle_bottom.place(x=170, y=400,anchor="center")
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
@@ -956,20 +959,20 @@ class Shop_main_screen:
             index += 1
 
 
-        Back_bottom = tk.Button(paymentPageFrame3,text="< Back >", command = self.pp, width = 10)    
+        self.Edit_bottom = tk.Button(paymentPageFrame3,text="< Edit >", command = self.pp, width = 15)    
         # Back_bottom.pack(side = BOTTOM,anchor='')
-        Back_bottom.place(x=100, y=30,anchor="center")
+        self.Edit_bottom.place(x=100, y=30,anchor="center")
 
-        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart,state=DISABLED, width = 10)
+        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart,state=DISABLED, width = 15)
         # Del_bottom.pack(side = BOTTOM)    
         self.Del_botton.place(x=300, y=30,anchor="center")
 
-        Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.pp , width = 10)
-        Next_bottom.place(x=500, y=30,anchor="center")
+        self.Confirm_bottom = tk.Button(paymentPageFrame3,text="< Confirm Order >", command = self.confirmorder , width = 15)
+        self.Confirm_bottom.place(x=500, y=30,anchor="center")
         # Next_bottom.pack(side = BOTTOM) 
 
-        Seemore_bottom = tk.Button(paymentPageFrame3,text="< See more >", command = self.pp , width = 10)
-        Seemore_bottom.place(x=700, y=30,anchor="center")
+        self.Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment , width = 15,state=DISABLED)
+        self.Next_bottom.place(x=700, y=30,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
         
@@ -984,10 +987,27 @@ class Shop_main_screen:
         # Back_bottom.place(x=500, y=400,anchor="center")
 
 
-
+    def confirmorder(self):
+        MB1 = messagebox.showinfo(message='Your order have been confirmed',title='Confirm your dOrder')
+        self.Cancle_bottom.config(state=DISABLED)
+        self.Next_bottom.config(state=NORMAL)
     def pp(self):
         print("OOPPPPPPPPPPPPPPPPPPPPPPPPPs")
-
+    def topayment(self):
+        self.Payment_bottom.config(state=NORMAL)
+    def dummy_payment(self):
+        print("PAYMENT")
+        self.Cancle_bottom.config(state=NORMAL)
+    def dummy_cancle(self):
+        MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancle Order')
+        if MB1 == True:
+            print("CANCEL")
+            self.Cancle_bottom.config(state=DISABLED)
+            self.Payment_bottom.config(state=DISABLED)
+            self.Next_bottom.config(state=DISABLED)
+        else:
+            print("...............")
+        
 
     def deliveryPage(self):
         self.inner_delivery = Canvas(self.canvas, width=1280, height=550)   
@@ -1004,7 +1024,7 @@ class Shop_main_screen:
             y += 40
 
         tk.Button(deliveryPageFrame1, text=Satatus_message[4], font="BahnschriftLight 15", 
-                        bg="#F2FBF9", fg="#f6b3d9", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
+                        bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
                         bd=0, width=20).place(x=125, y=240)
 
         deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
