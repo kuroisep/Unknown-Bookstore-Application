@@ -21,8 +21,8 @@ from UnknownShop import LoginPage
 import pandas as pd
 from time import sleep
 import time
-
-
+from ttkthemes.themed_tk import ThemedTk
+from ttkthemes import ThemedStyle
 
 class Shop_main_screen:
     def __init__(self):
@@ -49,12 +49,20 @@ class Shop_main_screen:
         self.Rating = StringVar()
         self.Example = StringVar()
 
+
+       
         # """ 
         # THEAM
         # """
         # style = ttk.Style(self.shop_window)
         # # Import the tcl file
         # self.shop_window.tk.call('source', 'UnknownShop/azure.tcl')
+
+
+        style = ThemedStyle(self.shop_window)
+        # style.set_theme("adapta")
+        # style.set_theme("yaru")
+
 
         # # Set the theme with the theme_use method
         # style.theme_use('azure')
@@ -63,6 +71,7 @@ class Shop_main_screen:
         # """ 
         # THEAM
         # """
+      
 
         #USER LOGIN
         self.df = pandas.read_csv('login.csv')
@@ -122,13 +131,15 @@ class Shop_main_screen:
         self.menuTab()
 
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        self.set_banner()
-        self.count = 0
-        self.moveBanner()
+        # self.set_banner()
+        # self.count = 0
+        # self.moveBanner()
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
 
 
         self.button_state()
+
+        
 
         self.shop_window.resizable(0, 0)
         self.shop_window.overrideredirect(0)
@@ -142,90 +153,97 @@ class Shop_main_screen:
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
 
-    def set_banner(self):
-        # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
-        banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
-        banner2_path = "Shop_Page\PICTURE\\banner2.jpg"
-        banner3_path = "Shop_Page\PICTURE\\banner3.jpg"
-        self.banner1 = ImageTk.PhotoImage(Image.open(banner1_path))
-        self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
-        self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
+    # def set_banner(self):
+    #     # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
+    #     banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
+    #     banner2_path = "Shop_Page\PICTURE\\banner2.jpg"
+    #     banner3_path = "Shop_Page\PICTURE\\banner3.jpg"
+    #     self.banner1 = ImageTk.PhotoImage(Image.open(banner1_path))
+    #     self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
+    #     self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
 
-        self.banner_label = tk.Label(self.shop_window,compound='none')
-        self.banner_label.pack()
+    #     self.banner_label = tk.Label(self.shop_window,compound='none')
+    #     self.banner_label.pack()
 
-        dot1_path = "Shop_Page\PICTURE\movingdot1.png"
-        dot2_path = "Shop_Page\PICTURE\movingdot2.png"
-        dot3_path = "Shop_Page\PICTURE\movingdot3.png"
-        self.dot1 = ImageTk.PhotoImage(Image.open(dot1_path))
-        self.dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
-        self.dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
+    #     dot1_path = "Shop_Page\PICTURE\movingdot1.png"
+    #     dot2_path = "Shop_Page\PICTURE\movingdot2.png"
+    #     dot3_path = "Shop_Page\PICTURE\movingdot3.png"
+    #     self.dot1 = ImageTk.PhotoImage(Image.open(dot1_path))
+    #     self.dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
+    #     self.dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
 
-        self.dot_label = tk.Label(self.shop_window)
-        self.dot_label.pack()
+    #     self.dot_label = tk.Label(self.shop_window)
+    #     self.dot_label.pack()
 
-    def moveBanner(self):
-            global after_id
+    # def moveBanner(self):
+    #         global after_id
         
-            if self.count == 30 :
-                self.count = 0
+    #         if self.count == 30 :
+    #             self.count = 0
 
-            if self.count == 0 :
-                self.banner_label.config(image = self.banner1)
-                self.dot_label.config(image = self.dot1)
-                self.canvas.create_image(700,300,image=self.banner1)
-                self.canvas.create_image(700,475,image=self.dot1)
-                self.banner_label.place()
-                self.dot_label.place()
-            elif self.count == 10 :
-                self.banner_label.config(image = self.banner2)
-                self.canvas.create_image(700,300,image=self.banner2)
-                self.canvas.create_image(700,475,image=self.dot2)
-                self.dot_label.config(image = self.dot2)
-            elif self.count == 20 :
-                self.banner_label.config(image = self.banner3)
-                self.canvas.create_image(700,300,image=self.banner3)
-                self.canvas.create_image(700,475,image=self.dot3)
-                self.dot_label.config(image = self.dot3)
+    #         if self.count == 0 :
+    #             self.banner_label.config(image = self.banner1)
+    #             self.dot_label.config(image = self.dot1)
+    #             self.canvas.create_image(700,300,image=self.banner1)
+    #             self.canvas.create_image(700,475,image=self.dot1)
+    #             self.banner_label.place()
+    #             self.dot_label.place()
+    #         elif self.count == 10 :
+    #             self.banner_label.config(image = self.banner2)
+    #             self.canvas.create_image(700,300,image=self.banner2)
+    #             self.canvas.create_image(700,475,image=self.dot2)
+    #             self.dot_label.config(image = self.dot2)
+    #         elif self.count == 20 :
+    #             self.banner_label.config(image = self.banner3)
+    #             self.canvas.create_image(700,300,image=self.banner3)
+    #             self.canvas.create_image(700,475,image=self.dot3)
+    #             self.dot_label.config(image = self.dot3)
 
-            self.count += 1
-            after_id = self.banner_label.after(200, self.moveBanner)
+    #         self.count += 1
+    #         after_id = self.banner_label.after(200, self.moveBanner)
         
-
+    def Ssearch(self):
+        pass
     def search_bar(self):
         
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12aadb")
         Frame1.place(x=0, y=75, height=40, width=1280)
 
-        searchLabel0 = tk.Label(Frame1, text=":", font=('TRACK', 12))
+        searchLabel0 = tk.Label(Frame1, text="", font=('TRACK', 12), bg="#12aadb")
         searchLabel0.pack(side= LEFT, padx=125, pady=10, anchor=CENTER)
 
-        searchLabel = tk.Label(Frame1, text="Search By", font=('TRACK', 12))
+        searchLabel = tk.Label(Frame1, text="Search By", font=('TRACK', 12),bg="#12aadb")
         searchLabel.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        drop1 = ttk.Combobox(Frame1, width=10, value=["All","Arts / Design / Decoration", "Literature", 
+        self.drop1 = ttk.Combobox(Frame1, width=10, value=["All","Arts / Design / Decoration", "Literature", 
                                                                 "Administration / Management", "Humanities / Science", 
                                                                 "Children's Books","Career Academic Textbooks", "Psychology"])
-        drop1.current((0))
+        self.drop1.current((0))
         # drop1.place(x=345, y=100)
-        drop1.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
+        self.drop1.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        drop2 = ttk.Combobox(Frame1, width=10, value=["All","Code", "Name", "Author"])
-        drop2.current((0))
+        self.drop2 = ttk.Combobox(Frame1, width=10, value=["All","Code", "Name", "Author"])
+        self.drop2.current((0))
         # drop2.place(x=440, y=100)
-        drop2.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
+        self.drop2.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        nameEntered = ttk.Entry(Frame1, width = 50, textvariable = self.Name)
+        self.nameEntered = tk.Entry(Frame1, width = 50, textvariable = self.Name)
         # nameEntered.place(x=535, y=100)
-        nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
+        self.nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        search_button = ttk.Button(Frame1, text = "Search", command = self.show_categoryPage)
+        search_button = tk.Button(Frame1, text = "Search", command = self.show_categoryPage,height=10, width=10)
         # search_button.place(x=855, y=100)
         search_button.pack(side=LEFT, padx=5, pady=10, anchor=CENTER)
 
-        show_all_books_button = ttk.Button(Frame1, text = "Clear")
+        show_all_books_button = tk.Button(Frame1, text = "Clear",command = self.Cclear_SearchBox, height=10, width=10)
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
+    
+    def Cclear_SearchBox(self):
+        self.drop1.current((0))
+        self.drop2.current((0))
+        self.nameEntered.delete(0, 'end')
+        MB1 = messagebox.showinfo(message='Clear Done!')
 
     def menuTab_logo(self):
         # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
