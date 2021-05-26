@@ -1068,7 +1068,10 @@ class Shop_main_screen:
         Label(self.payment_frame,text='Payment Method').grid(row=7, column=0, padx=10, pady=5,sticky='w')
         self.payment_method_entry = ttk.Combobox(self.payment_frame, width=20, value=["Cash On Delivery","Promptpay"])
         self.payment_method_entry.current((0))
+        self.payment_method_entry.bind("<<ComboboxSelected>>", self.pay_method_state)
         self.payment_method_entry.grid(row=7, column=1, padx=10, pady=5,columnspan=2)
+        self.pay_method_frame = LabelFrame(self.payment_frame, text='Upload File')
+        self.pay_method_img_frame = LabelFrame(self.payment_frame, text='Preview')
         
         #------------------------------    Option Detail Plane     ------------------------------------------------------------#
         self.payment_option_frame = LabelFrame(self.payment_screen, text='')
@@ -1081,7 +1084,7 @@ class Shop_main_screen:
 
 
         self.payment_option_frame.place(x=290, y=440, height=50, width=200)
-        self.payment_frame.place(x=10, y=10, height=430, width=480)
+        self.payment_frame.place(x=10, y=10, height=420, width=480)
     def close_payment(self):
         self.payment_screen.destroy()
     def place_order(self):
@@ -1102,10 +1105,44 @@ class Shop_main_screen:
                     writer = csv.writer(file)
                     for i in self.usercart:
                         writer.writerow([order_id,i[0],i[1],i[2],i[4]])
+                if self.pay_imginput != '':
+                    temp_img = cv2.imread(self.pay_imginput)
+                    cv2.imwrite('UnknownShop\\database\\transfer_slip\\{}.png'.format(order_id), temp_img)
                 messagebox.showinfo("Alert", "Order completed!!")
                 self.close_payment()
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.payment_screen)
+    def pay_method_state(self,e):
+        if self.payment_method_entry.get() == 'Promptpay':
+            self.order_payment_button.config(state=DISABLED)
+            self.pay_method_frame = LabelFrame(self.payment_frame, text='Upload File')
+            Label(self.pay_method_frame,text='Promptpay').grid(row=0, column=0, padx=10, pady=5,sticky='w')
+            Button(self.pay_method_frame,text='Upload',command=self.pay_openimage).grid(row=0, column=1, padx=10, pady=5,sticky='w')
+            temp_path = "UnknownShop\Picture\Draf BG.png" 
+            self.pay_upload_img = ImageTk.PhotoImage(Image.open(temp_path).resize((150, 200)))
+            self.pay_upload_frame = Label(self.pay_method_img_frame, image=self.pay_upload_img)
+            self.pay_upload_frame.pack(anchor=CENTER)
+            self.pay_method_img_frame.place(x=320,y=200, height=200, width=150)
+            self.pay_method_frame.place(x=10,y=200, height=100, width=300)
+        else:
+            self.pay_method_frame.destroy()
+            self.pay_upload_frame.destroy()
+            self.order_payment_button.config(state=NORMAL)
+    
+    def pay_upload_pic(self):
+        pass
+    def pay_openfunc(self):
+        temp = filedialog.askopenfilename(initialdir='UnknownShop\\Picture\\ShopPage\\USER_PIC',title='open')
+        return temp
+    def pay_openimage(self):
+        self.pay_imginput = self.pay_openfunc()
+        if self.pay_imginput != '':
+            self.order_payment_button.config(state=NORMAL)
+            self.pay_upload_img = ImageTk.PhotoImage(Image.open(self.pay_imginput).resize((150, 200)))
+            self.pay_upload_frame.destroy()
+            self.pay_upload_frame = Label(self.pay_method_img_frame, image=self.pay_upload_img)
+            self.pay_upload_frame.pack(anchor=CENTER)
+            self.pay_method_img_frame.place(x=320,y=200, height=200, width=150)
 
     def dummy_cancle(self):
         MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancel Order')
