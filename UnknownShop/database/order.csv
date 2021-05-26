@@ -8,8 +8,11 @@ Order_time,Order_ID,Customer,Address,Quantity,Total_amount,Status,Shipped_time,C
 2021-05-26 19:02:40.618746,7,Ummmmm,,3,1529.85,Payment confirmed,-,-
 2021-05-26 19:06:40,8,Ummmmm,test address,1,488.25,Payment confirmed - Promptpay,-,-
 2021-05-26 19:09:07,9,Ummmmm,test,1,274.35,Payment confirmed - Cash On Delivery,-,-
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 2021-05-26 19:50:58,10,Ummmmm,addresssssssssssss,1,488.25,Payment confirmed - Promptpay,-,-
 =======
 2021-05-26 19:14:38,10,Ummmmm,"20/96 dfgoidfuif ,dfijiogdf,dfgidfgiol",23,10329.1,Payment confirmed - Promptpay,-,-
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of 62accb3 (added payment)
