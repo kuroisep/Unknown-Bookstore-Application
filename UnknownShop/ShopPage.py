@@ -1,7 +1,7 @@
 from logging import disable
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, Tk, Label
 from PIL import ImageTk, Image
 from tkinter.ttk import *
 from tkinter import filedialog, messagebox
@@ -24,6 +24,35 @@ from time import sleep
 import time
 from ttkthemes.themed_tk import ThemedTk
 from ttkthemes import ThemedStyle
+
+
+class Node:
+    def __init__(self, data):
+        self.next = None
+        self.prev = None
+        self.data = data
+
+class CircularLinkedList:
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return self.head is None
+
+    def add(self, data):
+        if self.head is None:
+            new_node = Node(data)
+            new_node.next = new_node.prev = new_node
+            self.head = new_node
+            return
+
+        last = self.head.prev
+        new_node = Node(data)
+
+        new_node.next = self.head
+        self.head.prev = new_node
+        new_node.prev = last
+        last.next = new_node
 
 class Shop_main_screen:
     def __init__(self):
@@ -641,10 +670,119 @@ class Shop_main_screen:
         Nextbutton = tk.Button(Button_frame,text="Buy Books", width=15, command= self.show_categoryPage)
         Nextbutton.grid(row=2,column=3,padx=180, pady=20)
 
+
+        self.ll = CircularLinkedList()
+        self.ls = CircularLinkedList()
+        self.ls.add('orange')
+        self.ls.add('blue')
+        self.ls.add('green')
+        self.ll.add('UnknownShop/Picture/ShopPage/orange.jpg')
+        self.ll.add('UnknownShop/Picture/ShopPage/blue.png')
+        self.ll.add('UnknownShop/Picture/ShopPage/green.jpg')
+
+        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data))
+        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=100, width=100)
+        self.lbl_value.bind("<Enter>", lambda event: self.isL())
+        self.lbl_value.bind("<Leave>", lambda event: self.rsL())
+        self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
+        self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
+
+        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data))
+        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=200, width=200)
+        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
+        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
+        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
+        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+
+        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data))
+        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=100, width=100)
+        self.lbl_value3.bind("<Enter>", lambda event: self.isR())
+        self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
+        self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
+        self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+
+        self.sizeL = self.lbl_value['height']
+        self.sizeM = self.lbl_value2['height']
+        self.sizeR = self.lbl_value3['height']
+
+    def update(self):
+        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data))
+        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=100, width=100)
+        self.lbl_value.bind("<Enter>", lambda event: self.isL())
+        self.lbl_value.bind("<Leave>", lambda event: self.rsL())
+        self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
+        self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
+
+        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data))
+        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=200, width=200)
+        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
+        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
+        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
+        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+
+        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data))
+        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=100, width=100)
+        self.lbl_value3.bind("<Enter>", lambda event: self.isR())
+        self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
+        self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
+        self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+
+        self.sizeL = self.lbl_value['height']
+        self.sizeM = self.lbl_value2['height']
+        self.sizeR = self.lbl_value3['height']
+
+    def next_category(self):
+        self.ll.head = self.ll.head.next
+        self.ls.head = self.ls.head.next
+        self.update()
+
+    def prev_category(self):
+        self.ll.head = self.ll.head.prev
+        self.ls.head = self.ls.head.prev
+        self.update()
+
+    def ei(self):
+        print(f"What da fak r u doin!{self.ls.head.data}!", )
+
+    def rsL(self):
+        while self.sizeL > 100:
+            self.lbl_value['height'] = self.sizeL
+            self.lbl_value['width'] = self.sizeL
+            self.sizeL -= 1
+
+    def rsM(self):
+        while self.sizeM > 200:
+            self.lbl_value2['height'] = self.sizeM
+            self.lbl_value2['width'] = self.sizeM
+            self.sizeM -= 1
+
+    def rsR(self):
+        while self.sizeR > 100:
+            self.lbl_value3['height'] = self.sizeR
+            self.lbl_value3['width'] = self.sizeR
+            self.sizeR -= 1
+
+    def isL(self):
+        while self.sizeL < 105:
+            self.lbl_value['height'] = self.sizeL
+            self.lbl_value['width'] = self.sizeL
+            self.sizeL += 1
+
+    def isM(self):
+        while self.sizeM < 210:
+            self.lbl_value2['height'] = self.sizeM
+            self.lbl_value2['width'] = self.sizeM
+            self.sizeM += 1
+
+    def isR(self):
+        while self.sizeR < 105:
+            self.lbl_value3['height'] = self.sizeR
+            self.lbl_value3['width'] = self.sizeR
+            self.sizeR += 1
+
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas,width=1280, height=550,bd=0, highlightthickness=0)
         # self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
-
 
         ##Frame for book details
         self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
