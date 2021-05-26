@@ -5,10 +5,11 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 from tkinter.ttk import *
 from tkinter import filedialog, messagebox
-import pandas
+import pandas,csv
 import os, sys
 import re
 import cv2
+import datetime
 from tkinter.filedialog import SaveFileDialog, askopenfilename
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
@@ -103,6 +104,9 @@ class Shop_main_screen:
         self.book_data = self.loadbookfile.values.tolist()
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        
+
+
 
 
 
@@ -138,7 +142,7 @@ class Shop_main_screen:
         # self.count = 0
         # self.moveBanner()
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-
+        
 
         self.button_state()
 
@@ -893,18 +897,18 @@ class Shop_main_screen:
 
         lebel1 = tk.Label(paymentPageFrame4, text=" Sales : ", width = 15)
         lebel1.place(x=50, y=10)
-        total1 = 0.00
+        self.total_amount = 0.00
         def listsum(numList):
             if len(numList) == 1:
                     return float(numList[0][4])
             else:
                     return float(numList[0][4]) + listsum(numList[1:])
         if self.usercart != []:
-            total1 = round(listsum(self.usercart),2)
+            self.total_amount = round(listsum(self.usercart),2)
             
         
         
-        label1_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(total1), width = 15)
+        label1_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(self.total_amount), width = 15)
         label1_1.place(x=200, y=10)
         
         lebel2 = tk.Label(paymentPageFrame4, text=" Member : ", width = 15)
@@ -935,7 +939,7 @@ class Shop_main_screen:
         lebel5 = tk.Label(paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
         lebel5.place(x=1, y=210)
 
-        total2 = member + promotion + shipping +total1
+        total2 = member + promotion + shipping +self.total_amount
 
         lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
         lebel5.place(x=20, y=250)
@@ -1081,7 +1085,28 @@ class Shop_main_screen:
     def close_payment(self):
         self.payment_screen.destroy()
     def place_order(self):
-        pass
+        if self.payment_address_entry.get('1.0','end-1c') != '':
+            if(messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.payment_screen)) == True:
+                self.nowtime = datetime.datetime.now()
+                loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
+                order_temp = loadorder.values.tolist()
+                now_orderid = order_temp[len(order_temp)-1][1]
+                order_id = int(now_orderid) + 1
+                Quantity = 0
+                for i in self.usercart:
+                    Quantity += int(i[2])
+                with open('UnknownShop\\database\\order.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerow([self.nowtime.strftime("%Y-%m-%d %H:%M:%S"),order_id,self.user[0][3],self.payment_address_entry.get('1.0','end-1c'),Quantity,self.total_amount,'Payment confirmed - {}'.format(self.payment_method_entry.get()),'-','-'])
+                with open('UnknownShop\\database\\order_detail.csv', 'a', newline='') as file:
+                    writer = csv.writer(file)
+                    for i in self.usercart:
+                        writer.writerow([order_id,i[0],i[1],i[2],i[4]])
+                messagebox.showinfo("Alert", "Order completed!!")
+                self.close_payment()
+        else:
+            messagebox.showerror("Error", "Please fill out all fields required", parent=self.payment_screen)
+
     def dummy_cancle(self):
         MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancel Order')
         if MB1 == True:
