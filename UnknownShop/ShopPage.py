@@ -135,27 +135,6 @@ class Shop_main_screen:
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
-
-
-
-
-
-
-
-        
-        # self.canvas=Canvas(self.shop_window,bg='#7242f5')
-        # self.canvas.pack(fill=BOTH, expand=1)
-        # text_var=" ______ Welcome to the land of bookS ______"
-        # text=self.canvas.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='white',tags=("marquee",),anchor='w')
-        # x1,y1,x2,y2 = self.canvas.bbox("marquee")
-        # width = x2-x1
-        # height = y2-y1
-        # self.canvas['width']=width
-        # self.canvas['height']=height
-        # fps=40    #Change the fps to make the animation faster/slower
-
-
-
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         self.show_HomePage()
         self.infomationPage() # หน้า info 
@@ -168,9 +147,9 @@ class Shop_main_screen:
         self.menuTab()
 
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        # self.set_banner()
-        # self.count = 0
-        # self.moveBanner()
+        self.set_banner()
+        self.count = 0
+        self.moveBanner()
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
         
 
@@ -189,56 +168,7 @@ class Shop_main_screen:
         # self.canvas = Canvas(self.shop_window, width=1280, height=720)
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
-
-    # def set_banner(self):
-    #     # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
-    #     banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
-    #     banner2_path = "Shop_Page\PICTURE\\banner2.jpg"
-    #     banner3_path = "Shop_Page\PICTURE\\banner3.jpg"
-    #     self.banner1 = ImageTk.PhotoImage(Image.open(banner1_path))
-    #     self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
-    #     self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
-
-    #     self.banner_label = tk.Label(self.shop_window,compound='none')
-    #     self.banner_label.pack()
-
-    #     dot1_path = "Shop_Page\PICTURE\movingdot1.png"
-    #     dot2_path = "Shop_Page\PICTURE\movingdot2.png"
-    #     dot3_path = "Shop_Page\PICTURE\movingdot3.png"
-    #     self.dot1 = ImageTk.PhotoImage(Image.open(dot1_path))
-    #     self.dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
-    #     self.dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
-
-    #     self.dot_label = tk.Label(self.shop_window)
-    #     self.dot_label.pack()
-
-    # def moveBanner(self):
-    #         global after_id
-        
-    #         if self.count == 30 :
-    #             self.count = 0
-
-    #         if self.count == 0 :
-    #             self.banner_label.config(image = self.banner1)
-    #             self.dot_label.config(image = self.dot1)
-    #             self.canvas.create_image(700,300,image=self.banner1)
-    #             self.canvas.create_image(700,475,image=self.dot1)
-    #             self.banner_label.place()
-    #             self.dot_label.place()
-    #         elif self.count == 10 :
-    #             self.banner_label.config(image = self.banner2)
-    #             self.canvas.create_image(700,300,image=self.banner2)
-    #             self.canvas.create_image(700,475,image=self.dot2)
-    #             self.dot_label.config(image = self.dot2)
-    #         elif self.count == 20 :
-    #             self.banner_label.config(image = self.banner3)
-    #             self.canvas.create_image(700,300,image=self.banner3)
-    #             self.canvas.create_image(700,475,image=self.dot3)
-    #             self.dot_label.config(image = self.dot3)
-
-    #         self.count += 1
-    #         after_id = self.banner_label.after(200, self.moveBanner)
-        
+    
     def Ssearch(self):
         pass
     def search_bar(self):
@@ -295,7 +225,6 @@ class Shop_main_screen:
     def menuTab_logo(self):
         # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
         # self.Frame0.place(x=0, y=0, height=75, width=100)
-
         img_logo_path = "Shop_Page\PICTURE\logo.png"
         self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
         self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
@@ -415,12 +344,16 @@ class Shop_main_screen:
         self.shop_window.destroy()
         # self.shop_window.after_cancel(after_id)
 
+    
     def HomePage(self):
         self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
 
         self.HomePageFrame1 = tk.LabelFrame(self.inner_HomePage , text="HomePage_BANNER")
         self.HomePageFrame1.place(x=100, y=10, height=350, width=1080)
 
+        self.inner_HomePageFrame1 = Canvas(self.HomePageFrame1, width=300, height=500)   
+        # self.inner_HomePageFrame1.create_window(0, 0)
+        self.inner_HomePageFrame1.pack()
 
         HomePageFrame2 = tk.LabelFrame(self.inner_HomePage , text="Selected Menu")
         HomePageFrame2.place(x=100, y=370, height=150, width=1080)
@@ -442,7 +375,54 @@ class Shop_main_screen:
 
         ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15,  command= self.show_ContactUSPage)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
-       
+    
+    def set_banner(self):
+        # # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
+        banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
+        banner2_path = "Shop_Page\PICTURE\\banner2.jpg"
+        banner3_path = "Shop_Page\PICTURE\\banner3.jpg"
+        self.banner1 = ImageTk.PhotoImage(Image.open(banner1_path))
+        self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
+        self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
+
+        self.banner_label = tk.Label( self.inner_HomePageFrame1)
+        self.banner_label.pack()
+
+        dot1_path = "Shop_Page\PICTURE\movingdot1.png"
+        dot2_path = "Shop_Page\PICTURE\movingdot2.png"
+        dot3_path = "Shop_Page\PICTURE\movingdot3.png"
+        self.dot1 = ImageTk.PhotoImage(Image.open(dot1_path))
+        self.dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
+        self.dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
+
+        self.dot_label = tk.Label( self.inner_HomePageFrame1)
+        self.dot_label.pack()
+
+    def moveBanner(self):
+            global after_id
+        
+            if self.count == 30 :
+                self.count = 0
+
+            if self.count == 0 :
+                self.banner_label.config(image = self.banner1)
+                self.dot_label.config(image = self.dot1)
+                self.canvas.create_image(700,300,image=self.banner1)
+                self.canvas.create_image(700,475,image=self.dot1)
+                self.banner_label.place()
+                self.dot_label.place()
+            elif self.count == 10 :
+                self.banner_label.config(image = self.banner2)
+                self.canvas.create_image(700,300,image=self.banner2)
+                self.canvas.create_image(700,475,image=self.dot2)
+                self.dot_label.config(image = self.dot2)
+            elif self.count == 20 :
+                self.banner_label.config(image = self.banner3)
+                self.canvas.create_image(700,300,image=self.banner3)
+                self.canvas.create_image(700,475,image=self.dot3)
+                self.dot_label.config(image = self.dot3)
+            self.count += 1
+            after_id = self.banner_label.after(200, self.moveBanner)
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
         
@@ -1020,8 +1000,6 @@ class Shop_main_screen:
        
     def paymentPage(self):
         self.inner_payment = Canvas(self.canvas, width=1280, height=550)   
-        self.inner_payment.create_text(500, 275, font = 50, anchor=CENTER, text="paymentPage")
-
         paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
         paymentPageFrame1.place(x=0, y=0, height=50, width=1280)
         
@@ -1504,7 +1482,13 @@ class Shop_main_screen:
     def show_HomePage(self): 
         self.delete_canvas()
         self.HomePage()
-        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_HomePage)  
+        self.canvas.create_window(0, 150, anchor=NW, window=self.inner_HomePage) 
+
+        self.set_banner()
+        self.count = 0
+        
+        
+        
 
     def checkDeliverySuccess(self):
         print("Checking...")
@@ -1551,21 +1535,21 @@ class Shop_main_screen:
 
             
     # ลบหน้า info
-    def delete_canvas(self): # ปุ่ม 2                #3
-        # self.canvas.create_window(2000, 700, anchor=NW, window=self.inner_infomation)
-        # self.canvas.create_window(2200,750, anchor=NW, window=self.inner_category)
-        # self.canvas.create_window(2400,750, anchor=NW, window=self.inner_payment)
-        # self.canvas.create_window(2600,750, anchor=NW, window=self.inner_delivery)
-        # pass
-        
+    def delete_canvas(self): # ปุ่ม 2  
+
         self.canvas.delete(ALL)
-        self.create_background()
         
+        
+
+        self.create_background()
         # self.create_logo()
         # self.search_bar()
         self.button_state()
+       
         self.menuTab_logo()
+
         
+     
 
 
 
