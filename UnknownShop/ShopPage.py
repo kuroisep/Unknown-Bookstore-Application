@@ -992,7 +992,7 @@ class Shop_main_screen:
         self.Cancle_bottom.config(state=DISABLED)
         self.Next_bottom.config(state=NORMAL)
     def pp(self):
-        print("OOPPPPPPPPPPPPPPPPPPPPPPPPPs")
+        print("Test"*10)
     def topayment(self):
         self.Payment_bottom.config(state=NORMAL)
     def dummy_payment(self):
@@ -1040,6 +1040,10 @@ class Shop_main_screen:
         deliveryPageFrame2_2 = ttk.LabelFrame(deliveryPageFrame2, text="Databook")
         deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
 
+        deliveryPageFrame2_3 = ttk.LabelFrame(deliveryPageFrame2, text="Review Button")
+        deliveryPageFrame2_3.place(x=200, y=380, height=90, width=420)
+
+
 
         #Author Of Book
         lbl2 = Label(deliveryPageFrame2_2, text="Code")
@@ -1083,9 +1087,9 @@ class Shop_main_screen:
 
 
 
-        self.review_bottom = ttk.Button(deliveryPageFrame2,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
+        self.review_bottom = ttk.Button(deliveryPageFrame2_3,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
         # self.review_bottom.place(x=500, y=400,anchor="center")
-        self.review_bottom.pack(side = BOTTOM) 
+        self.review_bottom.pack(side = BOTTOM, padx=10, pady=5) 
 
         Back_bottom = ttk.Button(deliveryPageFrame1_1,text="< Back >", command = self.backk, width=10)    
         Back_bottom.place(x=180, y=40,anchor="center")
@@ -1103,10 +1107,13 @@ class Shop_main_screen:
         self.commentbox.place(x=200,y=300)
        
 
-        self.Comment_boutton1 = ttk.Button(deliveryPageFrame2,text="< Send >",command = self.printcomment, state=DISABLED)
-        self.Comment_boutton1.place(x=300,y=400)
-        self.Comment_boutton2 = ttk.Button(deliveryPageFrame2,text="< Clear >",command = self.clearcomment, state=DISABLED)
-        self.Comment_boutton2.place(x=450,y=400)
+        self.Comment_boutton1 = ttk.Button(deliveryPageFrame2_3,text="< Send >",command = self.printcomment, state=DISABLED)
+        # self.Comment_boutton1.place(x=100,y=25)
+        self.Comment_boutton1.pack(side = LEFT, padx=10, pady=5) 
+        
+        self.Comment_boutton2 = ttk.Button(deliveryPageFrame2_3,text="< Clear >",command = self.clearcomment, state=DISABLED)
+        # self.Comment_boutton2.place(x=220,y=25)
+        self.Comment_boutton2.pack(side = RIGHT, padx=10, pady=5)
 
     def ContactUSPage(self): # ข้อมูลหน้า info       #1
         self.inner_ContactUS = Canvas(self.canvas, width=1280, height=550)
