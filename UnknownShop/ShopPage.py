@@ -141,6 +141,8 @@ class Shop_main_screen:
         #self.user[0][7] = email
         #self.user[0][8] = telphone
         #self.user[0][9] = picture
+        #self.user[0][10] = memberpoiint
+
 
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Load data book >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -467,6 +469,7 @@ class Shop_main_screen:
                         j[0] = (float(j[0]) + float(i[5]))/2
                         round(j[0],2)
                         duplicate = True
+                    duplicate = False
                 if not duplicate:
                     to_sort.append([i[5],i[1],i[2]])
         recommend_sorted = QuickSort(to_sort)
@@ -559,6 +562,9 @@ class Shop_main_screen:
         
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
         
+        self.df = pandas.read_csv('login.csv')
+        self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
+
         filename = "UnknownShop/Picture/ShopPage/BG1.png"
         self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
         background_label = Label(self.inner_infomation, image=self.filenameBG)
@@ -652,7 +658,7 @@ class Shop_main_screen:
             point_text = Label(infomationPageFrame3, text="Member Point(s)",font = self.myfont)
             point_text.grid(row=7, column=0, padx=10, pady=5,sticky="W")
             self.point_entry = Entry(infomationPageFrame3,font = self.myfont)
-            self.point_entry.insert(0,self.user[0][9])
+            self.point_entry.insert(0,self.user[0][10])
             self.point_entry.config(state=DISABLED)
             self.point_entry.grid(row=7, column=1, padx=10, pady=5)
 
@@ -1291,10 +1297,11 @@ class Shop_main_screen:
         label4_1.place(x=200, y=130)
 
         
-        lebel5 = tk.Label(self.paymentPageFrame4, text=" Total(s) : ", width = 15)
+        lebel5 = tk.Label(self.paymentPageFrame4, text=" Total Point(s) : ", width = 15)
         lebel5.place(x=50, y=170)
 
-        self.label5_1 = tk.Label(self.paymentPageFrame4, text=" 0.00 ฿", width = 15)
+        self.memberpoint = float(self.total_amount.get())/31.92177939902474
+        self.label5_1 = tk.Label(self.paymentPageFrame4, text=f" {self.memberpoint:.2f}. point(s)", width = 15)
         self.label5_1.place(x=200, y=170)
 
         lebel5 = tk.Label(self.paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
@@ -1466,6 +1473,8 @@ class Shop_main_screen:
                 if self.pay_imginput != '':
                     temp_img = cv2.imread(self.pay_imginput)
                     cv2.imwrite('UnknownShop\\database\\transfer_slip\\{}.png'.format(self.order_id), temp_img)
+                self.df.loc[self.df['USER'] == self.user[0][1], 'MEMBERS'] =  int(self.user[0][10]) + int(self.memberpoint)
+                self.df.to_csv("login.csv", index=False)
                 messagebox.showinfo("Alert", "Order completed!!")
                 self.close_payment()
         else:

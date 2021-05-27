@@ -479,7 +479,7 @@ class main_account_screen:
         elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or ((len(tel_info) < 12) or (len(tel_info) > 13) ))  :
             messagebox.showerror("Error", "Phone Number Invalid.",parent=self.register_screen)
             self.telphone_entry.delete(0,END)
-                                                                      
+
         elif (email_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter Your Email.", parent=self.register_screen)
@@ -498,7 +498,7 @@ class main_account_screen:
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(['F',username_info, password_info,
-                                    name_info.capitalize(), lastname_info.capitalize(), gender_info,birthday_info, email_info, str(tel_info),'account'])
+                                    name_info.capitalize(), lastname_info.capitalize(), gender_info,birthday_info, email_info, str(tel_info),'account',"100"])
                 self.clear_user()
                 self.register_screen.destroy()
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
@@ -507,8 +507,6 @@ class main_account_screen:
 
 def showLoginPage():
     run = main_account_screen()
-
-
 
 if __name__ == '__main__':
     showLoginPage()
