@@ -129,6 +129,7 @@ class main_admin_screen:
         self.birthday = StringVar()
         self.email = StringVar()
         self.telphone = StringVar()
+        self.memberpoint = StringVar()
 
         #---------------------------     Database     ------------------------------------------------------------ #
         # Order Manangement
@@ -1057,7 +1058,7 @@ class main_admin_screen:
         #------------------------------   Table Plane     ------------------------------------------------------------#
         self.member_table_frame = LabelFrame(self.memberframe)
         columns = ("Loged in", "Username", "Name", "LastName",
-                   "Gender", "Birthday", "Email", "PhoneNumber")
+                   "Gender", "Birthday", "Email", "PhoneNumber","MemberPoint")
         self.member_treeview = Treeview(
             self.member_table_frame, column=columns, show="headings", height="20")
         yscrollbar = ttk.Scrollbar(
@@ -1076,10 +1077,11 @@ class main_admin_screen:
         self.member_treeview.column(4, anchor='center', width=80)
         self.member_treeview.column(5, anchor='center', width=100)
         self.member_treeview.column(6, anchor='center', width=200)
-        self.member_treeview.column(7, anchor='center', width=150)
+        self.member_treeview.column(7, anchor='center', width=100)
+        self.member_treeview.column(8, anchor='center', width=100)
 
         for i in self.member_data:
-            self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[2]])
+            self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[10]])
 
         self.member_treeview.pack()
         self.member_table_frame.place(x=20, y=10, height=400, width=1000)
@@ -1146,6 +1148,13 @@ class main_admin_screen:
         self.tel_entry.insert(1.0, '')
         self.tel_entry.grid(row=3, column=3, padx=10, pady=5)
 
+        Label(self.member_detail_frame, text="Member Point(s)").grid(
+            row=4, column=0, padx=10, pady=5, sticky="E")
+        self.memp_entry = Text(
+            self.member_detail_frame, width=20, height=1)
+        self.memp_entry.insert(1.0, '')
+        self.memp_entry.grid(row=4, column=1, padx=10, pady=5)
+
         self.member_detail_frame.place(x=20, y=430, height=200, width=700)
 
         #------------------------------  Option Plane     ------------------------------------------------------------#
@@ -1184,6 +1193,7 @@ class main_admin_screen:
         self.birthday.set(cur[5])
         self.email.set(cur[6])
         self.telphone.set(cur[7])
+        self.memberpoint.set(cur[8])
         self.memberPage_detailupdate()
     ###############################    Detail Plane Update    <Member Page> #########################################################
     def memberPage_detailupdate(self):
@@ -1195,6 +1205,8 @@ class main_admin_screen:
         self.birthday_entry.delete('1.0', END)
         self.email_entry.delete('1.0', END)
         self.tel_entry.delete('1.0', END)
+        self.memp_entry.delete('1.0', END)
+
         self.username_entry.insert(1.0, self.username.get())
         self.password_entry.insert(1.0, '********')
         self.fname_entry.insert(1.0, self.fname.get())
@@ -1203,6 +1215,8 @@ class main_admin_screen:
         self.birthday_entry.insert(1.0, self.birthday.get())
         self.email_entry.insert(1.0, self.email.get())
         self.tel_entry.insert(1.0, self.telphone.get())
+        self.memp_entry.insert(1.0, self.memberpoint.get())
+
     def password_clear(self,e):
         if self.password_entry.get('1.0', 'end-1c') == '********':
             self.password_entry.delete('1.0', END)
@@ -1222,7 +1236,7 @@ class main_admin_screen:
             treeview = pandas.read_csv('login.csv')
             treeview_update = treeview.values.tolist()
             for i in treeview_update:
-                self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[2]])
+                self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[10]])
             messagebox.showinfo("Info", "Deleted member \n[ {} {} ]".format(self.fname.get(),self.lname.get()), parent=self.memberframe)
             
     ##################################    Update Button   <Member Page>  #######################################################
@@ -1251,7 +1265,7 @@ class main_admin_screen:
             treeview = pandas.read_csv('login.csv')
             treeview_update = treeview.values.tolist()
             for i in treeview_update:
-                self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[2]])
+                self.member_treeview.insert('', 'end', values=[i[0],i[1],i[3],i[4],i[5],i[6],i[7],i[8],i[10]])
     ##################################    Register Button   <Member Page>  #######################################################
     def add_member(self):
          #------------------------------    init     ------------------------------------------------------------#
