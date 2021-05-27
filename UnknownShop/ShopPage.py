@@ -64,7 +64,7 @@ class Shop_main_screen:
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
-
+        self.myfont = 'TRACK'
         # self.pathcursor = ImageTk.PhotoImage(Image.open(pathcursor).resize((50, 50)))
         self.shop_window.configure(cursor='watch')
 
@@ -512,8 +512,7 @@ class Shop_main_screen:
 
         self.recommend_book_treeview.pack()
         self.recommend_book_frame.place(x=10, y=10, height=470, width=670)
-
-    
+ 
     def set_banner(self):
         # # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
         banner1_path = "Shop_Page\PICTURE\\banner1.jpg"
@@ -566,107 +565,106 @@ class Shop_main_screen:
         
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
         
-        infomationPageFrame1 = tk.LabelFrame(self.inner_infomation , text="INFOMATION")
+        infomationPageFrame1 = tk.LabelFrame(self.inner_infomation,borderwidth=0, highlightthickness=0,bg="#99aaff")
         infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
 
-        self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE")
-        self.infomationPageFrame2.place(x=600, y=0, height=400, width=300)
+        self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        self.infomationPageFrame2.place(x=600, y=50, height=350, width=300)
 
-        infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info")
-        infomationPageFrame3.place(x=200, y=0, height=400, width=350)
+        infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        infomationPageFrame3.place(x=200, y=50, height=400, width=365)
 
-        infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info")
-        infomationPageFrame4.place(x=200, y= 400, height=100, width=700)
+        infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        infomationPageFrame4.place(x=200, y= 420, height=100, width=700)
 
-        infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1 , text="นอน", bg="#12aadb")
+        infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1, bg="#12aadb",borderwidth=0, highlightthickness=0,)
         infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
 
-        infomationPage_custom_Frame2 = tk.LabelFrame(infomationPageFrame1 , text="นอน", bg="#12bbdb")
+        infomationPage_custom_Frame2 = tk.LabelFrame(infomationPageFrame1, bg="#12fcdb",borderwidth=0, highlightthickness=0,)
         infomationPage_custom_Frame2.place(x=1000, y=0, height=550, width=280)
 
 
         if self.user != []:
             ## USERNAME
-            username_text = Label(infomationPageFrame3, text="Username".format(self.user[0][1]))
-            username1_text = Label(infomationPageFrame3, text=self.user[0][1])
+            username_text = Label(infomationPageFrame3, text="Username".format(self.user[0][1]), font = self.myfont)
+            username1_text = Label(infomationPageFrame3, text=self.user[0][1],font = self.myfont)
             username_text.grid(row=0, column=0, padx=10, pady=10,sticky="W")
             username1_text.grid(row=0, column=1, padx=10, pady=5,sticky="W")
             ## NAME
-            name_text = Label(infomationPageFrame3, text="Name")
+            name_text = Label(infomationPageFrame3, text="Name",font = self.myfont)
             name_text.grid(row=1, column=0, padx=10, pady=5,sticky="W")
-            self.name_entry = Entry(infomationPageFrame3)
+            self.name_entry = Entry(infomationPageFrame3,font = self.myfont)
             self.name_entry.insert(0,self.user[0][3])
             self.name_entry.config(state=DISABLED)
             self.name_entry.grid(row=1, column=1, padx=10, pady=5)
             ##LASTNAME
-            lname_text = Label(infomationPageFrame3, text="Lastname")
+            lname_text = Label(infomationPageFrame3, text="Lastname",font = self.myfont)
             lname_text.grid(row=2, column=0, padx=10, pady=5,sticky="W")
-            self.lname_entry = Entry(infomationPageFrame3)
+            self.lname_entry = Entry(infomationPageFrame3,font = self.myfont)
             self.lname_entry.insert(0,self.user[0][4])
             self.lname_entry.config(state=DISABLED)
             self.lname_entry.grid(row=2, column=1, padx=10, pady=5)
             ##GENDER
-            gender_text = Label(infomationPageFrame3, text="Gender")
+            gender_text = Label(infomationPageFrame3, text="Gender",font = self.myfont)
             gender_text.grid(row=3, column=0, padx=10, pady=5,sticky="W")
-            self.gender_entry = Combobox(infomationPageFrame3, width=8,value=['MALE','FEMALE']) 
+            self.gender_entry = Combobox(infomationPageFrame3, width=8,value=['MALE','FEMALE'],font = self.myfont) 
             self.gender_entry.insert(0,self.user[0][5])
             self.gender_entry.config(state=DISABLED)
             self.gender_entry.grid(row=3, column=1, padx=10, pady=5,sticky="W")
             ##BIRTHDAY
                     #DATE
-            birthday_text = Label(infomationPageFrame3, text="Birthday")
+            birthday_text = Label(infomationPageFrame3, text="Birthday",font = self.myfont)
             birthday_text.grid(row=4, column=0, padx=10, pady=5,sticky="W")
             self.birthday_date_entry = Combobox(infomationPageFrame3, width=3,value=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
                                                                              '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
-                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
+                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],font = self.myfont) 
             self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
             self.birthday_date_entry.config(state=DISABLED)
-            self.birthday_date_entry.place(x=155, y=135)
+            self.birthday_date_entry.place(x=182, y=160)
                     #MONTH
-            self.birthday_month_entry = Combobox(infomationPageFrame3, width=5, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
+            self.birthday_month_entry = Combobox(infomationPageFrame3, width=4, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] ,font = self.myfont)
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
-            self.birthday_month_entry.place(x=200, y=135)
+            self.birthday_month_entry.place(x=236, y=160)
                     #YEAR
             year_list = []
             for i in range(1920,2022):
                 year_list.append(str(i))
-            self.birthday_year_entry = Combobox(infomationPageFrame3, width=5, value=year_list)
+            self.birthday_year_entry = Combobox(infomationPageFrame3, width=4, value=year_list,font = self.myfont)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.birthday_year_entry.place(x=258, y=135)
+            self.birthday_year_entry.place(x=300, y=160)
             ##EMAIL
-            email_text = Label(infomationPageFrame3, text="Email")
+            email_text = Label(infomationPageFrame3, text="Email",font = self.myfont)
             email_text.grid(row=5, column=0, padx=10, pady=5,sticky="W")
-            self.email_entry = Entry(infomationPageFrame3)
+            self.email_entry = Entry(infomationPageFrame3,font = self.myfont)
             self.email_entry.insert(0,self.user[0][7])
             self.email_entry.config(state=DISABLED)
             self.email_entry.grid(row=5, column=1, padx=10, pady=5)
             ##PHONE
-            telphone_text = Label(infomationPageFrame3, text="Phone Number")
+            telphone_text = Label(infomationPageFrame3, text="Phone Number",font = self.myfont)
             telphone_text.grid(row=6, column=0, padx=10, pady=5,sticky="W")
-            self.telphone_entry = Entry(infomationPageFrame3)
+            self.telphone_entry = Entry(infomationPageFrame3,font = self.myfont)
             self.telphone_entry.insert(0,self.user[0][8])
             self.telphone_entry.config(state=DISABLED)
             self.telphone_entry.grid(row=6, column=1, padx=10, pady=5)
 
-            point_text = Label(infomationPageFrame3, text="Member Point(s)")
+            point_text = Label(infomationPageFrame3, text="Member Point(s)",font = self.myfont)
             point_text.grid(row=7, column=0, padx=10, pady=5,sticky="W")
-            self.point_entry = Entry(infomationPageFrame3)
+            self.point_entry = Entry(infomationPageFrame3,font = self.myfont)
             self.point_entry.insert(0,self.user[0][9])
             self.point_entry.config(state=DISABLED)
             self.point_entry.grid(row=7, column=1, padx=10, pady=5)
 
 
-
             ##EDIT BUTTON
-            Label(infomationPageFrame3, text="\n\n\n\n\n\n\n\n\n\n").grid(row=8, column=0, padx=10, pady=5)
+            Label(infomationPageFrame3, text="").grid(row=8, column=0, padx=10, pady=5)
             Label(infomationPageFrame3, text="").grid(row=8, column=1, padx=10, pady=5)
-            self.edit_info_button = Button(infomationPageFrame3,text='Edit', command=self.edit_infomation_state)
+            self.edit_info_button = tk.Button(infomationPageFrame3,text='Edit', command=self.edit_infomation_state, width = 10)
             self.edit_info_button.grid(row=8, column=0, padx=35, pady=5)
             ##DONE BUTTON
-            self.done_info_button = Button(infomationPageFrame3,text='Done',state=DISABLED, command=self.edit_infomation_state)
+            self.done_info_button = tk.Button(infomationPageFrame3,text='Done',state=DISABLED, command=self.edit_infomation_state, width = 10)
             self.done_info_button.grid(row=8, column=1, padx=10, pady=5)
 
             ##PICTURE
@@ -674,7 +672,7 @@ class Shop_main_screen:
             self.user_img = ImageTk.PhotoImage(Image.open(image_path).resize((300, 300)))
             self.user_imginput = ''
 
-            self.imageselect_info_button = Button(self.infomationPageFrame2,text='select',state=DISABLED, command=self.openimage)
+            self.imageselect_info_button = tk.Button(self.infomationPageFrame2,text='select',state=DISABLED, command=self.openimage, width = 10 )
             self.imageselect_info_button.pack(side="bottom")
             self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
             self.user_image.pack()
@@ -801,7 +799,6 @@ class Shop_main_screen:
         
     def selected_categoryPages(self):
         self.inner_selected_categoryPages = Canvas(self.canvas, width=1280, height=550,bd=0, highlightthickness=0)
-        # self.inner_selected_categoryPages.create_text(500, 275, font = 50, anchor=CENTER, text="selected_categoryPages")
 
         self.selected_frame1 = ttk.LabelFrame(self.inner_selected_categoryPages, text="selected_categoryPages")
         self.selected_frame1.place(x=100, y=0,height=520, width=1050)
@@ -855,7 +852,7 @@ class Shop_main_screen:
         self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
 
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.705, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.719, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
@@ -886,7 +883,7 @@ class Shop_main_screen:
         self.lbl_status.destroy()
     
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.705, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.719, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
