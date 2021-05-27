@@ -407,9 +407,16 @@ class Shop_main_screen:
         loadorder_deatil = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
         order_detail = loadorder_deatil.values.tolist()
         to_sort = []
+        duplicate = False
         for i in order_detail:
             if str(i[5]) != 'nan':
-                to_sort.append([i[5],i[1],i[2]])
+                for j in to_sort:
+                    if i[1] in j[1]:
+                        j[0] = (float(j[0]) + float(i[5]))/2
+                        round(j[0],2)
+                        duplicate = True
+                if not duplicate:
+                    to_sort.append([i[5],i[1],i[2]])
         recommend_sorted = QuickSort(to_sort)
         #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Sort : Quicksort ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -419,9 +426,9 @@ class Shop_main_screen:
         self.recommend_screen.focus_set()
         self.recommend_screen.grab_set()
         self.recommend_screen.resizable(0, 0)
-        x = (960) - (500/2)
+        x = (960) - (700/2)
         y = (540) - (550/2)
-        self.recommend_screen.geometry("500x500+%d+%d" % (x, y))
+        self.recommend_screen.geometry("700x500+%d+%d" % (x, y))
         #------------------------------   Table Plane     ------------------------------------------------------------#
         self.recommend_book_frame = LabelFrame(self.recommend_screen)
         columns = ("No.",'Code','Title','Rating')
@@ -437,8 +444,8 @@ class Shop_main_screen:
 
         self.recommend_book_treeview.column(0, anchor='center', width=50)
         self.recommend_book_treeview.column(1, anchor='center', width=80)
-        self.recommend_book_treeview.column(2, anchor='w', width=250)
-        self.recommend_book_treeview.column(3, anchor='w', width=50)
+        self.recommend_book_treeview.column(2, anchor='center', width=450)
+        self.recommend_book_treeview.column(3, anchor='center', width=50)
 
         index = 1
         for i in recommend_sorted:
@@ -446,7 +453,7 @@ class Shop_main_screen:
             index += 1
 
         self.recommend_book_treeview.pack()
-        self.recommend_book_frame.place(x=10, y=10, height=470, width=470)
+        self.recommend_book_frame.place(x=10, y=10, height=470, width=670)
 
     
     def set_banner(self):
