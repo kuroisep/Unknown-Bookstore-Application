@@ -154,7 +154,6 @@ class Shop_main_screen:
         self.menuTab()
 
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        self.set_banner()
         self.count = 0
         self.moveBanner()
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 

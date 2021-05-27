@@ -83,44 +83,32 @@ class main_account_screen:
                         font=(self.myfont, 20), anchor="n")
                        
         
-        # loginfill = tk.LabelFrame( loginframe ,borderwidth=0, highlightthickness=0)
-        # loginfill.place(x=800, y=200, height=400, width=400)
+        canvas.create_text(1010, 170, text="Signin", font=(self.myfont, 40))
 
-
-        canvas.create_text(1000, 170, text="Signin", font=(self.myfont, 40))
-
-        canvas.create_text(875, 250, text="Username", font=(self.myfont))
+        canvas.create_text(915, 250, text="Username", font=(self.myfont))
         username_login_entry = ttk.Entry(
             textvariable=username_verify, width=30, font=20)
 
-        canvas.create_window(1000, 290, window=username_login_entry)
+        canvas.create_window(1010, 290, window=username_login_entry)
 
-        canvas.create_text(875, 340, text="Password", font=self.myfont)
+        canvas.create_text(915, 340, text="Password", font=self.myfont)
         password_login_entry = ttk.Entry(
             textvariable=password_verify, show='●', width=30, font=20)
-        canvas.create_window(1000, 380, window=password_login_entry)
+        canvas.create_window(1010, 380, window=password_login_entry)
 
-        img_login_path = "UnknownShop\Picture\LoginPage\login-button1.png"
-        img_login_button = ImageTk.PhotoImage(Image.open(img_login_path).resize((200, 300)))
-        login_button = Button(image=img_login_button, command=self.login_verify,
-                            bd=0, highlightthickness=0, width=140, height=60)
-        canvas.create_window(900, 450, window=login_button)
+        login_button = Button(text="LOGIN", command=self.login_verify,
+                            bd=3, highlightthickness=0, width=20, height=2,background = "green3",highlightbackground = "black",activebackground="green2",activeforeground="white")
+        login_button.place(x=850, y = 440)
 
+        regis_button = Button(text="REGISTER", command=self.register ,
+                            bd=3, highlightthickness=0, width=20, height=2,background = "orange2",highlightbackground = "black",activebackground="orange1",activeforeground="white")
+        regis_button.place(x=1040, y = 440)
 
-
-        img_regis_path = "UnknownShop\Picture\LoginPage\\regis-button.png"
-        img_regis_button = ImageTk.PhotoImage(Image.open(img_regis_path).resize((200, 300)))
-        regis_button = Button(image=img_regis_button, command=self.register ,
-                            bd=0, highlightthickness=0, width=140, height=60)
-        # canvas.create_window(1100, 450, window=regis_button)
-        regis_button.place(x=1040, y = 420)
-
-        canvas.create_text(1230, 700, text="V.1.0.0", font=self.myfont)
+        canvas.create_text(1230, 700, text="V.2.1.99", font=self.myfont)
 
         exit_button = Button(text="EXIT", command=self.confirm_closing,
-                            bd=0, highlightthickness=0, width=20, height=3)
-        # canvas.create_window(1100, 600, window=exit_button)
-        exit_button.place(x=1100, y=600)
+                            bd=3, highlightthickness=0, width=20, height=2, background = "red2",highlightbackground = "black",activebackground="red",activeforeground="white")
+        exit_button.place(x=950, y=500)
 
 
         self.main_screen.resizable(1, 1)
@@ -341,11 +329,11 @@ class main_account_screen:
     
         helv20 = tkFont.Font(family='Helvetica', size=12, weight=tkFont.BOLD)
         regis_button = Button(self.inner_registerframe_button, text="Register".upper(),
-                            font=helv20, bg="orange", fg="white", command=self.register_user, width=10, height=3)
+                            font=helv20, bg="orange", fg="white", command=self.register_user, width=10, height=2,activebackground="orange2")
         clear_button = Button(self.inner_registerframe_button, text="Clear".upper(),
-                            font=helv20, bg="blue", fg="white", command=self.clear_user_confirm,width=10, height=3)
+                            font=helv20, bg="blue", fg="white", command=self.clear_user_confirm,width=10, height=2,activebackground="blue2")
         cancel_button = Button(self.inner_registerframe_button, text="CANCEL", command=self.delete_register_screen,
-                            font=helv20, bg="red", fg="white", highlightthickness=0, width=10, height=3)
+                            font=helv20, bg="red", fg="white", highlightthickness=0, width=10, height=2, activebackground="red2")
 
         regis_button.grid(row=0, column=0,padx=10)
         clear_button.grid(row=0, column=1,padx=10)
@@ -488,7 +476,7 @@ class main_account_screen:
             messagebox.showinfo(
                 "Info", "Please Enter Phone Number.", parent=self.register_screen)
         
-        elif (tel_info.isdigit() == False or len(tel_info) != 10):
+        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or len(tel_info) > 13):
             messagebox.showerror("Error", "Phone Number Invalid.",parent=self.register_screen)
             self.telphone_entry.delete(0,END)
         
