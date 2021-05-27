@@ -1044,9 +1044,9 @@ class Shop_main_screen:
         self.lbl7_entry.grid(row=6, column=2, padx=10, pady=5)
 
         # Example Of Book
-        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example, state="readonly",font = self.myfont)
-
-        self.commentbox.place(x=10,y=0,width=550,height=70)
+        self.Examplebox = tk.Text(self.example_frame, font = self.myfont)
+        self.Examplebox.insert(1.0, END)
+        self.Examplebox.place(x=10,y=0,width=550,height=70)
        
 
         ## number of items book
@@ -1119,6 +1119,8 @@ class Shop_main_screen:
         self.Price.set(cur[5])
         self.Rating.set(cur[9])
         self.Example.set(cur[7])
+        self.Examplebox.delete('1.0', END)
+        self.Examplebox.insert('1.0', self.Example.get())
         if self.confirm_order == False:
             self.add_bookcart_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
@@ -1525,22 +1527,32 @@ class Shop_main_screen:
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
         deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
+        Label(deliveryPageFrame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
            
         deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
         deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
+        Label(deliveryPageFrame1_1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
         
-
         self.deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
         self.deliveryPageFrame2.place(x=550, y=20, height=500, width=700)
+        Label(self.deliveryPageFrame2, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
         self.delivery_img_frame.place(x=50, y=10, height=250, width=200)
+        Label(self.delivery_img_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
+        
+        self.img_review_input = 'BookPics\\NOT_FOUND.png'
+        self.img_review = ImageTk.PhotoImage(Image.open(self.img_review_input).resize((180, 220)))
+        self.img_review_label = Label(self.delivery_img_frame, image=self.img_review)
+        self.img_review_label.pack(anchor=CENTER)
 
         self.deliveryPageFrame2_2 = ttk.LabelFrame(self.deliveryPageFrame2, text="Databook")
         self.deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
+        Label( self.deliveryPageFrame2_2, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         self.deliveryPageFrame2_3 = ttk.LabelFrame(self.deliveryPageFrame2, text="Review Button")
         self.deliveryPageFrame2_3.place(x=200, y=380, height=90, width=420)
+        Label(self.deliveryPageFrame2_3, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
 
 
@@ -1797,7 +1809,7 @@ class Shop_main_screen:
                     self.review_Author.set(i[3])
                     self.review_Category.set(i[4])
                     self.review_Price.set(i[5])
-                    self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
+                    self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2)
                     self.delivery_img_frame.place(x=50, y=10, height=250, width=200)
                     if str(self.review_Code.get()) +'.png' in self.list_img_book:
                         self.img_review_input = 'BookPics\\{}.png'.format(self.review_Code.get())
@@ -1822,6 +1834,11 @@ class Shop_main_screen:
             self.review_bottom.config(state=DISABLED)
             self.Next_bottonn.config(state = DISABLED)
             self.Rating_Combobox.config(state=DISABLED)
+
+            self.img_review_input = 'BookPics\\NOT_FOUND.png'
+            self.img_review = ImageTk.PhotoImage(Image.open(self.img_review_input).resize((180, 220)))
+            self.img_review_label = Label(self.delivery_img_frame, image=self.img_review)
+            self.img_review_label.pack(anchor=CENTER)
 
     def backk(self):
         self.commentbox.config(state=DISABLED)
