@@ -472,7 +472,14 @@ class main_account_screen:
         elif (self.gender1.get() == 0 and self.gender2.get() == 0):
             messagebox.showinfo(
                 "Error", "Please Select Your Gender.", parent=self.register_screen)
-                                                                   
+        elif (tel_info == ''):
+            messagebox.showinfo(
+                "Info", "Please Enter Phone Number.", parent=self.register_screen)
+        
+        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or ((len(tel_info) < 12) or (len(tel_info) > 13) ))  :
+            messagebox.showerror("Error", "Phone Number Invalid.",parent=self.register_screen)
+            self.telphone_entry.delete(0,END)
+                                                                      
         elif (email_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter Your Email.", parent=self.register_screen)
@@ -480,13 +487,7 @@ class main_account_screen:
         elif (email_regex.match(email_info) == None):
             messagebox.showerror("Error", "Email Invalid.", parent=self.register_screen)
 
-        elif (tel_info == ''):
-            messagebox.showinfo(
-                "Info", "Please Enter Phone Number.", parent=self.register_screen)
         
-        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or len(tel_info) > 13):
-            messagebox.showerror("Error", "Phone Number Invalid.",parent=self.register_screen)
-            self.telphone_entry.delete(0,END)
         
         else:
             if self.gender1.get() == 0:
