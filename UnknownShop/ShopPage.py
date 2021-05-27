@@ -164,8 +164,6 @@ class Shop_main_screen:
 
         self.button_state()
 
-        
-
         self.shop_window.resizable(0, 0)
         self.shop_window.overrideredirect(0)
         self.shop_window.mainloop()
@@ -358,26 +356,6 @@ class Shop_main_screen:
         print(self.value)
         
     def button_state(self):
-
-        # button1_path = "UnknownShop\Picture\ShopPage\\button1.png"
-        # self.img_button1 = ImageTk.PhotoImage(Image.open(button1_path).resize((175, 48)))
-        # # self.canvas.create_image(200,200,image=self.img_button1)
-        # self.button1 = tk.Button(self.shop_window,image=self.img_button1, command = self.show_infomationPage, borderwidth=0)
-        
-        # self.canvas.create_window(0, 200, window=self.button1, anchor="nw")
-
-        # button2_path = "UnknownShop\Picture\ShopPage\\button2.png"
-        # self.img_button2 = ImageTk.PhotoImage(Image.open(button2_path).resize((175, 48)))
-        # # self.canvas.create_image(200,300,image=self.img_button2)
-        # self.button2 = tk.Button(image=self.img_button2,command= self.show_categoryPage, borderwidth=0, )
-        # self.canvas.create_window(0, 280, window=self.button2, anchor="nw")
-
-        # button3_path = "UnknownShop\Picture\ShopPage\\button3.png"
-        # self.img_button3 = ImageTk.PhotoImage(Image.open(button3_path).resize((175, 48)))
-        # # self.canvas.create_image(200,400,image=self.img_button3)
-        # self.button3 = tk.Button(image=self.img_button3,command=self.show_paymentPage, borderwidth=0)
-        # self.canvas.create_window(0, 360, window=self.button3, anchor="nw")
-
         # button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
         # self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
         # # self.canvas.create_image(200,500,image=self.img_button4)
@@ -429,23 +407,39 @@ class Shop_main_screen:
         HomePageFrame2 = tk.LabelFrame(self.inner_HomePage , text="Selected Menu")
         HomePageFrame2.place(x=100, y=370, height=150, width=1080)
 
-        
-        buy_button = tk.Button(HomePageFrame2,text="1", width=10)
-        buy_button.grid(row=0,column=0,padx=20, pady=5)
-        buy_button = tk.Button(HomePageFrame2,text="2", width=10)
-        buy_button.grid(row=1,column=0,padx=20, pady=5)    
+        path1 = "UnknownShop\\Picture\\ShopPage\\ICON\\bag.png"
+        path2 = "UnknownShop\\Picture\\ShopPage\\ICON\\box.png"
+        path3 = "UnknownShop\\Picture\\ShopPage\\ICON\\open-book.png"
+        path4 = "UnknownShop\\Picture\\ShopPage\\ICON\\operator.png"
 
-        buy_button = tk.Button(HomePageFrame2,text="Buy Books", width=15, command= self.show_selected_categoryPages)
-        buy_button.grid(row=2,column=2,padx=80, pady=10)
+        self.p1 = ImageTk.PhotoImage(Image.open(path1).resize((85, 75)))
+        self.p2 = ImageTk.PhotoImage(Image.open(path2).resize((85, 75)))
+        self.p3 = ImageTk.PhotoImage(Image.open(path3).resize((85, 75)))
+        self.p4 = ImageTk.PhotoImage(Image.open(path4).resize((85, 75)))
+        # self.img_logo = ImageTk.PhotoImage(Image.open(path1).resize((85, 75)))
+        # button.config(image=logo, compound=LEFT)
+        # small_logo = logo.subsample(5, 5)
+        # button.config(image=small_logo)
 
-        Status_button = tk.Button(HomePageFrame2,text="Status",width=15, command= self.show_deliveryPage)
-        Status_button.grid(row=2,column=3,padx=10, pady=10)
+        # buy_button = tk.Button(HomePageFrame2,text="1", width=10)
+        # buy_button.grid(row=0,column=0,padx=20, pady=5)
+        # buy_button = tk.Button(HomePageFrame2,text="2", width=10)
+        # buy_button.grid(row=1,column=0,padx=20, pady=5)    
 
-        Review_button = tk.Button(HomePageFrame2,text="Recommed Book",width=15, command= self.recommend_book_page)
-        Review_button.grid(row=2,column=4,padx=50, pady=10)
+        buy_button = tk.Button(HomePageFrame2,text="Buy Books",image=self.p1,width=200, command= self.show_selected_categoryPages, compound=TOP,pady=5)
+        # buy_button.config(image=p1, compound=LEFT)
+        # buy_button.grid(row=2,column=2,padx=80, pady=10)
+        buy_button.place(x=120,y=10)
 
-        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15,  command= self.show_ContactUSPage)
-        ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
+        Status_button = tk.Button(HomePageFrame2,text="Status",image=self.p2,width=200, command= self.show_deliveryPage, compound=TOP, pady=5)
+        Status_button.place(x=330,y=10)
+
+        Review_button = tk.Button(HomePageFrame2,text="Recommed Book",image=self.p3,width=200, command= self.recommend_book_page, compound=TOP, pady=5)
+        Review_button.place(x=540,y=10)
+
+        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",image=self.p4,width=200,  command= self.show_ContactUSPage, compound=TOP, pady=5)
+        ContactUs_button.place(x=750,y=10)
+
     def recommend_book_page(self):
 
         #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Sort :Quicksort ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
