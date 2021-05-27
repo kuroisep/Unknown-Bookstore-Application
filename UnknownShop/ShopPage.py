@@ -858,6 +858,9 @@ class Shop_main_screen:
         self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
         self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
 
+        self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
+        self.lbl_status.place(relx=0.5, rely=0.705, anchor=CENTER)
+
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
         self.sizeR = self.lbl_value3['height']
@@ -883,6 +886,11 @@ class Shop_main_screen:
         self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
         self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
         self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+
+        self.lbl_status.destroy()
+    
+        self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
+        self.lbl_status.place(relx=0.5, rely=0.705, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
