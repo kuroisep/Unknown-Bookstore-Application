@@ -351,9 +351,9 @@ class Shop_main_screen:
         self.HomePageFrame1 = tk.LabelFrame(self.inner_HomePage , text="HomePage_BANNER")
         self.HomePageFrame1.place(x=100, y=10, height=350, width=1080)
 
-        self.inner_HomePageFrame1 = Canvas(self.HomePageFrame1, width=300, height=500)   
-        # self.inner_HomePageFrame1.create_window(0, 0)
-        self.inner_HomePageFrame1.pack()
+        # self.inner_HomePageFrame1 = Canvas(self.HomePageFrame1, width=300, height=0)   
+        # # self.inner_HomePageFrame1.create_window(0, 0)
+        # self.inner_HomePageFrame1.pack()
 
         HomePageFrame2 = tk.LabelFrame(self.inner_HomePage , text="Selected Menu")
         HomePageFrame2.place(x=100, y=370, height=150, width=1080)
@@ -385,7 +385,7 @@ class Shop_main_screen:
         self.banner2 = ImageTk.PhotoImage(Image.open(banner2_path))
         self.banner3 = ImageTk.PhotoImage(Image.open(banner3_path))
 
-        self.banner_label = tk.Label( self.inner_HomePageFrame1)
+        self.banner_label = tk.Label(self.HomePageFrame1 )
         self.banner_label.pack()
 
         dot1_path = "Shop_Page\PICTURE\movingdot1.png"
@@ -395,7 +395,7 @@ class Shop_main_screen:
         self.dot2 = ImageTk.PhotoImage(Image.open(dot2_path))
         self.dot3 = ImageTk.PhotoImage(Image.open(dot3_path))
 
-        self.dot_label = tk.Label( self.inner_HomePageFrame1)
+        self.dot_label = tk.Label( self.HomePageFrame1 )
         self.dot_label.pack()
 
     def moveBanner(self):
