@@ -370,6 +370,8 @@ class Shop_main_screen:
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
             self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
             self.df.to_csv("login.csv", index=False)
+            # os.remove("users.txt")
+            open("users.txt", "w").close()
             self.shop_window.destroy()
             LoginPage.showLoginPage()
 
@@ -718,24 +720,23 @@ class Shop_main_screen:
             messagebox.showinfo("Info", "Please Enter Last Name",
                                 parent=self.shop_window)
 
-        # elif (self.gender1.get() == 0 and self.gender2.get() == 0):
-        #     messagebox.showinfo(
-        #         "Error", "Please Select Your Gender", parent=self.register_screen)
-
         elif (email_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter Your Email", parent=self.shop_window)
-
-        elif (email_regex.match(email_info) == None):
-            messagebox.showerror("Error", "Email Invalid", parent=self.shop_window)
 
         elif (tel_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter Phone Number", parent=self.shop_window)
         
-        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or len(tel_info) > 13):
+        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or ((len(tel_info) < 12) or (len(tel_info) > 13) )):
             messagebox.showerror("Error", "Phone Number Invalid",parent=self.shop_window)
             self.telphone_entry.delete(0,END)
+
+
+        elif (email_regex.match(email_info) == None):
+            messagebox.showerror("Error", "Email Invalid", parent=self.shop_window)
+
+        
 
         else:
             if messagebox.askokcancel("Confirm", "Are you sure?"):
