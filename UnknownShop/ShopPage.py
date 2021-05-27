@@ -82,6 +82,9 @@ class Shop_main_screen:
         self.confirm_next = False
         self.order_id = 0
         self.payment_check = False
+        self.total2 = StringVar(self.shop_window)
+        self.total_amount = StringVar()
+
 
         self.review_Code = StringVar()
         self.review_Name = StringVar()
@@ -741,7 +744,7 @@ class Shop_main_screen:
             messagebox.showinfo(
                 "Info", "Please Enter Phone Number", parent=self.shop_window)
         
-        elif (tel_info.isdigit() == False or len(tel_info) != 10):
+        elif (tel_info[0] != "+" or tel_info[1] != '6' or tel_info[2] != '6' or len(tel_info) > 13):
             messagebox.showerror("Error", "Phone Number Invalid",parent=self.shop_window)
             self.telphone_entry.delete(0,END)
 
@@ -1156,6 +1159,27 @@ class Shop_main_screen:
         for i in self.usercart:
             self.cart_treeview.insert('', 'end', values=[index,i[0],i[1],i[2],i[3],i[4]])
             index += 1
+        if self.usercart == []:
+            member = 0.00
+            promotion = 0.00
+            shipping = 0.00
+        else:
+            member = -15.25
+            promotion = -12.50
+            shipping = 40.00
+        self.total_amount.set(0.0)
+        def listsum(numList):
+            if len(numList) == 1:
+                    return float(numList[0][4])
+            else:
+                    return float(numList[0][4]) + listsum(numList[1:])
+        if self.usercart != []:
+            temp = round(listsum(self.usercart),2)
+            self.total_amount.set(temp)
+        temp=member + promotion + shipping +float(self.total_amount.get())
+        self.total2.set(temp)
+ 
+   
     def lookupCart(self, event):
         curItem = self.cart_treeview.focus()
         cur = self.cart_treeview.item(curItem)['values']
@@ -1199,10 +1223,10 @@ class Shop_main_screen:
         ############# Main program ###############
        
         ##cart table
-        paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
-        paymentPageFrame2.place(x=50, y=55, height=500, width=1180)
+        self.paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
+        self.paymentPageFrame2.place(x=50, y=55, height=500, width=1180)
 
-        paymentPageFrame3 = tk.LabelFrame(paymentPageFrame2, text="Button NA JAJAAJAJ")
+        paymentPageFrame3 = tk.LabelFrame(self.paymentPageFrame2, text="Button NA JAJAAJAJ")
         paymentPageFrame3.place(x=0, y=400, height=80, width=800)
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1214,72 +1238,75 @@ class Shop_main_screen:
             member = -15.25
             promotion = -12.50
             shipping = 40.00
-        paymentPageFrame4 = tk.LabelFrame(paymentPageFrame2, text="Bai SEDDDD", fg="blue",bg="white",font=("times new roman",14,"bold"))
-        paymentPageFrame4.place(x=800, y=0, height=480, width=350)
+        self.paymentPageFrame4 = tk.LabelFrame(self.paymentPageFrame2, text="Bai SEDDDD", fg="blue",bg="white",font=("times new roman",14,"bold"))
+        self.paymentPageFrame4.place(x=800, y=0, height=480, width=350)
 
-        lebel1 = tk.Label(paymentPageFrame4, text=" Sales : ", width = 15)
+        lebel1 = tk.Label(self.paymentPageFrame4, text=" Sales : ", width = 15)
         lebel1.place(x=50, y=10)
-        self.total_amount = 0.00
+        self.total_amount.set(0.0)
         def listsum(numList):
             if len(numList) == 1:
                     return float(numList[0][4])
             else:
                     return float(numList[0][4]) + listsum(numList[1:])
         if self.usercart != []:
-            self.total_amount = round(listsum(self.usercart),2)
+            temp = round(listsum(self.usercart),2)
+            self.total_amount.set(temp)
             
         
         
-        label1_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(self.total_amount), width = 15)
+        label1_1 = tk.Label(self.paymentPageFrame4, textvariable=self.total_amount, width = 15)
         label1_1.place(x=200, y=10)
         
-        lebel2 = tk.Label(paymentPageFrame4, text=" Member : ", width = 15)
+        lebel2 = tk.Label(self.paymentPageFrame4, text=" Member : ", width = 15)
         lebel2.place(x=50, y=50)
 
-        label2_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(member), width = 15)
+        label2_1 = tk.Label(self.paymentPageFrame4, text=" {} ฿".format(member), width = 15)
         label2_1.place(x=200, y=50)
 
-        lebel3 = tk.Label(paymentPageFrame4, text=" Promotion : ", width = 15)
+        lebel3 = tk.Label(self.paymentPageFrame4, text=" Promotion : ", width = 15)
         lebel3.place(x=50, y=90)
 
-        label3_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(promotion), width = 15)
+        label3_1 = tk.Label(self.paymentPageFrame4, text=" {} ฿".format(promotion), width = 15)
         label3_1.place(x=200, y=90)
 
-        lebel4 = tk.Label(paymentPageFrame4, text=" Shipping : ", width = 15)
+        lebel4 = tk.Label(self.paymentPageFrame4, text=" Shipping : ", width = 15)
         lebel4.place(x=50, y=130)
 
-        label4_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(shipping), width = 15)
+        label4_1 = tk.Label(self.paymentPageFrame4, text=" {} ฿".format(shipping), width = 15)
         label4_1.place(x=200, y=130)
 
         
-        lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 15)
+        lebel5 = tk.Label(self.paymentPageFrame4, text=" Total(s) : ", width = 15)
         lebel5.place(x=50, y=170)
 
-        label5_1 = tk.Label(paymentPageFrame4, text=" 0.00 ฿", width = 15)
-        label5_1.place(x=200, y=170)
+        self.label5_1 = tk.Label(self.paymentPageFrame4, text=" 0.00 ฿", width = 15)
+        self.label5_1.place(x=200, y=170)
 
-        lebel5 = tk.Label(paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
+        lebel5 = tk.Label(self.paymentPageFrame4, text="+ ============================================= +", font=("times new roman",10,"bold"))
         lebel5.place(x=1, y=210)
 
-        total2 = member + promotion + shipping +self.total_amount
+        temp=member + promotion + shipping +float(self.total_amount.get())
+        self.total2.set(temp)
 
-        lebel5 = tk.Label(paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
+
+        lebel5 = tk.Label(self.paymentPageFrame4, text=" Total(s) : ", width = 10, font=("times new roman",15,"bold"))
         lebel5.place(x=20, y=250)
 
-        label5_1 = tk.Label(paymentPageFrame4, text=" {} ฿".format(total2), width = 10, font=("times new roman",15,"bold"))
-        label5_1.place(x=200, y=250)
+        self.label5_1 = tk.Label(self.paymentPageFrame4, textvariable=self.total2, width = 10, font=("times new roman",15,"bold"))
+        self.label5_1.place(x=200, y=250)
 
-        self.Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
+        self.Payment_bottom = tk.Button(self.paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
         self.Payment_bottom.place(x=170, y=350,anchor="center")
 
-        self.Cancel_bottom = tk.Button(paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
+        self.Cancel_bottom = tk.Button(self.paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
         self.Cancel_bottom.place(x=170, y=400,anchor="center")
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-        self.cart_treeview = ttk.Treeview(paymentPageFrame2, column=(1,2,3,4,5,6), show="headings", height="18")
-        yscrollbar = ttk.Scrollbar(paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
+        self.cart_treeview = ttk.Treeview(self.paymentPageFrame2, column=(1,2,3,4,5,6), show="headings", height="18")
+        yscrollbar = ttk.Scrollbar(self.paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
         xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
 
         # self.cart_treeview.place(x= 10, y=0)
@@ -1328,13 +1355,13 @@ class Shop_main_screen:
 
         
 
-        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.place(x=500, y=400,anchor="center")
 
-        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.place(x=500, y=400,anchor="center")
 
-        # Back_bottom = tk.Button(paymentPageFrame2,text="< Back >", command = self.pp)    
+        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
         # Back_bottom.place(x=500, y=400,anchor="center")
         if self.usercart == [] or self.confirm_order == True:
             self.Edit_bottom.config(state=DISABLED)
