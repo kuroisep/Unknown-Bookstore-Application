@@ -310,19 +310,19 @@ class Shop_main_screen:
     def menuTab(self):
         
         self.Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1265db")
-        self.Frame1.place(x=0, y=0, height=30, width=1280)
+        self.Frame1.place(x=100, y=0, height=30, width=1280)
         
         self.closebutton = tk.Button(self.Frame1, text='***',background="#1265db",fg="white", width=30, borderwidth=0, 
                                 highlightthickness=0, font=('TRACK', 12),activebackground="#1265db", 
                                 command = self.delete_show_window)
         
-        self.closebutton.place(x=1100, y=5)
+        self.closebutton.place(x=1000, y=5)
         self.closebutton.bind("<Enter>", self.menuTabEnter)
         self.closebutton.bind("<Leave>", self.menuTabLeave)
 
 
         self.label1 = tk.Label(self.Frame1, text = "Welcome to The Land of books. ~~~",font=('TRACK', 15),background="#1265db")
-        self.label1.place(x=450, y=0)
+        self.label1.place(x=350, y=0)
         self.label1.bind("<Enter>", self.menuTabEnter)
         self.label1.bind("<Leave>", self.menuTabLeave)
        
