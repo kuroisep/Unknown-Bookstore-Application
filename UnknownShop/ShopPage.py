@@ -25,6 +25,8 @@ import time
 from ttkthemes.themed_tk import ThemedTk
 from ttkthemes import ThemedStyle
 from tkinter.font import Font
+import tkinter
+import Pmw
 
 
 class Node:
@@ -1535,8 +1537,6 @@ class Shop_main_screen:
         else:
             print("...............")
     
-        
-
     def deliveryPage(self):
         self.inner_delivery = Canvas(self.canvas, width=1280, height=550)   
 
@@ -1709,8 +1709,6 @@ class Shop_main_screen:
                             bd=0, width=35,anchor='w').place(x=0, y=y)
                 y += 40
 
-
-
     def ContactUSPage(self): # ข้อมูลหน้า info       #1
         self.inner_ContactUS = Canvas(self.canvas, width=1280, height=550)
         
@@ -1720,16 +1718,16 @@ class Shop_main_screen:
         background_label.place(x=641, y=207, anchor=CENTER)
 
         ContactUSPageFrame1 = tk.LabelFrame(self.inner_ContactUS , text="Contact Us")
-        ContactUSPageFrame1.place(x=750, y=0, height=550, width=500)
+        ContactUSPageFrame1.place(x=400, y=0, height=550, width=500)
 
         ContactUSPageFrame1_1 = tk.LabelFrame(self.inner_ContactUS , text="Feedback")
-        ContactUSPageFrame1_1.place(x=50, y=0, height=550, width=600)
+        # ContactUSPageFrame1_1.place(x=50, y=0, height=550, width=600)
 
-        ContactUSPageFrame2 = tk.LabelFrame(ContactUSPageFrame1 , text="Chat")
-        ContactUSPageFrame2.place(x=10, y=0, height=480, width=480)
+        self.ContactUSPageFrame2 = tk.LabelFrame(ContactUSPageFrame1 , text="Chat")
+        self.ContactUSPageFrame2.place(x=10, y=0, height=400, width=480)
 
-        ContactUSPageFrame3 = tk.LabelFrame(ContactUSPageFrame1 , text="Button option")
-        ContactUSPageFrame3.place(x=10, y=480, height=50, width=480)
+        self.ContactUSPageFrame3 = tk.LabelFrame(ContactUSPageFrame1 , text="Button option")
+        self.ContactUSPageFrame3.place(x=10, y=405, height=120, width=480)
 
         ###############  ContactUSPageFrame1 : "Contact Us"
         ##############   ContactUSPageFrame1_1 : "Feedback" 
@@ -1740,6 +1738,60 @@ class Shop_main_screen:
         FeedbackFrame2.place(x=50, y=0, height=350, width=500)
 
         ##############   ContactUSPageFrame2 : "Chat"
+        def USER_write_File (text_File):
+            UpdateReadfile()
+            file = open("users.txt", "a")
+            user_Input = text_File.get()
+            file.write("User XXX : "+user_Input+ '\n')
+            the_input.delete(0, END)
+            file.close()
+
+        def ADMIN_write_File (text_File):
+            UpdateReadfile()
+            file = open("users.txt", "a")
+            user_Input = text_File.get()
+            file.write("ADMIN XXX : "+user_Input+ '\n')  
+            the_input1.delete(0, END)
+            file.close()
+            
+
+        def UpdateReadfile():
+            text.delete('1.0', END)
+
+            text.insert('end', open(filename,'r').read())
+            text.see("end")
+            text.after(100,UpdateReadfile)
+        filename = "users.txt" 
+
+        text = Pmw.ScrolledText( self.ContactUSPageFrame2,
+            borderframe=5, 
+            vscrollmode='dynamic', 
+            hscrollmode='dynamic',
+            labelpos='n', 
+            label_text='file %s' % filename,
+            text_width=80, 
+            text_height=20,
+            text_wrap='none',
+            )
+
+        text.pack()
+        text.insert('end', open(filename,'r').read())
+
+
+
+
+        the_input = tkinter.Entry(self.ContactUSPageFrame3)
+        the_input.place(x=100, y=30)
+
+        the_input1 = tkinter.Entry(self.ContactUSPageFrame3)
+        the_input1.place(x=250, y=30)
+
+        label1 = tkinter.Label(self.ContactUSPageFrame3, text="")
+        label1.place(x=0, y=50)
+
+        button1_Write = tkinter.Button(self.ContactUSPageFrame3, text = " U Send to file:", width = 15 ,command = lambda: USER_write_File(the_input)).place(x=105, y=60)
+        button2_Write = tkinter.Button(self.ContactUSPageFrame3, text = "A Send to file:", width = 15, command = lambda: ADMIN_write_File(the_input1)).place(x=255, y=60)
+
         ##############   ContactUSPageFrame3 : "Button option"
 
 
