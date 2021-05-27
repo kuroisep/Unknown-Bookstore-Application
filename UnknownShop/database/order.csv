@@ -16,3 +16,5 @@ Order_time,Order_ID,Customer,Address,Quantity,Total_amount,Status,Shipped_time,C
 2021-05-27 10:41:27,15,Ummmmm,aa,4,3591.95,Payment confirmed - Cash On Delivery,-,-
 2021-05-27 21:58:02,16,Ummmmm,asdasdasdasf,13,PY_VAR10,Delivered,2021-05-27 22:00:59,2021-05-27 22:01:09
 2021-05-27 23:08:18,17,Ummmmm,"228/66 Rimsa, Ochaya Rd., LA. USA 45000",17,2858.0,Delivered,2021-05-27 23:12:59,2021-05-27 23:13:14
+2021-05-28 01:19:51,18,Ummmmm,test,2,1361.0,Delivered,2021-05-28 01:20:11,2021-05-28 01:20:15
+2021-05-28 01:21:52,19,Ummmmm,a,1,1148.0,Delivered,2021-05-28 01:22:06,2021-05-28 01:22:10

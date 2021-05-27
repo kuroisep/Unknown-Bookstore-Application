@@ -1462,7 +1462,7 @@ class Shop_main_screen:
                 with open('UnknownShop\\database\\order_detail.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     for i in self.usercart:
-                        writer.writerow([self.order_id,i[0],i[1],i[2],i[4]])
+                        writer.writerow([self.order_id,i[0],i[1],i[2],i[4],'',''])
                 if self.pay_imginput != '':
                     temp_img = cv2.imread(self.pay_imginput)
                     cv2.imwrite('UnknownShop\\database\\transfer_slip\\{}.png'.format(self.order_id), temp_img)
@@ -1682,8 +1682,8 @@ class Shop_main_screen:
         for i in reversed(order_detail):
             if str(i[0]) == str(self.order_id_review):
                 self.order_to_review.push(i[1])
-            if i[5] != '' or i[6] != '':
-                self.Next_bottonn.config(state = NORMAL)
+                if str(i[5]) != 'nan' or str(i[6]) != 'nan':
+                    self.Next_bottonn.config(state = DISABLED)
         #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Stack ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
         y = 50
