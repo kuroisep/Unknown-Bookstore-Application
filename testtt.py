@@ -608,34 +608,70 @@ drag_id = ''
 # root.bind('<Configure>', dragging)
 # root.mainloop()
 
-from tkinter import *
-import random
-import time
+# from tkinter import *
+# import random
+# import time
 
-tk = Tk()
-w = 500
-h = 500
+# tk = Tk()
+# w = 500
+# h = 500
 
-canvas = Canvas(tk, width=int(w), height=int(h))
-canvas.pack()
-ball = canvas.create_oval(0,0,100,100,fill="blue")
-xspeed = 10
-yspeed = 0
+# canvas = Canvas(tk, width=int(w), height=int(h))
+# canvas.pack()
+# ball = canvas.create_oval(0,0,100,100,fill="blue")
+# xspeed = 10
+# yspeed = 0
 
-while True:
-    canvas.move(ball,xspeed,yspeed)
-    pos = canvas.coords(ball)
+# while True:
+#     canvas.move(ball,xspeed,yspeed)
+#     pos = canvas.coords(ball)
 
-    if pos[2] >= int(w):
-        xspeed = -xspeed
-    if pos[0] <= 0:
-        pos[2] =0
+#     if pos[2] >= int(w):
+#         xspeed = -xspeed
+#     if pos[0] <= 0:
+#         pos[2] =0
 
-    print(pos)
-    # if pos[2] <= 0:
-    #     xspeed = 
-    # if pos[2] >= int(h):
-    #     yspeed = -yspeed
+#     print(pos)
+#     # if pos[2] <= 0:
+#     #     xspeed = 
+#     # if pos[2] >= int(h):
+#     #     yspeed = -yspeed
 
-    tk.update()
-    time.sleep(0.05)
+#     tk.update()
+#     time.sleep(0.05)
+
+# def QuickSort(arr):
+
+#     elements = len(arr)
+    
+#     #Base case
+#     if elements < 2:
+#         return arr
+    
+#     current_position = 0 #Position of the partitioning element
+
+#     for i in range(1, elements): #Partitioning loop
+#          if arr[i] <= arr[0]:
+#               current_position += 1
+#               temp = arr[i]
+#               arr[i] = arr[current_position]
+#               arr[current_position] = temp
+
+#     temp = arr[0]
+#     arr[0] = arr[current_position] 
+#     arr[current_position] = temp #Brings pivot to it's appropriate position
+    
+#     left = QuickSort(arr[0:current_position]) #Sorts the elements to the left of pivot
+#     right = QuickSort(arr[current_position+1:elements]) #sorts the elements to the right of pivot
+
+#     arr = left + [arr[current_position]] + right #Merging everything together
+    
+#     return arr
+
+
+
+# # array_to_be_sorted = [[4,'FOUR'],[3,'THREE'],[2,'TWO'],[2,'TWO']]
+# array_to_be_sorted =[[5.0, 'ADM_ST014', 'LEADERSHIP HACK'], [4.0, 'ART_FA003', 'Textilepedia'], [3.0, 'ADM_GR005', 'MILLIONAIRE SUCCESS HABITS: THE GATEWAY TO WEALTH & PROSPERITY'], [5.0, 'ADM_DU004', 'LEADERS IN LOCKDOWN: INSIDE STORIES OF COVID-19 AND THE NEW WORLD OF BUSINESS']]
+# print("Original Array: ",array_to_be_sorted)
+# print("Sorted Array: ",QuickSort(array_to_be_sorted))
+
