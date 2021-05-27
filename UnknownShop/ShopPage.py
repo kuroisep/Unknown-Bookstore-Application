@@ -165,7 +165,7 @@ class Shop_main_screen:
         
 
         self.shop_window.resizable(0, 0)
-        self.shop_window.overrideredirect(1)
+        self.shop_window.overrideredirect(0)
         self.shop_window.mainloop()
 
     def create_background(self): # <<<<<<<<<<<<<<<<<<<<<<<<<<< BG
@@ -194,16 +194,16 @@ class Shop_main_screen:
         # drop1.place(x=345, y=100)
         self.drop1.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        self.drop2 = ttk.Combobox(Frame1, width=10, value=["All","Code", "Name", "Author"])
+        self.drop2 = ttk.Combobox(Frame1, width=10, value=["Name", "Code", "Author"])
         self.drop2.current((0))
         # drop2.place(x=440, y=100)
         self.drop2.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        self.nameEntered = tk.Entry(Frame1, width = 50, textvariable = self.Name)
+        self.nameEntered = tk.Entry(Frame1, width = 50)
         # nameEntered.place(x=535, y=100)
         self.nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        search_button = tk.Button(Frame1, text = "Search", command = self.GotoSearch ,height=10, width=10)
+        search_button = tk.Button(Frame1, text = "Search", command = self.search ,height=10, width=10)
         # search_button.place(x=855, y=100)
         search_button.pack(side=LEFT, padx=5, pady=10, anchor=CENTER)
 
@@ -212,41 +212,85 @@ class Shop_main_screen:
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
     def search(self):
-        selected = self.drop1.get()
-        if selected == "All":
-            print('All')
-        if selected == "Arts / Design / Decoration":
-            return
-        if selected == "Literature":
-            return
-        if selected == "Administration / Management":
-            return
-        if selected == "Humanities / Science":
-            return
-        if selected == "Children's Books":
-            return
-        if selected == "Career Academic Textbooks":
-            return
-        if selected == "Psychology":
-            return
-
-    def GotoSearch(self):
-        # self.Cheack_Search()
         self.show_categoryPage()
-        self.search()
+
+        self.book_treeview.delete(*self.book_treeview.get_children())
+        for i in self.book_data:
+                self.book_treeview.insert('', 'end', values = [i][0])
+
+        selected = self.drop1.get()
+        selected2 = self.drop2.get()
+
+        print(selected, selected2)
+
+        query = str(self.nameEntered.get())
+        selections = []
+        for child in self.book_treeview.get_children(''):
+            # print(self.book_treeview.item(child)['values'][2])
+            if (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "All") and (selected2 == "Name"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Arts / Design / Decoration") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Arts / Design / Decoration"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Literature") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Literature"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Administration / Management") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Administration / Management"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Humanities / Science") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Humanities / Science"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Children's Books") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Children's Books"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Psychology") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+                selections.append(self.book_treeview.item(child)['values'])
+
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "All") and (selected2 == "Code"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Arts / Design / Decoration") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Arts / Design / Decoration"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Literature") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Literature"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Administration / Management") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Administration / Management"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Humanities / Science") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Humanities / Science"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Children's Books") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Children's Books"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Psychology") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+                selections.append(self.book_treeview.item(child)['values'])
+
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "All") and (selected2 == "Author"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Arts / Design / Decoration") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Arts / Design / Decoration"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Literature") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Literature"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Administration / Management") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Administration / Management"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Humanities / Science") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Humanities / Science"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Children's Books") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Children's Books"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
+                selections.append(self.book_treeview.item(child)['values'])
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Psychology") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+                selections.append(self.book_treeview.item(child)['values'])
+        # self.book_treeview.selection_set(selections)
+        self.book_treeview.delete(*self.book_treeview.get_children())
+        for i in selections:
+                self.book_treeview.insert('', 'end', values = [i][0])
+        
     def Cclear_SearchBox(self):
         self.drop1.current((0))
         self.drop2.current((0))
         self.nameEntered.delete(0, 'end')
-        MB1 = messagebox.showinfo(message='Clear Done!')
-    def Cheack_Search(self):
-        if self.drop1.get() == "All":
-            print("Please ALLLLLLL")
-            print(self.nameEntered.get())
-        
-        """"value=["All","Arts / Design / Decoration", "Literature", 
-                                                                "Administration / Management", "Humanities / Science", 
-                                                                "Children's Books","Career Academic Textbooks", "Psychology"])"""
+        # MB1 = messagebox.showinfo(message='Clear Done!')
+        self.book_treeview.delete(*self.book_treeview.get_children())
+        for i in self.book_data:
+                self.book_treeview.insert('', 'end', values = [i][0])
+
     def menuTab_logo(self):
         # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
         # self.Frame0.place(x=0, y=0, height=75, width=100)
@@ -497,30 +541,30 @@ class Shop_main_screen:
         self.dot_label.pack()
 
     def moveBanner(self):
-            global after_id
-        
-            if self.count == 30 :
-                self.count = 0
+        global after_id
+    
+        if self.count == 30 :
+            self.count = 0
 
-            if self.count == 0 :
-                self.banner_label.config(image = self.banner1)
-                self.dot_label.config(image = self.dot1)
-                self.canvas.create_image(700,300,image=self.banner1)
-                self.canvas.create_image(700,475,image=self.dot1)
-                self.banner_label.place()
-                self.dot_label.place()
-            elif self.count == 10 :
-                self.banner_label.config(image = self.banner2)
-                self.canvas.create_image(700,300,image=self.banner2)
-                self.canvas.create_image(700,475,image=self.dot2)
-                self.dot_label.config(image = self.dot2)
-            elif self.count == 20 :
-                self.banner_label.config(image = self.banner3)
-                self.canvas.create_image(700,300,image=self.banner3)
-                self.canvas.create_image(700,475,image=self.dot3)
-                self.dot_label.config(image = self.dot3)
-            self.count += 1
-            after_id = self.banner_label.after(200, self.moveBanner)
+        if self.count == 0 :
+            self.banner_label.config(image = self.banner1)
+            self.dot_label.config(image = self.dot1)
+            self.canvas.create_image(700,300,image=self.banner1)
+            self.canvas.create_image(700,475,image=self.dot1)
+            self.banner_label.place()
+            self.dot_label.place()
+        elif self.count == 10 :
+            self.banner_label.config(image = self.banner2)
+            self.canvas.create_image(700,300,image=self.banner2)
+            self.canvas.create_image(700,475,image=self.dot2)
+            self.dot_label.config(image = self.dot2)
+        elif self.count == 20 :
+            self.banner_label.config(image = self.banner3)
+            self.canvas.create_image(700,300,image=self.banner3)
+            self.canvas.create_image(700,475,image=self.dot3)
+            self.dot_label.config(image = self.dot3)
+        self.count += 1
+        after_id = self.banner_label.after(200, self.moveBanner)
 
     def infomationPage(self): # ข้อมูลหน้า info       #1
         
@@ -791,52 +835,54 @@ class Shop_main_screen:
         self.ll.add('UnknownShop/Picture/ShopPage/purple.png')
 
 
-        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data))
-        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=100, width=100)
+        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data).resize((200, 200)))
+        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=200, width=200, borderwidth=0)
         self.lbl_value.bind("<Enter>", lambda event: self.isL())
         self.lbl_value.bind("<Leave>", lambda event: self.rsL())
         self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
         self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
 
-        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data))
-        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=200, width=200)
-        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
-        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
-        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
-        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+        
 
-        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data))
-        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=100, width=100)
+        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data).resize((200, 200)))
+        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=200, width=200, borderwidth=0)
         self.lbl_value3.bind("<Enter>", lambda event: self.isR())
         self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
         self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
         self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+
+        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data).resize((300, 300)))
+        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=300, width=300, borderwidth=0)
+        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
+        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
+        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
+        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
         self.sizeR = self.lbl_value3['height']
 
     def update(self):
-        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data))
-        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=100, width=100)
+        self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data).resize((200, 200)))
+        self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=200, width=200, borderwidth=0)
         self.lbl_value.bind("<Enter>", lambda event: self.isL())
         self.lbl_value.bind("<Leave>", lambda event: self.rsL())
         self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
         self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
 
-        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data))
-        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=200, width=200)
-        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
-        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
-        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
-        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
-
-        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data))
-        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=100, width=100)
+        self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data).resize((200, 200)))
+        self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=200, width=200, borderwidth=0)
         self.lbl_value3.bind("<Enter>", lambda event: self.isR())
         self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
         self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
         self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+
+        self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data).resize((300, 300)))
+        self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=300, width=300, borderwidth=0)
+        self.lbl_value2.bind("<Enter>", lambda event: self.isM())
+        self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
+        self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
+        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
@@ -853,40 +899,61 @@ class Shop_main_screen:
         self.update()
 
     def ei(self):
-        print(f"What da fak r u doin!{self.ls.head.data}!", )
+        print(f"What da fak r u doin!{self.ls.head.data}!")
+        if self.ls.head.data == 'orange':
+            self.drop1.current(1)
+            self.search()
+        elif self.ls.head.data == 'blue':
+            self.drop1.current(2)
+            self.search()
+        elif self.ls.head.data == 'green':
+            self.drop1.current(3)
+            self.search()
+        elif self.ls.head.data == 'black':
+            self.drop1.current(4)
+            self.search()
+        elif self.ls.head.data == 'gray':
+            self.drop1.current(5)
+            self.search()
+        elif self.ls.head.data == 'red':
+            self.drop1.current(6)
+            self.search()
+        elif self.ls.head.data == 'purple':
+            self.drop1.current(7)
+            self.search()
 
     def rsL(self):
-        while self.sizeL > 100:
+        while self.sizeL > 200:
             self.lbl_value['height'] = self.sizeL
             self.lbl_value['width'] = self.sizeL
             self.sizeL -= 1
 
     def rsM(self):
-        while self.sizeM > 200:
+        while self.sizeM > 300:
             self.lbl_value2['height'] = self.sizeM
             self.lbl_value2['width'] = self.sizeM
             self.sizeM -= 1
 
     def rsR(self):
-        while self.sizeR > 100:
+        while self.sizeR > 200:
             self.lbl_value3['height'] = self.sizeR
             self.lbl_value3['width'] = self.sizeR
             self.sizeR -= 1
 
     def isL(self):
-        while self.sizeL < 105:
+        while self.sizeL < 205:
             self.lbl_value['height'] = self.sizeL
             self.lbl_value['width'] = self.sizeL
             self.sizeL += 1
 
     def isM(self):
-        while self.sizeM < 210:
+        while self.sizeM < 310:
             self.lbl_value2['height'] = self.sizeM
             self.lbl_value2['width'] = self.sizeM
             self.sizeM += 1
 
     def isR(self):
-        while self.sizeR < 105:
+        while self.sizeR < 205:
             self.lbl_value3['height'] = self.sizeR
             self.lbl_value3['width'] = self.sizeR
             self.sizeR += 1
@@ -1013,7 +1080,7 @@ class Shop_main_screen:
         # Book table
         for i in self.book_data:
             self.book_treeview.insert('', 'end', values = [i][0])
-            # print(int(i[0]))
+            # print(self.book_treeview.insert('', 'end', values = [i][0]))
 
 
 
@@ -1635,7 +1702,7 @@ class Shop_main_screen:
                 if i[1] == self.temp_review:
                     self.review_Code.set(i[1])
                     self.review_Name.set(i[2])
-                    self.review_Author.set(i[3])
+                    # self.review_Author.set(i[3])
                     self.review_Category.set(i[4])
                     self.review_Price.set(i[5])
                     self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
