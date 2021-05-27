@@ -780,9 +780,6 @@
 
 
 
-
-
-
 from tkinter import *
 import tkinter
 import Pmw, sys
