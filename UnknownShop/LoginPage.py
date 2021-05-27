@@ -225,7 +225,7 @@ class main_account_screen:
         canvas.pack(fill="both", expand=True)
 
         canvas.create_text(200, 100, text="User Not Found")
-        ok_button = Button(self.user_not_found_screen, text="<    OK   >",
+        ok_button = Button(self.user_not_found_screen, text="<   OK   >", width = 10,
                         command=self.delete_user_not_found_screen)
         canvas.create_window(200, 150, window=ok_button)
 
@@ -235,23 +235,31 @@ class main_account_screen:
         self.register_screen.title("Register")
         self.register_screen.focus_set()
         self.register_screen.grab_set()
+        # self.register_screen.overrideredirect(1)
         self.register_screen.resizable(0, 0)
 
         x = (960) - (750/2)
         y = (540) - (650/2)
         self.register_screen.geometry("750x600+%d+%d" % (x, y))
 
+        
+
         regis_bg_path = "UnknownShop\Picture\LoginPage\REGISTER.png"
         self.regis_bg = ImageTk.PhotoImage(Image.open(regis_bg_path).resize((750, 600)))
 
-        self.registerframe = tk.LabelFrame( self.register_screen , text="INFOMATION")
+        self.registerframe = tk.LabelFrame(self.register_screen , text="register".upper())
         self.registerframe.place(x=0, y=0, height=600, width=750)
+
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.registerframe, image=self.filenameBG)
+        background_label.place(x=375, y=300, anchor=CENTER)
 
         self.inner_registerframe = tk.LabelFrame( self.register_screen , text="USER INPUT")
         self.inner_registerframe.place(x=150, y=20, height=550, width=450)
 
-        self.inner_registerframe_button = tk.LabelFrame( self.inner_registerframe , text="Button")
-        self.inner_registerframe_button.place(x=20, y=400, height=100, width=400)
+        self.inner_registerframe_button = tk.LabelFrame( self.inner_registerframe)
+        self.inner_registerframe_button.place(x=20, y=400, height=80, width=400)
         # canvas = Canvas(self.register_screen, width=750, height=600)
         # canvas.pack(fill="both", expand=True)
         # canvas.create_image(0, 0, image=self.regis_bg, anchor="nw")
@@ -335,9 +343,9 @@ class main_account_screen:
         cancel_button = Button(self.inner_registerframe_button, text="CANCEL", command=self.delete_register_screen,
                             font=helv20, bg="red", fg="white", highlightthickness=0, width=10, height=2, activebackground="red2")
 
-        regis_button.grid(row=0, column=0,padx=10)
-        clear_button.grid(row=0, column=1,padx=10)
-        cancel_button.grid(row=0, column=2,padx=10)
+        regis_button.grid(row=0, column=0,padx=10, pady=10)
+        clear_button.grid(row=0, column=1,padx=10, pady=10)
+        cancel_button.grid(row=0, column=2,padx=10, pady=10)
         
 
 

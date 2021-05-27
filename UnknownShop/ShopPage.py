@@ -168,7 +168,7 @@ class Shop_main_screen:
         self.button_state()
 
         self.shop_window.resizable(0, 0)
-        self.shop_window.overrideredirect(0)
+        self.shop_window.overrideredirect(1)
         self.shop_window.mainloop()
 
     def create_background(self): # <<<<<<<<<<<<<<<<<<<<<<<<<<< BG
@@ -300,8 +300,8 @@ class Shop_main_screen:
     def menuTab_logo(self):
         # self.Frame0 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#528cdb")
         # self.Frame0.place(x=0, y=0, height=75, width=100)
-        img_logo_path = "Shop_Page\PICTURE\logo.png"
-        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((85, 75)))
+        img_logo_path = "UnknownShop\\Picture\\LoginPage\\black-logo.png"
+        self.img_logo = ImageTk.PhotoImage(Image.open(img_logo_path).resize((82, 72)))
         self.canvas.create_image(2, 0, image=self.img_logo, anchor="nw")
 
     def menuTabEnter(self, event):
@@ -399,7 +399,6 @@ class Shop_main_screen:
         self.shop_window.destroy()
         # self.shop_window.after_cancel(after_id)
 
-    
     def HomePage(self):
         self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
 
@@ -1386,16 +1385,6 @@ class Shop_main_screen:
         self.Next_botton.place(x=700, y=30,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
-        
-
-        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
-        # Back_bottom.place(x=500, y=400,anchor="center")
-
-        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
-        # Back_bottom.place(x=500, y=400,anchor="center")
-
-        # Back_bottom = tk.Button(self.paymentPageFrame2,text="< Back >", command = self.pp)    
-        # Back_bottom.place(x=500, y=400,anchor="center")
         if self.usercart == [] or self.confirm_order == True:
             self.Edit_bottom.config(state=DISABLED)
             self.Del_botton.config(state=DISABLED)
