@@ -229,7 +229,7 @@ class Shop_main_screen:
         selected = self.drop1.get()
         selected2 = self.drop2.get()
 
-        print(selected, selected2)
+        # print(selected, selected2)
 
         query = str(self.nameEntered.get())
         selections = []
@@ -364,43 +364,20 @@ class Shop_main_screen:
         print(self.value)
         
     def button_state(self):
-        # button4_path = "UnknownShop\Picture\ShopPage\\button4.png"
-        # self.img_button4 = ImageTk.PhotoImage(Image.open(button4_path).resize((175, 48)))
-        # # self.canvas.create_image(200,500,image=self.img_button4)
-        # self.button4 = tk.Button(image=self.img_button4,command=self.show_deliveryPage, borderwidth=0, 
-        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        # self.canvas.create_window(0, 440, window=self.button4, anchor="nw")
-
-        # button5_path = "UnknownShop\Picture\ShopPage\\button5.png"
-        # self.img_button5 = ImageTk.PhotoImage(Image.open(button5_path).resize((175, 48)))
-        # # self.canvas.create_image(200,600,image=self.img_button5)
-        # self.button5 = tk.Button(self.shop_window, image=self.img_button5, command=self.delete_canvas, border=0,
-        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        # self.canvas.create_window(0, 520, window=self.button5, anchor="nw")
-       
-
-        # button6_path = "UnknownShop\Picture\ShopPage\\button5.png"
-        # self.img_button6 = ImageTk.PhotoImage(Image.open(button6_path).resize((175, 48)))
-        # # self.canvas.create_image(200,600,image=self.img_button6)
-        # self.button6 = tk.Button(self.shop_window, image=self.img_button6, command=self.delete_show_window, border=0,
-        #                         relief=FLAT, bg="#856fff",activebackground='#4444ff')
-        # self.canvas.create_window(0, 600, window=self.button6, anchor="nw")
         pass
     
-
     def delete_show_window(self):
         if messagebox.askokcancel("Quit", "Do you want to sign out?"):
-            # self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
-            # self.df.to_csv("login.csv", index=False)
+            self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+            self.df.to_csv("login.csv", index=False)
             self.shop_window.destroy()
-            # self.shop_window.after_cancel(after_id)
-            # LoginPage.showLoginPage()
-    def deleteX_show_window(self):
-        # self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
-        # self.df.to_csv("login.csv", index=False)
-        self.shop_window.destroy()
-        # self.shop_window.after_cancel(after_id)
+            LoginPage.showLoginPage()
 
+    def deleteX_show_window(self):
+        self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
+        self.df.to_csv("login.csv", index=False)
+        self.shop_window.destroy()
+       
     def HomePage(self):
         self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
 
@@ -927,7 +904,7 @@ class Shop_main_screen:
         self.update()
 
     def ei(self):
-        print(f"What da fak r u doin!{self.ls.head.data}!")
+        # print(f"What da fak r u doin!{self.ls.head.data}!")
         if self.ls.head.data == 'orange':
             self.drop1.current(1)
             self.search()
@@ -1161,12 +1138,12 @@ class Shop_main_screen:
                     i[4] = str(float(i[2]) * float(i[3]))
                     # self.tempprice += float(i[4])
                     # self.tempprice += self.tempprice
-                    print('UserCart :',self.usercart)
+                    # print('UserCart :',self.usercart)
                     # print("\n\n\n",self.tempprice)
                     return
                     
         self.usercart.append([self.Code.get(),self.Name.get(),str(self.items_book_spinbox.get()),self.Price.get(),self.Price.get()])
-        print('UserCart :',self.usercart)
+        # print('UserCart :',self.usercart)
         self.spinboxvar.set(1)
 
     def delete_bookcart(self):
@@ -1396,7 +1373,7 @@ class Shop_main_screen:
             self.Del_botton.config(state=NORMAL)
             self.Confirm_bottom.config(state=NORMAL)
         if self.confirm_order == True and self.confirm_next == False:
-            print('self.confirm_next :',self.confirm_next)
+            # print('self.confirm_next :',self.confirm_next)
             self.self.Next_botton.config(state=NORMAL)
         elif self.confirm_next == True:
             self.Payment_bottom.config(state=NORMAL)
@@ -1525,7 +1502,7 @@ class Shop_main_screen:
     def dummy_cancle(self):
         MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancel Order')
         if MB1 == True:
-            print("CANCEL")
+            # print("CANCEL")
             self.Cancel_bottom.config(state=DISABLED)
             self.Payment_bottom.config(state=DISABLED)
             self.Next_botton.config(state=DISABLED)
@@ -1794,8 +1771,6 @@ class Shop_main_screen:
 
         ##############   ContactUSPageFrame3 : "Button option"
 
-
-
     def printcomment(self):
         # self.commenttext2.config(text=self.commentbox.get(1.0,END))
         print(f"Rating is : {self.Rating_Combobox.get()}")
@@ -1803,7 +1778,6 @@ class Shop_main_screen:
     def clearcomment(self):
         self.commentbox.delete(1.0,END)
         print("<<< delete >>> ")
-
 
     def review_bottomOn(self):
         self.commentbox.config(state=NORMAL)
@@ -1847,8 +1821,6 @@ class Shop_main_screen:
             self.review_bottom.config(state=DISABLED)
             self.Next_bottonn.config(state = DISABLED)
             self.Rating_Combobox.config(state=DISABLED)
-
-
 
     def backk(self):
         self.commentbox.config(state=DISABLED)
