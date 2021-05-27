@@ -24,6 +24,7 @@ from time import sleep
 import time
 from ttkthemes.themed_tk import ThemedTk
 from ttkthemes import ThemedStyle
+from tkinter.font import Font
 
 
 class Node:
@@ -103,6 +104,7 @@ class Shop_main_screen:
 
 
         style = ThemedStyle(self.shop_window)
+        style.configure('resize1.TSpinbox', arrowsize=25)
         # style.set_theme("adapta")
         # style.set_theme("yaru")
 
@@ -144,9 +146,9 @@ class Shop_main_screen:
         self.book_data = self.loadbookfile.values.tolist()
 
         #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        
-        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         self.show_HomePage()
+
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         self.infomationPage() # หน้า info 
         self.categoryPage()
         self.paymentPage()
@@ -155,12 +157,13 @@ class Shop_main_screen:
         self.search_bar()
         self.shift()
         self.menuTab()
-
+        
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # self.set_banner()
         self.count = 0
         self.moveBanner()
         ## <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-        
+        self.show_HomePage()
 
         self.button_state()
 
@@ -169,12 +172,15 @@ class Shop_main_screen:
         self.shop_window.mainloop()
 
     def create_background(self): # <<<<<<<<<<<<<<<<<<<<<<<<<<< BG
-        bg_path = "UnknownShop\Picture\Draf BG.png" 
-        self.bg = ImageTk.PhotoImage(Image.open(bg_path).resize((1280, 720)))
+        self.bg_path = "UnknownShop/Picture/ShopPage/BG1.png" 
+        self.bg = ImageTk.PhotoImage(Image.open(self.bg_path).resize((1280, 720)))
 
         # self.canvas = Canvas(self.shop_window, width=1280, height=720)
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
+
+        self.bgg_path = "UnknownShop/Picture/ShopPage/BG2.png" 
+        self.bgg = ImageTk.PhotoImage(Image.open(self.bgg_path).resize((1280, 720)))
     
     def search_bar(self):
         
@@ -397,8 +403,15 @@ class Shop_main_screen:
     def HomePage(self):
         self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
 
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_HomePage, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
+       
+
         self.HomePageFrame1 = tk.LabelFrame(self.inner_HomePage , text="HomePage_BANNER")
         self.HomePageFrame1.place(x=100, y=10, height=350, width=1080)
+        Label(self.HomePageFrame1,  image=self.bgg).place(x=530, y=187, anchor=CENTER)
 
         # self.inner_HomePageFrame1 = Canvas(self.HomePageFrame1, width=300, height=0)   
         # # self.inner_HomePageFrame1.create_window(0, 0)
@@ -406,6 +419,7 @@ class Shop_main_screen:
 
         HomePageFrame2 = tk.LabelFrame(self.inner_HomePage , text="Selected Menu")
         HomePageFrame2.place(x=100, y=370, height=150, width=1080)
+        Label(HomePageFrame2,  image=self.bgg).place(x=530, y=187, anchor=CENTER)
 
         path1 = "UnknownShop\\Picture\\ShopPage\\ICON\\bag.png"
         path2 = "UnknownShop\\Picture\\ShopPage\\ICON\\box.png"
@@ -429,16 +443,16 @@ class Shop_main_screen:
         buy_button = tk.Button(HomePageFrame2,text="Buy Books",image=self.p1,width=200, command= self.show_selected_categoryPages, compound=TOP,pady=5)
         # buy_button.config(image=p1, compound=LEFT)
         # buy_button.grid(row=2,column=2,padx=80, pady=10)
-        buy_button.place(x=120,y=10)
+        buy_button.place(x=120,y=5)
 
         Status_button = tk.Button(HomePageFrame2,text="Status",image=self.p2,width=200, command= self.show_deliveryPage, compound=TOP, pady=5)
-        Status_button.place(x=330,y=10)
+        Status_button.place(x=330,y=5)
 
         Review_button = tk.Button(HomePageFrame2,text="Recommed Book",image=self.p3,width=200, command= self.recommend_book_page, compound=TOP, pady=5)
-        Review_button.place(x=540,y=10)
+        Review_button.place(x=540,y=5)
 
         ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",image=self.p4,width=200,  command= self.show_ContactUSPage, compound=TOP, pady=5)
-        ContactUs_button.place(x=750,y=10)
+        ContactUs_button.place(x=750,y=5)
 
     def recommend_book_page(self):
 
@@ -565,6 +579,11 @@ class Shop_main_screen:
         
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
         
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_infomation, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
+
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation,borderwidth=0, highlightthickness=0,bg="#99aaff")
         infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
 
@@ -800,15 +819,22 @@ class Shop_main_screen:
     def selected_categoryPages(self):
         self.inner_selected_categoryPages = Canvas(self.canvas, width=1280, height=550,bd=0, highlightthickness=0)
 
-        self.selected_frame1 = ttk.LabelFrame(self.inner_selected_categoryPages, text="selected_categoryPages")
+        self.selected_frame1 = tk.LabelFrame(self.inner_selected_categoryPages, text="selected_categoryPages", bg="white" ,borderwidth=0, highlightthickness=0)
         self.selected_frame1.place(x=100, y=0,height=520, width=1050)
 
-        Button_frame = ttk.LabelFrame(self.selected_frame1, text="Button State")
-        Button_frame.place(x=300, y=400,height=100, width=500)
+        # Button_frame = ttk.LabelFrame(self.selected_frame1, text="Button State")
+        # Button_frame.place(x=300, y=400,height=100, width=500)
 
-        Nextbutton = tk.Button(Button_frame,text="Buy Books", width=15, command= self.show_categoryPage)
-        Nextbutton.grid(row=2,column=3,padx=180, pady=20)
+        # Nextbutton = tk.Button(Button_frame,text="Buy Books", width=15, command= self.show_categoryPage)
+        # Nextbutton.grid(row=2,column=3,padx=180, pady=20)
 
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_selected_categoryPages, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
+
+        self.lbl_status = tk.Label(self.inner_selected_categoryPages, text="-- Choose type --".upper(), font=('TRACK',20) ,bg="white")
+        self.lbl_status.place(relx=0.5, rely=0.07, anchor=CENTER)
 
         self.ll = CircularLinkedList()
         self.ls = CircularLinkedList()
@@ -833,7 +859,7 @@ class Shop_main_screen:
         self.lbl_value.bind("<Enter>", lambda event: self.isL())
         self.lbl_value.bind("<Leave>", lambda event: self.rsL())
         self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
-        self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
+        self.lbl_value.place(relx=0.35, rely=0.5, anchor="center")
 
         
 
@@ -842,17 +868,17 @@ class Shop_main_screen:
         self.lbl_value3.bind("<Enter>", lambda event: self.isR())
         self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
         self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
-        self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+        self.lbl_value3.place(relx=0.65, rely=0.5, anchor="center")
 
         self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data).resize((300, 300)))
         self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=300, width=300, borderwidth=0)
         self.lbl_value2.bind("<Enter>", lambda event: self.isM())
         self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
         self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
-        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+        self.lbl_value2.place(relx=0.5, rely=0.5, anchor="center")
 
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.719, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.819, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
@@ -864,26 +890,26 @@ class Shop_main_screen:
         self.lbl_value.bind("<Enter>", lambda event: self.isL())
         self.lbl_value.bind("<Leave>", lambda event: self.rsL())
         self.lbl_value.bind("<Button-1>", lambda event: self.prev_category())
-        self.lbl_value.place(relx=0.35, rely=0.4, anchor="center")
+        self.lbl_value.place(relx=0.35, rely=0.5, anchor="center")
 
         self.login_btn3 = ImageTk.PhotoImage(Image.open(self.ll.head.next.data).resize((200, 200)))
         self.lbl_value3 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn3, height=200, width=200, borderwidth=0)
         self.lbl_value3.bind("<Enter>", lambda event: self.isR())
         self.lbl_value3.bind("<Leave>", lambda event: self.rsR())
         self.lbl_value3.bind("<Button-1>", lambda event: self.next_category())
-        self.lbl_value3.place(relx=0.65, rely=0.4, anchor="center")
+        self.lbl_value3.place(relx=0.65, rely=0.5, anchor="center")
 
         self.login_btn2 = ImageTk.PhotoImage(Image.open(self.ll.head.data).resize((300, 300)))
         self.lbl_value2 = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn2, height=300, width=300, borderwidth=0)
         self.lbl_value2.bind("<Enter>", lambda event: self.isM())
         self.lbl_value2.bind("<Leave>", lambda event: self.rsM())
         self.lbl_value2.bind("<Button-1>", lambda event: self.ei())
-        self.lbl_value2.place(relx=0.5, rely=0.4, anchor="center")
+        self.lbl_value2.place(relx=0.5, rely=0.5, anchor="center")
 
         self.lbl_status.destroy()
     
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.719, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.819, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
@@ -961,29 +987,34 @@ class Shop_main_screen:
 
     def categoryPage(self):
         self.inner_category = Canvas(self.canvas,width=1280, height=550,bd=0, highlightthickness=0)
-        # self.inner_category.create_text(500, 275, font = 50, anchor=CENTER, text="categoryPage")
-
+       
+        Label(self.inner_category, image=self.bgg).place(x=641, y=207, anchor=CENTER)
         ##Frame for book details
-        self.detail_frame = ttk.LabelFrame(self.inner_category, text="Book Details")
+        self.detail_frame = tk.LabelFrame(self.inner_category,borderwidth=0, highlightthickness=0)
         self.detail_frame.place(x=20, y=0,height=540, width=650)
+        Label(self.detail_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-        self.picbook_frame = ttk.LabelFrame(self.detail_frame, text="picbook_frame")
-        self.picbook_frame.place(x=10, y=0,height=330, width=230)
+        self.picbook_frame = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
+        self.picbook_frame.place(x=20, y=20,height=330, width=230)
+        Label(self.picbook_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-        self.detail_data = ttk.LabelFrame(self.detail_frame, text="detail_data")
-        self.detail_data.place(x=310, y=10,height=300, width=250)
+        self.detail_data = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
+        self.detail_data.place(x=310, y=50,height=250, width=300)
+        Label(self.detail_data, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-        self.example_frame = ttk.LabelFrame(self.detail_frame, text="example_frame")
-        self.example_frame.place(x=10, y=350,height=100, width=600)
-        
-        self.option_frame = ttk.LabelFrame(self.detail_frame, text="option_frame")
-        self.option_frame.place(x=120, y=450,height=60, width=360)
+        self.example_frame = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
+        self.example_frame.place(x=20, y=350,height=100, width=600)
+        Label(self.example_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-
+        self.option_frame = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
+        self.option_frame.place(x=120, y=450,height=50, width=360)
+        Label(self.option_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
+    
 
         # Frame for book_TreeView
-        frame1 = ttk.LabelFrame(self.inner_category, text="Excel Data")
+        frame1 = tk.LabelFrame(self.inner_category,borderwidth=0, highlightthickness=0)
         frame1.place(x=680, y=0, height=540, width=590)
+        Label(frame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
        
 
@@ -997,44 +1028,44 @@ class Shop_main_screen:
 
 
         #Author Of Book
-        lbl2 = Label(self.detail_data, text="Code")
+        lbl2 = tk.Label(self.detail_data, text="Code",font = self.myfont, background="#908d8d")
         lbl2.grid(row=0, column=1, padx=10, pady=5)
-        self.lbl2_entry = Entry(self.detail_data, textvariable=self.Code)
-        self.lbl2_entry.grid(row=0, column=2, padx=10, pady=5)
+        self.lbl2_entry = Entry(self.detail_data, textvariable=self.Code,font = self.myfont, width = 15)
+        self.lbl2_entry.grid(row=0, column=2, padx=10, pady=10)
 
 
         #Category Of Book
-        lbl3 = Label(self.detail_data, text="Name")
+        lbl3 = tk.Label(self.detail_data, text="Name",font = self.myfont,background="#908d8d")
         lbl3.grid(row=1, column=1, padx=10, pady=5)
-        self.lbl3_entry = Entry(self.detail_data, textvariable=self.Name)
+        self.lbl3_entry = Entry(self.detail_data, textvariable=self.Name,font = self.myfont, width = 15)
         self.lbl3_entry.grid(row=1, column=2, padx=10, pady=5)
 
         #Language Of Book
-        lbl4 = Label(self.detail_data, text="Author")
+        lbl4 = tk.Label(self.detail_data, text="Author",font = self.myfont, background="#908d8d")
         lbl4.grid(row=3, column=1, padx=10, pady=5)
-        self.lbl4_entry = Entry(self.detail_data, textvariable=self.Author)
+        self.lbl4_entry = Entry(self.detail_data, textvariable=self.Author,font = self.myfont, width = 15)
         self.lbl4_entry.grid(row=3, column=2, padx=10, pady=5)
 
         #Price Of Book
-        lbl5 = Label(self.detail_data, text="Category")
+        lbl5 = tk.Label(self.detail_data, text="Category",font = self.myfont, background="#908d8d")
         lbl5.grid(row=4, column=1, padx=10, pady=5)
-        self.lbl5_entry = Entry(self.detail_data, textvariable=self.Category)
+        self.lbl5_entry = Entry(self.detail_data, textvariable=self.Category,font = self.myfont, width = 15)
         self.lbl5_entry.grid(row=4, column=2, padx=10, pady=5)
 
         #Code Of Book
-        lbl6 = Label(self.detail_data, text="Price")
+        lbl6 = tk.Label(self.detail_data, text="Price",font = self.myfont, background="#908d8d")
         lbl6.grid(row=5, column=1, padx=10, pady=5)
-        self.lbl6_entry = Entry(self.detail_data, textvariable=self.Price)
+        self.lbl6_entry = Entry(self.detail_data, textvariable=self.Price,font = self.myfont, width = 15)
         self.lbl6_entry.grid(row=5, column=2, padx=10, pady=5)
 
         # Rating Of Book
-        lbl7 = Label(self.detail_data, text="Rating")
+        lbl7 = tk.Label(self.detail_data, text="Rating",font = self.myfont, background="#908d8d")
         lbl7.grid(row=6, column=1, padx=10, pady=5)
-        self.lbl7_entry = Entry(self.detail_data, textvariable=self.Rating)
+        self.lbl7_entry = Entry(self.detail_data, textvariable=self.Rating,font = self.myfont, width = 15)
         self.lbl7_entry.grid(row=6, column=2, padx=10, pady=5)
 
         # Example Of Book
-        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example, state="readonly")
+        self.commentbox = tk.Entry(self.example_frame, textvariable=self.Example, state="readonly",font = self.myfont)
 
         self.commentbox.place(x=10,y=0,width=550,height=70)
        
@@ -1042,14 +1073,14 @@ class Shop_main_screen:
         ## number of items book
         self.spinboxvar = IntVar(self.option_frame)
         self.spinboxvar.set(1)
-        self.items_book_spinbox = Spinbox(self.option_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7)
+        self.items_book_spinbox = Spinbox(self.option_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7, font=Font(family='Helvetica', size=12, weight='bold'))
         Label(self.option_frame, text="").grid(row=7, column=0, padx=10, pady=5)
         self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5)
 
-        add_favbook_button = Button(self.option_frame,text=' ♥ ', command=self.add_bookcart, width=15)
-        add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
+        # add_favbook_button = tk.Button(self.option_frame,text=' ♥ ', command=self.add_bookcart, width=15,font = self.myfont)
+        # add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
 
-        self.add_bookcart_button = Button(self.option_frame,text=' + ', command=self.add_bookcart,state=DISABLED,width=15)
+        self.add_bookcart_button = tk.Button(self.option_frame,text=' + ', command=self.add_bookcart,state=DISABLED,width=15)
         self.add_bookcart_button.grid(row=7, column=2, padx=10, pady=5)
         
    
@@ -1063,7 +1094,7 @@ class Shop_main_screen:
 
         self.book_treeview = ttk.Treeview(frame1, column=(1,2,3,4,5,6), show="headings", height="23")
 
-        self.book_treeview.place(x= 20, y=10)
+        self.book_treeview.place(x= 30, y=30)
         self.book_treeview.column(1, anchor='center', width=40)
         self.book_treeview.column(2, anchor='center', width=80)
         self.book_treeview.column(3, anchor='center', width=140)
@@ -1090,13 +1121,13 @@ class Shop_main_screen:
 
 
         yscrollbar = ttk.Scrollbar(frame1, orient="vertical", command=self.book_treeview.yview)
-        xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.book_treeview.xview)
+        # xscrollbar = ttk.Scrollbar(frame1, orient="horizontal", command=self.book_treeview.xview)
 
-        self.book_treeview.config(xscrollcommand=xscrollbar.set)
+        # self.book_treeview.config(xscrollcommand=xscrollbar.set)
         self.book_treeview.config(yscrollcommand=yscrollbar.set)
 
         yscrollbar.pack(side="right", fill="y")
-        xscrollbar.pack(side="bottom", fill="x")
+        # xscrollbar.pack(side="bottom", fill="x")
 
     def lookupCustomer(self, event):
         curItem = self.book_treeview.focus()
@@ -1195,16 +1226,25 @@ class Shop_main_screen:
     
        
     def paymentPage(self):
-        self.inner_payment = Canvas(self.canvas, width=1280, height=550)   
-        paymentPageFrame1 = tk.LabelFrame(self.inner_payment, text="Lo go JA JA")
-        paymentPageFrame1.place(x=0, y=0, height=50, width=1280)
+        self.inner_payment = Canvas(self.canvas, width=1280, height=550)  
+
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_payment, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
+
+
+        paymentPageFrame1 = tk.LabelFrame(self.inner_payment)
+        paymentPageFrame1.place(x=50, y=0, height=50, width=1178)
+        # Label(paymentPageFrame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
         
          ##Text Slide
         text_var="______|   Welcome to the land of bookS   |______" 
-        self.inner_payment_slidetext = Canvas(paymentPageFrame1, width=1000, height=100)   
+        self.inner_payment_slidetext = Canvas(paymentPageFrame1, width=1000, height=100) 
         self.inner_payment_slidetext.create_text(0,-2000,text=text_var,font=('Times New Roman',20,'bold'),fill='black',tags=("marquee",),anchor='w')
         x1,y1,x2,y2 = self.inner_payment_slidetext.bbox("marquee")
-        
+
+    
         width = x2-x1
         # height = y2-y1
         self.inner_payment_slidetext['width'] = width+500
@@ -1214,11 +1254,13 @@ class Shop_main_screen:
         ############# Main program ###############
        
         ##cart table
-        self.paymentPageFrame2 = tk.LabelFrame(self.inner_payment, text="Table NA JAJAAJAJ")
+        self.paymentPageFrame2 = tk.LabelFrame(self.inner_payment)
         self.paymentPageFrame2.place(x=50, y=55, height=500, width=1180)
+        Label(self.paymentPageFrame2, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-        paymentPageFrame3 = tk.LabelFrame(self.paymentPageFrame2, text="Button NA JAJAAJAJ")
+        paymentPageFrame3 = tk.LabelFrame(self.paymentPageFrame2)
         paymentPageFrame3.place(x=0, y=400, height=80, width=800)
+        Label(paymentPageFrame3, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         if self.usercart == []:
@@ -1229,7 +1271,7 @@ class Shop_main_screen:
             member = -15.25
             promotion = -12.50
             shipping = 40.00
-        self.paymentPageFrame4 = tk.LabelFrame(self.paymentPageFrame2, text="Bai SEDDDD", fg="blue",bg="white",font=("times new roman",14,"bold"))
+        self.paymentPageFrame4 = tk.LabelFrame(self.paymentPageFrame2, text="receipt".upper(), fg="blue",bg="white",font=("times new roman",14,"bold"))
         self.paymentPageFrame4.place(x=800, y=0, height=480, width=350)
 
         lebel1 = tk.Label(self.paymentPageFrame4, text=" Sales : ", width = 15)
@@ -1297,15 +1339,15 @@ class Shop_main_screen:
 
 
         self.cart_treeview = ttk.Treeview(self.paymentPageFrame2, column=(1,2,3,4,5,6), show="headings", height="18")
-        yscrollbar = ttk.Scrollbar(self.paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
-        xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
+        # yscrollbar = ttk.Scrollbar(self.paymentPageFrame2, orient="vertical", command=self.cart_treeview.yview)
+        # xscrollbar = ttk.Scrollbar(paymentPageFrame1, orient="horizontal", command=self.cart_treeview.xview)
 
-        # self.cart_treeview.place(x= 10, y=0)
-        self.cart_treeview.config(xscrollcommand=xscrollbar.set)
-        self.cart_treeview.config(yscrollcommand=yscrollbar.set)
+        # # self.cart_treeview.place(x= 10, y=0)
+        # self.cart_treeview.config(xscrollcommand=xscrollbar.set)
+        # self.cart_treeview.config(yscrollcommand=yscrollbar.set)
 
-        yscrollbar.pack(side="right", fill="y")
-        xscrollbar.pack(side="bottom", fill="x")
+        # yscrollbar.pack(side="right", fill="y")
+        # xscrollbar.pack(side="bottom", fill="x")
         self.cart_treeview.pack()
         self.cart_treeview.place(x=400,y=200,anchor=CENTER)
         self.cart_treeview.column(1, anchor='center', width=50)
@@ -1370,7 +1412,6 @@ class Shop_main_screen:
         if self.payment_check == True:
             self.Cancel_bottom.config(state=NORMAL)
             self.Payment_bottom.config(state=DISABLED)
-
 
     def confirmorder(self):
         self.Edit_bottom.config(state=DISABLED)
@@ -1446,7 +1487,7 @@ class Shop_main_screen:
                     Quantity += int(i[2])
                 with open('UnknownShop\\database\\order.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
-                    writer.writerow([self.nowtime.strftime("%Y-%m-%d %H:%M:%S"),self.order_id,self.user[0][3],self.payment_address_entry.get('1.0','end-1c'),Quantity,self.total_amount,'Payment confirmed - {}'.format(self.payment_method_entry.get()),'-','-'])
+                    writer.writerow([self.nowtime.strftime("%Y-%m-%d %H:%M:%S"),self.order_id,self.user[0][3],self.payment_address_entry.get('1.0','end-1c'),Quantity,self.total_amount.get(),'Payment confirmed - {}'.format(self.payment_method_entry.get()),'-','-'])
                 with open('UnknownShop\\database\\order_detail.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     for i in self.usercart:
@@ -1509,6 +1550,11 @@ class Shop_main_screen:
 
     def deliveryPage(self):
         self.inner_delivery = Canvas(self.canvas, width=1280, height=550)   
+
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_delivery, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
         deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
@@ -1613,18 +1659,18 @@ class Shop_main_screen:
                 self.order_id_review = i[1]
                 if i[6] == 'Payment confirmed - Cash On Delivery' or i[6] == 'Payment confirmed - Promptpay':
                     self.Satatus_message.append(i[0] + ' : Payment confirmed')
-                    self.Next_bottonn.config(state = DISABLED)
+                    self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Waiting for shipment':
                     self.Satatus_message.append(i[0] + ' : Payment confirmed')
                     self.Satatus_message.append(i[0] + ' : Waiting for shipment')
-                    self.Next_bottonn.config(state = DISABLED)
+                    self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Shipped':
                     self.Satatus_message.append(i[0] + ' : Payment confirmed')
                     self.Satatus_message.append(i[0] + ' :  for shipment')
                     self.Satatus_message.append(i[7] + ' : Shipped')
-                    self.Next_bottonn.config(state = DISABLED)
+                    self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Delivered':
                     self.Satatus_message.append(i[0] + ' : Payment confirmed')
@@ -1658,7 +1704,7 @@ class Shop_main_screen:
             if str(i[0]) == str(self.order_id_review):
                 self.order_to_review.push(i[1])
             if i[5] != '' or i[6] != '':
-                self.Next_bottonn.config(state = DISABLED)
+                self.Next_bottonn.config(state = NORMAL)
         #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Stack ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
         y = 50
@@ -1679,6 +1725,11 @@ class Shop_main_screen:
     def ContactUSPage(self): # ข้อมูลหน้า info       #1
         self.inner_ContactUS = Canvas(self.canvas, width=1280, height=550)
         
+        filename = "UnknownShop/Picture/ShopPage/BG1.png"
+        self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
+        background_label = Label(self.inner_ContactUS, image=self.filenameBG)
+        background_label.place(x=641, y=207, anchor=CENTER)
+
         ContactUSPageFrame1 = tk.LabelFrame(self.inner_ContactUS , text="Contact Us")
         ContactUSPageFrame1.place(x=750, y=0, height=550, width=500)
 
@@ -1727,7 +1778,7 @@ class Shop_main_screen:
                 if i[1] == self.temp_review:
                     self.review_Code.set(i[1])
                     self.review_Name.set(i[2])
-                    # self.review_Author.set(i[3])
+                    self.review_Author.set(i[3])
                     self.review_Category.set(i[4])
                     self.review_Price.set(i[5])
                     self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
@@ -1769,7 +1820,6 @@ class Shop_main_screen:
         self.delete_canvas()
         self.HomePage()
         self.canvas.create_window(0, 150, anchor=NW, window=self.inner_HomePage) 
-
         self.set_banner()
         self.count = 0
         
@@ -1791,6 +1841,7 @@ class Shop_main_screen:
      
     def show_categoryPage(self):
         self.delete_canvas()
+        self.categoryPage()
         self.canvas.create_window(0, 150, anchor=NW, window=self.inner_category)
         if self.confirm_order == True:
             self.add_bookcart_button.config(state=DISABLED)
