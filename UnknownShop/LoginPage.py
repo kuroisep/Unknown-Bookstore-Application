@@ -259,9 +259,11 @@ class main_account_screen:
         self.registerframe = tk.LabelFrame( self.register_screen , text="INFOMATION")
         self.registerframe.place(x=0, y=0, height=600, width=750)
 
-        self.inner_registerframe = tk.LabelFrame( self.register_screen , text="INFOMATION")
-        self.inner_registerframe.place(x=10, y=20, height=500, width=400)
+        self.inner_registerframe = tk.LabelFrame( self.register_screen , text="USER INPUT")
+        self.inner_registerframe.place(x=150, y=20, height=550, width=450)
 
+        self.inner_registerframe_button = tk.LabelFrame( self.inner_registerframe , text="Button")
+        self.inner_registerframe_button.place(x=20, y=400, height=100, width=400)
         # canvas = Canvas(self.register_screen, width=750, height=600)
         # canvas.pack(fill="both", expand=True)
         # canvas.create_image(0, 0, image=self.regis_bg, anchor="nw")
@@ -278,103 +280,78 @@ class main_account_screen:
         self.gender_choice2 = IntVar(self.register_screen)
         self.telphone = StringVar()
 
-        # canvas.create_text(375, 60, text="Please enter details below", font=self.myfont)
 
-        # canvas.create_text(65, 150, text="Username *", font=self.myfont)
-        titletext = ["User", "Password","Confirm Password", "Name", "Last Name", ]
-        y = 20
-        for i in range(5):
-            self.Busername = Label(self.inner_registerframe, text= titletext[i], font=self.myfont)
-            self.Busername.place(x=25, y=y)
-            y += 60
+        titletext1 = ["User", "Password", "Name","Gender","BirthDay","Phone Number (+66)"]
+        titletext2 = ["Confirm Password","Last Name","","","Email Address",""]
+        y1 = 10
+        y2 = 70
+        for i in range(6):
+            self.Ausername = Label(self.inner_registerframe, text= titletext1[i], font=self.myfont)
+            self.Busername = Label(self.inner_registerframe, text= titletext2[i], font=self.myfont)
+            self.Ausername.place(x=25, y=y1)
+            self.Busername.place(x=220, y=y2)
+            y1 += 60
+            y2 += 60
 
-        self.username_entry = ttk.Entry(self.inner_registerframe, textvariable=self.username)
-        self.password_entry = ttk.Entry(self.inner_registerframe, textvariable=self.password, show='●')
-        self.confpassword_entry = ttk.Entry(self.inner_registerframe, textvariable=self.confpassword, show='●')
-        self.name_entry = ttk.Entry(self.inner_registerframe, textvariable=self.name)
-        self.lastname_entry = ttk.Entry(self.inner_registerframe, textvariable=self.lastname)
+        self.username_entry = ttk.Entry(self.inner_registerframe, textvariable=self.username, width=20)
+        self.password_entry = ttk.Entry(self.inner_registerframe, textvariable=self.password, show='●', width=20)
+        self.confpassword_entry = ttk.Entry(self.inner_registerframe, textvariable=self.confpassword, show='●', width=20)
+        self.name_entry = ttk.Entry(self.inner_registerframe, textvariable=self.name, width=20)
+        self.lastname_entry = ttk.Entry(self.inner_registerframe, textvariable=self.lastname, width=20)
         self.gender_choice1 = Checkbutton(self.inner_registerframe, text="Male", font=(
             self.myfont, 12), command=self.my_upd, variable=self.gender1)
         self.gender_choice2 = Checkbutton(self.inner_registerframe, text="Female", font=(
             self.myfont, 12), command=self.my_upd, variable=self.gender2)
 
-        self.username_entry.place(x=30,y=45)
-        self.password_entry.place(x=30,y=105)
-        # self.confpassword_entry.grid(row=2, column=1)
-        # self.name_entry.grid(row=3, column=1)
-        # self.lastname_entry.grid(row=4, column=1)
-
-
-        # canvas.create_window(115, 175, window=self.username_entry, width=180)
-
-        # self.password_entry = ttk.Entry(self.register_screen, textvariable=self.password, show='●')
-        # canvas.create_text(290, 150, text="Password *", font=self.myfont)
-        # canvas.create_window(340, 175, window=self.password_entry, width=180)
-
-        # self.confpassword_entry = ttk.Entry(self.register_screen, textvariable=self.confpassword, show='●')
-        # canvas.create_text(580, 150, text="Confirm Password *", font=self.myfont)
-        # canvas.create_window(610, 175, window=self.confpassword_entry, width=180)
-
-        # self.name_entry = ttk.Entry(self.register_screen, textvariable=self.name)
-        # canvas.create_text(50, 225, text="Name *", font=self.myfont)
-        # canvas.create_window(115, 250, window=self.name_entry, width=180)
-
-        # self.lastname_entry = ttk.Entry(self.register_screen, textvariable=self.lastname)
-        # canvas.create_text(292, 225, text="Last Name *", font=self.myfont)
-        # canvas.create_window(340, 250, window=self.lastname_entry, width=180)
-
-        # canvas.create_text(500, 310, text="Gender *", font=self.myfont)
-
-        # self.gender_choice1 = Checkbutton(self.register_screen, text="Male", font=(
-        #     self.myfont, 12), command=self.my_upd, variable=self.gender1)
-        # self.gender_choice2 = Checkbutton(self.register_screen, text="Female", font=(
-        #     self.myfont, 12), command=self.my_upd, variable=self.gender2)
-
-        # canvas.create_window(450, 350, window=self.gender_choice1)
-        # canvas.create_window(550, 350, window=self.gender_choice2)
-
+        self.birth_date_entry = Combobox(self.inner_registerframe, width=5,state = "readonly",value=['----','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
+                                                                             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
+                                                                             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'])
+        self.birth_date_entry.current(0) 
+        self.birth_month_entry = Combobox(self.inner_registerframe, width=5, state = "readonly",value=['----','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                                                                                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
+        self.birth_month_entry.current(0)  
         
-        # #DATE Combobox
-        # canvas.create_text(470, 225, text="Day", font=self.myfont)
-        # self.birth_date_entry = Combobox(self.register_screen, width=3,value=['----','1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 
-        #                                                                      '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', 
-        #                                                                      '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']) 
-        # self.birth_date_entry.current(0)
-        # canvas.create_window(470, 250, window=self.birth_date_entry)
-        # #MONTH Combobox
-        # canvas.create_text(550, 225, text="Month", font=self.myfont)
-        # self.birth_month_entry = Combobox(self.register_screen, width=5, value=['----','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-        #                                                                         'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] )
-        # self.birth_month_entry.current(0)
-        # canvas.create_window(550, 250, window=self.birth_month_entry)
-        # #YEAR Combobox
-        # canvas.create_text(630, 225, text="Year", font=self.myfont)
-        # year_list = ['----']
-        # for i in range(1920,2022):
-        #     year_list.append(str(i))
-        # self.birth_year_entry = Combobox(self.register_screen, width=5, value=year_list)
-        # self.birth_year_entry.current(0)
-        # canvas.create_window(630, 250, window=self.birth_year_entry)
+        year_list = ['----']
+        for i in range(1920,2022):
+            year_list.append(str(i))
+        self.birth_year_entry = Combobox(self.inner_registerframe, width=5, value=year_list,state = "readonly")
+        self.birth_year_entry.current(0)   
+
+        self.telphone_entry = ttk.Entry(self.inner_registerframe, textvariable=self.telphone, width=20)
+        self.email_entry = ttk.Entry(self.inner_registerframe, textvariable=self.email,width=20)
+
+        self.username_entry.place(x=30,y=35)
+
+        self.password_entry.place(x=30,y=95)
+        self.confpassword_entry.place(x=220,y=95)
         
-        # canvas.create_text(85, 310, text="Email Address * ", font=self.myfont)
-        # self.email_entry = ttk.Entry(self.register_screen, textvariable=self.email)
-        # canvas.create_window(150, 335, window=self.email_entry, width=250)
+        self.name_entry.place(x=30,y=155)
+        self.lastname_entry.place(x=220,y=155)
+        
+        self.gender_choice1.place(x=30,y=215)
+        self.gender_choice2.place(x=120,y=215)
 
-        # canvas.create_text(85, 385, text="Phone Number * ", font=self.myfont)
-        # self.telphone_entry = ttk.Entry(self.register_screen, textvariable=self.telphone)
-        # canvas.create_window(150, 410, window=self.telphone_entry, width=250)
+        self.birth_date_entry.place(x=30,y=275)
+        self.birth_month_entry.place(x=95,y=275)
+        self.birth_year_entry.place(x=160,y=275)
 
-        # helv20 = tkFont.Font(family='Helvetica', size=20, weight=tkFont.BOLD)
-        # regis_button = Button(self.register_screen, text="Register",
-        #                     font=helv20, bg="blue", fg="white", command=self.register_user)
-        # canvas.create_window(400, 420, window=regis_button)
-        # clear_button = Button(self.register_screen, text="Clear",
-        #                     font=helv20, bg="blue", fg="white", command=self.clear_user_confirm)
-        # canvas.create_window(600, 420, window=clear_button)
+        self.telphone_entry.place(x=30,y=335)
+        self.email_entry.place(x=220,y=335)
 
-        # cancel_button = Button(self.register_screen, text="CANCEL", command=self.delete_register_screen,
-        #                     bd=0, highlightthickness=0, width=20, height=3)
-        # canvas.create_window(600, 500, window=cancel_button)
+    
+        helv20 = tkFont.Font(family='Helvetica', size=12, weight=tkFont.BOLD)
+        regis_button = Button(self.inner_registerframe_button, text="Register".upper(),
+                            font=helv20, bg="orange", fg="white", command=self.register_user, width=10, height=3)
+        clear_button = Button(self.inner_registerframe_button, text="Clear".upper(),
+                            font=helv20, bg="blue", fg="white", command=self.clear_user_confirm,width=10, height=3)
+        cancel_button = Button(self.inner_registerframe_button, text="CANCEL", command=self.delete_register_screen,
+                            font=helv20, bg="red", fg="white", highlightthickness=0, width=10, height=3)
+
+        regis_button.grid(row=0, column=0,padx=10)
+        clear_button.grid(row=0, column=1,padx=10)
+        cancel_button.grid(row=0, column=2,padx=10)
+        
+
 
 
     def my_upd(self):
