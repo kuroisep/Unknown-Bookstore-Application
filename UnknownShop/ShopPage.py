@@ -176,8 +176,6 @@ class Shop_main_screen:
         self.canvas.pack(fill="both", expand=True)
         self.canvas.create_image(0, 0, image=self.bg,anchor="nw")
     
-    def Ssearch(self):
-        pass
     def search_bar(self):
         
         Frame1 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#12aadb")
@@ -212,10 +210,30 @@ class Shop_main_screen:
         show_all_books_button = tk.Button(Frame1, text = "Clear",command = self.Cclear_SearchBox, height=10, width=10)
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
-    
+
+    def search(self):
+        selected = self.drop1.get()
+        if selected == "All":
+            print('All')
+        if selected == "Arts / Design / Decoration":
+            return
+        if selected == "Literature":
+            return
+        if selected == "Administration / Management":
+            return
+        if selected == "Humanities / Science":
+            return
+        if selected == "Children's Books":
+            return
+        if selected == "Career Academic Textbooks":
+            return
+        if selected == "Psychology":
+            return
+
     def GotoSearch(self):
-        self.Cheack_Search()
+        # self.Cheack_Search()
         self.show_categoryPage()
+        self.search()
     def Cclear_SearchBox(self):
         self.drop1.current((0))
         self.drop2.current((0))
@@ -760,9 +778,18 @@ class Shop_main_screen:
         self.ls.add('orange')
         self.ls.add('blue')
         self.ls.add('green')
+        self.ls.add('black')
+        self.ls.add('gray')
+        self.ls.add('red')
+        self.ls.add('purple')
         self.ll.add('UnknownShop/Picture/ShopPage/orange.jpg')
         self.ll.add('UnknownShop/Picture/ShopPage/blue.png')
         self.ll.add('UnknownShop/Picture/ShopPage/green.jpg')
+        self.ll.add('UnknownShop/Picture/ShopPage/black.png')
+        self.ll.add('UnknownShop/Picture/ShopPage/gray.jpg')
+        self.ll.add('UnknownShop/Picture/ShopPage/red.png')
+        self.ll.add('UnknownShop/Picture/ShopPage/purple.png')
+
 
         self.login_btn = ImageTk.PhotoImage(Image.open(self.ll.head.prev.data))
         self.lbl_value = tk.Button(master=self.inner_selected_categoryPages, image=self.login_btn, height=100, width=100)
