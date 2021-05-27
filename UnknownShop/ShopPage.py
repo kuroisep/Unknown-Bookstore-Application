@@ -81,10 +81,13 @@ class Shop_main_screen:
         self.Code = StringVar()
         self.Rating = StringVar()
         self.Example = StringVar()
+
         self.confirm_order = False
         self.confirm_next = False
         self.order_id = 0
+        
         self.payment_check = False
+
         self.total2 = StringVar(self.shop_window)
         self.total_amount = StringVar()
 
@@ -131,7 +134,7 @@ class Shop_main_screen:
             self.user = [['T', '\" Login Required \"', '', 
             'You are not logged in', 'You are not logged in', 
             '-','-/-/-', 'You are not logged in', 
-            'You are not logged in','account']]
+            'You are not logged in','account','99999']]
         #self.user[0][1] = username
         #self.user[0][2] = password
         #self.user[0][3] = name
@@ -251,7 +254,7 @@ class Shop_main_screen:
                 selections.append(self.book_treeview.item(child)['values'])
             elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
                 selections.append(self.book_treeview.item(child)['values'])
-            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Psychology") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][2]).lower()) and (selected == "Psychology") and (selected2 == "Name") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology."):
                 selections.append(self.book_treeview.item(child)['values'])
 
             elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "All") and (selected2 == "Code"):
@@ -268,7 +271,7 @@ class Shop_main_screen:
                 selections.append(self.book_treeview.item(child)['values'])
             elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
                 selections.append(self.book_treeview.item(child)['values'])
-            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Psychology") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][1]).lower()) and (selected == "Psychology") and (selected2 == "Code") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology."):
                 selections.append(self.book_treeview.item(child)['values'])
 
             elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "All") and (selected2 == "Author"):
@@ -285,7 +288,7 @@ class Shop_main_screen:
                 selections.append(self.book_treeview.item(child)['values'])
             elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Career Academic Textbooks") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Career Academic Textbooks"):
                 selections.append(self.book_treeview.item(child)['values'])
-            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Psychology") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology"):
+            elif (query.lower() in str(self.book_treeview.item(child)['values'][3]).lower()) and (selected == "Psychology") and (selected2 == "Author") and (str(self.book_treeview.item(child)['values'][4]) == "Psychology."):
                 selections.append(self.book_treeview.item(child)['values'])
         # self.book_treeview.selection_set(selections)
         self.book_treeview.delete(*self.book_treeview.get_children())
@@ -564,6 +567,13 @@ class Shop_main_screen:
         
         self.df = pandas.read_csv('login.csv')
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
+        if self.user == []:
+            # messagebox.showerror("Error", "NO USER LOGIN FOUND")
+            print("NO USER LOGIN FOUND")
+            self.user = [['T', '\" Login Required \"', '', 
+            'You are not logged in', 'You are not logged in', 
+            '-','-/-/-', 'You are not logged in', 
+            'You are not logged in','account','99999']]
 
         filename = "UnknownShop/Picture/ShopPage/BG1.png"
         self.filenameBG = ImageTk.PhotoImage(Image.open(filename))
@@ -1534,11 +1544,11 @@ class Shop_main_screen:
         background_label = Label(self.inner_delivery, image=self.filenameBG)
         background_label.place(x=641, y=207, anchor=CENTER)
 
-        deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
-        deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
-        Label(deliveryPageFrame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
+        self.deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
+        self.deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
+        Label(self.deliveryPageFrame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
            
-        deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
+        deliveryPageFrame1_1 = ttk.LabelFrame(self.deliveryPageFrame1, text="Button Status")
         deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
         Label(deliveryPageFrame1_1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
         
@@ -1693,19 +1703,20 @@ class Shop_main_screen:
                 self.order_to_review.push(i[1])
                 if str(i[5]) != 'nan' or str(i[6]) != 'nan':
                     self.Next_bottonn.config(state = DISABLED)
+                    self.Satatus_message = []
         #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Stack ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         
         y = 50
         if len(self.Satatus_message) != 0:
             for i in range(len(self.Satatus_message)):
                 if self.Satatus_message[i] == 'Cancelled order':
-                    tk.Button(deliveryPageFrame1, text=self.Satatus_message[4], font="BahnschriftLight 15", 
+                    tk.Button(self.deliveryPageFrame1, text=self.Satatus_message[4], font="BahnschriftLight 15", 
                         bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
-                        bd=0, width=20).place(x=125, y=240)
+                        bd=0, width=40).place(x=125, y=240)
                 else:
-                    tk.Button(deliveryPageFrame1, text=self.Satatus_message[i], font="BahnschriftLight 15", 
+                    tk.Button(self.deliveryPageFrame1, text=self.Satatus_message[i], font="BahnschriftLight 15", 
                             bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
-                            bd=0, width=35,anchor='w').place(x=0, y=y)
+                            bd=0, width=40,anchor='w').place(x=0, y=y)
                 y += 40
 
     def ContactUSPage(self): # ข้อมูลหน้า info       #1
@@ -1849,6 +1860,12 @@ class Shop_main_screen:
             self.img_review_label = Label(self.delivery_img_frame, image=self.img_review)
             self.img_review_label.pack(anchor=CENTER)
 
+            self.Satatus_message = []
+            # self.deliveryPageFrame1.destroy()
+            self.show_deliveryPage()
+
+
+
     def backk(self):
         self.commentbox.config(state=DISABLED)
         self.review_bottom.config(state=DISABLED)
@@ -1867,6 +1884,10 @@ class Shop_main_screen:
         
 
     def checkDeliverySuccess(self):
+        self.confirm_order = False
+        self.confirm_next = False
+        self.payment_check = False
+        self.usercart = []
         self.review_bottomOn()
 
     def show_infomationPage(self): # ุปุ่ม 1
