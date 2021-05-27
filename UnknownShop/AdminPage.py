@@ -1259,6 +1259,10 @@ class main_admin_screen:
             ), 'EMAIL'] = self.email_entry.get('1.0', 'end-1c')
             self.df3.loc[self.df3['USER'] == self.username.get(
             ), 'TEL'] = self.tel_entry.get('1.0', 'end-1c')
+            
+            self.df3.loc[self.df3['USER'] == self.username.get(
+            ), 'MEMBERS'] = self.memp_entry.get('1.0', 'end-1c')
+            
             self.df3.to_csv("login.csv", index=False)
             ### Treeview Update
             self.member_treeview.delete(*self.member_treeview.get_children())
@@ -1365,7 +1369,7 @@ class main_admin_screen:
                 with open('login.csv', 'a', newline='') as file:
                     writer = csv.writer(file)
                     writer.writerow(['F',self.addmember_username_entry.get('1.0', 'end-1c'), self.addmember_pass_entry.get('1.0', 'end-1c'),
-                                    self.addmember_fname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_lname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_gender_entry.get('1.0', 'end-1c'),self.addmember_birthday_entry.get('1.0', 'end-1c'), self.addmember_email_entry.get('1.0', 'end-1c'), str(self.addmember_tel_entry.get('1.0', 'end-1c')),'account'])
+                                    self.addmember_fname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_lname_entry.get('1.0', 'end-1c').capitalize(), self.addmember_gender_entry.get('1.0', 'end-1c'),self.addmember_birthday_entry.get('1.0', 'end-1c'), self.addmember_email_entry.get('1.0', 'end-1c'), str(self.addmember_tel_entry.get('1.0', 'end-1c')),'account',"500"])
                 self.addmember_username_entry.delete('1.0', END)
                 self.addmember_pass_entry.delete('1.0', END)
                 self.addmember_cpass_entry.delete('1.0', END)
@@ -1453,6 +1457,23 @@ class main_admin_screen:
 
 
     def destoryframe(self):
+        # Order Manangement
+        self.df = pandas.read_csv('UnknownShop\\database\\order.csv')
+        # print(self.df)
+        self.order_data = self.df.values.tolist()
+
+
+        # Order Detail
+        self.df1 = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
+        self.order_detail_data = self.df1.values.tolist()
+
+        # Book Page
+        self.df2 = pandas.read_csv('UnknownShop\\database\\DataBookList.csv')
+        self.book_data = self.df2.values.tolist()
+        
+        # Member Page
+        self.df3 = pandas.read_csv('login.csv')
+        self.member_data = self.df3.values.tolist()
         self.orderframe.destroy()
         self.orderhistoryframe.destroy()
         self.menberframe.destroy()
