@@ -377,11 +377,84 @@ class Shop_main_screen:
         Status_button = tk.Button(HomePageFrame2,text="Status",width=15, command= self.show_deliveryPage)
         Status_button.grid(row=2,column=3,padx=10, pady=10)
 
-        Review_button = tk.Button(HomePageFrame2,text="Review Books",width=15, command= self.show_deliveryPage)
+        Review_button = tk.Button(HomePageFrame2,text="Recommed Book",width=15, command= self.recommend_book_page)
         Review_button.grid(row=2,column=4,padx=50, pady=10)
 
         ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",width=15,  command= self.show_ContactUSPage)
         ContactUs_button.grid(row=2,column=5,padx=40, pady=10)
+    def recommend_book_page(self):
+
+        #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Sort :Quicksort ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        def QuickSort(arr):
+            elements = len(arr)
+            #Base case
+            if elements < 2:
+                return arr
+            current_position = 0 #Position of the partitioning element
+            for i in range(1, elements): #Partitioning loop
+                if arr[i] > arr[0]:
+                    current_position += 1
+                    temp = arr[i]
+                    arr[i] = arr[current_position]
+                    arr[current_position] = temp
+            temp = arr[0]
+            arr[0] = arr[current_position] 
+            arr[current_position] = temp #Brings pivot to it's appropriate position
+            left = QuickSort(arr[0:current_position]) #Sorts the elements to the left of pivot
+            right = QuickSort(arr[current_position+1:elements]) #sorts the elements to the right of pivot
+            arr = left + [arr[current_position]] + right #Merging everything together
+            return arr
+        loadorder_deatil = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
+        order_detail = loadorder_deatil.values.tolist()
+        to_sort = []
+        duplicate = False
+        for i in order_detail:
+            if str(i[5]) != 'nan':
+                for j in to_sort:
+                    if i[1] in j[1]:
+                        j[0] = (float(j[0]) + float(i[5]))/2
+                        round(j[0],2)
+                        duplicate = True
+                if not duplicate:
+                    to_sort.append([i[5],i[1],i[2]])
+        recommend_sorted = QuickSort(to_sort)
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Sort : Quicksort ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+        #------------------------------    init     ------------------------------------------------------------#
+        self.recommend_screen = Toplevel(self.inner_HomePage)
+        self.recommend_screen.title("Recommend Book")
+        self.recommend_screen.focus_set()
+        self.recommend_screen.grab_set()
+        self.recommend_screen.resizable(0, 0)
+        x = (960) - (700/2)
+        y = (540) - (550/2)
+        self.recommend_screen.geometry("700x500+%d+%d" % (x, y))
+        #------------------------------   Table Plane     ------------------------------------------------------------#
+        self.recommend_book_frame = LabelFrame(self.recommend_screen)
+        columns = ("No.",'Code','Title','Rating')
+        self.recommend_book_treeview = Treeview(
+            self.recommend_book_frame, column=columns, show="headings", height="20")
+        yscrollbar = ttk.Scrollbar(
+            self.recommend_book_frame, orient="vertical", command=self.recommend_book_treeview.yview)
+        self.recommend_book_treeview.config(yscrollcommand=yscrollbar.set)
+        yscrollbar.pack(side="right", fill="y")
+        for col in columns:
+            self.recommend_book_treeview.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(
+                self.recommend_book_treeview, _col, False))
+
+        self.recommend_book_treeview.column(0, anchor='center', width=50)
+        self.recommend_book_treeview.column(1, anchor='center', width=80)
+        self.recommend_book_treeview.column(2, anchor='center', width=450)
+        self.recommend_book_treeview.column(3, anchor='center', width=50)
+
+        index = 1
+        for i in recommend_sorted:
+            self.recommend_book_treeview.insert('', 'end', values=[index,i[1],i[2],i[0]])
+            index += 1
+
+        self.recommend_book_treeview.pack()
+        self.recommend_book_frame.place(x=10, y=10, height=470, width=670)
+
     
     def set_banner(self):
         # # BANNER <<<<<<<<<<<<<<<<<<<<<<<<<<
