@@ -81,6 +81,13 @@ class Shop_main_screen:
         self.confirm_order = False
         self.confirm_next = False
         self.order_id = 0
+        self.payment_check = False
+
+        self.review_Code = StringVar()
+        self.review_Name = StringVar()
+        self.review_Author = StringVar()
+        self.review_Category = StringVar()
+        self.review_Price = StringVar()
 
 
        
@@ -1091,8 +1098,8 @@ class Shop_main_screen:
         self.Payment_bottom = tk.Button(paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
         self.Payment_bottom.place(x=170, y=350,anchor="center")
 
-        self.Cancle_bottom = tk.Button(paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
-        self.Cancle_bottom.place(x=170, y=400,anchor="center")
+        self.Cancel_bottom = tk.Button(paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
+        self.Cancel_bottom.place(x=170, y=400,anchor="center")
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -1139,10 +1146,10 @@ class Shop_main_screen:
 
         self.Confirm_bottom = tk.Button(paymentPageFrame3,text="< Confirm Order >", command = self.confirmorder , width = 15)
         self.Confirm_bottom.place(x=500, y=30,anchor="center")
-        # Next_bottom.pack(side = BOTTOM) 
+        # self.Next_botton.pack(side = BOTTOM) 
 
-        self.Next_bottom = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment,state=DISABLED , width = 15)
-        self.Next_bottom.place(x=700, y=30,anchor="center")
+        self.Next_botton = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment,state=DISABLED , width = 15)
+        self.Next_botton.place(x=700, y=30,anchor="center")
         # Seemore_bottom.pack(side = BOTTOM) 
 
         
@@ -1165,9 +1172,12 @@ class Shop_main_screen:
             self.Confirm_bottom.config(state=NORMAL)
         if self.confirm_order == True and self.confirm_next == False:
             print('self.confirm_next :',self.confirm_next)
-            self.Next_bottom.config(state=NORMAL)
+            self.self.Next_botton.config(state=NORMAL)
         elif self.confirm_next == True:
             self.Payment_bottom.config(state=NORMAL)
+        if self.payment_check == True:
+            self.Cancel_bottom.config(state=NORMAL)
+            self.Payment_bottom.config(state=DISABLED)
 
 
     def confirmorder(self):
@@ -1175,19 +1185,18 @@ class Shop_main_screen:
         self.Del_botton.config(state=DISABLED)
         self.Confirm_bottom.config(state=DISABLED)
         messagebox.showinfo(message='Your order have been confirmed',title='Confirm your Order')
-        self.Cancle_bottom.config(state=DISABLED)
-        self.Next_bottom.config(state=NORMAL)
+        self.Cancel_bottom.config(state=DISABLED)
+        self.Next_botton.config(state=NORMAL)
         self.confirm_order = True
     def pp(self):
         print("Test"*10)
     def topayment(self):
         self.confirm_next = True
-        self.Next_bottom.config(state=DISABLED)
+        self.Next_botton.config(state=DISABLED)
         self.Payment_bottom.config(state=NORMAL)
 
     def dummy_payment(self):
         print("PAYMENT")
-        self.Cancle_bottom.config(state=NORMAL)
         #------------------------------    init     ------------------------------------------------------------#
         self.payment_screen = Toplevel(self.inner_payment)
         self.payment_screen.title("Payment")
@@ -1232,6 +1241,9 @@ class Shop_main_screen:
     def place_order(self):
         if self.payment_address_entry.get('1.0','end-1c') != '':
             if(messagebox.askokcancel("Confirmation", "Are you sure?", parent=self.payment_screen)) == True:
+                self.payment_check = True
+                self.Cancel_bottom.config(state=NORMAL)
+                self.Payment_bottom.config(state=DISABLED)
                 self.nowtime = datetime.datetime.now()
                 loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
                 order_temp = loadorder.values.tolist()
@@ -1290,9 +1302,14 @@ class Shop_main_screen:
         MB1 = messagebox.askyesno(message='Are your sure to cancel this order ?',icon='question',title='Cancel Order')
         if MB1 == True:
             print("CANCEL")
-            self.Cancle_bottom.config(state=DISABLED)
+            self.Cancel_bottom.config(state=DISABLED)
             self.Payment_bottom.config(state=DISABLED)
-            self.Next_bottom.config(state=DISABLED)
+            self.Next_botton.config(state=DISABLED)
+            self.confirm_order = False
+            self.confirm_next = False
+            self.payment_check = False
+            self.usercart = []
+
         else:
             print("...............")
     
@@ -1303,103 +1320,68 @@ class Shop_main_screen:
 
         deliveryPageFrame1 = ttk.LabelFrame(self.inner_delivery, text="Status")
         deliveryPageFrame1.place(x=30, y=20, height=500, width=500)
-        loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
-        order_status = loadorder.values.tolist()
-        Satatus_message = []
-        for i in order_status:
-            if self.order_id == i[1]:
-                if i[6] == 'Payment confirmed - Cash On Delivery' or i[6] == 'Payment confirmed - Promptpay':
-                    Satatus_message.append(i[0] + ' : Payment confirmed')
-                elif i[6] == 'Waiting for shipment':
-                    Satatus_message.append(i[0] + ' : Payment confirmed')
-                    Satatus_message.append(i[0] + ' : Waiting for shipment')
-                elif i[6] == 'Shipped':
-                    Satatus_message.append(i[0] + ' : Payment confirmed')
-                    Satatus_message.append(i[0] + ' :  for shipment')
-                    Satatus_message.append(i[7] + ' : Shipped')
-                elif i[6] == 'Delivered':
-                    Satatus_message.append(i[0] + ' : Payment confirmed')
-                    Satatus_message.append(i[0] + ' : Waiting for shipment')
-                    Satatus_message.append(i[7] + ' : Shipped')
-                    Satatus_message.append(i[8] + ' : Delivered')
-                else:
-                    Satatus_message.append('Cancelled order')
-
-
-        
-        y = 50
-        if len(Satatus_message) != 0:
-            for i in range(len(Satatus_message)):
-                tk.Button(deliveryPageFrame1, text=Satatus_message[i], font="BahnschriftLight 15", 
-                            bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
-                            bd=0, width=35,anchor='w').place(x=0, y=y)
-                y += 40
-
-        # tk.Button(deliveryPageFrame1, text=Satatus_message[4], font="BahnschriftLight 15", 
-        #                 bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
-        #                 bd=0, width=20).place(x=125, y=240)
-
+           
         deliveryPageFrame1_1 = ttk.LabelFrame(deliveryPageFrame1, text="Button Status")
         deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
         
 
-        deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
-        deliveryPageFrame2.place(x=550, y=20, height=500, width=700)
+        self.deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
+        self.deliveryPageFrame2.place(x=550, y=20, height=500, width=700)
 
-        deliveryPageFrame2_1 = ttk.LabelFrame(deliveryPageFrame2, text="Picture")
-        deliveryPageFrame2_1.place(x=50, y=10, height=250, width=200)
+        self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
+        self.delivery_img_frame.place(x=50, y=10, height=250, width=200)
 
-        deliveryPageFrame2_2 = ttk.LabelFrame(deliveryPageFrame2, text="Databook")
-        deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
+        self.deliveryPageFrame2_2 = ttk.LabelFrame(self.deliveryPageFrame2, text="Databook")
+        self.deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
 
-        deliveryPageFrame2_3 = ttk.LabelFrame(deliveryPageFrame2, text="Review Button")
-        deliveryPageFrame2_3.place(x=200, y=380, height=90, width=420)
+        self.deliveryPageFrame2_3 = ttk.LabelFrame(self.deliveryPageFrame2, text="Review Button")
+        self.deliveryPageFrame2_3.place(x=200, y=380, height=90, width=420)
 
 
 
         #Author Of Book
-        lbl2 = Label(deliveryPageFrame2_2, text="Code")
+        lbl2 = Label(self.deliveryPageFrame2_2, text="Code")
         lbl2.grid(row=0, column=1, padx=10, pady=5)
-        self.lbl2_entry = Entry(deliveryPageFrame2_2, textvariable=self.Code,state= "readonly")
-        self.lbl2_entry.grid(row=0, column=2, padx=10, pady=10)
+        self.review_code_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Code,state= "readonly")
+        self.review_code_entry.grid(row=0, column=2, padx=10, pady=10)
 
 
         #Category Of Book
-        lbl3 = Label(deliveryPageFrame2_2, text="Name")
+        lbl3 = Label(self.deliveryPageFrame2_2, text="Name")
         lbl3.grid(row=1, column=1, padx=10, pady=5)
-        self.lbl3_entry = Entry(deliveryPageFrame2_2, textvariable=self.Name,state= "readonly")
-        self.lbl3_entry.grid(row=1, column=2, padx=10, pady=5)
+        self.review_name_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Name,state= "readonly")
+        self.review_name_entry.grid(row=1, column=2, padx=10, pady=5)
 
         #Language Of Book
-        lbl4 = Label(deliveryPageFrame2_2, text="Author")
+        lbl4 = Label(self.deliveryPageFrame2_2, text="Author")
         lbl4.grid(row=3, column=1, padx=10, pady=5)
-        self.lbl4_entry = Entry(deliveryPageFrame2_2, textvariable=self.Author,state= "readonly")
-        self.lbl4_entry.grid(row=3, column=2, padx=10, pady=5)
+        self.review_author_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Author,state= "readonly")
+        self.review_author_entry.grid(row=3, column=2, padx=10, pady=5)
 
         #Price Of Book
-        lbl5 = Label(deliveryPageFrame2_2, text="Category")
+        lbl5 = Label(self.deliveryPageFrame2_2, text="Category")
         lbl5.grid(row=4, column=1, padx=10, pady=5)
-        self.lbl5_entry = Entry(deliveryPageFrame2_2, textvariable=self.Category,state= "readonly")
-        self.lbl5_entry.grid(row=4, column=2, padx=10, pady=5)
+        self.review_category_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Category,state= "readonly")
+        self.review_category_entry.grid(row=4, column=2, padx=10, pady=5)
 
         #Code Of Book
-        lbl6 = Label(deliveryPageFrame2_2, text="Price")
+        lbl6 = Label(self.deliveryPageFrame2_2, text="Price")
         lbl6.grid(row=5, column=1, padx=10, pady=5)
-        self.lbl6_entry = Entry(deliveryPageFrame2_2, textvariable=self.Price,state= "readonly")
-        self.lbl6_entry.grid(row=5, column=2, padx=10, pady=5)
+        self.review_price_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Price,state= "readonly")
+        self.review_price_entry.grid(row=5, column=2, padx=10, pady=5)
 
         # Rating Of Book
-        lbl7 = Label(deliveryPageFrame2_2, text="Rating")
+        lbl7 = Label(self.deliveryPageFrame2_2, text="Rating")
         lbl7.grid(row=6, column=1, padx=10, pady=5)
         listofRating = ["1","2","3","4","5"]
-        self.Rating_Combobox = ttk.Combobox(deliveryPageFrame2_2,values=listofRating,width=18,state=DISABLED)
-        self.Rating_Combobox.current(0)
+        self.Rating_Combobox = ttk.Combobox(self.deliveryPageFrame2_2,values=listofRating,width=18,state=DISABLED)
+        self.Rating_Combobox.current(4)
         self.Rating_Combobox.grid(row=6, column=2, padx=10, pady=5)
 
 
 
 
-        self.review_bottom = ttk.Button(deliveryPageFrame2_3,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
+        self.review_bottom = ttk.Button(self.deliveryPageFrame2_3,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
         # self.review_bottom.place(x=500, y=400,anchor="center")
         self.review_bottom.pack(side = BOTTOM, padx=10, pady=5) 
 
@@ -1407,25 +1389,100 @@ class Shop_main_screen:
         Back_bottom.place(x=180, y=40,anchor="center")
         # Back_bottom.pack(side = LEFT) 
 
-        Next_bottom = ttk.Button(deliveryPageFrame1_1,text="< Next >", command = self.checkDeliverySuccess, width=10)    
-        Next_bottom.place(x=300, y=40,anchor="center")
-        # Next_bottom.pack(side = RIGHT)
+        self.Next_bottonn = ttk.Button(deliveryPageFrame1_1,text="< Next >", command = self.checkDeliverySuccess, width=10)    
+        self.Next_bottonn.place(x=300, y=40,anchor="center")
+        # self.Next_botton.pack(side = RIGHT)
 
 
 
-        commenttext = Label(deliveryPageFrame2,text="Comment : ", font=('TRACK', 12))
+        commenttext = Label(self.deliveryPageFrame2,text="Comment : ", font=('TRACK', 12))
         commenttext.place(x=50,y=300)
-        self.commentbox = tk.Text(deliveryPageFrame2,width=60,height=5, font=('TRACK', 8),state=DISABLED)
+        self.commentbox = tk.Text(self.deliveryPageFrame2,width=60,height=5, font=('TRACK', 8),state=DISABLED)
         self.commentbox.place(x=200,y=300)
        
 
-        self.Comment_boutton1 = ttk.Button(deliveryPageFrame2_3,text="< Send >",command = self.printcomment, state=DISABLED)
+        self.Comment_boutton1 = ttk.Button(self.deliveryPageFrame2_3,text="< Send >",command = self.printcomment, state=DISABLED)
         # self.Comment_boutton1.place(x=100,y=25)
         self.Comment_boutton1.pack(side = LEFT, padx=10, pady=5) 
         
-        self.Comment_boutton2 = ttk.Button(deliveryPageFrame2_3,text="< Clear >",command = self.clearcomment, state=DISABLED)
+        self.Comment_boutton2 = ttk.Button(self.deliveryPageFrame2_3,text="< Clear >",command = self.clearcomment, state=DISABLED)
         # self.Comment_boutton2.place(x=220,y=25)
         self.Comment_boutton2.pack(side = RIGHT, padx=10, pady=5)
+
+        loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
+        order_status = loadorder.values.tolist()
+        self.Satatus_message = []
+        self.loadorder_deatil = pandas.read_csv('UnknownShop\\database\\order_detail.csv')
+        order_detail = self.loadorder_deatil.values.tolist()
+        self.order_id_review = 0
+        
+        for i in reversed(order_status):
+            if self.user[0][3] == i[2]: 
+                self.order_id_review = i[1]
+                if i[6] == 'Payment confirmed - Cash On Delivery' or i[6] == 'Payment confirmed - Promptpay':
+                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
+                    self.Next_bottonn.config(state = DISABLED)
+                    break
+                elif i[6] == 'Waiting for shipment':
+                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' : Waiting for shipment')
+                    self.Next_bottonn.config(state = DISABLED)
+                    break
+                elif i[6] == 'Shipped':
+                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' :  for shipment')
+                    self.Satatus_message.append(i[7] + ' : Shipped')
+                    self.Next_bottonn.config(state = DISABLED)
+                    break
+                elif i[6] == 'Delivered':
+                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' : Waiting for shipment')
+                    self.Satatus_message.append(i[7] + ' : Shipped')
+                    self.Satatus_message.append(i[8] + ' : Delivered')
+                    self.Next_bottonn.config(state = NORMAL)
+                    break
+                else:
+                    self.Satatus_message.append('Cancelled order')
+                    self.Next_bottonn.config(state = DISABLED)
+                    break
+        #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Stack ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        class Stack:
+            def __init__(self):
+                self.items = []
+            def push(self,data):
+                self.items.append(data)
+            def pop(self):
+                return self.items.pop()
+            def __str__(self):
+                return str(self.items)
+            def isEmpty(self):
+                return self.items == []
+            def peek(self):
+                return self.items[len(self.items)-1]
+            def size(self):
+                return len(self.items)
+        self.order_to_review = Stack()
+        for i in reversed(order_detail):
+            if str(i[0]) == str(self.order_id_review):
+                self.order_to_review.push(i[1])
+            if i[5] != '' or i[6] != '':
+                self.Next_bottonn.config(state = DISABLED)
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Stack ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        
+        y = 50
+        if len(self.Satatus_message) != 0:
+            for i in range(len(self.Satatus_message)):
+                if self.Satatus_message[i] == 'Cancelled order':
+                    tk.Button(deliveryPageFrame1, text=self.Satatus_message[4], font="BahnschriftLight 15", 
+                        bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
+                        bd=0, width=20).place(x=125, y=240)
+                else:
+                    tk.Button(deliveryPageFrame1, text=self.Satatus_message[i], font="BahnschriftLight 15", 
+                            bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
+                            bd=0, width=35,anchor='w').place(x=0, y=y)
+                y += 40
+
+
 
     def ContactUSPage(self): # ข้อมูลหน้า info       #1
         self.inner_ContactUS = Canvas(self.canvas, width=1280, height=550)
@@ -1470,7 +1527,44 @@ class Shop_main_screen:
         self.Comment_boutton1.config(state=NORMAL)
         self.Comment_boutton2.config(state=NORMAL)
         self.Rating_Combobox.config(state=NORMAL)
-        print("Review JAA")
+        #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Stack ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        if not self.order_to_review.isEmpty():
+            self.temp_review = self.order_to_review.pop()
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Stack ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            for i in self.book_data:
+                if i[1] == self.temp_review:
+                    self.review_Code.set(i[1])
+                    self.review_Name.set(i[2])
+                    self.review_Author.set(i[3])
+                    self.review_Category.set(i[4])
+                    self.review_Price.set(i[5])
+                    self.delivery_img_frame = ttk.LabelFrame(self.deliveryPageFrame2, text="Picture")
+                    self.delivery_img_frame.place(x=50, y=10, height=250, width=200)
+                    if str(self.review_Code.get()) +'.png' in self.list_img_book:
+                        self.img_review_input = 'BookPics\\{}.png'.format(self.review_Code.get())
+                        self.img_review_label = Label(self.delivery_img_frame)
+                        self.img_review = ImageTk.PhotoImage(Image.open(self.img_review_input).resize((180, 220)))
+                        self.img_review_label.destroy()
+                        self.img_review_label = Label(self.delivery_img_frame, image=self.img_review)
+                        self.img_review_label.pack(anchor=CENTER)
+                    self.loadorder_deatil.loc[(self.loadorder_deatil['Order_ID'] == str(self.order_id_review)) & (self.loadorder_deatil['Bookcode'] == self.review_Code.get()), 'rating'] = self.Rating_Combobox.get()
+                    self.loadorder_deatil.loc[(self.loadorder_deatil['Order_ID'] == str(self.order_id_review)) & (self.loadorder_deatil['Bookcode'] == self.review_Code.get()), 'review'] = self.commentbox.get('1.0','end-1c')
+                    self.loadorder_deatil.to_csv("UnknownShop\\database\\order_detail.csv", index=False)
+                    self.Rating_Combobox.current(4)
+                    self.commentbox.delete('1.0',END)
+
+        else:
+            self.review_Code.set('')
+            self.review_Name.set('')
+            self.review_Author.set('')
+            self.review_Category.set('')
+            self.review_Price.set('')
+            self.img_review_label.destroy()
+            self.review_bottom.config(state=DISABLED)
+            self.Next_bottonn.config(state = DISABLED)
+            self.Rating_Combobox.config(state=DISABLED)
+
+
 
     def backk(self):
         self.commentbox.config(state=DISABLED)
@@ -1491,8 +1585,6 @@ class Shop_main_screen:
         
 
     def checkDeliverySuccess(self):
-        print("Checking...")
-        print("Success...")
         self.review_bottomOn()
 
     def show_infomationPage(self): # ุปุ่ม 1

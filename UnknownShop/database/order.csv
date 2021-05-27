@@ -7,3 +7,10 @@ Order_time,Order_ID,Customer,Address,Quantity,Total_amount,Status,Shipped_time,C
 2021-05-23 18:14:20,6,Ummmmmmmm,123 LA srgfs,5,250,Cancelled order,2021-05-21 21:52:43,2021-05-21 19:12:07
 2021-05-26 22:24:54,7,Ummmmm,sdfvsfsdfsdfsdfsdcvvxczvxzcvzxcvxczvsdvsdzvsdvxcvxzcvzxvzsdvszdvzsvzsdvzxdcvxczzxcvxzcvxzcvxzcvv,27,10501.93,Payment confirmed - Promptpay,-,-
 2021-05-26 22:27:05,8,Ummmmm,erafgresfwaerf,2,870.0,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:45:05,9,Ummmmm,123,2,2113.25,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:48:09,10,Ummmmm,test,1,274.35,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:49:25,11,Ummmmm,a,1,367.35,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:51:06,12,Ummmmm,aa,1,553.35,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:53:58,13,Ummmmm,a,1,309.0,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 09:55:52,14,Ummmmm,00,1,1390.35,Payment confirmed - Cash On Delivery,-,-
+2021-05-27 10:41:27,15,Ummmmm,aa,4,3591.95,Payment confirmed - Cash On Delivery,-,-
