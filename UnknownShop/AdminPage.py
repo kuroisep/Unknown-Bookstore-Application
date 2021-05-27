@@ -12,7 +12,9 @@ import cv2
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
-
+import tkinter
+import Pmw, sys
+from oauth2client import file
 import os
 import sys
 currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -1363,33 +1365,79 @@ class main_admin_screen:
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.add_member_screen)
+
      ##################################    Chat Page     #######################################################
     def chatPage(self):
         self.destoryframe()
+
         #------------------------------    init     ------------------------------#
         self.chatframe = LabelFrame(self.admin_window, text="Chat")
-        self.chat_list_frame = LabelFrame(self.chatframe, text="Customer")
         self.chat_detail_frame = LabelFrame(self.chatframe, text="Chat window")
-        #------------------------------    Table Plane     ------------------------------#
-        columns = ("Customer")
-        self.chatlist_treeview = Treeview(
-            self.chat_list_frame, column=columns, show="headings", height="18")
-        yscrollbar = ttk.Scrollbar(self.chat_list_frame,
-                                   orient="vertical", command=self.chatlist_treeview.yview)
-        self.chatlist_treeview.config(yscrollcommand=yscrollbar.set)
-        yscrollbar.pack(side="right", fill="y")
-        self.chatlist_treeview.heading(0, text="Customer")
-        self.chatlist_treeview.column(0, anchor='w', width=100)
+        self.button_chat_detail_frame = LabelFrame(self.chatframe, text="Button")
+        
+        def USER_write_File (text_File):
+            UpdateReadfile()
+            file = open("users.txt", "a")
+            user_Input = text_File.get()
+            file.write("User XXX : "+user_Input+ '\n')
+            the_input.delete(0, END)
+            file.close()
 
-        for i in self.order_data:
-            self.chatlist_treeview.insert(
-                '', 'end', values=[i][0])
+        def ADMIN_write_File (text_File):
+            UpdateReadfile()
+            file = open("users.txt", "a")
+            user_Input = text_File.get()
+            file.write("ADMIN XXX : "+user_Input+ '\n')  
+            the_input1.delete(0, END)
+            file.close()
+            
 
-        self.chatlist_treeview.pack()
+        def UpdateReadfile():
+            text.delete('1.0', END)
 
-        self.chat_list_frame.place(x=20,y=10, height=400, width=150)
-        self.chat_detail_frame.place(x=200,y=10, height=400, width=800)
+            text.insert('end', open(filename,'r').read())
+            text.see("end")
+            text.after(100,UpdateReadfile)
+        filename = "users.txt" 
+
+        text = Pmw.ScrolledText( self.chat_detail_frame,
+            borderframe=5, 
+            vscrollmode='dynamic', 
+            hscrollmode='dynamic',
+            labelpos='n', 
+            label_text='file %s' % filename,
+            text_width=80, 
+            text_height=20,
+            text_wrap='none',
+            state ='disabled'
+            )
+
+        text.pack()
+        text.insert('end', open(filename,'r').read())
+
+
+
+
+        the_input = tkinter.Entry(self.button_chat_detail_frame)
+        the_input.place(x=50, y=30)
+
+        the_input1 = tkinter.Entry(self.button_chat_detail_frame)
+        the_input1.place(x=200, y=30)
+
+        label1 = tkinter.Label(self.button_chat_detail_frame, text="")
+        label1.place(x=0, y=50)
+
+        button1_Write = tkinter.Button(self.button_chat_detail_frame, text = " U Send to file:", width = 15 ,command = lambda: USER_write_File(the_input)).place(x=55, y=60)
+        button2_Write = tkinter.Button(self.button_chat_detail_frame, text = "A Send to file:", width = 15, command = lambda: ADMIN_write_File(the_input1)).place(x=205, y=60)
+
+        # Button(self.chat_detail_frame, text='Quit', command=self.chatframe.destroy).pack(pady=15)
+
+        self.button_chat_detail_frame.place(x=325,y=450, height=150, width=400)
+        self.chat_detail_frame.place(x=125,y=10, height=400, width=800)
         self.chatframe.place(x=220, y=25, height=690, width=1040)
+
+
+
 
     def destoryframe(self):
         self.orderframe.destroy()
