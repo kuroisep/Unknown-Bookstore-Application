@@ -1409,7 +1409,6 @@ class main_admin_screen:
             text_width=80, 
             text_height=20,
             text_wrap='none',
-            state ='disabled'
             )
 
         text.pack()
