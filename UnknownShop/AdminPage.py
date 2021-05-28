@@ -503,7 +503,7 @@ class main_admin_screen:
         #------------------------------    Graph Plane     ------------------------------#
         self.orderhistory_graphframe = LabelFrame(
             self.orderhistoryframe, text="Graph")
-        figure2 = plt.Figure(figsize=(5, 4), dpi=100)
+        figure2 = plt.Figure(figsize=(10, 4), dpi=100)
         ax2 = figure2.add_subplot(111)
         line2 = FigureCanvasTkAgg(figure2, self.orderhistory_graphframe)
         line2.get_tk_widget().pack(side=tk.LEFT, fill=tk.BOTH)
