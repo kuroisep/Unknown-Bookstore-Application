@@ -758,23 +758,42 @@ class Shop_main_screen:
         background_label = Label(self.inner_infomation, image=self.filenameBG)
         background_label.place(x=641, y=207, anchor=CENTER)
 
+        
+
         infomationPageFrame1 = tk.LabelFrame(self.inner_infomation,borderwidth=0, highlightthickness=0,bg="#99aaff")
         infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
+        
+        filename4 = "UnknownShop\Picture\ShopPage\pic.png"
+        self.filenameBGG = ImageTk.PhotoImage(Image.open(filename4))
+        background_label = Label(infomationPageFrame1, image=self.filenameBGG)
+        background_label.place(x=0, y=0)
 
-        self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE",borderwidth=0, highlightthickness=0)
         self.infomationPageFrame2.place(x=630, y=50, height=350, width=300)
+        Label(self.infomationPageFrame2, image=self.filenameBGG).place(x=-100, y=217, anchor=CENTER)
 
-        infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info",borderwidth=0, highlightthickness=0)
         infomationPageFrame3.place(x=170, y=50, height=400, width=430)
+        Label(infomationPageFrame3, image=self.filenameBGG).place(x=300, y=207, anchor=CENTER)
 
-        infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
-        infomationPageFrame4.place(x=170, y= 450, height=100, width=700)
+        infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",borderwidth=0, highlightthickness=0)
+        # infomationPageFrame4.place(x=170, y= 450, height=100, width=700)
+
+        # self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        # self.infomationPageFrame2.place(x=630, y=50, height=350, width=300)
+
+        # infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        # infomationPageFrame3.place(x=170, y=50, height=400, width=430)
+
+        # infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
+        # infomationPageFrame4.place(x=170, y= 450, height=100, width=700)
+
 
         infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1, bg="#12aadb",borderwidth=0, highlightthickness=0,)
-        infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
+        # infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
 
         infomationPage_custom_Frame2 = tk.LabelFrame(infomationPageFrame1, bg="#12fcdb",borderwidth=0, highlightthickness=0,)
-        infomationPage_custom_Frame2.place(x=1000, y=0, height=550, width=280)
+        # infomationPage_custom_Frame2.place(x=1000, y=0, height=550, width=280)
 
 
         if self.user != []:
