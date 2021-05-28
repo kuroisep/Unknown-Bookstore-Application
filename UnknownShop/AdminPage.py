@@ -1168,6 +1168,8 @@ class main_admin_screen:
         self.member_delete_button.grid(row=0, column=2, padx=10, pady=5)
         self.member_add_button = Button(self.member_option_frame, text='Register',command=self.add_member)
         self.member_add_button.grid(row=1, column=1, padx=10, pady=5)
+        self.member_sort_button = Button(self.member_option_frame, text='Sort Member Point',command=self.sort_member)
+        self.member_sort_button.grid(row=1, column=2, padx=10, pady=5)
 
         self.member_option_frame.place(x=750, y=430, height=200, width=250)
 
@@ -1383,6 +1385,72 @@ class main_admin_screen:
                 messagebox.showinfo("Alert", "Register Sucessfully!!")
         else:
             messagebox.showerror("Error", "Please fill out all fields required", parent=self.add_member_screen)
+    def sort_member(self):
+        #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Sort :Quicksort ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        def QuickSort(arr):
+            elements = len(arr)
+            #Base case
+            if elements < 2:
+                return arr
+            current_position = 0 #Position of the partitioning element
+            for i in range(1, elements): #Partitioning loop
+                if arr[i] > arr[0]:
+                    current_position += 1
+                    temp = arr[i]
+                    arr[i] = arr[current_position]
+                    arr[current_position] = temp
+            temp = arr[0]
+            arr[0] = arr[current_position] 
+            arr[current_position] = temp #Brings pivot to it's appropriate position
+            left = QuickSort(arr[0:current_position]) #Sorts the elements to the left of pivot
+            right = QuickSort(arr[current_position+1:elements]) #sorts the elements to the right of pivot
+            arr = left + [arr[current_position]] + right #Merging everything together
+            return arr
+        member = pandas.read_csv('login.csv')
+        member_data = member.values.tolist()
+        to_sort = []
+        for i in member_data:
+            if str(i[10]) != 'nan':
+                to_sort.append([i[10],i[1],i[3],i[4]])
+        recommend_sorted = QuickSort(to_sort)
+        #------------------------------    init     ------------------------------------------------------------#
+        self.member_sort_screen = Toplevel(self.memberframe)
+        self.member_sort_screen.title("Sort member point")
+        self.member_sort_screen.focus_set()
+        self.member_sort_screen.grab_set()
+        self.member_sort_screen.resizable(0, 0)
+        x = (960) - (700/2)
+        y = (540) - (550/2)
+        self.member_sort_screen.geometry("700x500+%d+%d" % (x, y))
+        #------------------------------   Table Plane     ------------------------------------------------------------#
+        self.member_sort_frame = LabelFrame(self.member_sort_screen)
+        columns = ('No.',"Username",'Firstname','Lastname','Memberpoint')
+        self.rmember_sort_treeview = Treeview(
+            self.member_sort_frame, column=columns, show="headings", height="20")
+        yscrollbar = ttk.Scrollbar(
+            self.member_sort_frame, orient="vertical", command=self.rmember_sort_treeview.yview)
+        self.rmember_sort_treeview.config(yscrollcommand=yscrollbar.set)
+        yscrollbar.pack(side="right", fill="y")
+        for col in columns:
+            self.rmember_sort_treeview.heading(col, text=col, command=lambda _col=col: self.treeview_sort_column(
+                self.rmember_sort_treeview, _col, False))
+
+        self.rmember_sort_treeview.column(0, anchor='center', width=50)
+        self.rmember_sort_treeview.column(1, anchor='center', width=100)
+        self.rmember_sort_treeview.column(2, anchor='center', width=150)
+        self.rmember_sort_treeview.column(3, anchor='center', width=150)
+        self.rmember_sort_treeview.column(4, anchor='center', width=50)
+
+        index = 1
+        for i in recommend_sorted:
+            print(i)
+            self.rmember_sort_treeview.insert('', 'end', values=[index,i[1],i[2],i[3],i[0]])
+            index += 1
+
+        self.rmember_sort_treeview.pack()
+        self.member_sort_frame.place(x=10, y=10, height=470, width=670)
+ 
+        #^^^^^^^^^^^^^^^^^^^^^^^^^^ Data Structure [ Sort : Quicksort ] ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
      ##################################    Chat Page     #######################################################
     def chatPage(self):
