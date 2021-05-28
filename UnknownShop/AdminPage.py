@@ -1412,10 +1412,10 @@ class main_admin_screen:
         for i in member_data:
             if str(i[10]) != 'nan':
                 to_sort.append([i[10],i[1],i[3],i[4]])
-        recommend_sorted = QuickSort(to_sort)
+        member_sorted = QuickSort(to_sort)
         #------------------------------    init     ------------------------------------------------------------#
         self.member_sort_screen = Toplevel(self.memberframe)
-        self.member_sort_screen.title("Sort member point")
+        self.member_sort_screen.title("Sorted member point")
         self.member_sort_screen.focus_set()
         self.member_sort_screen.grab_set()
         self.member_sort_screen.resizable(0, 0)
@@ -1439,10 +1439,10 @@ class main_admin_screen:
         self.rmember_sort_treeview.column(1, anchor='center', width=100)
         self.rmember_sort_treeview.column(2, anchor='center', width=150)
         self.rmember_sort_treeview.column(3, anchor='center', width=150)
-        self.rmember_sort_treeview.column(4, anchor='center', width=50)
+        self.rmember_sort_treeview.column(4, anchor='center', width=100)
 
         index = 1
-        for i in recommend_sorted:
+        for i in member_sorted:
             print(i)
             self.rmember_sort_treeview.insert('', 'end', values=[index,i[1],i[2],i[3],i[0]])
             index += 1
