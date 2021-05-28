@@ -1990,8 +1990,6 @@ class Shop_main_screen:
     def review_bottomOn(self):
         self.commentbox.config(state=NORMAL)
         self.review_bottom.config(state=NORMAL)
-        
-        self.Comment_boutton1.config(state=NORMAL)
         self.Comment_boutton2.config(state=NORMAL)
         self.Rating_Combobox.config(state=NORMAL)
         #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Stack ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -2037,7 +2035,6 @@ class Shop_main_screen:
             self.img_review_label.pack(anchor=CENTER)
 
             self.Satatus_message = []
-            # self.deliveryPageFrame1.destroy()
             self.show_deliveryPage()
 
 
@@ -2045,7 +2042,6 @@ class Shop_main_screen:
     def backk(self):
         self.commentbox.config(state=DISABLED)
         self.review_bottom.config(state=DISABLED)
-        self.Comment_boutton1.config(state=DISABLED)
         self.Comment_boutton2.config(state=DISABLED)
         self.Rating_Combobox.config(state=DISABLED)
 
