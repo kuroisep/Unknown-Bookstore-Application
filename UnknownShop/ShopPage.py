@@ -1100,25 +1100,25 @@ class Shop_main_screen:
 
     def ei(self):
         # print(f"What da fak r u doin!{self.ls.head.data}!")
-        if self.ls.head.data == 'orange':
+        if self.ls.head.data == "Arts / Design / Decoration":
             self.drop1.current(1)
             self.search()
-        elif self.ls.head.data == 'blue':
+        elif self.ls.head.data == "Literature":
             self.drop1.current(2)
             self.search()
-        elif self.ls.head.data == 'green':
+        elif self.ls.head.data == "Administration / Management":
             self.drop1.current(3)
             self.search()
-        elif self.ls.head.data == 'black':
+        elif self.ls.head.data == "Humanities / Science":
             self.drop1.current(4)
             self.search()
-        elif self.ls.head.data == 'gray':
+        elif self.ls.head.data == "Children's Books":
             self.drop1.current(5)
             self.search()
-        elif self.ls.head.data == 'red':
+        elif self.ls.head.data == "Career Academic Textbooks":
             self.drop1.current(6)
             self.search()
-        elif self.ls.head.data == 'purple':
+        elif self.ls.head.data == "Psychology":
             self.drop1.current(7)
             self.search()
 
