@@ -60,14 +60,18 @@ class CircularLinkedList:
 class Shop_main_screen:
     def __init__(self):
         self.shop_window = tk.Tk()
+        # self.icon_path = "UnknownShop\\Picture\\ShopPage\\ICON\\book.png"
+        # self.shop_window.tk.call('wm', 'iconphoto', self.shop_window._w, PhotoImage(file= self.icon_path))
         self.shop_window.protocol("WM_DELETE_WINDOW", self.deleteX_show_window)
         self.shop_window.title("Unknown Book Store")
+        
         x = (700) - (750/2)
         y = (420) - (500/2)
         self.shop_window.geometry("1280x720+%d+%d" % (x, y))
         # Create Canvas
         self.canvas = Canvas(self.shop_window, width=1280, height=720, bd=0, highlightthickness=0)
         self.myfont = 'TRACK'
+        
         # self.pathcursor = ImageTk.PhotoImage(Image.open(pathcursor).resize((50, 50)))
         self.shop_window.configure(cursor='watch')
 
@@ -299,7 +303,7 @@ class Shop_main_screen:
         self.drop1.current((0))
         self.drop2.current((0))
         self.nameEntered.delete(0, 'end')
-        # MB1 = messagebox.showinfo(message='Clear Done!')
+        MB1 = messagebox.showinfo(title = "Clear Search",message='Clear Done!')
         self.book_treeview.delete(*self.book_treeview.get_children())
         for i in self.book_data:
                 self.book_treeview.insert('', 'end', values = [i][0])
@@ -315,9 +319,135 @@ class Shop_main_screen:
         self.label1.config(fg="#120896")
         self.closebutton.config(fg="red")
 
+        
+
     def menuTabLeave(self, event):
         self.label1.config(fg="white")
         self.closebutton.config(fg="white")
+
+        
+    # Button 1
+    def menuTextEnter1(self, event):
+        self.one_button.config(fg="black")
+
+    def menuTextLeave1(self, event):
+        self.one_button.config(fg="white")
+    
+    # Button 2
+    def menuTextEnter2(self, event):
+        self.two_button.config(fg="black")
+
+    def menuTextLeave2(self, event):
+        self.two_button.config(fg="white")
+
+    # Button 3
+    def menuTextEnter3(self, event):
+        self.three_button.config(fg="black")
+
+    def menuTextLeave3(self, event):
+        self.three_button.config(fg="white")
+
+    # Button 4
+    def menuTextEnter4(self, event):
+        self.four_button.config(fg="black")
+
+    def menuTextLeave4(self, event):
+        self.four_button.config(fg="white")
+
+    # Button 5
+    def menuTextEnter5(self, event):
+        self.five_button.config(fg="black")
+
+    def menuTextLeave5(self, event):
+        self.five_button.config(fg="white")
+
+    # Button 6
+    def menuTextEnter6(self, event):
+        self.six_button.config(fg="black")
+
+    def menuTextLeave6(self, event):
+        self.six_button.config(fg="white")
+
+    # Button 7
+    def menuTextEnter7(self, event):
+        self.seven_button.config(fg="black")
+
+    def menuTextLeave7(self, event):
+        self.seven_button.config(fg="white")
+    
+    #Button 1
+    def menuTextclick1(self, event):
+        self.one_button.config(background = "#fb7e00")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
+    #Button 2
+    def menuTextclick2(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#fb7e00")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
+    #Button 3
+    def menuTextclick3(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#fb7e00")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
+    #Button 4
+    def menuTextclick4(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#fb7e00")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
+    #Button 5
+    def menuTextclick5(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#fb7e00")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
+    #Button 6
+    def menuTextclick6(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#fb7e00")
+        self.seven_button.config(background = "#1200db")
+    #Button 7
+    def menuTextclick7(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#fb7e00")
+
+
+    def menuTextsetdefault(self, event):
+        self.one_button.config(background = "#1200db")
+        self.two_button.config(background = "#1200db")
+        self.three_button.config(background = "#1200db")
+        self.four_button.config(background = "#1200db")
+        self.five_button.config(background = "#1200db")
+        self.six_button.config(background = "#1200db")
+        self.seven_button.config(background = "#1200db")
 
 
     def menuTab(self):
@@ -342,22 +472,67 @@ class Shop_main_screen:
         Frame2 = tk.LabelFrame(self.shop_window, borderwidth=0, highlightthickness=0, bg="#1200db")
         Frame2.place(x=100, y=30, height=35, width=1280)
 
-        self.one_button = tk.Button(Frame2, text='HOME',background="#1200db",fg="white", width=30, borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_HomePage
-               ).grid(column=0, row=0, padx=10, pady=2)
-        self.two_button = tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command = self.show_infomationPage
-               ).grid(column=1, row=0, padx=5, pady=0)
-        self.three_button = tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command= self.show_selected_categoryPages
-               ).grid(column=2, row=0, padx=5, pady=0)
-        self.four_button = tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activebackground="#1200db",command=self.show_paymentPage
-               ).grid(column=3,row=0, padx=5, pady=0)
-        self.five_button = tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground="#120896",command=self.show_deliveryPage
-               ).grid(column=4,row=0, padx=5, pady=0)
-        self.six_button = tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground="#120896",command= self.show_ContactUSPage
-               ).grid(column=5,row=0, padx=5, pady=0)
-        self.seven_button = tk.Button(Frame2, text='Logout', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, font=('TRACK', 12),activeforeground= "#120896",command= self.delete_show_window,
-               ).grid(column=6,row=0, padx=5, pady=0)
+        self.one_button = tk.Button(Frame2, text='HOME',background = "#fb7e00",fg="white", width=30, borderwidth=0, highlightthickness=0, 
+                                    font=('TRACK', 12),activeforeground="#120896",command = self.show_HomePage)
+        self.one_button.grid(column=0, row=0, padx=10, pady=2)
+
+        self.two_button = tk.Button(Frame2, text='My Profile', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, 
+                                    font=('TRACK', 12),activeforeground="#120896",command = self.show_infomationPage)
+        self.two_button.grid(column=1, row=0, padx=5, pady=0)
+
+        self.three_button = tk.Button(Frame2, text='Shopping', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, 
+                                        font=('TRACK', 12),activeforeground="#120896",command= self.show_selected_categoryPages)
+               
+        self.three_button.grid(column=2, row=0, padx=5, pady=0)
+
+        self.four_button = tk.Button(Frame2, text='My Cart', width=10,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, 
+                                        font=('TRACK', 12),activeforeground="#120896",command=self.show_paymentPage)
+        self.four_button.grid(column=3,row=0, padx=5, pady=0)
+
+        self.five_button = tk.Button(Frame2, text='Delivery Status', width=15,bg="#1200db",fg="white", borderwidth=0, highlightthickness=0, 
+                                    font=('TRACK', 12),activeforeground="#120896",command=self.show_deliveryPage)
+        self.five_button.grid(column=4,row=0, padx=5, pady=0)
+
+        self.six_button = tk.Button(Frame2, text='Contact Us', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, 
+                                    font=('TRACK', 12),activeforeground="#120896",command= self.show_ContactUSPage) 
+        self.six_button.grid(column=5,row=0, padx=5, pady=0)
+
+        self.seven_button = tk.Button(Frame2, text='Logout', width=10,fg="white", bg="#1200db", borderwidth=0, highlightthickness=0, 
+                                        font=('TRACK', 12),activeforeground= "#120896",command= self.delete_show_window,) 
+        self.seven_button.grid(column=6,row=0, padx=5, pady=0)
 
         self.menuTab_logo()
+        
+        # EVENT FUN ----------------------------------------------------
+        self.one_button.bind("<Enter>", self.menuTextEnter1)
+        self.one_button.bind("<Leave>", self.menuTextLeave1)
+        self.one_button.bind("<Button-1>", self.menuTextclick1)
+
+
+        self.two_button.bind("<Enter>", self.menuTextEnter2)
+        self.two_button.bind("<Leave>", self.menuTextLeave2)
+        self.two_button.bind("<Button-1>", self.menuTextclick2)
+
+        self.three_button.bind("<Enter>", self.menuTextEnter3)
+        self.three_button.bind("<Leave>", self.menuTextLeave3)
+        self.three_button.bind("<Button-1>", self.menuTextclick3)
+
+        self.four_button.bind("<Enter>", self.menuTextEnter4)
+        self.four_button.bind("<Leave>", self.menuTextLeave4)
+        self.four_button.bind("<Button-1>", self.menuTextclick4)
+
+        self.five_button.bind("<Enter>", self.menuTextEnter5)
+        self.five_button.bind("<Leave>", self.menuTextLeave5)
+        self.five_button.bind("<Button-1>", self.menuTextclick5)
+
+        self.six_button.bind("<Enter>", self.menuTextEnter6)
+        self.six_button.bind("<Leave>", self.menuTextLeave6)
+        self.six_button.bind("<Button-1>", self.menuTextclick6)
+
+        self.seven_button.bind("<Enter>", self.menuTextEnter7)
+        self.seven_button.bind("<Leave>", self.menuTextLeave7)
+        self.seven_button.bind("<Button-1>", self.menuTextclick7)
+        
 
     def click_manuTab(self):
         self.one_button.config(bg="#8ac126") 
@@ -384,7 +559,7 @@ class Shop_main_screen:
         self.df.loc[self.df['USER'] == self.user[0][1], 'STATUS'] = 'F'
         self.df.to_csv("login.csv", index=False)
         self.shop_window.destroy()
-       
+    
     def HomePage(self):
         self.inner_HomePage = Canvas(self.canvas, width=1280, height=550)
 
@@ -415,29 +590,25 @@ class Shop_main_screen:
         self.p2 = ImageTk.PhotoImage(Image.open(path2).resize((85, 75)))
         self.p3 = ImageTk.PhotoImage(Image.open(path3).resize((85, 75)))
         self.p4 = ImageTk.PhotoImage(Image.open(path4).resize((85, 75)))
-        # self.img_logo = ImageTk.PhotoImage(Image.open(path1).resize((85, 75)))
-        # button.config(image=logo, compound=LEFT)
-        # small_logo = logo.subsample(5, 5)
-        # button.config(image=small_logo)
+        
+        self.buy_button = tk.Button(HomePageFrame2,text="Buy Books".upper(),image=self.p1,width=200, command= self.show_selected_categoryPages, compound=TOP,pady=5,activebackground="white",background="#FFB1AF")
+        self.buy_button.place(x=120,y=5)
 
-        # buy_button = tk.Button(HomePageFrame2,text="1", width=10)
-        # buy_button.grid(row=0,column=0,padx=20, pady=5)
-        # buy_button = tk.Button(HomePageFrame2,text="2", width=10)
-        # buy_button.grid(row=1,column=0,padx=20, pady=5)    
+        self.Status_button = tk.Button(HomePageFrame2,text="Status".upper(),image=self.p2,width=200, command= self.show_deliveryPage, compound=TOP, pady=5,activebackground="white",background="#FFCBA5")
+        self.Status_button.place(x=330,y=5)
 
-        buy_button = tk.Button(HomePageFrame2,text="Buy Books",image=self.p1,width=200, command= self.show_selected_categoryPages, compound=TOP,pady=5)
-        # buy_button.config(image=p1, compound=LEFT)
-        # buy_button.grid(row=2,column=2,padx=80, pady=10)
-        buy_button.place(x=120,y=5)
+        self.Review_button = tk.Button(HomePageFrame2,text="Recommed Book".upper(),image=self.p3,width=200, command= self.recommend_book_page, compound=TOP, pady=5,activebackground="white",background="#D6D4FF")
+        self.Review_button.place(x=540,y=5)
 
-        Status_button = tk.Button(HomePageFrame2,text="Status",image=self.p2,width=200, command= self.show_deliveryPage, compound=TOP, pady=5)
-        Status_button.place(x=330,y=5)
-
-        Review_button = tk.Button(HomePageFrame2,text="Recommed Book",image=self.p3,width=200, command= self.recommend_book_page, compound=TOP, pady=5)
-        Review_button.place(x=540,y=5)
-
-        ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us",image=self.p4,width=200,  command= self.show_ContactUSPage, compound=TOP, pady=5)
-        ContactUs_button.place(x=750,y=5)
+        self.ContactUs_button = tk.Button(HomePageFrame2,text="Contact Us".upper(),image=self.p4,width=200,  command= self.show_ContactUSPage, compound=TOP, pady=5, activebackground="white",background="#B3EEFF")
+        self.ContactUs_button.place(x=750,y=5)
+    
+        #B3EEFF
+        #D6D4FF
+        #FFEEA5
+        #FFCBA5
+        #FFB1AF
+        #C8F69B
 
     def recommend_book_page(self):
 
@@ -481,6 +652,12 @@ class Shop_main_screen:
         #------------------------------    init     ------------------------------------------------------------#
         self.recommend_screen = Toplevel(self.inner_HomePage)
         self.recommend_screen.title("Recommend Book")
+        # self.recommend_screen.iconphoto(False, 'UnknownShop\Picture\LoginPage\black-logo.png')
+
+        # icon_path = "UnknownShop\\Picture\\ShopPage\\ICON\\book.png"
+        # icon = PhotoImage(file=icon_path)
+        # self.recommend_screen.iconphoto(False, icon)
+
         self.recommend_screen.focus_set()
         self.recommend_screen.grab_set()
         self.recommend_screen.resizable(0, 0)
@@ -564,7 +741,8 @@ class Shop_main_screen:
     def infomationPage(self): # ข้อมูลหน้า info       #1
         
         self.inner_infomation = Canvas(self.canvas, width=1280, height=550)
-        
+
+   
         self.df = pandas.read_csv('login.csv')
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
         if self.user == []:
@@ -584,13 +762,13 @@ class Shop_main_screen:
         infomationPageFrame1.place(x=100, y=0, height=550, width=1080)
 
         self.infomationPageFrame2 = tk.LabelFrame(infomationPageFrame1 , text="PICTURE",bg="#99aaff",borderwidth=0, highlightthickness=0)
-        self.infomationPageFrame2.place(x=600, y=50, height=350, width=300)
+        self.infomationPageFrame2.place(x=630, y=50, height=350, width=300)
 
         infomationPageFrame3 = tk.LabelFrame(infomationPageFrame1 , text="Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
-        infomationPageFrame3.place(x=200, y=50, height=400, width=365)
+        infomationPageFrame3.place(x=170, y=50, height=400, width=430)
 
         infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
-        infomationPageFrame4.place(x=200, y= 420, height=100, width=700)
+        infomationPageFrame4.place(x=170, y= 420, height=100, width=700)
 
         infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1, bg="#12aadb",borderwidth=0, highlightthickness=0,)
         infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
@@ -635,13 +813,13 @@ class Shop_main_screen:
                                                                              '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],font = self.myfont) 
             self.birthday_date_entry.insert(0,self.user[0][6].split('/')[0])
             self.birthday_date_entry.config(state=DISABLED)
-            self.birthday_date_entry.place(x=182, y=160)
+            self.birthday_date_entry.place(x=202, y=170)
                     #MONTH
             self.birthday_month_entry = Combobox(infomationPageFrame3, width=4, value=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                                                                                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] ,font = self.myfont)
             self.birthday_month_entry.insert(0,self.user[0][6].split('/')[1])
             self.birthday_month_entry.config(state=DISABLED)
-            self.birthday_month_entry.place(x=236, y=160)
+            self.birthday_month_entry.place(x=265, y=170)
                     #YEAR
             year_list = []
             for i in range(1920,2022):
@@ -649,7 +827,7 @@ class Shop_main_screen:
             self.birthday_year_entry = Combobox(infomationPageFrame3, width=4, value=year_list,font = self.myfont)
             self.birthday_year_entry.insert(0,self.user[0][6].split('/')[2])
             self.birthday_year_entry.config(state=DISABLED)
-            self.birthday_year_entry.place(x=300, y=160)
+            self.birthday_year_entry.place(x=340, y=170)
             ##EMAIL
             email_text = Label(infomationPageFrame3, text="Email",font = self.myfont)
             email_text.grid(row=5, column=0, padx=10, pady=5,sticky="W")
@@ -727,7 +905,7 @@ class Shop_main_screen:
         birthday_info = str(self.birthday_date_entry.get()) + '/' +  str(self.birthday_month_entry.get()) + '/' + str(self.birthday_year_entry.get())
 
         email_regex = re.compile(r"[^@]+@[^@]+\.[^@]+")
-
+        
         if (name_info == ''):
             messagebox.showinfo(
                 "Info", "Please Enter First Name", parent=self.shop_window)
@@ -1421,6 +1599,11 @@ class Shop_main_screen:
         #------------------------------    init     ------------------------------------------------------------#
         self.payment_screen = Toplevel(self.inner_payment)
         self.payment_screen.title("Payment")
+
+        # icon_path = "UnknownShop\\Picture\\ShopPage\\ICON\\book.png"
+        # icon = PhotoImage(file=icon_path)
+        # self.payment_screen.iconphoto(False, icon)
+
         self.payment_screen.focus_set()
         self.payment_screen.grab_set()
         self.payment_screen.resizable(0, 0)
@@ -1660,25 +1843,25 @@ class Shop_main_screen:
                     self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Waiting for shipment':
-                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
-                    self.Satatus_message.append(i[0] + ' : Waiting for shipment')
+                    self.Satatus_message.append(i[0] + ' :   Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' :   Waiting for shipment')
                     self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Shipped':
-                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
-                    self.Satatus_message.append(i[0] + ' :  for shipment')
-                    self.Satatus_message.append(i[7] + ' : Shipped')
+                    self.Satatus_message.append(i[0] + ' :   Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' :   For Shipment')
+                    self.Satatus_message.append(i[7] + ' :   Shipped')
                     self.Next_bottonn.config(state =  NORMAL)
                     break
                 elif i[6] == 'Delivered':
-                    self.Satatus_message.append(i[0] + ' : Payment confirmed')
-                    self.Satatus_message.append(i[0] + ' : Waiting for shipment')
-                    self.Satatus_message.append(i[7] + ' : Shipped')
-                    self.Satatus_message.append(i[8] + ' : Delivered')
+                    self.Satatus_message.append(i[0] + ' :   Payment confirmed')
+                    self.Satatus_message.append(i[0] + ' :   Waiting for shipment')
+                    self.Satatus_message.append(i[7] + ' :   Shipped')
+                    self.Satatus_message.append(i[8] + ' :   Delivered')
                     self.Next_bottonn.config(state = NORMAL)
                     break
                 else:
-                    self.Satatus_message.append('Cancelled order')
+                    self.Satatus_message.append('Cancelled Order')
                     self.Next_bottonn.config(state = DISABLED)
                     break
         #vvvvvvvvvvvvvvvvvvvvvvv Data Structure [ Stack ] vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -1709,14 +1892,14 @@ class Shop_main_screen:
         y = 50
         if len(self.Satatus_message) != 0:
             for i in range(len(self.Satatus_message)):
-                if self.Satatus_message[i] == 'Cancelled order':
+                if self.Satatus_message[i] == 'Cancelled Order':
                     tk.Button(self.deliveryPageFrame1, text=self.Satatus_message[4], font="BahnschriftLight 15", 
                         bg="#F2FBF9", fg="#ed67b4", activebackground="#F2FBF9", activeforeground="#8e3d6c", 
-                        bd=0, width=40).place(x=125, y=240)
+                        bd=0, width=60).place(x=125, y=240)
                 else:
                     tk.Button(self.deliveryPageFrame1, text=self.Satatus_message[i], font="BahnschriftLight 15", 
                             bg="#F2FBF9", fg="#12CCAB", activebackground="#F2FBF9", activeforeground="#98FF98", 
-                            bd=0, width=40,anchor='w').place(x=0, y=y)
+                            bd=0, width=60,anchor='w').place(x=0, y=y)
                 y += 40
 
     def ContactUSPage(self): # ข้อมูลหน้า info       #1

@@ -27,3 +27,4 @@ Order_time,Order_ID,Customer,Address,Quantity,Total_amount,Status,Shipped_time,C
 2021-05-28 02:43:38,26,Pluem,sdfgsdfgdfgsfgsdfg,6,4451.9,Delivered,2021-05-28 02:44:09,2021-05-28 02:44:17
 2021-05-28 02:45:53,27,Ummmmm,aefsdf,1,179.6,Delivered,2021-05-28 02:46:19,2021-05-28 02:46:30
 2021-05-28 02:48:17,28,Pluem,dfghjkhgf,10,381.3,Delivered,2021-05-28 02:56:19,2021-05-28 02:56:30
+2021-05-28 08:50:47,29,Ummmmm,asdasdasd,3,2532.35,Payment confirmed - Cash On Delivery,-,-
