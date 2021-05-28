@@ -768,7 +768,7 @@ class Shop_main_screen:
         infomationPageFrame3.place(x=170, y=50, height=400, width=430)
 
         infomationPageFrame4 = tk.LabelFrame(infomationPageFrame1 , text="Text Info",bg="#99aaff",borderwidth=0, highlightthickness=0)
-        infomationPageFrame4.place(x=170, y= 420, height=100, width=700)
+        infomationPageFrame4.place(x=170, y= 450, height=100, width=700)
 
         infomationPage_custom_Frame1 = tk.LabelFrame(infomationPageFrame1, bg="#12aadb",borderwidth=0, highlightthickness=0,)
         infomationPage_custom_Frame1.place(x=0, y=0, height=550, width=100)
@@ -855,10 +855,10 @@ class Shop_main_screen:
             Label(infomationPageFrame3, text="").grid(row=8, column=0, padx=10, pady=5)
             Label(infomationPageFrame3, text="").grid(row=8, column=1, padx=10, pady=5)
             self.edit_info_button = tk.Button(infomationPageFrame3,text='Edit', command=self.edit_infomation_state, width = 10)
-            self.edit_info_button.grid(row=8, column=0, padx=35, pady=5)
+            self.edit_info_button.grid(row=8, column=0, padx=35, pady=15)
             ##DONE BUTTON
             self.done_info_button = tk.Button(infomationPageFrame3,text='Done',state=DISABLED, command=self.edit_infomation_state, width = 10)
-            self.done_info_button.grid(row=8, column=1, padx=10, pady=5)
+            self.done_info_button.grid(row=8, column=1, padx=10, pady=15)
 
             ##PICTURE
             image_path = "UnknownShop/Picture/ShopPage/USER_PIC/{}.png".format(self.user[0][9])
@@ -866,7 +866,7 @@ class Shop_main_screen:
             self.user_imginput = ''
 
             self.imageselect_info_button = tk.Button(self.infomationPageFrame2,text='select',state=DISABLED, command=self.openimage, width = 10 )
-            self.imageselect_info_button.pack(side="bottom")
+            self.imageselect_info_button.pack(side="bottom",padx=10, pady=20)
             self.user_image = Label(self.infomationPageFrame2, image=self.user_img)
             self.user_image.pack()
             
@@ -1100,25 +1100,25 @@ class Shop_main_screen:
 
     def ei(self):
         # print(f"What da fak r u doin!{self.ls.head.data}!")
-        if self.ls.head.data == 'orange':
+        if self.ls.head.data == "Arts / Design / Decoration":
             self.drop1.current(1)
             self.search()
-        elif self.ls.head.data == 'blue':
+        elif self.ls.head.data == "Literature":
             self.drop1.current(2)
             self.search()
-        elif self.ls.head.data == 'green':
+        elif self.ls.head.data == "Administration / Management":
             self.drop1.current(3)
             self.search()
-        elif self.ls.head.data == 'black':
+        elif self.ls.head.data == "Humanities / Science":
             self.drop1.current(4)
             self.search()
-        elif self.ls.head.data == 'gray':
+        elif self.ls.head.data == "Children's Books":
             self.drop1.current(5)
             self.search()
-        elif self.ls.head.data == 'red':
+        elif self.ls.head.data == "Career Academic Textbooks":
             self.drop1.current(6)
             self.search()
-        elif self.ls.head.data == 'purple':
+        elif self.ls.head.data == "Psychology":
             self.drop1.current(7)
             self.search()
 
