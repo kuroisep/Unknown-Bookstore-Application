@@ -220,11 +220,11 @@ class Shop_main_screen:
         # nameEntered.place(x=535, y=100)
         self.nameEntered.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
-        search_button = tk.Button(Frame1, text = "Search", command = self.search ,height=10, width=10)
+        search_button = tk.Button(Frame1, text = "Search".upper(), command = self.search ,height=10, width=10, background = "#f0f04f",activebackground = "#90902f",activeforeground="white")
         # search_button.place(x=855, y=100)
         search_button.pack(side=LEFT, padx=5, pady=10, anchor=CENTER)
 
-        show_all_books_button = tk.Button(Frame1, text = "Clear",command = self.Cclear_SearchBox, height=10, width=10)
+        show_all_books_button = tk.Button(Frame1, text = "Clear".upper(),command = self.Cclear_SearchBox, height=10, width=10, background = "#90902f",activebackground = "#f0f04f",activeforeground="white")
         # show_all_books_button.place(x=943, y=100)
         show_all_books_button.pack(side= LEFT, padx=5, pady=10, anchor=CENTER)
 
@@ -1176,11 +1176,11 @@ class Shop_main_screen:
         Label(self.detail_data, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         self.example_frame = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
-        self.example_frame.place(x=20, y=350,height=100, width=600)
+        self.example_frame.place(x=20, y=350,height=150, width=600)
         Label(self.example_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         self.option_frame = tk.LabelFrame(self.detail_frame,borderwidth=0, highlightthickness=0)
-        self.option_frame.place(x=120, y=450,height=50, width=360)
+        self.option_frame.place(x=20, y=490,height=50, width=600)
         Label(self.option_frame, image=self.bgg).place(x=641, y=207, anchor=CENTER)
     
 
@@ -1189,71 +1189,61 @@ class Shop_main_screen:
         frame1.place(x=680, y=0, height=540, width=590)
         Label(frame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
-       
-
-        #Name Of Book
-        # self.name_detail_book_entry.bind("<Key>", lambda e: "break")
-
-        # lbl1 = Label(self.detail_frame, text="No")
-        # lbl1.grid(row=0, column=0, padx=10, pady=5)
-        # self.lbl1_entry = Entry(self.detail_frame, textvariable=self.No)
-        # self.lbl1_entry.grid(row=0, column=1, padx=10, pady=5)
-
 
         #Author Of Book
         lbl2 = tk.Label(self.detail_data, text="Code",font = self.myfont, background="#908d8d")
-        lbl2.grid(row=0, column=1, padx=10, pady=5)
-        self.lbl2_entry = Entry(self.detail_data, textvariable=self.Code,font = self.myfont, width = 15)
+        lbl2.grid(row=0, column=1, padx=10, pady=5,sticky="W")
+        self.lbl2_entry = Entry(self.detail_data, textvariable=self.Code,font = self.myfont, width = 15,state= "readonly")
         self.lbl2_entry.grid(row=0, column=2, padx=10, pady=10)
 
 
         #Category Of Book
         lbl3 = tk.Label(self.detail_data, text="Name",font = self.myfont,background="#908d8d")
-        lbl3.grid(row=1, column=1, padx=10, pady=5)
-        self.lbl3_entry = Entry(self.detail_data, textvariable=self.Name,font = self.myfont, width = 15)
+        lbl3.grid(row=1, column=1, padx=10, pady=5,sticky="W")
+        self.lbl3_entry = Entry(self.detail_data, textvariable=self.Name,font = self.myfont, width = 15,state= "readonly")
         self.lbl3_entry.grid(row=1, column=2, padx=10, pady=5)
 
         #Language Of Book
         lbl4 = tk.Label(self.detail_data, text="Author",font = self.myfont, background="#908d8d")
-        lbl4.grid(row=3, column=1, padx=10, pady=5)
-        self.lbl4_entry = Entry(self.detail_data, textvariable=self.Author,font = self.myfont, width = 15)
+        lbl4.grid(row=3, column=1, padx=10, pady=5,sticky="W")
+        self.lbl4_entry = Entry(self.detail_data, textvariable=self.Author,font = self.myfont, width = 15,state= "readonly")
         self.lbl4_entry.grid(row=3, column=2, padx=10, pady=5)
 
         #Price Of Book
         lbl5 = tk.Label(self.detail_data, text="Category",font = self.myfont, background="#908d8d")
-        lbl5.grid(row=4, column=1, padx=10, pady=5)
-        self.lbl5_entry = Entry(self.detail_data, textvariable=self.Category,font = self.myfont, width = 15)
+        lbl5.grid(row=4, column=1, padx=10, pady=5,sticky="W")
+        self.lbl5_entry = Entry(self.detail_data, textvariable=self.Category,font = self.myfont, width = 15,state= "readonly")
         self.lbl5_entry.grid(row=4, column=2, padx=10, pady=5)
 
         #Code Of Book
         lbl6 = tk.Label(self.detail_data, text="Price",font = self.myfont, background="#908d8d")
-        lbl6.grid(row=5, column=1, padx=10, pady=5)
-        self.lbl6_entry = Entry(self.detail_data, textvariable=self.Price,font = self.myfont, width = 15)
+        lbl6.grid(row=5, column=1, padx=10, pady=5,sticky="W")
+        self.lbl6_entry = Entry(self.detail_data, textvariable=self.Price,font = self.myfont, width = 15,state= "readonly")
         self.lbl6_entry.grid(row=5, column=2, padx=10, pady=5)
 
         # Rating Of Book
         lbl7 = tk.Label(self.detail_data, text="Rating",font = self.myfont, background="#908d8d")
-        lbl7.grid(row=6, column=1, padx=10, pady=5)
-        self.lbl7_entry = Entry(self.detail_data, textvariable=self.Rating,font = self.myfont, width = 15)
+        lbl7.grid(row=6, column=1, padx=10, pady=5,sticky="W")
+        self.lbl7_entry = Entry(self.detail_data, textvariable=self.Rating,font = self.myfont, width = 15,state= "readonly")
         self.lbl7_entry.grid(row=6, column=2, padx=10, pady=5)
 
         # Example Of Book
         self.Examplebox = tk.Text(self.example_frame, font = self.myfont)
         self.Examplebox.insert(1.0, END)
-        self.Examplebox.place(x=10,y=0,width=550,height=70)
+        self.Examplebox.place(x=10,y=0,width=550,height=120)
        
 
         ## number of items book
         self.spinboxvar = IntVar(self.option_frame)
         self.spinboxvar.set(1)
         self.items_book_spinbox = Spinbox(self.option_frame, from_=1, to=10,textvariable=self.spinboxvar ,state = 'readonly',width=7, font=Font(family='Helvetica', size=12, weight='bold'))
-        Label(self.option_frame, text="").grid(row=7, column=0, padx=10, pady=5)
+        Label(self.option_frame, text="Item(s) : ", font = (10)).grid(row=7, column=0, padx=10, pady=5)
         self.items_book_spinbox.grid(row=7, column=1, padx=10, pady=5)
 
-        # add_favbook_button = tk.Button(self.option_frame,text=' ♥ ', command=self.add_bookcart, width=15,font = self.myfont)
-        # add_favbook_button.grid(row=7, column=0, padx=10, pady=5)
+        self.add_next_button = tk.Button(self.option_frame,text='< NEXT >', command= self.show_paymentPage,width=15,state=DISABLED, background="#ff8508")
+        self.add_next_button.grid(row=7, column=3, padx=10, pady=5)
 
-        self.add_bookcart_button = tk.Button(self.option_frame,text=' + ', command=self.add_bookcart,state=DISABLED,width=15)
+        self.add_bookcart_button = tk.Button(self.option_frame,text='< + ADD + >', command=self.add_bookcart,state=DISABLED,width=15,background="#00D46B")
         self.add_bookcart_button.grid(row=7, column=2, padx=10, pady=5)
         
    
@@ -1317,6 +1307,7 @@ class Shop_main_screen:
         self.Examplebox.insert('1.0', self.Example.get())
         if self.confirm_order == False:
             self.add_bookcart_button.config(state=NORMAL)
+            self.add_next_button.config(state=NORMAL)
         if str(self.Code.get()) +'.png' in self.list_img_book:
             self.book_img_input = 'BookPics\\{}.png'.format(self.Code.get())
             self.book_img = ImageTk.PhotoImage(Image.open(self.book_img_input).resize((200, 300)))
@@ -1327,6 +1318,7 @@ class Shop_main_screen:
             Label(self.picbook_frame, image=self.book_img).grid(row=0, column=0, padx=10, pady=5)
     
     def add_bookcart(self):
+        MB1 = messagebox.showinfo(message=f'Your order have been add Books CODE : {self.Code.get()} \n NAME :{self.Name.get()} by {self.items_book_spinbox.get()} item(s)',title='Confirm your Order')
         self.tempprice = 0
         if self.usercart != []:
             for i in self.usercart:
@@ -1434,7 +1426,7 @@ class Shop_main_screen:
         Label(self.paymentPageFrame2, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         paymentPageFrame3 = tk.LabelFrame(self.paymentPageFrame2)
-        paymentPageFrame3.place(x=0, y=400, height=80, width=800)
+        paymentPageFrame3.place(x=0, y=410, height=80, width=800)
         Label(paymentPageFrame3, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1505,10 +1497,10 @@ class Shop_main_screen:
         self.label5_1 = tk.Label(self.paymentPageFrame4, textvariable=self.total2, width = 10, font=("times new roman",15,"bold"))
         self.label5_1.place(x=200, y=250)
 
-        self.Payment_bottom = tk.Button(self.paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED)
+        self.Payment_bottom = tk.Button(self.paymentPageFrame4,text="< Payment >", command = self.dummy_payment , width = 15, state=DISABLED,background ="#00d401", font = (8))
         self.Payment_bottom.place(x=170, y=350,anchor="center")
 
-        self.Cancel_bottom = tk.Button(self.paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED)
+        self.Cancel_bottom = tk.Button(self.paymentPageFrame4,text="< Cancel Order >", command = self.dummy_cancle , width = 15, state=DISABLED, background ="#e04d4c", font = (8))
         self.Cancel_bottom.place(x=170, y=400,anchor="center")
 
         ############# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1546,22 +1538,23 @@ class Shop_main_screen:
             index += 1
 
 
-        self.Edit_bottom = tk.Button(paymentPageFrame3,text="< Edit >", command = self.pp, width = 15)    
-        # Back_bottom.pack(side = BOTTOM,anchor='')
+        self.Edit_bottom = tk.Button(paymentPageFrame3,text="< Back >", command = self.show_selected_categoryPages , width = 15,background="#FFB1AF",font = (8)) 
         self.Edit_bottom.place(x=100, y=30,anchor="center")
 
-        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart, width = 15)
-        # Del_bottom.pack(side = BOTTOM)    
+        self.Del_botton = tk.Button(paymentPageFrame3,text="< Del >", command = self.delete_bookcart, width = 15,background="#FFCBA5",font = (8)) 
         self.Del_botton.place(x=300, y=30,anchor="center")
 
-        self.Confirm_bottom = tk.Button(paymentPageFrame3,text="< Confirm Order >", command = self.confirmorder , width = 15)
+        self.Confirm_bottom = tk.Button(paymentPageFrame3,text="< Confirm Order >", command = self.confirmorder,width = 15,background="#D6D4FF",font = (8))
         self.Confirm_bottom.place(x=500, y=30,anchor="center")
-        # self.Next_botton.pack(side = BOTTOM) 
 
-        self.Next_botton = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment,state=DISABLED , width = 15)
+        self.Next_botton = tk.Button(paymentPageFrame3,text="< Next >", command = self.topayment,state=DISABLED ,width = 15,background="#B3EEFF", font = (8))
         self.Next_botton.place(x=700, y=30,anchor="center")
-        # Seemore_bottom.pack(side = BOTTOM) 
-
+        #B3EEFF
+        #D6D4FF
+        #FFEEA5
+        #FFCBA5
+        #FFB1AF
+        #C8F69B
         if self.usercart == [] or self.confirm_order == True:
             self.Edit_bottom.config(state=DISABLED)
             self.Del_botton.config(state=DISABLED)
@@ -1631,7 +1624,7 @@ class Shop_main_screen:
         #------------------------------    Option Detail Plane     ------------------------------------------------------------#
         self.payment_option_frame = LabelFrame(self.payment_screen, text='')
         self.cancel_payment_button = Button(
-            self.payment_option_frame, text='Cancel',command =self.close_payment)
+            self.payment_option_frame, text='Cancel',command =self.close_payment,)
         self.cancel_payment_button.grid(row=0, column=0, padx=12, pady=0)
         self.order_payment_button = Button(
             self.payment_option_frame, text='Place Order',command=self.place_order)
@@ -1732,7 +1725,7 @@ class Shop_main_screen:
         Label(self.deliveryPageFrame1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
            
         deliveryPageFrame1_1 = ttk.LabelFrame(self.deliveryPageFrame1, text="Button Status")
-        deliveryPageFrame1_1.place(x=8, y=360, height=100, width=480)
+        deliveryPageFrame1_1.place(x=0, y=360, height=100, width=480)
         Label(deliveryPageFrame1_1, image=self.bgg).place(x=641, y=207, anchor=CENTER)
         
         self.deliveryPageFrame2 = ttk.LabelFrame(self.inner_delivery, text="Review Book")
@@ -1749,67 +1742,62 @@ class Shop_main_screen:
         self.img_review_label.pack(anchor=CENTER)
 
         self.deliveryPageFrame2_2 = ttk.LabelFrame(self.deliveryPageFrame2, text="Databook")
-        self.deliveryPageFrame2_2.place(x=400, y=10, height=250, width=250)
+        self.deliveryPageFrame2_2.place(x=300, y=5, height=275, width=350)
         Label( self.deliveryPageFrame2_2, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
         self.deliveryPageFrame2_3 = ttk.LabelFrame(self.deliveryPageFrame2, text="Review Button")
-        self.deliveryPageFrame2_3.place(x=200, y=380, height=90, width=420)
+        self.deliveryPageFrame2_3.place(x=200, y=360, height=90, width=420)
         Label(self.deliveryPageFrame2_3, image=self.bgg).place(x=641, y=207, anchor=CENTER)
 
 
 
         #Author Of Book
-        lbl2 = Label(self.deliveryPageFrame2_2, text="Code")
-        lbl2.grid(row=0, column=1, padx=10, pady=5)
-        self.review_code_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Code,state= "readonly")
+        lbl2 = Label(self.deliveryPageFrame2_2, text="Code",font = self.myfont, background="#908d8d")
+        lbl2.grid(row=0, column=1, padx=10, pady=5,sticky="W")
+        self.review_code_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Code,font = self.myfont, width = 15,state= "readonly")
         self.review_code_entry.grid(row=0, column=2, padx=10, pady=10)
 
 
         #Category Of Book
-        lbl3 = Label(self.deliveryPageFrame2_2, text="Name")
-        lbl3.grid(row=1, column=1, padx=10, pady=5)
-        self.review_name_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Name,state= "readonly")
+        lbl3 = Label(self.deliveryPageFrame2_2, text="Name",font = self.myfont, background="#908d8d")
+        lbl3.grid(row=1, column=1, padx=10, pady=5,sticky="W")
+        self.review_name_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Name,font = self.myfont, width = 15,state= "readonly")
         self.review_name_entry.grid(row=1, column=2, padx=10, pady=5)
 
         #Language Of Book
-        lbl4 = Label(self.deliveryPageFrame2_2, text="Author")
-        lbl4.grid(row=3, column=1, padx=10, pady=5)
-        self.review_author_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Author,state= "readonly")
+        lbl4 = Label(self.deliveryPageFrame2_2, text="Author",font = self.myfont, background="#908d8d")
+        lbl4.grid(row=3, column=1, padx=10, pady=5,sticky="W")
+        self.review_author_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Author,font = self.myfont, width = 15,state= "readonly")
         self.review_author_entry.grid(row=3, column=2, padx=10, pady=5)
 
         #Price Of Book
-        lbl5 = Label(self.deliveryPageFrame2_2, text="Category")
-        lbl5.grid(row=4, column=1, padx=10, pady=5)
-        self.review_category_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Category,state= "readonly")
+        lbl5 = Label(self.deliveryPageFrame2_2, text="Category",font = self.myfont, background="#908d8d")
+        lbl5.grid(row=4, column=1, padx=10, pady=5,sticky="W")
+        self.review_category_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Category,font = self.myfont, width = 15,state= "readonly")
         self.review_category_entry.grid(row=4, column=2, padx=10, pady=5)
 
         #Code Of Book
-        lbl6 = Label(self.deliveryPageFrame2_2, text="Price")
-        lbl6.grid(row=5, column=1, padx=10, pady=5)
-        self.review_price_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Price,state= "readonly")
+        lbl6 = Label(self.deliveryPageFrame2_2, text="Price",font = self.myfont, background="#908d8d")
+        lbl6.grid(row=5, column=1, padx=10, pady=5,sticky="W")
+        self.review_price_entry = Entry(self.deliveryPageFrame2_2, textvariable=self.review_Price,font = self.myfont, width = 15,state= "readonly")
         self.review_price_entry.grid(row=5, column=2, padx=10, pady=5)
 
         # Rating Of Book
-        lbl7 = Label(self.deliveryPageFrame2_2, text="Rating")
-        lbl7.grid(row=6, column=1, padx=10, pady=5)
+        lbl7 = Label(self.deliveryPageFrame2_2, text="Rating",font = self.myfont, background="#908d8d")
+        lbl7.grid(row=6, column=1, padx=10, pady=5,sticky="W")
         listofRating = ["1","2","3","4","5"]
-        self.Rating_Combobox = ttk.Combobox(self.deliveryPageFrame2_2,values=listofRating,width=18,state=DISABLED)
+        self.Rating_Combobox = ttk.Combobox(self.deliveryPageFrame2_2,values=listofRating,width=14,state=DISABLED,font = self.myfont)
         self.Rating_Combobox.current(4)
         self.Rating_Combobox.grid(row=6, column=2, padx=10, pady=5)
 
 
 
-
-        self.review_bottom = ttk.Button(self.deliveryPageFrame2_3,text="< Review >", command = self.review_bottomOn, state=DISABLED)    
-        # self.review_bottom.place(x=500, y=400,anchor="center")
-        self.review_bottom.pack(side = BOTTOM, padx=10, pady=5) 
-
-        Back_bottom = ttk.Button(deliveryPageFrame1_1,text="< Back >", command = self.backk, width=10)    
-        Back_bottom.place(x=180, y=40,anchor="center")
+        self.Backtopay_bottom = tk.Button(deliveryPageFrame1_1,text="< Back >", command = self.show_paymentPage, width=10, background ="#FFCBA5", font = (8))
+        self.Backtopay_bottom.place(x=140, y=40,anchor="center")
         # Back_bottom.pack(side = LEFT) 
 
-        self.Next_bottonn = ttk.Button(deliveryPageFrame1_1,text="< Next >", command = self.checkDeliverySuccess, width=10)    
-        self.Next_bottonn.place(x=300, y=40,anchor="center")
+        self.Next_bottonn = tk.Button(deliveryPageFrame1_1,text="< Next >", command = self.checkDeliverySuccess, width=10, background ="#B3EEFF", font = (8))  
+        self.Next_bottonn.place(x=330, y=40,anchor="center")
         # self.Next_botton.pack(side = RIGHT)
 
 
@@ -1819,13 +1807,10 @@ class Shop_main_screen:
         self.commentbox = tk.Text(self.deliveryPageFrame2,width=60,height=5, font=('TRACK', 8),state=DISABLED)
         self.commentbox.place(x=200,y=300)
        
+        self.review_bottom = tk.Button(self.deliveryPageFrame2_3,text="< Review >", command = self.review_bottomOn, state=DISABLED,width=10, background ="#f272f3", font = (8))    
+        self.review_bottom.pack(side = LEFT, padx=10, pady=5) 
 
-        self.Comment_boutton1 = ttk.Button(self.deliveryPageFrame2_3,text="< Send >",command = self.printcomment, state=DISABLED)
-        # self.Comment_boutton1.place(x=100,y=25)
-        self.Comment_boutton1.pack(side = LEFT, padx=10, pady=5) 
-        
-        self.Comment_boutton2 = ttk.Button(self.deliveryPageFrame2_3,text="< Clear >",command = self.clearcomment, state=DISABLED)
-        # self.Comment_boutton2.place(x=220,y=25)
+        self.Comment_boutton2 = tk.Button(self.deliveryPageFrame2_3,text="< Clear >",command = self.clearcomment, state=DISABLED,width=10, background ="#b97ef4", font = (8)) 
         self.Comment_boutton2.pack(side = RIGHT, padx=10, pady=5)
 
         loadorder = pandas.read_csv('UnknownShop\\database\\order.csv')
@@ -1998,6 +1983,7 @@ class Shop_main_screen:
     def review_bottomOn(self):
         self.commentbox.config(state=NORMAL)
         self.review_bottom.config(state=NORMAL)
+        
         self.Comment_boutton1.config(state=NORMAL)
         self.Comment_boutton2.config(state=NORMAL)
         self.Rating_Combobox.config(state=NORMAL)
@@ -2094,7 +2080,6 @@ class Shop_main_screen:
     def show_paymentPage(self):
         self.delete_canvas()
         self.paymentPage()
-        # self.shift()
         self.canvas.create_window(0,150, anchor=NW, window=self.inner_payment)
 
 
