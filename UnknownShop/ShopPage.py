@@ -134,7 +134,7 @@ class Shop_main_screen:
         self.usercart = []
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
-            print("NO USER LOGIN FOUND")
+            # print("<< NO USER LOGIN FOUND >>")
             self.user = [['T', '\" Login Required \"', '', 
             'You are not logged in', 'You are not logged in', 
             '-','-/-/-', 'You are not logged in', 
@@ -747,7 +747,7 @@ class Shop_main_screen:
         self.user = self.df.loc[self.df['STATUS']=='T'].values.tolist()
         if self.user == []:
             # messagebox.showerror("Error", "NO USER LOGIN FOUND")
-            print("NO USER LOGIN FOUND")
+            print("<< NO USER LOGIN FOUND >>")
             self.user = [['T', '\" Login Required \"', '', 
             'You are not logged in', 'You are not logged in', 
             '-','-/-/-', 'You are not logged in', 

@@ -87,18 +87,18 @@ class main_account_screen:
 
         canvas.create_text(915, 250, text="Username", font=(self.myfont))
         username_login_entry = ttk.Entry(
-            textvariable=username_verify, width=30, font=20)
+            textvariable=username_verify, width=20, font=20)
 
         canvas.create_window(1010, 290, window=username_login_entry)
 
         canvas.create_text(915, 340, text="Password", font=self.myfont)
         password_login_entry = ttk.Entry(
-            textvariable=password_verify, show='●', width=30, font=20)
+            textvariable=password_verify, show='●', width=20, font=20)
         canvas.create_window(1010, 380, window=password_login_entry)
 
         login_button = Button(text="LOGIN", command=self.login_verify,
                             bd=3, highlightthickness=0, width=20, height=2,background = "green3",highlightbackground = "black",activebackground="green2",activeforeground="white")
-        login_button.place(x=850, y = 440)
+        login_button.place(x=840, y = 440)
 
         regis_button = Button(text="REGISTER", command=self.register ,
                             bd=3, highlightthickness=0, width=20, height=2,background = "orange2",highlightbackground = "black",activebackground="orange1",activeforeground="white")
@@ -108,7 +108,7 @@ class main_account_screen:
 
         exit_button = Button(text="EXIT", command=self.confirm_closing,
                             bd=3, highlightthickness=0, width=20, height=2, background = "red2",highlightbackground = "black",activebackground="red",activeforeground="white")
-        exit_button.place(x=950, y=500)
+        exit_button.place(x=940, y=500)
 
 
         self.main_screen.resizable(1, 1)
@@ -277,7 +277,7 @@ class main_account_screen:
         self.telphone = StringVar()
 
 
-        titletext1 = ["User", "Password", "Name","Gender","BirthDay","Phone Number (+66)"]
+        titletext1 = ["User", "Password", "Name","Gender","BirthDay","Phone Number"]
         titletext2 = ["Confirm Password","Last Name","","","Email Address",""]
         y1 = 10
         y2 = 70
