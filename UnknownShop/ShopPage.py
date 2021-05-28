@@ -1011,13 +1011,13 @@ class Shop_main_screen:
 
         self.ll = CircularLinkedList()
         self.ls = CircularLinkedList()
-        self.ls.add('orange')
-        self.ls.add('blue')
-        self.ls.add('green')
-        self.ls.add('black')
-        self.ls.add('gray')
-        self.ls.add('red')
-        self.ls.add('purple')
+        self.ls.add("Arts / Design / Decoration")
+        self.ls.add("Literature")
+        self.ls.add("Administration / Management")
+        self.ls.add("Humanities / Science")
+        self.ls.add("Children's Books")
+        self.ls.add("Career Academic Textbooks")
+        self.ls.add("Psychology")
         self.ll.add('UnknownShop/Picture/ShopPage/orange.jpg')
         self.ll.add('UnknownShop/Picture/ShopPage/blue.png')
         self.ll.add('UnknownShop/Picture/ShopPage/green.jpg')
@@ -1051,7 +1051,7 @@ class Shop_main_screen:
         self.lbl_value2.place(relx=0.5, rely=0.5, anchor="center")
 
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.819, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.859, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
@@ -1082,7 +1082,7 @@ class Shop_main_screen:
         self.lbl_status.destroy()
     
         self.lbl_status = Label(self.inner_selected_categoryPages, text=self.ls.head.data, font=('TRACK',20))
-        self.lbl_status.place(relx=0.5, rely=0.819, anchor=CENTER)
+        self.lbl_status.place(relx=0.5, rely=0.859, anchor=CENTER)
 
         self.sizeL = self.lbl_value['height']
         self.sizeM = self.lbl_value2['height']
